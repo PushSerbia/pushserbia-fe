@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npm run sourcemaps:move && npm run sentry:sourcemaps",
+    "sourcemaps:move": "rm -rf ./sourcemaps && mkdir ./sourcemaps && mv ./dist/pushserbia-fe/browser/*.map ./sourcemaps && mv ./dist/pushserbia-fe/server/*.map ./sourcemaps",
+    "sentry:sourcemaps": "./node_modules/.bin/sentry-cli sourcemaps inject --org pushserbia --project pushserbia-fe ./sourcemaps && sentry-cli sourcemaps upload --org pushserbia --project pushserbia-fe ./sourcemaps",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:pushserbia-fe": "node dist/pushserbia-fe/server/server.mjs"
@@ -21,6 +23,8 @@
     "@angular/platform-server": "^19.1.0",
     "@angular/router": "^19.1.0",
     "@angular/ssr": "^19.1.7",
+    "@sentry/angular": "^9.5.0",
+    "@sentry/cli": "^2.42.2",
     "@tailwindcss/postcss": "^4.0.12",
     "express": "^4.18.2",
     "postcss": "^8.5.3",

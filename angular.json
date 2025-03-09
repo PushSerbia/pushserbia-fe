@@ -39,6 +39,11 @@
             "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
+            },
+            "sourceMap": {
+              "hidden": true,
+              "scripts": true,
+              "styles": false
             }
           },
           "configurations": {
