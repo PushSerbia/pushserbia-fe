@@ -1,11 +1,18 @@
-import { Route } from "@angular/router";
-import { ProfilePageComponent } from "./pages/profile-page/profile-page.component";
-import { NotificationsListPageComponent } from "./pages/notifications-list-page/notifications-list-page.component";
+import { Route } from '@angular/router';
 
-export const profileRoutes: Route[] = [{
-  path: '',
-  loadComponent: () => ProfilePageComponent
-}, {
-  path: 'notifications',
-  loadComponent: () => NotificationsListPageComponent
-}];
+export const profileRoutes: Route[] = [
+  {
+    path: '',
+    loadComponent: () =>
+      import('./pages/profile-page/profile-page.component').then(
+        (m) => m.ProfilePageComponent
+      ),
+  },
+  {
+    path: 'notifications',
+    loadComponent: () =>
+      import(
+        './pages/notifications-list-page/notifications-list-page.component'
+      ).then((m) => m.NotificationsListPageComponent),
+  },
+];
