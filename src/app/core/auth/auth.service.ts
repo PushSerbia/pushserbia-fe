@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { BehaviorSubject, from, map, Observable, of, switchMap, tap, } from 'rxjs';
-import { FirebaseUserData } from '../user/firebase-user-data.types';
+import { FirebaseUserData } from '../user/firebase-user-data';
 import firebase from 'firebase/compat/app';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
