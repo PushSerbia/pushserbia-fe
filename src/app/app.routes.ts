@@ -10,21 +10,21 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.routes').then((m) => m.authRoutes),
+    loadChildren: () => import('./features/auth/auth.routes').then((m) => m.authRoutes),
   },
   {
     path: 'admin',
     loadChildren: () =>
-      import('./admin/admin.routes').then((m) => m.adminRoutes),
+      import('./features/admin/admin.routes').then((m) => m.adminRoutes),
   },
   {
     path: 'profile',
     loadChildren: () =>
-      import('./profile/profile.routes').then((m) => m.profileRoutes),
+      import('./features/profile/profile.routes').then((m) => m.profileRoutes),
   },
   {
     path: 'projects',
     loadChildren: () =>
-      import('./projects/projects.routes').then((m) => m.projectsRoutes),
+      import('./features/projects/projects.routes').then((m) => m.projectsRoutes),
   },
 ];

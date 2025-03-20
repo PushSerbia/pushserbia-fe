@@ -4,10 +4,10 @@ import { provideRouter, Router } from '@angular/router';
 import { routes } from './app.routes';
 import * as Sentry from '@sentry/angular';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { provideApiEndpointUrl } from './providers/api-endpoint-url.provider';
 import { provideFirebase } from './core/firebase/firebase.provider';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { apiInterceptor } from './core/api/api.interceptor';
+import { provideApiEndpointUrl } from './core/providers/api-endpoint-url.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
