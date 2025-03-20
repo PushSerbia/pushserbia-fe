@@ -1,1 +1,29 @@
-<p>login-page works!</p>
+<section class="bg-gray-50 dark:bg-gray-900 h-full min-h-screen flex items-center">
+  <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-20 lg:py-16 lg:grid-cols-12">
+    <div class="w-full place-self-center lg:col-span-6">
+      <div class="p-6 mx-auto bg-white rounded-lg shadow dark:bg-gray-800 sm:max-w-xl sm:p-8">
+        <a routerLink="/" class="inline-flex items-center text-xl font-semibold text-gray-900 dark:text-white">
+          <div class="flex items-center">
+            <span class="mr-2 text-green-400 text-lg">git</span>
+            <span class="text-xl font-bold">push Serbia</span>
+          </div>
+        </a>
+        <h1 class="mt-6 text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+          Brzo i jednostavno
+        </h1>
+        <p class="mt-2 mb-8 text-sm font-light text-gray-500 dark:text-gray-300">
+          Nije potrebno da popunjavaš kojekakve forme, samo se uloguj sa svojim LinkedIn nalogom. A možeš pročitati i našu <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">politiku privatnosti</a> koja je u skladu sa GDPR-om.
+        </p>
+        <a
+          href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77e1aof4f7c9bj&redirect_uri=http://localhost:3000/v1/auth/redirect/linkedin&scope=openid,profile,email"
+          class="cursor-pointer scale-100 hover:scale-105 transition-transform"
+        >
+          <img src="/images/services/linkedin.png" alt="linkedin" class="h-12" />
+        </a>
+      </div>
+    </div>
+    <div class="mr-auto place-self-center lg:col-span-6">
+      <img class="hidden mx-auto lg:flex" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/authentication/illustration.svg" alt="illustration">
+    </div>
+  </div>
+</section>

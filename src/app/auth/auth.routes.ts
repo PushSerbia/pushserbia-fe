@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { AccountComponent } from './pages/account/account.component';
 
 export const authRoutes: Route[] = [
   {
@@ -14,6 +15,11 @@ export const authRoutes: Route[] = [
       import('./pages/register-page/register-page.component').then(
         (m) => m.RegisterPageComponent
       ),
+  },
+  {
+    path: 'redirect/linkedin',
+    resolve: [],
+    component: AccountComponent,
   },
   {
     path: '',
