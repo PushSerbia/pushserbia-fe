@@ -25,11 +25,11 @@
     "@angular/ssr": "^19.1.7",
     "@sentry/angular": "^9.5.0",
     "@sentry/cli": "^2.42.2",
-    "@tailwindcss/postcss": "^4.0.12",
+    "@tailwindcss/postcss": "^4.0.14",
     "express": "^4.18.2",
     "postcss": "^8.5.3",
     "rxjs": "~7.8.0",
-    "tailwindcss": "^4.0.12",
+    "tailwindcss": "^4.0.14",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
