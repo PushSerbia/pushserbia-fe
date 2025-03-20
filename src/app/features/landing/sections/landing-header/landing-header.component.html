@@ -5,17 +5,6 @@
       <span class="text-xl font-bold text-black dark:text-white">push Serbia</span>
     </div>
 
-    <div>
-      @if (user$ | async; as user) {
-          <span class="text-sm text-gray-500 dark:text-gray-400">Welcome back, {{ user.name }}</span>
-          <a class="ml-4 text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:text-gray-400 hover:dark:text-gray-300" (click)="onLogoutClick()">
-            Logout
-          </a>
-      } @else {
-        <a routerLink="/auth/login" class="text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:text-gray-400 hover:dark:text-gray-300">
-          Login
-        </a>
-      }
-    </div>
+    <app-user-widget />
   </div>
 </header>
