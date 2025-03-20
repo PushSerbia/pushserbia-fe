@@ -1,21 +1,32 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { BehaviorSubject, from, map, Observable, of, switchMap, tap, } from 'rxjs';
+import { from, map, Observable, of, switchMap, } from 'rxjs';
 import { FirebaseUserData } from '../user/firebase-user-data';
 import firebase from 'firebase/compat/app';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
+import { UserRole } from '../user/user-role';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private _authenticated: boolean = false;
-  private userData = new BehaviorSubject<FirebaseUserData | any>(undefined);
-  userData$ = this.userData.asObservable();
+  private afAuth = inject(AngularFireAuth);
+  userData$ = this.afAuth.idTokenResult.pipe(map((result: firebase.auth.IdTokenResult | null) => {
+    if (!result) {
+      return undefined;
+    }
+    const userData: FirebaseUserData = {
+      name: result.claims['name'],
+      email: result.claims['email'],
+      emailVerified: result.claims['email_verified'],
+      role: result.claims['app_user_role'] as UserRole,
+      photoUrl: result.claims['picture'],
+    }
+    return userData;
+  }));
 
   constructor(
     private userService: UserService,
-    private afAuth: AngularFireAuth,
   ) {}
 
   signInWithCustomToken(token: string) {
@@ -27,13 +38,7 @@ export class AuthService {
   }
 
   signOut(): Observable<any> {
-    this._authenticated = false;
-
-    return from(this.afAuth.signOut()).pipe(
-      tap(() => {
-        this.userData.next(undefined);
-      }),
-    );
+    return from(this.afAuth.signOut());
   }
 
   getMe(): Observable<User> {
@@ -51,8 +56,6 @@ export class AuthService {
   }
 
   private loadCurrentUser(userCredential: UserCredential): Observable<User> {
-    this._authenticated = true;
-
     if (!userCredential?.user?.emailVerified) {
       throw new Error('Email is not verified');
     }
@@ -64,28 +67,10 @@ export class AuthService {
             fullName: token.claims.name,
             email: token.claims.email,
           }).pipe(switchMap((user: any) => {
-            this.userData.next({
-              name: token.claims.name,
-              email: token.claims.email,
-              emailVerified: token.claims.email_verified,
-              role: user.role,
-              accountCreated: true,
-              photoUrl: token.claims.picture,
-              signInProvider: token.signInProvider,
-            });
             return of(user);
           }));
         }
 
-        this.userData.next({
-          name: token.claims.name,
-          email: token.claims.email,
-          emailVerified: token.claims.email_verified,
-          role: token.claims.app_user_role,
-          accountCreated: Boolean(token.claims.app_user_id),
-          photoUrl: token.claims.picture,
-          signInProvider: token.signInProvider,
-        });
         return this.getMe();
       }),
     );
