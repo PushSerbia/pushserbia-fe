@@ -15,7 +15,7 @@
           Nije potrebno da popunjavaš kojekakve forme, samo se uloguj sa svojim LinkedIn nalogom. A možeš pročitati i našu <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">politiku privatnosti</a> koja je u skladu sa GDPR-om.
         </p>
         <a
-          href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77e1aof4f7c9bj&redirect_uri=http://localhost:3000/v1/auth/redirect/linkedin&scope=openid,profile,email"
+          [href]="linkedinUrl"
           class="cursor-pointer scale-100 hover:scale-105 transition-transform"
         >
           <img src="/images/services/linkedin.png" alt="linkedin" class="h-12" />
