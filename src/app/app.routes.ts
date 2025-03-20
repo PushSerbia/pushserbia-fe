@@ -4,8 +4,8 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./pages/landing-page/landing-page.component').then(
-        (m) => m.LandingPageComponent
+      import('./features/landing/landing.component').then(
+        (c) => c.LandingComponent
       ),
   },
   {
