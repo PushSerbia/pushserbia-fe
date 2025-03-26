@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   apiUrl: 'http://localhost:3000/v1',
-  linkedinAuthUrl: "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77e1aof4f7c9bj&redirect_uri=http://localhost:3000/v1/auth/redirect/linkedin&scope=openid,profile,email",
+  linkedinAuthUrl: "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77e1aof4f7c9bj&redirect_uri=https://api.pushserbia.com/v1/auth/redirect/linkedin?callback=https://pushserbia.com&scope=openid,profile,email",
   firebase: {
     projectId: "pushserbia-be79a",
     appId: "1:245366071118:web:aea6b3a5e48f4d6a71881f",
