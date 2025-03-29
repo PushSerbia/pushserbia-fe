@@ -1,1 +1,23 @@
-<p>profile-page works!</p>
+<app-basic-layout>
+  @if (data$ | async; as data) {
+    <div class="mx-auto container px-4 2xl:px-0">
+      <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6">
+        Podešavanje naloga
+      </h2>
+
+      <div class="gap-8 lg:flex pb-8 relative">
+        <app-profile-sidenav class="h-fit sticky top-4" />
+
+        <div class="grid w-full grid-cols-2 gap-4">
+          <app-profile-stats class="col-span-2" [data]="data" />
+
+          <app-profile-details class="col-span-2" [data]="data" />
+
+          <app-profile-feedback class="col-span-2 md:col-span-1 lg:col-span-2 xl:col-span-1" />
+        </div>
+      </div>
+    </div>
+  } @else {
+    <app-page-loader />
+  }
+</app-basic-layout>
