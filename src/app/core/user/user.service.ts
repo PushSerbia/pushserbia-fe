@@ -11,4 +11,8 @@ export class UserService extends ApiService<User> {
   createAccount(params: Partial<User>) {
     return this.httpClient.post<User>(`/${this.endpoint}/account`, params);
   }
+
+  getMe() {
+    return this.getById('me')
+  }
 }

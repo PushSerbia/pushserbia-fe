@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   getMe(): Observable<User> {
-    return this.userService.getById(`me`);
+    return this.userService.getMe();
   }
 
   private createAccount(params: { fullName: string; email: string }) {
