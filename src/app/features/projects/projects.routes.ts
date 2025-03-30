@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { projectDetailsResolver } from './resolvers/project-details.resolver';
 
 export const projectsRoutes: Route[] = [
   {
@@ -16,11 +17,14 @@ export const projectsRoutes: Route[] = [
       ),
   },
   {
-    path: ':id',
+    path: ':slug',
     loadComponent: () =>
       import(
         './pages/project-details-page/project-details-page.component'
       ).then((m) => m.ProjectDetailsPageComponent),
+    resolve: {
+      project: projectDetailsResolver
+    }
   },
   {
     path: ':id/meeting-notes',

@@ -32,8 +32,13 @@
 
     <!--#region Projects -->
     <section class="flex gap-6 flex-wrap">
-      @for (project of projects; track project.id) {
-        <app-project-card [project]="project" />
+      @if (projects() === null) {
+        <app-loading-spinner class="flex items-center justify-center text-center w-full h-96 align-middle" />
+      }
+      @else {
+        @for (project of projects(); track project.id) {
+          <app-project-card [project]="project" />
+        }
       }
     </section>
     <!--#endregion Projects -->

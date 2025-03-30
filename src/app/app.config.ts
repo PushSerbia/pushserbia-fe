@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, Router } from '@angular/router';
+import { provideRouter, Router, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import * as Sentry from '@sentry/angular';
@@ -8,12 +8,13 @@ import { provideFirebase } from './core/firebase/firebase.provider';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { apiInterceptor } from './core/api/api.interceptor';
 import { provideApiEndpointUrl } from './core/providers/api-endpoint-url.provider';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
-    provideApiEndpointUrl(),
+    provideRouter(routes, withComponentInputBinding()),
+    provideApiEndpointUrl(environment.apiUrl),
     provideHttpClient(withFetch(), withInterceptors([apiInterceptor, authInterceptor])),
     {
       provide: ErrorHandler,
