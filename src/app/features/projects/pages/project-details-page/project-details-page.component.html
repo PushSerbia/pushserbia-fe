@@ -5,7 +5,8 @@
         <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
             <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ project.name }}</h1>
             <p class="mb-4">{{ project.description }}</p>
-            <p>Projekat predložio {{ project.creatorName }}</p>
+            <p>Projekat predložio: {{ project.creatorName }}</p>
+            <p>Broj ljudi koji je podržalo projekat: {{ project.voteCounter }}</p>
         </div>
         <div class="grid grid-cols-1 gap-4 mt-8">
             <img class="w-full rounded-lg" [src]="project.image" [alt]="project.name">
