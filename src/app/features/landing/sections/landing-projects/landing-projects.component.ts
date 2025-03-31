@@ -24,7 +24,7 @@ export class LandingProjectsComponent {
       voteCounter: faker.number.int({ min: 0, max: 100 }),
       creator: {
         id: faker.string.uuid(),
-        name: faker.person.fullName(),
+        fullName: faker.person.fullName(),
         image: faker.image.avatar(),
       },
       status: ProjectStatus.InProgress,
@@ -42,7 +42,7 @@ export class LandingProjectsComponent {
       voteCounter: faker.number.int({ min: 0, max: 100 }),
       creator: {
         id: faker.string.uuid(),
-        name: faker.person.fullName(),
+        fullName: faker.person.fullName(),
         image: faker.image.avatar(),
       },
       status: ProjectStatus.InProgress,

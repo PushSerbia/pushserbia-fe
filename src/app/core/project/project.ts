@@ -10,7 +10,7 @@ export interface Project {
   voteCounter: number;
   creator: {
     id: string;
-    name: string;
+    fullName: string;
     image: string;
   };
   status: ProjectStatus;
