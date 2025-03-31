@@ -1,3 +1,5 @@
+import { ProjectStatus } from './project-status';
+
 export interface Project {
   id: string;
   name: string;
@@ -6,28 +8,15 @@ export interface Project {
   shortDescription: string;
   description: string;
   voteCounter: number;
-  creatorId: string;
-  creatorName: string;
-  creatorImage: string;
+  creator: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  status: ProjectStatus;
+  isBanned: boolean;
   createdAt: Date;
   updatedAt: Date;
+  banNote?: string;
+  github?: string;
 }
-
-// export enum ProjectStatus {
-//   Pending = 'pending',
-//   Active = 'active',
-//   Declined = 'declined'
-// }
-// export interface Project {
-//   id: string;
-//   title: string;
-//   description: string;
-//   shareableLink: string;
-//   githubLink: string | null;
-//   status: ProjectStatus;
-//   isBanned: boolean;
-//   banNote: string | null;
-//   creator: unknown | null;
-//   createdAt: Date;
-//   updatedAt: Date;
-// }

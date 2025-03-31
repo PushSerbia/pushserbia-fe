@@ -4,6 +4,7 @@ import { Project } from '../../../../core/project/project';
 import { faker } from '@faker-js/faker';
 import { ProjectCardComponent } from '../../../../shared/ui/project-card/project-card.component';
 import { ProjectCardNewComponent } from '../../../../shared/ui/project-card-new/project-card-new.component';
+import { ProjectStatus } from '../../../../core/project/project-status';
 
 @Component({
   selector: 'app-landing-projects',
@@ -21,11 +22,15 @@ export class LandingProjectsComponent {
       shortDescription: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.',
       description: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order. They include some of the biggest names in tech, such as Microsoft, Salesforce, and Oracle.',
       voteCounter: faker.number.int({ min: 0, max: 100 }),
+      creator: {
+        id: faker.string.uuid(),
+        name: faker.person.fullName(),
+        image: faker.image.avatar(),
+      },
+      status: ProjectStatus.InProgress,
+      isBanned: false,
       createdAt: faker.date.past(),
-      creatorName: faker.person.fullName(),
-      creatorImage: faker.image.avatar(),
       updatedAt: faker.date.past(),
-      creatorId: faker.string.uuid(),
     },
     {
       id: faker.string.uuid(),
@@ -35,11 +40,15 @@ export class LandingProjectsComponent {
       shortDescription: 'Here are the biggest enterprise technology acquisitions of 2022 so far, in reverse chronological order.',
       description: 'Here are the biggest enterprise technology acquisitions of 2022 so far, in reverse chronological order. They include some of the biggest names in tech, such as Microsoft, Salesforce, and Oracle.',
       voteCounter: faker.number.int({ min: 0, max: 100 }),
+      creator: {
+        id: faker.string.uuid(),
+        name: faker.person.fullName(),
+        image: faker.image.avatar(),
+      },
+      status: ProjectStatus.InProgress,
+      isBanned: false,
       createdAt: faker.date.past(),
-      creatorName: faker.person.fullName(),
-      creatorImage: faker.image.avatar(),
       updatedAt: faker.date.past(),
-      creatorId: faker.string.uuid(),
     },
   ];
 }
