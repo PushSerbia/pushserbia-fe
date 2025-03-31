@@ -3,7 +3,19 @@
 
     <!--#region Title -->
     <section class="max-w-2xl">
-      <h1 class="text-5xl font-bold text-gray-900 dark:text-gray-100">Projekti</h1>
+      <div class="flex gap-6 items-center">
+        <h1 class="text-5xl font-bold text-gray-900 dark:text-gray-100">Projekti</h1>
+
+        <!--stroked button with transparent bg-->
+        <button
+          class="flex items-center justify-center px-2 py-2 text-sm font-medium text-center text-gray-900 bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700 cursor-pointer"
+          routerLink="/projects/new">
+          <!--svg plus-->
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H4a1 1 0 110-2h6V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
       <p class="text-gray-500 dark:text-gray-400 mt-2">Pregledaj postojeće open-source projekte i pridruži se onima koji te inspirišu. Razvijaj softver, učestvuj u diskusijama i doprinesi inovacijama.</p>
     </section>
     <!--#endregion Title -->
@@ -32,46 +44,22 @@
 
     <!--#region Projects -->
     <section class="flex gap-6 flex-wrap">
-      @if (projects() === null) {
+      @if (projectsResource.isLoading()) {
         <app-loading-spinner class="flex items-center justify-center text-center w-full h-96 align-middle" />
-      }
-      @else {
-        @for (project of projects(); track project.id) {
-          <app-project-card [project]="project" />
-        }
-      }
-
-      @if (error() !== null) {
-        <div class="flex items-center justify-center text-center w-full h-96 align-middle">
-          <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 " role="alert">
-            <span class="font-medium">Greška!</span> {{ error() }}
+      } @else {
+        @if (projectsResource.error()) {
+          <div class="flex items-center justify-center text-center w-full h-96 align-middle">
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+              <span class="font-medium">Greška!</span>
+            </div>
           </div>
-        </div>
-
+        } @else {
+          @for (project of projectsResource.value(); track project.id) {
+            <app-project-card [project]="project" />
+          }
+        }
       }
     </section>
     <!--#endregion Projects -->
-
-    <!--#region alt Projects -->
-    <section class="flex gap-6 flex-wrap">
-      @if (projectsResource.isLoading()) {
-        <app-loading-spinner class="flex items-center justify-center text-center w-full h-96 align-middle" />
-      }
-      @else {
-        @for (project of projectsResource.value(); track project.id) {
-          <app-project-card [project]="project" />
-        }
-      }
-
-      @if (projectsResource.error()) {
-        <div class="flex items-center justify-center text-center w-full h-96 align-middle">
-          <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 " role="alert">
-            <span class="font-medium">Greška!</span> {{ projectsResource.error().message }}
-          </div>
-        </div>
-
-      }
-    </section>
-    <!--#endregion alt Projects -->
   </div>
 </app-basic-layout>
