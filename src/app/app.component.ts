@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private updateCountdown(): void {
-    const targetDate = new Date("2025-03-31T23:59:59");
+    const targetDate = new Date("2025-04-13T23:59:59");
     const now = new Date();
     const timeDiff = targetDate.getTime() - now.getTime();
 
