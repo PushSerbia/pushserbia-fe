@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LandingHeaderComponent } from './landing-header.component';
+import { ProjectCardNewComponent } from './project-card-new.component';
 
-describe('LandingHeaderComponent', () => {
-  let component: LandingHeaderComponent;
-  let fixture: ComponentFixture<LandingHeaderComponent>;
+describe('ProjectCardNewComponent', () => {
+  let component: ProjectCardNewComponent;
+  let fixture: ComponentFixture<ProjectCardNewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LandingHeaderComponent]
+      imports: [ProjectCardNewComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LandingHeaderComponent);
+    fixture = TestBed.createComponent(ProjectCardNewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
