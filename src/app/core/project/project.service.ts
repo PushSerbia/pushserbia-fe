@@ -30,13 +30,13 @@ export class ProjectService extends ApiService<Project>{
   readonly endpoint = 'projects';
 
   override getAll(): Observable<Project[]> {
-    // return super.getAll();
+    //return super.getAll();
     return of(PROJECTS_MOCK).pipe(delay(1000));
   }
 
-  override getById<Project>(slug: string) {
-    //return super.getById(slug);
-    const p = PROJECTS_MOCK.find(project => project.slug === slug)! as Project;
+  override getById<Project>(id: string) {
+    //return super.getById<Project>(id);
+    const p = PROJECTS_MOCK.find(project => project.id === id)! as Project;
     return of(p).pipe(delay(1000));
   }
 }

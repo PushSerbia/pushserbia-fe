@@ -40,6 +40,10 @@
           <app-project-card [project]="project" />
         }
       }
+
+      @if (error() !== null) {
+        <p>{{ error() }}</p>
+      }
     </section>
     <!--#endregion Projects -->
   </div>
