@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -8,8 +8,8 @@ export abstract class ApiService<Model> {
 
   protected httpClient = inject(HttpClient);
 
-  getAll(): Observable<Model[]> {
-    return this.httpClient.get<Model[]>(`/${this.endpoint}`);
+  getAll(params?: HttpParams | Record<string, string | number | boolean | ReadonlyArray<string | number | boolean>>): Observable<Model[]> {
+    return this.httpClient.get<Model[]>(`/${this.endpoint}`, { params });
   }
 
   getById<R = Model>(id: string): Observable<R> {

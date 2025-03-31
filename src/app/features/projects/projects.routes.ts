@@ -10,7 +10,8 @@ export const projectsRoutes: Route[] = [
       ),
   },
   {
-    path: 'create',
+    path: 'new',
+    pathMatch: 'full',
     loadComponent: () =>
       import('./pages/create-project-page/create-project-page.component').then(
         (m) => m.CreateProjectPageComponent
