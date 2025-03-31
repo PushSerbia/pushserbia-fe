@@ -14,29 +14,24 @@ export const authInterceptor = (
 
   let newReq = req.clone();
 
-  return from(angularFireAuth.currentUser).pipe(
-    switchMap((user) => {
-      if (!user) {
+  return from(angularFireAuth.idToken).pipe(
+    switchMap((token: any) => {
+      if (!token) {
         return next(newReq);
       }
-      return from(user.getIdToken()).pipe(
-        switchMap((token) => {
-          if (token && !AuthUtils.isTokenExpired(token)) {
-            newReq = req.clone({
-              headers: req.headers.set('Authorization', 'Bearer ' + token),
-            });
+      if (token && !AuthUtils.isTokenExpired(token)) {
+        newReq = req.clone({
+          headers: req.headers.set('Authorization', 'Bearer ' + token),
+        });
+      }
+      return next(newReq).pipe(
+        catchError((error) => {
+          if (error instanceof HttpErrorResponse && error.status === 401) {
+            authService.signOut();
+            location.reload();
           }
 
-          return next(newReq).pipe(
-            catchError((error) => {
-              if (error instanceof HttpErrorResponse && error.status === 401) {
-                authService.signOut();
-                location.reload();
-              }
-
-              return throwError(error);
-            }),
-          );
+          return throwError(error);
         }),
       );
     }),
