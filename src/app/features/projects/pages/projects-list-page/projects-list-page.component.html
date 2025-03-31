@@ -51,5 +51,27 @@
       }
     </section>
     <!--#endregion Projects -->
+
+    <!--#region alt Projects -->
+    <section class="flex gap-6 flex-wrap">
+      @if (projectsResource.isLoading()) {
+        <app-loading-spinner class="flex items-center justify-center text-center w-full h-96 align-middle" />
+      }
+      @else {
+        @for (project of projectsResource.value(); track project.id) {
+          <app-project-card [project]="project" />
+        }
+      }
+
+      @if (projectsResource.error()) {
+        <div class="flex items-center justify-center text-center w-full h-96 align-middle">
+          <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 " role="alert">
+            <span class="font-medium">Greška!</span> {{ projectsResource.error().message }}
+          </div>
+        </div>
+
+      }
+    </section>
+    <!--#endregion alt Projects -->
   </div>
 </app-basic-layout>

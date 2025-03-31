@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { Project } from '../../../../core/project/project';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
@@ -24,4 +24,8 @@ export class ProjectsListPageComponent {
         return of([]);
       })
     ), { initialValue: null });
+
+  readonly page = signal<number>(1);
+
+  readonly projectsResource = this.projectsService.getProjectsResource(this.page);
 }

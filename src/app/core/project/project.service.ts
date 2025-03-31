@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { delay, Observable, of } from 'rxjs';
 import { Project } from './project';
 import { faker } from '@faker-js/faker';
 import slugify from 'slugify';
+import { httpResource } from '@angular/common/http';
 
 const PROJECTS_MOCK: Project[] = Array.from({ length: 5 }, (_, i) => {
   const name = faker.company.name();
@@ -29,9 +30,13 @@ const PROJECTS_MOCK: Project[] = Array.from({ length: 5 }, (_, i) => {
 export class ProjectService extends ApiService<Project>{
   readonly endpoint = 'projects';
 
+  getProjectsResource(page: Signal<number>) {
+    return httpResource<Project[]>(() => `/projects?page=${page()}`, { defaultValue: [] });
+  }
+
   override getAll(): Observable<Project[]> {
-    //return super.getAll();
-    return of(PROJECTS_MOCK).pipe(delay(1000));
+    return super.getAll();
+    //return of(PROJECTS_MOCK).pipe(delay(1000));
   }
 
   override getById<Project>(id: string) {
