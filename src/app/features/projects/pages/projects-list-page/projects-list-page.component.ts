@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Project } from '../../../../core/project/project';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
@@ -6,10 +6,11 @@ import { ProjectCardComponent } from '../../../../shared/ui/project-card/project
 import { ProjectService } from '../../../../core/project/project.service';
 import { LoadingSpinnerComponent } from '../../../../shared/ui/loading-spinner/loading-spinner.component';
 import { catchError, of } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-projects-list-page',
-  imports: [BasicLayoutComponent, ProjectCardComponent, LoadingSpinnerComponent],
+  imports: [BasicLayoutComponent, ProjectCardComponent, LoadingSpinnerComponent, RouterLink],
   templateUrl: './projects-list-page.component.html',
   styleUrl: './projects-list-page.component.scss'
 })
