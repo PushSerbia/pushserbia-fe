@@ -3,7 +3,7 @@
 
     <!--#region Title -->
     <section class="max-w-2xl">
-      <h1 class="text-5xl font-bold text-gray-900 dark:text-gray-100">Projects</h1>
+      <h1 class="text-5xl font-bold text-gray-900 dark:text-gray-100">Projekti</h1>
       <p class="text-gray-500 dark:text-gray-400 mt-2">Pregledaj postojeće open-source projekte i pridruži se onima koji te inspirišu. Razvijaj softver, učestvuj u diskusijama i doprinesi inovacijama.</p>
     </section>
     <!--#endregion Title -->
@@ -32,10 +32,46 @@
 
     <!--#region Projects -->
     <section class="flex gap-6 flex-wrap">
-      @for (project of projects; track project.id) {
-        <app-project-card [project]="project" />
+      @if (projects() === null) {
+        <app-loading-spinner class="flex items-center justify-center text-center w-full h-96 align-middle" />
+      }
+      @else {
+        @for (project of projects(); track project.id) {
+          <app-project-card [project]="project" />
+        }
+      }
+
+      @if (error() !== null) {
+        <div class="flex items-center justify-center text-center w-full h-96 align-middle">
+          <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 " role="alert">
+            <span class="font-medium">Greška!</span> {{ error() }}
+          </div>
+        </div>
+
       }
     </section>
     <!--#endregion Projects -->
+
+    <!--#region alt Projects -->
+    <section class="flex gap-6 flex-wrap">
+      @if (projectsResource.isLoading()) {
+        <app-loading-spinner class="flex items-center justify-center text-center w-full h-96 align-middle" />
+      }
+      @else {
+        @for (project of projectsResource.value(); track project.id) {
+          <app-project-card [project]="project" />
+        }
+      }
+
+      @if (projectsResource.error()) {
+        <div class="flex items-center justify-center text-center w-full h-96 align-middle">
+          <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 " role="alert">
+            <span class="font-medium">Greška!</span> {{ projectsResource.error().message }}
+          </div>
+        </div>
+
+      }
+    </section>
+    <!--#endregion alt Projects -->
   </div>
 </app-basic-layout>
