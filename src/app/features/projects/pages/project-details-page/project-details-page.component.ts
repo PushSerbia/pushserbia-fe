@@ -3,6 +3,7 @@ import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/b
 import { ProjectService } from '../../../../core/project/project.service';
 import { LoadingSpinnerComponent } from '../../../../shared/ui/loading-spinner/loading-spinner.component';
 import { AlertMessageComponent } from '../../../../shared/ui/alert-message/alert-message.component';
+import { VoteService } from '../../../../core/vote/vote.service';
 
 @Component({
   selector: 'app-project-details-page',
@@ -12,6 +13,7 @@ import { AlertMessageComponent } from '../../../../shared/ui/alert-message/alert
 })
 export class ProjectDetailsPageComponent {
   private readonly projectService = inject(ProjectService);
+  private readonly voteService = inject(VoteService);
   readonly slug = input.required<string>();
   readonly projectDetailsResource = this.projectService.getProjectDetailsResource(this.slug);
 
@@ -24,4 +26,12 @@ export class ProjectDetailsPageComponent {
       return '';
     }
   });
+
+  voteForProject() {
+    this.voteService.voteForProject(this.projectDetailsResource.value()!.id)
+      .subscribe(() => {
+        alert('Thank you!');
+        // router.navigate([???]);
+      })
+  }
 }
