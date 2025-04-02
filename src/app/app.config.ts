@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, Router, withComponentInputBinding } from '@angular/router';
+import { provideRouter, Router, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import * as Sentry from '@sentry/angular';
@@ -13,7 +13,7 @@ import { environment } from '../environments/environment';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
     provideApiEndpointUrl(environment.apiUrl),
     provideHttpClient(withFetch(), withInterceptors([apiInterceptor, authInterceptor])),
     {
