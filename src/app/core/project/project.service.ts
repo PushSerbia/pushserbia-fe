@@ -14,6 +14,10 @@ export class ProjectService extends ApiService<Project>{
     return httpResource<Project[]>(() => `/projects?page=${page()}`, { defaultValue: [] });
   }
 
+  getProjectDetailsResource(slug: Signal<string>) {
+    return httpResource<Project[] | null>(() => `/projects?slug=${slug()}`, { defaultValue: null });
+  }
+
   override getById<Project>(id: string) {
     return super.getAll({ slug: id }).pipe(map(items => items[0] as Project));
   }

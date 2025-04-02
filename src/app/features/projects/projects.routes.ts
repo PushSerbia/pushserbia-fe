@@ -23,9 +23,9 @@ export const projectsRoutes: Route[] = [
       import(
         './pages/project-details-page/project-details-page.component'
       ).then((m) => m.ProjectDetailsPageComponent),
-    resolve: {
-      project: projectDetailsResolver
-    }
+    // resolve: {
+    //   project: projectDetailsResolver
+    // }
   },
   {
     path: ':id/meeting-notes',

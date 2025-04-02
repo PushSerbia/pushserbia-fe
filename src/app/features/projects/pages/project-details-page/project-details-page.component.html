@@ -1,19 +1,35 @@
 <app-basic-layout>
   <section class="bg-white dark:bg-gray-900">
-    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+    @if (projectDetailsResource.hasValue() && projectDetailsResource.value()?.length && projectDetailsResource.value()!.length > 0) {
+      @let projectDetails = projectDetailsResource.value()![0];
+      <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
         <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
-            <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ project().name }}</h1>
-            <p class="mb-4">{{ project().description }}</p>
-            <p>Projekat predložio: {{ project().creator.fullName }}</p>
-            <p>Broj ljudi koji je podržalo projekat: {{ project().voteCounter }}</p>
+            <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ projectDetails!.name }}</h1>
+            <p class="mb-4">{{ projectDetails!.description }}</p>
+            <p>Projekat predložio: {{ projectDetails!.creator.fullName }}</p>
+            <p>Broj ljudi koji je podržalo projekat: {{ projectDetails!.voteCounter }}</p>
         </div>
         <div class="grid grid-cols-1 gap-4 mt-8">
-          @if (project().image) {
-            <img class="w-full rounded-lg" [src]="project().image" [alt]="project().name">
+          @if (projectDetails!.image) {
+            <img class="w-full rounded-lg" [src]="projectDetails!.image" [alt]="projectDetails!.name">
           } @else {
-            <img src="/illustrations/woman-earth-hugging.svg" class="w-72 rounded-lg" [alt]="project().name" />
+            <img src="/illustrations/woman-earth-hugging.svg" class="w-72 rounded-lg" [alt]="projectDetails!.name" />
           }
         </div>
     </div>
+    }
+
+    @if (projectDetailsResource.isLoading()) {
+      <app-loading-spinner class="flex items-center justify-center text-center w-full h-96 align-middle" />
+    }
+
+    @if(projectDetailsResource.error() || (projectDetailsResource.hasValue() && projectDetailsResource.value()?.length === 0)) {
+      <div class="flex items-center justify-center text-center w-full h-96 align-middle">
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+          <span class="font-medium">Greška!</span>
+        </div>
+      </div>
+    }
+
   </section>
 </app-basic-layout>
