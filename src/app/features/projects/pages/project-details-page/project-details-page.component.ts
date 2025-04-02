@@ -1,9 +1,10 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, DestroyRef, inject, input } from '@angular/core';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
 import { ProjectService } from '../../../../core/project/project.service';
 import { LoadingSpinnerComponent } from '../../../../shared/ui/loading-spinner/loading-spinner.component';
 import { AlertMessageComponent } from '../../../../shared/ui/alert-message/alert-message.component';
 import { VoteService } from '../../../../core/vote/vote.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-project-details-page',
@@ -14,6 +15,8 @@ import { VoteService } from '../../../../core/vote/vote.service';
 export class ProjectDetailsPageComponent {
   private readonly projectService = inject(ProjectService);
   private readonly voteService = inject(VoteService);
+  private readonly destroyRef = inject(DestroyRef);
+
   readonly slug = input.required<string>();
   readonly projectDetailsResource = this.projectService.getProjectDetailsResource(this.slug);
 
@@ -29,9 +32,10 @@ export class ProjectDetailsPageComponent {
 
   voteForProject() {
     this.voteService.voteForProject(this.projectDetailsResource.value()!.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         alert('Thank you!');
         // router.navigate([???]);
-      })
+      });
   }
 }
