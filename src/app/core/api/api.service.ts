@@ -27,6 +27,14 @@ export abstract class ApiService<Model> {
     );
   }
 
+  set(id: string, data: Partial<Model>): Observable<Model> {
+    // should be PUT
+    return this.httpClient.post<Model>(
+      `/${this.endpoint}/${id}`,
+      data,
+    );
+  }
+
   delete(id: string): Observable<Model> {
     return this.httpClient.delete<Model>(
       `/${this.endpoint}/${id}`,

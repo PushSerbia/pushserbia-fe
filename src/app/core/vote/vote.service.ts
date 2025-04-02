@@ -8,6 +8,6 @@ export class VoteService extends ApiService<any>{
   readonly endpoint = 'votes';
 
   voteForProject(projectId: string) {
-    return super.update(projectId, {});
+    return super.set(projectId, {});
   }
 }
