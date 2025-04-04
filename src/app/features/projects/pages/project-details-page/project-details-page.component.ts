@@ -31,7 +31,7 @@ export class ProjectDetailsPageComponent {
   });
 
   voteForProject() {
-    this.voteService.voteForProject(this.projectDetailsResource.value()!.id)
+    this.voteService.create({ projectId: this.projectDetailsResource.value()!.id })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         alert('Thank you!');
