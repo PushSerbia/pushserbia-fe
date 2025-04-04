@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import 'quill/dist/quill.snow.css';
 @import "tailwindcss";
 
 @theme {
@@ -27,4 +28,3 @@
     --color-secondary-900: #1D2026;
     --color-secondary-950: #030712;
 }
-

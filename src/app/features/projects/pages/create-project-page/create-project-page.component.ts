@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 import { ProjectService } from '../../../../core/project/project.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { QuillEditorComponent } from 'ngx-quill';
+import slugify from 'slugify';
 
 @Component({
   selector: 'app-create-project-page',
   standalone: true,
-  imports: [CommonModule, BasicLayoutComponent, ReactiveFormsModule],
+  imports: [CommonModule, BasicLayoutComponent, ReactiveFormsModule, QuillEditorComponent],
   templateUrl: './create-project-page.component.html',
   styleUrl: './create-project-page.component.scss',
 })
@@ -25,6 +27,9 @@ export class CreateProjectPageComponent implements OnInit {
       slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9-]+$/)]],
       shortDescription: ['', [Validators.required, Validators.maxLength(250)]],
       description: ['', [Validators.required, Validators.minLength(50)]],
+    });
+    this.form.controls['name'].valueChanges.subscribe((name) => {
+      this.form.controls['slug'].setValue(slugify(name, { lower: true, strict: true }));
     });
   }
 
