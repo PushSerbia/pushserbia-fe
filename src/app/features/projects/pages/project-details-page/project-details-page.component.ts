@@ -4,7 +4,6 @@ import { ProjectService } from '../../../../core/project/project.service';
 import { LoadingSpinnerComponent } from '../../../../shared/ui/loading-spinner/loading-spinner.component';
 import { AlertMessageComponent } from '../../../../shared/ui/alert-message/alert-message.component';
 import { VoteService } from '../../../../core/vote/vote.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-project-details-page',
@@ -30,11 +29,10 @@ export class ProjectDetailsPageComponent {
     }
   });
 
-  voteForProject() {
-    this.voteService.create({ projectId: this.projectDetailsResource.value()!.id })
-      .pipe(takeUntilDestroyed(this.destroyRef))
+  voteForProject(projectId: string) {
+    this.voteService.create({ projectId })
       .subscribe(() => {
-        alert('Thank you!');
+        console.log('Thank you!');
         // router.navigate([???]);
       });
   }

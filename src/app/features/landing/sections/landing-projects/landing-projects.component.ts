@@ -21,7 +21,8 @@ export class LandingProjectsComponent {
       image: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/ngo-carousel/image-1.jpg',
       shortDescription: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.',
       description: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order. They include some of the biggest names in tech, such as Microsoft, Salesforce, and Oracle.',
-      voteCounter: faker.number.int({ min: 0, max: 100 }),
+      totalVoters: faker.number.int({ min: 0, max: 100 }),
+      totalVotes: faker.number.int({ min: 0, max: 100 }),
       creator: {
         id: faker.string.uuid(),
         fullName: faker.person.fullName(),
@@ -39,7 +40,8 @@ export class LandingProjectsComponent {
       image: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/ngo-carousel/image-4.jpg',
       shortDescription: 'Here are the biggest enterprise technology acquisitions of 2022 so far, in reverse chronological order.',
       description: 'Here are the biggest enterprise technology acquisitions of 2022 so far, in reverse chronological order. They include some of the biggest names in tech, such as Microsoft, Salesforce, and Oracle.',
-      voteCounter: faker.number.int({ min: 0, max: 100 }),
+      totalVoters: faker.number.int({ min: 0, max: 100 }),
+      totalVotes: faker.number.int({ min: 0, max: 100 }),
       creator: {
         id: faker.string.uuid(),
         fullName: faker.person.fullName(),
