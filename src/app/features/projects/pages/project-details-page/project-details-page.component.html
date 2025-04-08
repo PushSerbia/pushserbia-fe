@@ -5,17 +5,9 @@
       <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
         <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
             <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ projectDetails.name }}</h1>
-            <p class="mb-4">{{ projectDetails.description }}</p>
+            <quill-view-html [content]="projectDetails.description" />
             <p>Projekat predložio: {{ projectDetails.creator.fullName }}</p>
             <p>Broj ljudi koji je podržalo projekat: {{ projectDetails.voteCounter }}</p>
-            <div class="text-end">
-              <button (click)="voteForProject()" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                <span class="pr-2">Glasaj</span>
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-                  <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
-                </svg>
-              </button>
-            </div>
         </div>
         <div class="grid grid-cols-1 gap-4 mt-8">
           @if (projectDetails!.image) {

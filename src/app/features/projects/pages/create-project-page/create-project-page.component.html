@@ -1,6 +1,6 @@
 <app-basic-layout>
-  <section class="bg-white dark:bg-gray-900">
-    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+  <section class="bg-white dark:bg-gray-900 overflow-auto">
+    <div class="p-8 my-8 mx-auto max-w-4xl dark:bg-gray-800 rounded-2xl">
       <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Predloži novi projekat</h2>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-2">
@@ -68,14 +68,9 @@
           <!--#endregion Short Description -->
 
           <!--#region Description -->
-          <div class="sm:col-span-2">
+          <div class="sm:col-span-2 dark">
             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opis</label>
-            <textarea 
-              id="description" 
-              formControlName="description"
-              rows="15" 
-              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
-              placeholder="Biće vidljiv samo na stranici projekta"></textarea>
+            <quill-editor id="description" formControlName="description" class="quill-editor-custom" placeholder="Biće vidljiv samo na stranici projekta" />
             <div class="text-red-500 text-sm mt-1" [class.invisible]="form.controls['description'].valid || !(form.controls['description'].dirty || form.controls['description'].touched)">
               <div class="h-5">
                 @if (form.controls['description'].errors?.['required']) {

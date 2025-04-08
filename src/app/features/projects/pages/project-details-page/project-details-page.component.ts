@@ -1,14 +1,15 @@
 import { Component, computed, DestroyRef, inject, input } from '@angular/core';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
+import { QuillViewHTMLComponent } from 'ngx-quill';
 import { ProjectService } from '../../../../core/project/project.service';
-import { LoadingSpinnerComponent } from '../../../../shared/ui/loading-spinner/loading-spinner.component';
-import { AlertMessageComponent } from '../../../../shared/ui/alert-message/alert-message.component';
 import { VoteService } from '../../../../core/vote/vote.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoadingSpinnerComponent } from '../../../../shared/ui/loading-spinner/loading-spinner.component';
+import { AlertMessageComponent } from '../../../../shared/ui/alert-message/alert-message.component';
 
 @Component({
   selector: 'app-project-details-page',
-  imports: [BasicLayoutComponent, LoadingSpinnerComponent, AlertMessageComponent],
+  imports: [BasicLayoutComponent, QuillViewHTMLComponent, LoadingSpinnerComponent, AlertMessageComponent],
   templateUrl: './project-details-page.component.html',
   styleUrl: './project-details-page.component.scss'
 })
