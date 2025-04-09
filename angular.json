@@ -32,7 +32,8 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/styles.css",
+              "src/styles/vendors/ngx-quill.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules"]
@@ -110,7 +111,8 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/styles.css",
+              "src/styles/vendors/ngx-quill.css"
             ],
             "scripts": []
           }
