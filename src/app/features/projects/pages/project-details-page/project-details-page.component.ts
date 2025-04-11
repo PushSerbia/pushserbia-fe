@@ -1,40 +1,41 @@
-import { Component, computed, DestroyRef, inject, input } from '@angular/core';
+import { Component, inject, input, OnInit, Signal } from '@angular/core';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
 import { QuillViewHTMLComponent } from 'ngx-quill';
-import { ProjectService } from '../../../../core/project/project.service';
 import { VoteService } from '../../../../core/vote/vote.service';
-import { LoadingSpinnerComponent } from '../../../../shared/ui/loading-spinner/loading-spinner.component';
-import { AlertMessageComponent } from '../../../../shared/ui/alert-message/alert-message.component';
+import { Project } from '../../../../core/project/project';
+import { ProjectDetailsSidenavComponent } from './components/project-details-sidenav/project-details-sidenav.component';
+import { ProjectStoreService } from '../../../../core/project/project.store.service';
+import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-loader.component';
 
 @Component({
   selector: 'app-project-details-page',
-  imports: [BasicLayoutComponent, QuillViewHTMLComponent, LoadingSpinnerComponent, AlertMessageComponent],
+  imports: [BasicLayoutComponent, QuillViewHTMLComponent, ProjectDetailsSidenavComponent, PageLoaderComponent],
   templateUrl: './project-details-page.component.html',
   styleUrl: './project-details-page.component.scss'
 })
-export class ProjectDetailsPageComponent {
-  private readonly projectService = inject(ProjectService);
+export class ProjectDetailsPageComponent implements OnInit {
+  public readonly projectStore = inject(ProjectStoreService);
   private readonly voteService = inject(VoteService);
-  private readonly destroyRef = inject(DestroyRef);
 
   readonly slug = input.required<string>();
-  readonly projectDetailsResource = this.projectService.getProjectDetailsResource(this.slug);
 
-  readonly error = computed<string>(() => {
-    const error = this.projectDetailsResource.error();
-    if (error instanceof Error) {
-      return error.message;
-    }
-    else {
-      return '';
-    }
-  });
+  $loading = this.projectStore.$loading;
+  $project?: Signal<Project>;
 
-  voteForProject(projectId: string) {
-    this.voteService.create({ projectId })
+  ngOnInit(): void {
+    this.$project = this.projectStore.getBySlug(this.slug());
+  }
+
+  voteForProject(project: Project): void {
+    this.voteService.create({ projectId: project.id })
       .subscribe(() => {
         console.log('Thank you!');
         // router.navigate([???]);
+
+        this.projectStore.updateStateBySlug(project.slug, {
+          ...project,
+          totalVoters: project.totalVoters + 1,
+        });
       });
   }
 }
