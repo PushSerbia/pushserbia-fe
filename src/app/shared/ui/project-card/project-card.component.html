@@ -5,7 +5,7 @@
       <img class="h-full w-full object-cover object-center" [src]="project().image" [alt]="project().name" />
     } @else {
       <div class="h-full w-full flex justify-center items-center bg-gray-200 dark:bg-gray-700 pt-3">
-        <img  class="w-auto max-w-[16rem] h-40 text-gray-800 dark:text-white" src="/illustrations/woman-earth-hugging.svg" [alt]="project().name" />
+        <img  class="w-auto max-w-[16rem] h-40 text-gray-800 dark:text-white" src="/illustrations/woman-earth-hugging.svg" [alt]="project().name" [style.viewTransitionName]="viewTransitionName(project())" />
       </div>
     }
   </div>
