@@ -1,5 +1,12 @@
-import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, Router, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, inject, provideZoneChangeDetection } from '@angular/core';
+import {
+  provideRouter,
+  Router,
+  ViewTransitionInfo,
+  withComponentInputBinding,
+  withInMemoryScrolling,
+  withViewTransitions
+} from '@angular/router';
 
 import { routes } from './app.routes';
 import * as Sentry from '@sentry/angular';
@@ -10,11 +17,34 @@ import { apiInterceptor } from './core/api/api.interceptor';
 import { provideApiEndpointUrl } from './core/providers/api-endpoint-url.provider';
 import { environment } from '../environments/environment';
 import { provideQuillConfig } from 'ngx-quill';
+import { TransitionService } from './core/transition/transition.service';
+
+function onViewTransitionCreated(info: ViewTransitionInfo) {
+  const router = inject(Router);
+  const toUrl = router.getCurrentNavigation()?.finalUrl?.toString() ?? '';
+
+  if (!toUrl.startsWith('/projects') || toUrl === '/projects/new') {
+    info.transition.skipTransition();
+    return;
+  }
+
+  const currentTransitionService = inject(TransitionService);
+  currentTransitionService.current.set(info)
+
+  info.transition.finished.finally(() => {
+    currentTransitionService.current.set(null);
+  });
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'top' })),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
+      withViewTransitions({ skipInitialTransition: true, onViewTransitionCreated })
+    ),
     provideApiEndpointUrl(environment.apiUrl),
     provideHttpClient(withFetch(), withInterceptors([apiInterceptor, authInterceptor])),
     {
