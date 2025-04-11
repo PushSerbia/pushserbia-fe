@@ -2,6 +2,7 @@
 
 @import 'quill/dist/quill.snow.css';
 @import "tailwindcss";
+@import "./_transitions.css";
 
 @theme {
     --color-primary-50: #F0FDFF;

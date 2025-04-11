@@ -7,7 +7,8 @@ export interface Project {
   image: string;
   shortDescription: string;
   description: string;
-  voteCounter: number;
+  totalVoters: number;
+  totalVotes: number;
   creator: {
     id: string;
     fullName: string;

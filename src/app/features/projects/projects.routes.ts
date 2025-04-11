@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import { projectDetailsResolver } from './resolvers/project-details.resolver';
 
 export const projectsRoutes: Route[] = [
   {
@@ -22,10 +21,7 @@ export const projectsRoutes: Route[] = [
     loadComponent: () =>
       import(
         './pages/project-details-page/project-details-page.component'
-      ).then((m) => m.ProjectDetailsPageComponent),
-    resolve: {
-      project: projectDetailsResolver
-    }
+      ).then((m) => m.ProjectDetailsPageComponent)
   },
   {
     path: ':id/meeting-notes',
