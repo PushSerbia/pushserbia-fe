@@ -16,6 +16,7 @@ export class AuthService {
       return undefined;
     }
     const userData: FirebaseUserData = {
+      id: result.claims['app_user_id'],
       name: result.claims['name'],
       email: result.claims['email'],
       emailVerified: result.claims['email_verified'],
