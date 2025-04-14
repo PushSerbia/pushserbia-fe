@@ -17,6 +17,13 @@ export const projectsRoutes: Route[] = [
       ),
   },
   {
+    path: ':slug/edit',
+    loadComponent: () =>
+      import('./pages/create-project-page/create-project-page.component').then(
+        (m) => m.CreateProjectPageComponent
+      ),
+  },
+  {
     path: ':slug',
     loadComponent: () =>
       import(
