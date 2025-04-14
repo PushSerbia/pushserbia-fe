@@ -74,7 +74,10 @@ export class CreateProjectPageComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this.projectStoreService.create(this.form.value).subscribe(() => {
+    const endpoint = this.project?.id
+      ? this.projectStoreService.update(this.project.id, this.form.value)
+      : this.projectStoreService.create(this.form.value);
+    endpoint.subscribe(() => {
       this.router.navigateByUrl('/projects');
     });
   }

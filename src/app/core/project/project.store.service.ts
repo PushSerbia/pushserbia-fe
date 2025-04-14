@@ -78,4 +78,31 @@ export class ProjectStoreService {
       }),
     );
   }
+
+  update(id: string, project: Partial<Project>): Observable<Project> {
+    this.loading.set(true);
+    return this.projectService.update(id, project).pipe(
+      first(),
+      finalize(() => this.loading.set(false)),
+      tap((updatedProject) => {
+        const currentState = this.items();
+        const oldSlugIndex = currentState.slugs.findIndex(slug => currentState.entitiesMap[slug].id === id);
+        const oldSlug = currentState.slugs[oldSlugIndex];
+
+        const slugs = [...currentState.slugs];
+        slugs[oldSlugIndex] = updatedProject.slug;
+
+        const entitiesMap = {
+          ...currentState.entitiesMap,
+          [updatedProject.slug]: {
+            ...currentState.entitiesMap[oldSlug],
+            ...updatedProject,
+          },
+        };
+        delete entitiesMap[oldSlug];
+
+        this.items.set({ slugs, entitiesMap });
+      }),
+    );
+  }
 }
