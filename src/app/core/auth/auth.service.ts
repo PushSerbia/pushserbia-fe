@@ -29,6 +29,10 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
+  isAuthenticated(): boolean {
+    return this.afAuth.currentUser !== null;
+  }
+
   signInWithCustomToken(token: string) {
     return from(this.afAuth.signInWithCustomToken(token)).pipe(
       switchMap((userCredential) => {
