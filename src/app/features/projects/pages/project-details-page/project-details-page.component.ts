@@ -6,16 +6,19 @@ import { ProjectDetailsSidenavComponent } from './components/project-details-sid
 import { ProjectStoreService } from '../../../../core/project/project.store.service';
 import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-loader.component';
 import { VoteStoreService } from '../../../../core/vote/vote.store.service';
+import { AuthService } from '../../../../core/auth/auth.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-project-details-page',
-  imports: [BasicLayoutComponent, QuillViewHTMLComponent, ProjectDetailsSidenavComponent, PageLoaderComponent],
+  imports: [BasicLayoutComponent, QuillViewHTMLComponent, ProjectDetailsSidenavComponent, PageLoaderComponent, AsyncPipe],
   templateUrl: './project-details-page.component.html',
   styleUrl: './project-details-page.component.scss'
 })
 export class ProjectDetailsPageComponent implements OnInit {
   public readonly projectStore = inject(ProjectStoreService);
   public readonly voteStore = inject(VoteStoreService);
+  private readonly authService = inject(AuthService);
   private readonly injector = inject(Injector);
 
   readonly slug = input.required<string>();
@@ -25,6 +28,8 @@ export class ProjectDetailsPageComponent implements OnInit {
   
   $voteLoading = this.voteStore.$loading;
   $voted?: Signal<boolean>;
+
+  currentUser$ = this.authService.userData$;
 
   ngOnInit(): void {
     this.$project = this.projectStore.getBySlug(this.slug());

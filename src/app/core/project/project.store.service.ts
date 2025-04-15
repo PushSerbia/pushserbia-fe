@@ -64,4 +64,45 @@ export class ProjectStoreService {
     const updatedEntitiesMap = { ...currentState.entitiesMap, [slug]: project };
     this.items.set({ ...currentState, entitiesMap: updatedEntitiesMap });
   }
+
+  create(project: Partial<Project>): Observable<Project> {
+    this.loading.set(true);
+    return this.projectService.create(project).pipe(
+      first(),
+      finalize(() => this.loading.set(false)),
+      tap((newProject) => {
+        const currentState = this.items();
+        const entitiesMap = { ...currentState.entitiesMap, [newProject.slug]: newProject };
+        const slugs = [...currentState.slugs, newProject.slug];
+        this.items.set({ slugs, entitiesMap });
+      }),
+    );
+  }
+
+  update(id: string, project: Partial<Project>): Observable<Project> {
+    this.loading.set(true);
+    return this.projectService.update(id, project).pipe(
+      first(),
+      finalize(() => this.loading.set(false)),
+      tap((updatedProject) => {
+        const currentState = this.items();
+        const oldSlugIndex = currentState.slugs.findIndex(slug => currentState.entitiesMap[slug].id === id);
+        const oldSlug = currentState.slugs[oldSlugIndex];
+
+        const slugs = [...currentState.slugs];
+        slugs[oldSlugIndex] = updatedProject.slug;
+
+        const entitiesMap = {
+          ...currentState.entitiesMap,
+          [updatedProject.slug]: {
+            ...currentState.entitiesMap[oldSlug],
+            ...updatedProject,
+          },
+        };
+        delete entitiesMap[oldSlug];
+
+        this.items.set({ slugs, entitiesMap });
+      }),
+    );
+  }
 }

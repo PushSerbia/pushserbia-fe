@@ -23,7 +23,7 @@ function onViewTransitionCreated(info: ViewTransitionInfo) {
   const router = inject(Router);
   const toUrl = router.getCurrentNavigation()?.finalUrl?.toString() ?? '';
 
-  if (!toUrl.startsWith('/projects') || toUrl === '/projects/new') {
+  if (!toUrl.startsWith('/projects') || toUrl === '/projects/new' || toUrl.endsWith('/edit')) {
     info.transition.skipTransition();
     return;
   }

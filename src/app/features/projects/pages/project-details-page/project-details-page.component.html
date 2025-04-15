@@ -4,8 +4,11 @@
       <app-page-loader class="flex items-center justify-center text-center w-full h-96 align-middle" />
     } @else {
       @let projectDetails = $project!();
+      @let currentUser = currentUser$ | async;
 
-      <app-project-details-sidenav class="h-fit md:sticky md:top-4" />
+      @if (currentUser) {
+        <app-project-details-sidenav class="h-fit md:sticky md:top-4" [project]="projectDetails" [currentUser]="currentUser" />
+      }
 
       <div class="flex flex-col gap-16 items-center py-8 px-4 mx-auto xl:mx-0 w-[calc(100%-16px)] max-w-screen-xl overflow-hidden lg:px-6  bg-gray-100 dark:bg-gray-800 rounded-2xl">
         <div class="w-full flex justify-center xl:justify-start items-center flex-wrap xl:flex-nowrap">
