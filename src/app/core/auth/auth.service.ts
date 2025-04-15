@@ -21,7 +21,7 @@ export class AuthService {
       email: result.claims['email'],
       emailVerified: result.claims['email_verified'],
       role: result.claims['app_user_role'] as UserRole,
-      photoUrl: result.claims['picture'],
+      imageUrl: result.claims['picture'],
     }
     return userData;
   }));
@@ -50,7 +50,7 @@ export class AuthService {
     return this.userService.getMe();
   }
 
-  private createAccount(params: { fullName: string; email: string }) {
+  private createAccount(params: { fullName: string; email: string, imageUrl: string }) {
     return this.userService
       .createAccount( params)
       .pipe(
@@ -71,6 +71,7 @@ export class AuthService {
           return this.createAccount({
             fullName: token.claims.name,
             email: token.claims.email,
+            imageUrl: token.claims.picture,
           }).pipe(switchMap((user: any) => {
             return of(user);
           }));

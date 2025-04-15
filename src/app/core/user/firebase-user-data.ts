@@ -6,5 +6,5 @@ export interface FirebaseUserData {
   email: string;
   emailVerified: boolean;
   role: UserRole;
-  photoUrl?: string;
+  imageUrl?: string;
 }
