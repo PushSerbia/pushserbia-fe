@@ -1,4 +1,4 @@
-import { Component, effect, inject, Injector, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, Injector, input, OnInit, signal } from '@angular/core';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
 import { ProjectCardComponent } from '../../../../shared/ui/project-card/project-card.component';
 import { ProjectListFiltersComponent } from './components/project-list-filters/project-list-filters.component';
@@ -9,7 +9,7 @@ import { ProjectsFilter } from '../../../../core/project/projects-filter';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { Project } from '../../../../core/project/project';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-projects-list-page',
@@ -21,13 +21,21 @@ export class ProjectsListPageComponent implements OnInit {
   public readonly projectStore = inject(ProjectStoreService);
   private readonly authService = inject(AuthService);
   private readonly injector = inject(Injector);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   readonly $loading = this.projectStore.$loading;
   readonly $filter = signal<ProjectsFilter>({myProjectsOnly: false});
   readonly $projects = signal<Project[]>([]);
   readonly $currentUser = toSignal(this.authService.userData$);
 
+  myProjectsOnly = input<string>('myProjectsOnly');
+
   ngOnInit(): void {
+    if (this.myProjectsOnly()) {
+      this.$filter.set({myProjectsOnly: true});
+    }
+
     effect(() => {
       const projects = this.projectStore.getAll()();
       const currentUser = this.$currentUser();
@@ -47,5 +55,10 @@ export class ProjectsListPageComponent implements OnInit {
 
   onFilterUpdate(filter: ProjectsFilter): void {
     this.$filter.set(filter);
+
+    this.router.navigate(['.'], {
+      relativeTo: this.route,
+      queryParams: filter.myProjectsOnly ? {myProjectsOnly: true} : {},
+    });
   }
 }
