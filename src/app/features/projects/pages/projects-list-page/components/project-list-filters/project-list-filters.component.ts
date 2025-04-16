@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ProjectsFilter } from '../../../../../../core/project/projects-filter';
 
 @Component({
@@ -8,5 +8,6 @@ import { ProjectsFilter } from '../../../../../../core/project/projects-filter';
   styleUrl: './project-list-filters.component.css'
 })
 export class ProjectListFiltersComponent {
+  state = input<ProjectsFilter>();
   updated = output<ProjectsFilter>();
 }
