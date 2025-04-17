@@ -1,16 +1,25 @@
-import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, inject, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  inject,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import {
   provideRouter,
   Router,
   ViewTransitionInfo,
   withComponentInputBinding,
   withInMemoryScrolling,
-  withViewTransitions
+  withViewTransitions,
 } from '@angular/router';
 
 import { routes } from './app.routes';
 import * as Sentry from '@sentry/angular';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import { provideFirebase } from './core/firebase/firebase.provider';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { apiInterceptor } from './core/api/api.interceptor';
@@ -23,13 +32,17 @@ function onViewTransitionCreated(info: ViewTransitionInfo) {
   const router = inject(Router);
   const toUrl = router.getCurrentNavigation()?.finalUrl?.toString() ?? '';
 
-  if (!toUrl.startsWith('/projects') || toUrl === '/projects/new' || toUrl.endsWith('/edit')) {
+  if (
+    !toUrl.startsWith('/projects') ||
+    toUrl === '/projects/new' ||
+    toUrl.endsWith('/edit')
+  ) {
     info.transition.skipTransition();
     return;
   }
 
   const currentTransitionService = inject(TransitionService);
-  currentTransitionService.current.set(info)
+  currentTransitionService.current.set(info);
 
   info.transition.finished.finally(() => {
     currentTransitionService.current.set(null);
@@ -43,10 +56,16 @@ export const appConfig: ApplicationConfig = {
       routes,
       withComponentInputBinding(),
       withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
-      withViewTransitions({ skipInitialTransition: true, onViewTransitionCreated })
+      withViewTransitions({
+        skipInitialTransition: true,
+        onViewTransitionCreated,
+      }),
     ),
     provideApiEndpointUrl(environment.apiUrl),
-    provideHttpClient(withFetch(), withInterceptors([apiInterceptor, authInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([apiInterceptor, authInterceptor]),
+    ),
     {
       provide: ErrorHandler,
       useValue: Sentry.createErrorHandler(),
@@ -54,12 +73,6 @@ export const appConfig: ApplicationConfig = {
     {
       provide: Sentry.TraceService,
       deps: [Router],
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: () => () => {},
-      deps: [Sentry.TraceService],
-      multi: true,
     },
     // todo: https://docs.sentry.io/platforms/javascript/guides/angular/sourcemaps/
     provideFirebase(),
@@ -89,5 +102,5 @@ export const appConfig: ApplicationConfig = {
         ],
       },
     }),
-  ]
+  ],
 };

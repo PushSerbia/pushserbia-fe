@@ -1,19 +1,28 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
+import {
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-coming-soon',
-  imports: [
-    FormsModule,
-    ReactiveFormsModule
-  ],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './coming-soon.component.html',
-  styleUrl: './coming-soon.component.css'
+  styleUrl: './coming-soon.component.css',
 })
-export class ComingSoonComponent  implements OnInit, OnDestroy {
+export class ComingSoonComponent implements OnInit, OnDestroy {
   days = 0;
   hours = 0;
   minutes = 0;
@@ -22,13 +31,12 @@ export class ComingSoonComponent  implements OnInit, OnDestroy {
   savingInProgress = signal(false);
   emailSent = signal(false);
 
-  private countdownInterval: any;
+  private countdownInterval?: NodeJS.Timeout;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
     private httpClient: HttpClient,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.updateCountdown();
@@ -50,12 +58,20 @@ export class ComingSoonComponent  implements OnInit, OnDestroy {
 
     // todo: move it to the independent service
     // todo: make environment configurations
-    this.savingInProgress.set(true)
-    this.httpClient.post('https://api.pushserbia.com/v1/integrations/subscribe', { email: this.emailCtrl.value, tags: 'coming-soon' }).pipe(finalize(() => {
-      this.savingInProgress.set(false)
-    })).subscribe(() => {
-      this.emailSent.set(true);
-    });
+    this.savingInProgress.set(true);
+    this.httpClient
+      .post('https://api.pushserbia.com/v1/integrations/subscribe', {
+        email: this.emailCtrl.value,
+        tags: 'coming-soon',
+      })
+      .pipe(
+        finalize(() => {
+          this.savingInProgress.set(false);
+        }),
+      )
+      .subscribe(() => {
+        this.emailSent.set(true);
+      });
   }
 
   private startCountdown(): void {
@@ -67,7 +83,7 @@ export class ComingSoonComponent  implements OnInit, OnDestroy {
   }
 
   private updateCountdown(): void {
-    const targetDate = new Date("2025-03-31T23:59:59");
+    const targetDate = new Date('2025-03-31T23:59:59');
     const now = new Date();
     const timeDiff = targetDate.getTime() - now.getTime();
 

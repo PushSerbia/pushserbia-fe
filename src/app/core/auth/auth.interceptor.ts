@@ -1,4 +1,9 @@
-import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandlerFn,
+  HttpRequest,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
@@ -15,7 +20,7 @@ export const authInterceptor = (
   let newReq = req.clone();
 
   return from(angularFireAuth.idToken).pipe(
-    switchMap((token: any) => {
+    switchMap((token: string | null) => {
       if (!token) {
         return next(newReq);
       }
