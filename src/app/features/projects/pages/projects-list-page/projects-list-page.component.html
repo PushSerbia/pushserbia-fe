@@ -1,16 +1,36 @@
 <app-basic-layout>
   <div class="container mx-auto px-4 py-8 lg:py-16 flex flex-col gap-8">
 
-    <app-project-list-header />
+    <app-project-list-header/>
 
-    <app-project-list-filters />
+    <div class="flex items-center gap-6 flex-wrap">
+      <button
+        class="flex items-center justify-center px-2 py-2 text-sm font-medium text-center text-gray-900 bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700 cursor-pointer"
+        routerLink="/projects/new">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path clip-rule="evenodd"
+                d="M10 3a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H4a1 1 0 110-2h6V4a1 1 0 011-1z"
+                fill-rule="evenodd"></path>
+        </svg>
+
+        <span class="ml-2">Predloži projekat</span>
+      </button>
+
+      @if ($currentUser()) {
+        <app-project-list-filters [state]="$filter()" (updated)="onFilterUpdate($event)"/>
+      }
+    </div>
 
     <section class="flex gap-6 flex-wrap">
       @if ($loading()) {
-        <app-page-loader class="flex items-center justify-center text-center w-full h-96 align-middle" />
+        <app-page-loader class="flex items-center justify-center text-center w-full h-96 align-middle"/>
       } @else {
         @for (project of $projects(); track project.id) {
-          <app-project-card [project]="project" />
+          <app-project-card [project]="project"/>
+        } @empty {
+          <div class="w-full flex items-center justify-center text-center">
+            <p class="text-gray-500 dark:text-gray-400">Nema projekata koji odgovaraju tvojim filtrima.</p>
+          </div>
         }
       }
     </section>
