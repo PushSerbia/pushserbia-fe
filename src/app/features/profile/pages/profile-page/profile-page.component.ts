@@ -20,19 +20,25 @@ import { ProfileDetailsComponent } from './components/profile-details/profile-de
     PageLoaderComponent,
     ProfileStatsComponent,
     ProfileFeedbackComponent,
-    ProfileDetailsComponent
+    ProfileDetailsComponent,
   ],
   templateUrl: './profile-page.component.html',
-  styleUrl: './profile-page.component.scss'
+  styleUrl: './profile-page.component.scss',
 })
 export class ProfilePageComponent {
   private readonly authService = inject(AuthService);
 
   data$: Observable<User & FirebaseUserData> = combineLatest([
     this.authService.userData$.pipe(first()),
-    this.authService.getMe()
-  ]).pipe(map(([userData, me]) => ({
-    ...userData,
-    ...me
-  } as User & FirebaseUserData)));
+    this.authService.getMe(),
+  ]).pipe(
+    map(
+      ([userData, me]) =>
+        ({
+          ...me,
+          ...userData,
+          imageUrl: me.imageUrl || userData?.imageUrl,
+        }) as User & FirebaseUserData,
+    ),
+  );
 }
