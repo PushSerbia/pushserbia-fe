@@ -5,7 +5,8 @@ export interface User {
   firebaseUid: string;
   fullName: string;
   email: string;
+  imageUrl: string;
   role: UserRole;
-  isActive: boolean;
+  isBlocked: boolean;
   level: number;
 }
