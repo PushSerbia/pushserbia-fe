@@ -4,20 +4,19 @@ import { Vote } from './vote';
 import { EMPTY, finalize, first, Observable, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
-interface VoteState {
-  [projectId: string]: boolean;
-}
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VoteStoreService {
   private loading = signal<boolean>(false);
-  private itemMap = signal<VoteState | null>(null);
+  private itemMap = signal<Record<string, boolean> | null>(null);
 
   $loading = this.loading.asReadonly();
 
-  constructor(private voteService: VoteService, private authService: AuthService) {}
+  constructor(
+    private voteService: VoteService,
+    private authService: AuthService,
+  ) {}
 
   private fetchAll(): Observable<Vote[]> {
     if (!this.authService.isAuthenticated()) {
@@ -29,11 +28,14 @@ export class VoteStoreService {
     return this.voteService.getMyVotes().pipe(
       first(),
       finalize(() => this.loading.set(false)),
-      tap(votes => {
-        const state = votes.reduce((acc, vote) => {
-          acc[vote.projectId] = true;
-          return acc;
-        }, {} as VoteState);
+      tap((votes) => {
+        const state = votes.reduce(
+          (acc, vote) => {
+            acc[vote.projectId] = true;
+            return acc;
+          },
+          {} as Record<string, boolean>,
+        );
         this.itemMap.set(state);
       }),
     );

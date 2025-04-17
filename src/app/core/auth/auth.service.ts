@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { from, map, Observable, of, switchMap, } from 'rxjs';
+import { EMPTY, from, map, Observable, of, switchMap } from 'rxjs';
 import { FirebaseUserData } from '../user/firebase-user-data';
 import firebase from 'firebase/compat/app';
 import { User } from '../user/user';
@@ -11,24 +11,24 @@ import UserCredential = firebase.auth.UserCredential;
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private afAuth = inject(AngularFireAuth);
-  userData$ = this.afAuth.idTokenResult.pipe(map((result: firebase.auth.IdTokenResult | null) => {
-    if (!result) {
-      return undefined;
-    }
-    const userData: FirebaseUserData = {
-      id: result.claims['app_user_id'],
-      name: result.claims['name'],
-      email: result.claims['email'],
-      emailVerified: result.claims['email_verified'],
-      role: result.claims['app_user_role'] as UserRole,
-      imageUrl: result.claims['picture'],
-    }
-    return userData;
-  }));
+  userData$ = this.afAuth.idTokenResult.pipe(
+    map((result: firebase.auth.IdTokenResult | null) => {
+      if (!result) {
+        return undefined;
+      }
+      const userData: FirebaseUserData = {
+        id: result.claims['app_user_id'],
+        name: result.claims['name'],
+        email: result.claims['email'],
+        emailVerified: result.claims['email_verified'],
+        role: result.claims['app_user_role'] as UserRole,
+        imageUrl: result.claims['picture'],
+      };
+      return userData;
+    }),
+  );
 
-  constructor(
-    private userService: UserService,
-  ) {}
+  constructor(private userService: UserService) {}
 
   isAuthenticated(): boolean {
     return this.afAuth.currentUser !== null;
@@ -39,10 +39,10 @@ export class AuthService {
       switchMap((userCredential) => {
         return this.loadCurrentUser(userCredential);
       }),
-    )
+    );
   }
 
-  signOut(): Observable<any> {
+  signOut(): Observable<void> {
     return from(this.afAuth.signOut());
   }
 
@@ -50,14 +50,16 @@ export class AuthService {
     return this.userService.getMe();
   }
 
-  private createAccount(params: { fullName: string; email: string, imageUrl: string }) {
-    return this.userService
-      .createAccount( params)
-      .pipe(
-        switchMap(account => {
-          return this.fetchNewToken().pipe(map(() => account));
-        }),
-      );
+  private createAccount(params: {
+    fullName: string;
+    email: string;
+    imageUrl: string;
+  }) {
+    return this.userService.createAccount(params).pipe(
+      switchMap((account) => {
+        return this.fetchNewToken().pipe(map(() => account));
+      }),
+    );
   }
 
   private loadCurrentUser(userCredential: UserCredential): Observable<User> {
@@ -66,15 +68,17 @@ export class AuthService {
     }
 
     return from(userCredential.user.getIdTokenResult()).pipe(
-      switchMap((token: any) => {
-        if (!token.claims.app_user_id) {
+      switchMap((token: firebase.auth.IdTokenResult) => {
+        if (!token.claims['app_user_id']) {
           return this.createAccount({
-            fullName: token.claims.name,
-            email: token.claims.email,
-            imageUrl: token.claims.picture,
-          }).pipe(switchMap((user: any) => {
-            return of(user);
-          }));
+            fullName: token.claims['name'],
+            email: token.claims['email'],
+            imageUrl: token.claims['picture'],
+          }).pipe(
+            switchMap((user: User) => {
+              return of(user);
+            }),
+          );
         }
 
         return this.getMe();
@@ -84,8 +88,8 @@ export class AuthService {
 
   private fetchNewToken() {
     return from(this.afAuth.currentUser).pipe(
-      switchMap((user: any) => {
-        return from(user.getIdToken(true));
+      switchMap((user: firebase.User | null) => {
+        return user ? from(user.getIdToken(true)) : EMPTY;
       }),
     );
   }
