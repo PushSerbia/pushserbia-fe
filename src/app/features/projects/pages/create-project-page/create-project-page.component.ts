@@ -1,8 +1,21 @@
-import { Component, DestroyRef, effect, inject, Injector, input, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  Injector,
+  input,
+  OnInit,
+} from '@angular/core';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill';
 import slugify from 'slugify';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -13,13 +26,20 @@ import { Project } from '../../../../core/project/project';
 @Component({
   selector: 'app-create-project-page',
   standalone: true,
-  imports: [CommonModule, BasicLayoutComponent, ReactiveFormsModule, QuillEditorComponent, PageLoaderComponent],
+  imports: [
+    CommonModule,
+    BasicLayoutComponent,
+    ReactiveFormsModule,
+    QuillEditorComponent,
+    PageLoaderComponent,
+    RouterLink,
+  ],
   templateUrl: './create-project-page.component.html',
   styleUrl: './create-project-page.component.scss',
 })
 export class CreateProjectPageComponent implements OnInit {
   private projectStoreService = inject(ProjectStoreService);
-  private project?: Project;
+  public project?: Project;
 
   form!: FormGroup;
 
@@ -30,7 +50,7 @@ export class CreateProjectPageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private destroyRef: DestroyRef,
-    private injector: Injector
+    private injector: Injector,
   ) {}
 
   private initForm(): void {
@@ -40,27 +60,34 @@ export class CreateProjectPageComponent implements OnInit {
       shortDescription: ['', [Validators.required, Validators.maxLength(250)]],
       description: ['', [Validators.required, Validators.minLength(50)]],
     });
-    this.form.controls['name'].valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((name) => {
-      this.form.controls['slug'].setValue(slugify(name, {lower: true, strict: true}));
-    });
+    this.form.controls['name'].valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((name) => {
+        this.form.controls['slug'].setValue(
+          slugify(name, { lower: true, strict: true }),
+        );
+      });
   }
 
   ngOnInit(): void {
-    effect(() => {
-      const slug = this.slug();
-      if (slug) {
-        this.project = this.projectStoreService.getBySlug(slug)();
-        if (this.project) {
-          this.initForm();
-          this.form.patchValue({
-            name: this.project.name,
-            slug: this.project.slug,
-            shortDescription: this.project.shortDescription,
-            description: this.project.description,
-          });
+    effect(
+      () => {
+        const slug = this.slug();
+        if (slug) {
+          this.project = this.projectStoreService.getBySlug(slug)();
+          if (this.project) {
+            this.initForm();
+            this.form.patchValue({
+              name: this.project.name,
+              slug: this.project.slug,
+              shortDescription: this.project.shortDescription,
+              description: this.project.description,
+            });
+          }
         }
-      }
-    }, { injector: this.injector });
+      },
+      { injector: this.injector },
+    );
     if (!this.slug()) {
       this.initForm();
     }
