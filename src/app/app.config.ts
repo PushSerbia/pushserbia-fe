@@ -27,6 +27,7 @@ import { provideApiEndpointUrl } from './core/providers/api-endpoint-url.provide
 import { environment } from '../environments/environment';
 import { provideQuillConfig } from 'ngx-quill';
 import { TransitionService } from './core/transition/transition.service';
+import { provideClientHydration, withEventReplay, withHttpTransferCacheOptions, withI18nSupport } from '@angular/platform-browser';
 
 function onViewTransitionCreated(info: ViewTransitionInfo) {
   const router = inject(Router);
@@ -52,6 +53,11 @@ function onViewTransitionCreated(info: ViewTransitionInfo) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideClientHydration(
+      withHttpTransferCacheOptions({ includePostRequests: true, includeRequestsWithAuthHeaders: true }),
+      withI18nSupport(),
+      withEventReplay()
+    ),
     provideRouter(
       routes,
       withComponentInputBinding(),
