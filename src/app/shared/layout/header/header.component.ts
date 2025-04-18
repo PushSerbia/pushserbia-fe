@@ -6,7 +6,8 @@ import { RouterLink } from '@angular/router';
   selector: 'app-header',
   imports: [UserWidgetComponent, RouterLink],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
+  host: {ngSkipHydration: 'true'}
 })
 export class HeaderComponent {
 }
