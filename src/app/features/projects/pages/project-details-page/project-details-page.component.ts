@@ -1,4 +1,4 @@
-import { Component, effect, inject, Injector, input, OnInit, Signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, Injector, input, OnInit, Signal } from '@angular/core';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
 import { QuillViewHTMLComponent } from 'ngx-quill';
 import { Project } from '../../../../core/project/project';
@@ -8,6 +8,7 @@ import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-load
 import { VoteStoreService } from '../../../../core/vote/vote.store.service';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { AsyncPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-project-details-page',
@@ -20,12 +21,13 @@ export class ProjectDetailsPageComponent implements OnInit {
   public readonly voteStore = inject(VoteStoreService);
   private readonly authService = inject(AuthService);
   private readonly injector = inject(Injector);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly slug = input.required<string>();
 
   $projectLoading = this.projectStore.$loading;
   $project?: Signal<Project>;
-  
+
   $voteLoading = this.voteStore.$loading;
   $voted?: Signal<boolean>;
 
@@ -44,6 +46,7 @@ export class ProjectDetailsPageComponent implements OnInit {
 
   voteForProject(project: Project): void {
     this.voteStore.create(project.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(vote => {
         this.projectStore.updateStateBySlug(project.slug, {
           ...project,
