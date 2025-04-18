@@ -104,5 +104,4 @@ This project is licensed under the [MIT License](LICENSE) - see the LICENSE file
 ## 🙏 Acknowledgements
 
 - All the contributors who have helped shape Push Serbia
-- Our partners and backers, including Greenpeace, United Nations, WWF, and Oxfam
 - The open-source community for their invaluable tools and libraries
