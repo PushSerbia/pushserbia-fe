@@ -1,7 +1,7 @@
 import { Component, DestroyRef, effect, inject, Injector, input, OnInit } from '@angular/core';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill';
 import slugify from 'slugify';
@@ -13,7 +13,7 @@ import { Project } from '../../../../core/project/project';
 @Component({
   selector: 'app-create-project-page',
   standalone: true,
-  imports: [CommonModule, BasicLayoutComponent, ReactiveFormsModule, QuillEditorComponent, PageLoaderComponent],
+  imports: [BasicLayoutComponent, ReactiveFormsModule, QuillEditorComponent, PageLoaderComponent],
   templateUrl: './create-project-page.component.html',
   styleUrl: './create-project-page.component.scss',
 })
