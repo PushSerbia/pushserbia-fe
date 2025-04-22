@@ -4,7 +4,6 @@ import { Project } from './project';
 import { finalize, first, iif, Observable, of, tap } from 'rxjs';
 import { isPlatformServer } from '@angular/common';
 
-const projectsStateKey = makeStateKey<ProjectState>('projects-state');
 const projectsKey = makeStateKey<Project[]>('projects');
 
 interface ProjectState {
@@ -29,13 +28,6 @@ export class ProjectStoreService {
   $loading = this.loading.asReadonly();
 
   constructor(private projectService: ProjectService) {
-    if (isPlatformServer(this.platformId)) {
-      const projectStateTransferState = this.transferState.get(projectsStateKey, {
-        slugs: [],
-        entitiesMap: {}
-      });
-      this.items.set(projectStateTransferState);
-    }
   }
 
   private fetchAll(): Observable<Project[]> {
@@ -57,10 +49,7 @@ export class ProjectStoreService {
         }, { slugs: [], entitiesMap: {} } as ProjectState);
         this.items.set(state);
 
-
-
         if (isPlatformServer(this.platformId) && state) {
-          this.transferState.set(projectsStateKey, state);
           this.transferState.set(projectsKey, projects);
         }
       }),
