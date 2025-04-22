@@ -1,7 +1,11 @@
-import { computed, Injectable, Signal, signal } from '@angular/core';
+import { computed, inject, Injectable, makeStateKey, PLATFORM_ID, Signal, signal, TransferState } from '@angular/core';
 import { ProjectService } from './project.service';
 import { Project } from './project';
-import { finalize, first, Observable, tap } from 'rxjs';
+import { finalize, first, iif, Observable, of, tap } from 'rxjs';
+import { isPlatformServer } from '@angular/common';
+
+const projectsStateKey = makeStateKey<ProjectState>('projects-state');
+const projectsKey = makeStateKey<Project[]>('projects');
 
 interface ProjectState {
   slugs: string[];
@@ -12,6 +16,10 @@ interface ProjectState {
   providedIn: 'root'
 })
 export class ProjectStoreService {
+
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly transferState = inject(TransferState);
+
   private loading = signal<boolean>(false);
   private items = signal<ProjectState>({
     slugs: [],
@@ -20,12 +28,25 @@ export class ProjectStoreService {
 
   $loading = this.loading.asReadonly();
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService) {
+    if (isPlatformServer(this.platformId)) {
+      const projectStateTransferState = this.transferState.get(projectsStateKey, {
+        slugs: [],
+        entitiesMap: {}
+      });
+      this.items.set(projectStateTransferState);
+    }
+  }
 
   private fetchAll(): Observable<Project[]> {
     this.loading.set(true);
+    const transferProjectsValue = this.transferState.get(projectsKey, null);
 
-    return this.projectService.getAll().pipe(
+    return iif(() => transferProjectsValue !== null,
+      of(transferProjectsValue as Project[]),
+      this.projectService.getAll()
+    )
+    .pipe(
       first(),
       finalize(() => this.loading.set(false)),
       tap(projects => {
@@ -35,6 +56,13 @@ export class ProjectStoreService {
           return acc;
         }, { slugs: [], entitiesMap: {} } as ProjectState);
         this.items.set(state);
+
+
+
+        if (isPlatformServer(this.platformId) && state) {
+          this.transferState.set(projectsStateKey, state);
+          this.transferState.set(projectsKey, projects);
+        }
       }),
     );
   }
