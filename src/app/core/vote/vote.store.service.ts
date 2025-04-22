@@ -1,7 +1,7 @@
 import { computed, Injectable, Signal, signal } from '@angular/core';
 import { VoteService } from './vote.service';
 import { Vote } from './vote';
-import { EMPTY, finalize, first, Observable, tap } from 'rxjs';
+import { catchError, EMPTY, finalize, first, Observable, of, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -27,7 +27,6 @@ export class VoteStoreService {
 
     return this.voteService.getMyVotes().pipe(
       first(),
-      finalize(() => this.loading.set(false)),
       tap((votes) => {
         const state = votes.reduce(
           (acc, vote) => {
@@ -38,6 +37,11 @@ export class VoteStoreService {
         );
         this.itemMap.set(state);
       }),
+      catchError(() => {
+        this.itemMap.set({});
+        return of([]);
+      }),
+      finalize(() => this.loading.set(false)),
     );
   }
 
