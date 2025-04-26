@@ -55,7 +55,7 @@
             }
           </ul>
           <a
-            routerLink="/placanje"
+            routerLink="/payments/placanje"
             [queryParams]="{isOneTime: donation.isOneTime, amount: donation.price, title: donation.title}"
             class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900"
             >{{ donation.isOneTime ? 'Doniraj' : 'Pretplati se' }}</a
@@ -69,7 +69,7 @@
         Mesečno objavljujemo izveštaje o korišćenju sredstava.
       </p>
       <a
-        routerLink="/finansiranje"
+        routerLink="/payments/finansiranje"
         class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
       >
         Saznaj više o našem finansiranju
