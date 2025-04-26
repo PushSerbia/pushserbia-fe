@@ -14,7 +14,7 @@
     </p>
 
     <div class="flex flex-wrap gap-10 py-16">
-      @for (project of projects; track project.id) {
+      @for (project of allProjects() | slice: 0 : 2; track project.id) {
         <app-project-card [project]="project" />
       }
 
