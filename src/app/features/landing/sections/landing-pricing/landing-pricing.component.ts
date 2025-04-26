@@ -1,52 +1,59 @@
 import { Component } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-landing-pricing',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, RouterLink],
   templateUrl: './landing-pricing.component.html',
   styleUrl: './landing-pricing.component.css',
 })
 export class LandingPricingComponent {
   donationOptions = [
     {
-      title: 'Može kafa',
-      price: 4,
+      title: 'Prijatelj zajednice',
+      price: 5,
+      isOneTime: false,
       description:
-        'Mala donacija, veliki doprinos! Uz tvoju podršku, infrastruktura naše zajednice ostaje stabilna i dostupna.',
+        'Svaki doprinos je važan! Tvoja podrška pomaže održavanju osnovne infrastrukture i omogućava pristup resursima svima.',
       benefits: [
-        'Pristup ekskluzivnom Discord kanalu za donatore',
+        'Pristup zajedničkom Discord kanalu',
         'Zahvalnica na našem sajtu',
-        'Glasanje za manje tehničke odluke zajednice',
-        'Mesečni izveštaj o napretku projekata',
-        'Dobro osećanje jer si pomogao/la open-source inicijativi',
+        'Transparentni izveštaji o korišćenju sredstava',
+        'Učešće u mesečnim anketama zajednice',
+        'Doprinos održivosti open-source ekosistema',
       ],
+      impact: 'Pokriva mesečne troškove hostinga i osnovnih servisa',
     },
     {
-      title: 'Timski igrač',
-      price: 49,
+      title: 'Aktivni član',
+      price: 15,
+      isOneTime: false,
       description:
-        'Kao pravi timski igrač, tvoja podrška omogućava ne samo održavanje, već i rast naših projekata!',
+        'Redovna podrška koja omogućava dugoročno planiranje i kontinuirani razvoj projekata od društvenog značaja.',
       benefits: [
-        'Sve iz “Može kafa” paketa',
-        'Ime u zahvalnicama open-source projekata',
-        'Prioritetna registracija za naše meetup-ove',
-        'Ekskluzivni uvid u nove projekte i inicijative',
-        'Poziv na kvartalni community call sa osnivačima',
+        'Sve pogodnosti "Prijatelja zajednice"',
+        'Učešće u odlučivanju o prioritetima razvoja',
+        'Pristup zajedničkim resursima za učenje',
+        'Prioritetni glas prilikom glasanja (broji se duplo)',
+        'Povezivanje sa drugim članovima zajednice',
       ],
+      impact: 'Podržava organizaciju događaja i razvoj novih inicijativa',
     },
     {
-      title: 'Vizionar',
-      price: 499,
+      title: 'Jednokratna podrška',
+      price: 97,
+      isOneTime: true,
       description:
-        'Tvoja vizija gura zajednicu napred! Uz ovu donaciju, postaješ ključni pokretač promena i inovacija.',
+        'Jednokratna donacija koja pomaže razvoju konkretnih projekata i inicijativa bez dugoročne obaveze.',
       benefits: [
-        'Sve iz “Timski igrač” paketa',
-        'Ime istaknuto kao glavni donator na sajtu',
-        'Prilika da predložiš i vodiš inicijative unutar zajednice',
-        'Pozivnica za ekskluzivne događaje i radionice',
-        'Pristup internim roadmap diskusijama i strategiji razvoja',
+        'Sve pogodnosti "Prijatelja zajednice"',
+        'Mogućnost usmeravanja donacije ka određenom projektu',
+        'Priznanje u dokumentaciji projekta',
+        'Pristup edukativnim materijalima zajednice',
+        'Poziv na online događaje i radionice',
       ],
+      impact: 'Omogućava razvoj novih funkcionalnosti i edukativnih materijala',
     },
   ];
 }
