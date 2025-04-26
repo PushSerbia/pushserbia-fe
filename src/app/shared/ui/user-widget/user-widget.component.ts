@@ -5,12 +5,9 @@ import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-user-widget',
-  imports: [
-    AsyncPipe,
-    RouterLink
-  ],
+  imports: [AsyncPipe, RouterLink],
   templateUrl: './user-widget.component.html',
-  styleUrl: './user-widget.component.css'
+  styleUrl: './user-widget.component.css',
 })
 export class UserWidgetComponent {
   private authService = inject(AuthService);

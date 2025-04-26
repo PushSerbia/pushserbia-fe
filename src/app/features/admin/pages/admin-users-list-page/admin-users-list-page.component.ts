@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-admin-users-list-page',
   imports: [],
   templateUrl: './admin-users-list-page.component.html',
-  styleUrl: './admin-users-list-page.component.scss'
+  styleUrl: './admin-users-list-page.component.scss',
 })
-export class AdminUsersListPageComponent {
-
-}
+export class AdminUsersListPageComponent {}

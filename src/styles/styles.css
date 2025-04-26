@@ -1,31 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import 'quill/dist/quill.snow.css';
+@import "quill/dist/quill.snow.css";
 @import "tailwindcss";
 @import "./_transitions.css";
 
 @theme {
-    --color-primary-50: #F0FDFF;
-    --color-primary-100: #E0FEED;
-    --color-primary-200: #BCE7C9;
-    --color-primary-300: #86D3BF;
-    --color-primary-400: #56BB7A;
-    --color-primary-500: #22C55E;
-    --color-primary-600: #16A34A;
-    --color-primary-700: #15803D;
-    --color-primary-800: #145E33;
-    --color-primary-900: #124527;
-    --color-primary-950: #052E16;
+  --color-primary-50: #f0fdff;
+  --color-primary-100: #e0feed;
+  --color-primary-200: #bce7c9;
+  --color-primary-300: #86d3bf;
+  --color-primary-400: #56bb7a;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #16a34a;
+  --color-primary-700: #15803d;
+  --color-primary-800: #145e33;
+  --color-primary-900: #124527;
+  --color-primary-950: #052e16;
 
-    --color-secondary-50: #F9FAFB;
-    --color-secondary-100: #F3F4F6;
-    --color-secondary-200: #E5E7EB;
-    --color-secondary-300: #D1D5DB;
-    --color-secondary-400: #A0AEC0;
-    --color-secondary-500: #6B7280;
-    --color-secondary-600: #4B5563;
-    --color-secondary-700: #374151;
-    --color-secondary-800: #293240;
-    --color-secondary-900: #1D2026;
-    --color-secondary-950: #030712;
+  --color-secondary-50: #f9fafb;
+  --color-secondary-100: #f3f4f6;
+  --color-secondary-200: #e5e7eb;
+  --color-secondary-300: #d1d5db;
+  --color-secondary-400: #a0aec0;
+  --color-secondary-500: #6b7280;
+  --color-secondary-600: #4b5563;
+  --color-secondary-700: #374151;
+  --color-secondary-800: #293240;
+  --color-secondary-900: #1d2026;
+  --color-secondary-950: #030712;
 }

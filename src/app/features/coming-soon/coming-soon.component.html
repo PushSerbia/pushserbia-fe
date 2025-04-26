@@ -1,4 +1,6 @@
-<div class="bg-gradient-to-br from-gray-900 via-green-900 to-gray-800 text-white min-h-screen flex flex-col">
+<div
+  class="bg-gradient-to-br from-gray-900 via-green-900 to-gray-800 text-white min-h-screen flex flex-col"
+>
   <header class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center">
       <div class="flex items-center">
@@ -10,20 +12,38 @@
 
   <main class="flex-grow flex items-center relative overflow-hidden">
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="absolute top-20 left-10 w-20 h-20 rounded-full bg-gray-500 opacity-20 floating"></div>
-      <div class="absolute top-40 right-20 w-32 h-32 rounded-full bg-green-500 opacity-20 floating-slow"></div>
-      <div class="absolute bottom-20 left-1/4 w-24 h-24 rounded-full bg-pink-500 opacity-20 floating-slower"></div>
-      <div class="absolute top-1/3 right-1/3 w-16 h-16 rounded-full bg-gray-300 opacity-20 floating"></div>
+      <div
+        class="absolute top-20 left-10 w-20 h-20 rounded-full bg-gray-500 opacity-20 floating"
+      ></div>
+      <div
+        class="absolute top-40 right-20 w-32 h-32 rounded-full bg-green-500 opacity-20 floating-slow"
+      ></div>
+      <div
+        class="absolute bottom-20 left-1/4 w-24 h-24 rounded-full bg-pink-500 opacity-20 floating-slower"
+      ></div>
+      <div
+        class="absolute top-1/3 right-1/3 w-16 h-16 rounded-full bg-gray-300 opacity-20 floating"
+      ></div>
     </div>
 
     <div class="container mx-auto px-4 py-12 relative z-10">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="text-center md:text-left">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            Something <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-green-400">Amazing</span> is Coming Soon
+          <h1
+            class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+          >
+            Something
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-green-400"
+              >Amazing</span
+            >
+            is Coming Soon
           </h1>
-          <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-lg mx-auto md:mx-0">
-            We're working hard to bring you our new platform. Sign up to be the first to know when we launch and get exclusive early access.
+          <p
+            class="text-lg md:text-xl text-gray-200 mb-8 max-w-lg mx-auto md:mx-0"
+          >
+            We're working hard to bring you our new platform. Sign up to be the
+            first to know when we launch and get exclusive early access.
           </p>
 
           <div class="grid grid-cols-4 gap-4 max-w-md mx-auto md:mx-0 mb-10">
@@ -45,21 +65,45 @@
             </div>
           </div>
 
-
           @if (emailSent()) {
-            <div class="bg-white/10 backdrop-blur-sm rounded-lg text-white w-fit px-14 py-6 flex items-center justify-center">
+            <div
+              class="bg-white/10 backdrop-blur-sm rounded-lg text-white w-fit px-14 py-6 flex items-center justify-center"
+            >
               Email sent successfully, we'll keep you updated!
             </div>
           } @else {
             <div class="max-w-md mx-auto md:mx-0">
-              <form class="flex flex-col sm:flex-row gap-3 relative" (ngSubmit)="onNotifyMeSubmitted()">
-                <input type="email" placeholder="Enter your email" class="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white/10 backdrop-blur-sm border border-white/20" [formControl]="emailCtrl" />
-                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-gray-500 to-green-500 hover:from-gray-600 hover:to-green-600 rounded-lg font-medium transition-all duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-4">
+              <form
+                class="flex flex-col sm:flex-row gap-3 relative"
+                (ngSubmit)="onNotifyMeSubmitted()"
+              >
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  class="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white/10 backdrop-blur-sm border border-white/20"
+                  [formControl]="emailCtrl"
+                />
+                <button
+                  type="submit"
+                  class="px-6 py-3 bg-gradient-to-r from-gray-500 to-green-500 hover:from-gray-600 hover:to-green-600 rounded-lg font-medium transition-all duration-200 whitespace-nowrap cursor-pointer flex items-center justify-center gap-4"
+                >
                   @if (savingInProgress()) {
                     <div role="status">
-                      <svg aria-hidden="true" class="w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                      <svg
+                        aria-hidden="true"
+                        class="w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-white"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
                       </svg>
                       <span class="sr-only">Loading...</span>
                     </div>
@@ -77,8 +121,14 @@
 
         <div class="hidden md:block">
           <div class="relative">
-            <div class="absolute inset-0 bg-gradient-to-r from-gray-500 to-green-500 rounded-full opacity-20 blur-3xl"></div>
-            <img src="/network.webp" alt="Illustration" class="relative z-10 mx-auto floating-slow">
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-gray-500 to-green-500 rounded-full opacity-20 blur-3xl"
+            ></div>
+            <img
+              src="/network.webp"
+              alt="Illustration"
+              class="relative z-10 mx-auto floating-slow"
+            />
           </div>
         </div>
       </div>

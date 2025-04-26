@@ -3,8 +3,8 @@ import { ApiService } from '../api/api.service';
 import { Project } from './project';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ProjectService extends ApiService<Project>{
+export class ProjectService extends ApiService<Project> {
   readonly endpoint = 'projects';
 }

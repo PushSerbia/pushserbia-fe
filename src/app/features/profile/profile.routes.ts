@@ -5,7 +5,7 @@ export const profileRoutes: Route[] = [
     path: '',
     loadComponent: () =>
       import('./pages/profile-page/profile-page.component').then(
-        (m) => m.ProfilePageComponent
+        (m) => m.ProfilePageComponent,
       ),
   },
   {

@@ -4,11 +4,9 @@ import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profile-sidenav',
-  imports: [
-    RouterLink
-  ],
+  imports: [RouterLink],
   templateUrl: './profile-sidenav.component.html',
-  styleUrl: './profile-sidenav.component.css'
+  styleUrl: './profile-sidenav.component.css',
 })
 export class ProfileSidenavComponent {
   private authService = inject(AuthService);

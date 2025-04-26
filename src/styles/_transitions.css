@@ -1,52 +1,59 @@
-/*https://stackblitz.com/edit/stackblitz-starters-dh8npr?file=src%2Fmain.ts*/
 .main-header {
-    view-transition-name: main-header;
-    contain: layout;
+  view-transition-name: main-header;
+  contain: layout;
 }
 
 .main-header-text {
-    view-transition-name: main-header-text;
-    contain: layout;
-    width: fit-content;
+  view-transition-name: main-header-text;
+  contain: layout;
+  width: fit-content;
 }
 
 .project-img img {
-    view-transition-name: project-img;
-    contain: layout;
+  view-transition-name: project-img;
+  contain: layout;
 }
 
 .gallery img {
-    contain: layout;
+  contain: layout;
 }
 
 @keyframes fade-in {
-    from { opacity: 0; }
+  from {
+    opacity: 0;
+  }
 }
 
 @keyframes fade-out {
-    to { opacity: 0; }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes slide-from-right {
-    from { transform: translateX(30px); }
+  from {
+    transform: translateX(30px);
+  }
 }
 
 @keyframes slide-to-left {
-    to { transform: translateX(-30px); }
+  to {
+    transform: translateX(-30px);
+  }
 }
 
 ::view-transition-old(project-img),
 ::view-transition-new(project-img) {
-    animation: none;
-    mix-blend-mode: normal;
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 ::view-transition-image-pair(project-img) {
-    isolation: none;
+  isolation: none;
 }
 
 .project-img img {
-    display: block;
-    width: 100%;
-    max-width: 450px;
+  display: block;
+  width: 100%;
+  max-width: 450px;
 }

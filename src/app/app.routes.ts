@@ -5,12 +5,13 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./features/landing/landing.component').then(
-        (c) => c.LandingComponent
+        (c) => c.LandingComponent,
       ),
   },
   {
     path: 'auth',
-    loadChildren: () => import('./features/auth/auth.routes').then((m) => m.authRoutes),
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then((m) => m.authRoutes),
   },
   {
     path: 'admin',
@@ -25,6 +26,8 @@ export const routes: Routes = [
   {
     path: 'projects',
     loadChildren: () =>
-      import('./features/projects/projects.routes').then((m) => m.projectsRoutes),
+      import('./features/projects/projects.routes').then(
+        (m) => m.projectsRoutes,
+      ),
   },
 ];

@@ -5,11 +5,9 @@ import { TransitionService } from '../../../core/transition/transition.service';
 
 @Component({
   selector: 'app-project-card',
-  imports: [
-    RouterLink
-  ],
+  imports: [RouterLink],
   templateUrl: './project-card.component.html',
-  styleUrl: './project-card.component.css'
+  styleUrl: './project-card.component.css',
 })
 export class ProjectCardComponent {
   project = input.required<Project>();
