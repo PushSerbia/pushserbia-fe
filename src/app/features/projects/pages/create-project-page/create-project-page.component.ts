@@ -22,6 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectStoreService } from '../../../../core/project/project.store.service';
 import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-loader.component';
 import { Project } from '../../../../core/project/project';
+import { ProjectStatus } from '../../../../core/project/project-status';
 
 @Component({
   selector: 'app-create-project-page',
@@ -39,7 +40,8 @@ import { Project } from '../../../../core/project/project';
 })
 export class CreateProjectPageComponent implements OnInit {
   private projectStoreService = inject(ProjectStoreService);
-  public project?: Project;
+  project?: Project;
+  projectStatus = ProjectStatus;
 
   form!: FormGroup;
 
@@ -54,13 +56,17 @@ export class CreateProjectPageComponent implements OnInit {
   ) {}
 
   private initForm(): void {
-    this.form = this.fb.group({
+    const formGroup: Record<string, unknown[]> = {
       name: ['', [Validators.required, Validators.minLength(3)]],
       slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9-]+$/)]],
       shortDescription: ['', [Validators.required, Validators.maxLength(250)]],
       description: ['', [Validators.required, Validators.minLength(50)]],
       github: [''],
-    });
+    };
+    if (this.project) {
+      formGroup['status'] = [this.project.status];
+    }
+    this.form = this.fb.group(formGroup);
     this.form.controls['name'].valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((name) => {
@@ -84,6 +90,7 @@ export class CreateProjectPageComponent implements OnInit {
               shortDescription: this.project.shortDescription,
               description: this.project.description,
               github: this.project.github || '',
+              status: this.project.status || '',
             });
           }
         }
