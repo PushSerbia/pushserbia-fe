@@ -8,10 +8,6 @@
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.ql-editor {
-    padding: 0;
-}
-
 .dark .quill-editor-custom {
     background-color: #364153;
     border-color: #4b5563;
@@ -76,11 +72,24 @@
 
 .quill-editor-custom .ql-editor {
     min-height: 200px;
-    padding: 0;
+    padding: 16px;
     font-size: 1rem;
     line-height: 1.75;
     color: inherit;
     background-color: transparent;
+}
+
+.quill-editor-custom .ql-snow .ql-editor {
+    min-height: 200px;
+    padding: 16px;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: inherit;
+    background-color: transparent;
+}
+
+.ql-snow.ngx-quill-view-html .ql-editor {
+    padding: 0;
 }
 
 .quill-editor-custom .ql-editor.ql-blank::before {
