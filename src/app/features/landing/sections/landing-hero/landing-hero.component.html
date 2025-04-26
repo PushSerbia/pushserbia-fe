@@ -18,12 +18,16 @@
 
         <div class="flex flex-col gap-4 mt-8 sm:flex-row">
           <a
-            href="#"
-            title=""
+            routerLink="/placanje"
+            [queryParams]="{
+              isOneTime: true,
+              amount: 97,
+              title: 'Jednokratna podrška',
+            }"
             class="sm:w-[182px] px-5 py-3 w-full text-base font-medium text-center text-white bg-primary-700 rounded-lg shrink-0 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             role="button"
           >
-            Doniraj
+            Podrži naš rad
           </a>
 
           <a
@@ -50,31 +54,43 @@
         <div
           class="mt-4 sm:border-t sm:border-gray-100 sm:mt-8 sm:pt-8 dark:border-gray-700"
         >
-          <p class="hidden text-base font-medium text-gray-500 sm:block">
-            Partners and backers:
-          </p>
-
-          <div class="flex items-center mt-3 max-w-md">
-            <img
-              class="w-auto h-8 md:h-12 mr-4"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/customers/greenpeace.svg"
-              alt=""
-            />
-            <img
-              class="w-auto h-8 md:h-12 mr-8"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/customers/united-nations.svg"
-              alt=""
-            />
-            <img
-              class="w-auto h-8 md:h-12 mr-8 dark:invert"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/customers/wwf.svg"
-              alt=""
-            />
-            <img
-              class="w-auto h-8 md:h-12"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/customers/oxfam.svg"
-              alt=""
-            />
+          <div class="flex flex-col mt-3 max-w-md">
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-4">
+              Pridruži se rastućoj zajednici entuzijasta koji svojim znanjem i
+              vremenom doprinose boljem društvu.
+            </p>
+            <div class="flex items-center gap-2">
+              <div class="flex -space-x-4">
+                <div
+                  class="w-12 h-12 md:w-12 md:h-12 border-2 border-white rounded-full dark:border-gray-800 bg-primary-100 flex items-center justify-center"
+                >
+                  <span class="text-xs md:text-sm font-bold text-primary-800">
+                    MK
+                  </span>
+                </div>
+                <div
+                  class="w-12 h-12 md:w-12 md:h-12 border-2 border-white rounded-full dark:border-gray-800 bg-primary-100 flex items-center justify-center"
+                >
+                  <span class="text-xs md:text-sm font-bold text-primary-800">
+                    SV
+                  </span>
+                </div>
+                <div
+                  class="w-12 h-12 md:w-12 md:h-12 border-2 border-white rounded-full dark:border-gray-800 bg-primary-100 flex items-center justify-center"
+                >
+                  <span class="text-xs md:text-sm font-bold text-primary-800">
+                    MM
+                  </span>
+                </div>
+                <div
+                  class="w-12 h-12 md:w-12 md:h-12 border-2 border-white rounded-full dark:border-gray-800 bg-primary-100 flex items-center justify-center"
+                >
+                  <span class="text-xs md:text-sm font-bold text-primary-800">
+                    DP
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
