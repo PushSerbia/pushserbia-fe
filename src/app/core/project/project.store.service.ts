@@ -1,26 +1,57 @@
-import { computed, Injectable, Signal, signal } from '@angular/core';
+import {
+  computed,
+  Inject,
+  Injectable,
+  makeStateKey,
+  PLATFORM_ID,
+  Signal,
+  signal,
+  TransferState,
+} from '@angular/core';
 import { ProjectService } from './project.service';
 import { Project } from './project';
 import { finalize, first, Observable, tap } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 interface ProjectState {
   slugs: string[];
   entitiesMap: Record<string, Project>;
 }
+const PROJECT_STATE_KEY = makeStateKey<ProjectState>('projects');
+const PROJECT_INITIAL_STATE: ProjectState = {
+  slugs: [],
+  entitiesMap: {},
+};
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProjectStoreService {
   private loading = signal<boolean>(false);
-  private items = signal<ProjectState>({
-    slugs: [],
-    entitiesMap: {}
-  });
+  private items = signal<ProjectState>(PROJECT_INITIAL_STATE);
 
   $loading = this.loading.asReadonly();
 
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    private state: TransferState,
+    private projectService: ProjectService,
+  ) {
+    this.loadStateTransfer();
+  }
+
+  private loadStateTransfer(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const state = this.state.get(PROJECT_STATE_KEY, PROJECT_INITIAL_STATE);
+      this.items.set(state);
+    }
+  }
+
+  private setStateTransfer(state: ProjectState): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      this.state.set(PROJECT_STATE_KEY, state);
+    }
+  }
 
   private fetchAll(): Observable<Project[]> {
     this.loading.set(true);
@@ -28,13 +59,18 @@ export class ProjectStoreService {
     return this.projectService.getAll().pipe(
       first(),
       finalize(() => this.loading.set(false)),
-      tap(projects => {
-        const state = projects.reduce((acc, project) => {
-          acc.slugs.push(project.slug);
-          acc.entitiesMap[project.slug] = project;
-          return acc;
-        }, { slugs: [], entitiesMap: {} } as ProjectState);
+      tap((projects) => {
+        const state = projects.reduce(
+          (acc, project) => {
+            acc.slugs.push(project.slug);
+            acc.entitiesMap[project.slug] = project;
+            return acc;
+          },
+          { slugs: [], entitiesMap: {} } as ProjectState,
+        );
         this.items.set(state);
+
+        this.setStateTransfer(state);
       }),
     );
   }
@@ -46,7 +82,7 @@ export class ProjectStoreService {
 
     return computed(() => {
       const entities = this.items();
-      return entities.slugs.map(slug => entities.entitiesMap[slug]);
+      return entities.slugs.map((slug) => entities.entitiesMap[slug]);
     });
   }
 
@@ -72,7 +108,10 @@ export class ProjectStoreService {
       finalize(() => this.loading.set(false)),
       tap((newProject) => {
         const currentState = this.items();
-        const entitiesMap = { ...currentState.entitiesMap, [newProject.slug]: newProject };
+        const entitiesMap = {
+          ...currentState.entitiesMap,
+          [newProject.slug]: newProject,
+        };
         const slugs = [...currentState.slugs, newProject.slug];
         this.items.set({ slugs, entitiesMap });
       }),
@@ -86,7 +125,9 @@ export class ProjectStoreService {
       finalize(() => this.loading.set(false)),
       tap((updatedProject) => {
         const currentState = this.items();
-        const oldSlugIndex = currentState.slugs.findIndex(slug => currentState.entitiesMap[slug].id === id);
+        const oldSlugIndex = currentState.slugs.findIndex(
+          (slug) => currentState.entitiesMap[slug].id === id,
+        );
         const oldSlug = currentState.slugs[oldSlugIndex];
 
         const slugs = [...currentState.slugs];
