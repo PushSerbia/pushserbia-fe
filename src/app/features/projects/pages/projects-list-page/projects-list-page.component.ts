@@ -18,6 +18,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { Project } from '../../../../core/project/project';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 
 @Component({
   selector: 'app-projects-list-page',
@@ -28,6 +29,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
     ProjectListHeaderComponent,
     PageLoaderComponent,
     RouterLink,
+    AuthRequiredDirective,
   ],
   templateUrl: './projects-list-page.component.html',
   styleUrl: './projects-list-page.component.scss',
