@@ -20,7 +20,7 @@
         @for (post of blogPosts; track post.id) {
           <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
             <div class="mb-4 overflow-hidden rounded-lg">
-              <img [src]="post.imageUrl" [alt]="post.title" class="w-full h-auto">
+              <img [src]="post.image" [alt]="post.title" class="w-full h-auto">
             </div>
             <div class="flex items-center mb-2 text-sm text-gray-500 dark:text-gray-400">
               <span>{{ post.date }}</span>
