@@ -87,8 +87,7 @@ export class ProjectStoreService {
   }
 
   getBySlug(slug: string): Signal<Project> {
-    const cachedProject = this.items().entitiesMap[slug];
-    if (!cachedProject && !this.loading()) {
+    if (!this.items().slugs?.length && !this.loading()) {
       this.fetchAll().subscribe();
     }
 
@@ -133,6 +132,7 @@ export class ProjectStoreService {
         const slugs = [...currentState.slugs];
         slugs[oldSlugIndex] = updatedProject.slug;
 
+        delete currentState.entitiesMap[oldSlug];
         const entitiesMap = {
           ...currentState.entitiesMap,
           [updatedProject.slug]: {
@@ -140,7 +140,6 @@ export class ProjectStoreService {
             ...updatedProject,
           },
         };
-        delete entitiesMap[oldSlug];
 
         this.items.set({ slugs, entitiesMap });
       }),
