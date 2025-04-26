@@ -14,32 +14,16 @@ export const routes: Routes = [
     loadComponent: () => import('./features/landing/pages/payment-page/payment-page.component').then(m => m.PaymentPageComponent),
   },
   {
-    path: 'o-nama',
-    loadComponent: () => import('./features/landing/pages/about/about.component').then(m => m.AboutComponent),
-  },
-  {
     path: 'kontakt',
     loadComponent: () => import('./features/landing/pages/contact/contact.component').then(m => m.ContactComponent),
-  },
-  {
-    path: 'politika-privatnosti',
-    loadComponent: () => import('./features/landing/pages/privacy-policy/privacy-policy.component').then(m => m.PrivacyPolicyComponent),
-  },
-  {
-    path: 'licence',
-    loadComponent: () => import('./features/landing/pages/licensing/licensing.component').then(m => m.LicensingComponent),
-  },
-  {
-    path: 'uslovi-koriscenja',
-    loadComponent: () => import('./features/landing/pages/terms/terms.component').then(m => m.TermsComponent),
   },
   {
     path: 'karijere',
     loadComponent: () => import('./features/landing/pages/careers/careers.component').then(m => m.CareersComponent),
   },
   {
-    path: 'brend-centar',
-    loadComponent: () => import('./features/landing/pages/brand-center/brand-center.component').then(m => m.BrandCenterComponent),
+    path: 'docs',
+    loadChildren: () => import('./features/docs/docs.routes').then(m => m.docsRoutes),
   },
   {
     path: 'blog',
