@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { DonationOption, donationOptions } from '../../../../core/donation/donation-option';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-payment-page',
@@ -13,7 +14,7 @@ import { DonationOption, donationOptions } from '../../../../core/donation/donat
   templateUrl: './payment-page.component.html',
   styleUrl: './payment-page.component.css',
 })
-export class PaymentPageComponent implements OnInit {
+export class PaymentPageComponent implements OnInit, OnDestroy {
   paymentForm: FormGroup;
   isOneTime: boolean = true;
   amount: number = 0;
@@ -21,6 +22,7 @@ export class PaymentPageComponent implements OnInit {
   donationOptions = donationOptions;
   selectedOption: DonationOption | null = null;
   showOptionsSelector: boolean = false;
+  private queryParamsSubscription: Subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -38,7 +40,7 @@ export class PaymentPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
       this.isOneTime = params['isOneTime'] === 'true';
       this.amount = Number(params['amount']) || 0;
       this.title = params['title'] || '';
@@ -49,6 +51,12 @@ export class PaymentPageComponent implements OnInit {
                  option.isOneTime === this.isOneTime
       ) || null;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
   }
 
   toggleOptionsSelector(): void {
