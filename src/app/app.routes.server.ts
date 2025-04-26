@@ -10,6 +10,34 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
+    path: '',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'kontakt',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'karijere',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'dokumentacija/**',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'blog/**',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'placanja/**',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'projekti/**',
+    renderMode: RenderMode.Server,
+  },
+  {
     path: '**',
     renderMode: RenderMode.Server,
   },
