@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { DonationOption, donationOptions } from '../../../../core/donation/donation-option';
 
 @Component({
   selector: 'app-payment-page',
@@ -17,9 +18,13 @@ export class PaymentPageComponent implements OnInit {
   isOneTime: boolean = true;
   amount: number = 0;
   title: string = '';
+  donationOptions = donationOptions;
+  selectedOption: DonationOption | null = null;
+  showOptionsSelector: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder
   ) {
     this.paymentForm = this.fb.group({
@@ -37,7 +42,31 @@ export class PaymentPageComponent implements OnInit {
       this.isOneTime = params['isOneTime'] === 'true';
       this.amount = Number(params['amount']) || 0;
       this.title = params['title'] || '';
+
+      // Find the selected option from donationOptions
+      this.selectedOption = this.donationOptions.find(
+        option => option.title === this.title && 
+                 option.price === this.amount && 
+                 option.isOneTime === this.isOneTime
+      ) || null;
     });
+  }
+
+  toggleOptionsSelector(): void {
+    this.showOptionsSelector = !this.showOptionsSelector;
+  }
+
+  selectOption(option: DonationOption): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        isOneTime: option.isOneTime,
+        amount: option.price,
+        title: option.title
+      },
+      queryParamsHandling: 'merge'
+    });
+    this.showOptionsSelector = false;
   }
 
   onSubmit(): void {
@@ -49,7 +78,7 @@ export class PaymentPageComponent implements OnInit {
         isOneTime: this.isOneTime,
         title: this.title
       });
-      
+
       // Simulate successful payment
       alert('Plaćanje uspešno! Hvala na podršci.');
     } else {
