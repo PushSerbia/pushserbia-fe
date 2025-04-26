@@ -134,6 +134,12 @@ button.ql-active,
 }
 
 .ngx-quill-view-html.ql-container {
+  font-family: var(--default-font-family);
+
+  .ql-editor {
+    white-space: inherit;
+  }
+
   h1 {
     font-size: var(--text-4xl);
     margin-bottom: 16px;
