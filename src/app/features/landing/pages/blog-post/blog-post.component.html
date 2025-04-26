@@ -8,7 +8,7 @@
         Nazad na blog
       </a>
 
-      <div *ngIf="post">
+      @if (post) {
         <div class="mb-6 overflow-hidden rounded-lg">
           <img [src]="post.imageUrl" [alt]="post.title" class="w-full h-auto">
         </div>
@@ -23,7 +23,9 @@
           {{ post.title }}
         </h1>
 
-        <div class="blog-content prose prose-lg max-w-none text-gray-500 dark:text-gray-400" [innerHTML]="post.content"></div>
+        <div class="blog-content prose prose-lg max-w-none text-gray-500 dark:text-gray-400">
+          <quill-view-html [content]="post.content" />
+        </div>
 
         <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
           <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
@@ -63,13 +65,13 @@
             </p>
           </div>
         </div>
-      </div>
-
-      <div *ngIf="!post" class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-        <p class="text-gray-500 dark:text-gray-400">
-          Članak nije pronađen. Molimo vas da se vratite na blog stranicu i izaberete drugi članak.
-        </p>
-      </div>
+      } @else {
+        <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+          <p class="text-gray-500 dark:text-gray-400">
+            Članak nije pronađen. Molimo vas da se vratite na blog stranicu i izaberete drugi članak.
+          </p>
+        </div>
+      }
 
       <div class="mt-8 text-center">
         <a routerLink="/blog" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">

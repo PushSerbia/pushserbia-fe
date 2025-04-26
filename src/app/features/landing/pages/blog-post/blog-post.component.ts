@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
-import { NgIf } from '@angular/common';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { QuillViewHTMLComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-blog-post',
   standalone: true,
-  imports: [RouterLink, NgIf],
+  imports: [RouterLink, QuillViewHTMLComponent],
   templateUrl: './blog-post.component.html',
   styleUrl: './blog-post.component.css',
 })
@@ -14,7 +13,6 @@ export class BlogPostComponent implements OnInit {
   slug: string = '';
   post: any;
 
-  // Mock blog post data
   blogPosts = [
     {
       id: 1,
@@ -319,18 +317,12 @@ export class BlogPostComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.slug = params['slug'];
-      const post = this.blogPosts.find(post => post.slug === this.slug);
-      if (post) {
-        this.post = {
-          ...post,
-          content: this.sanitizer.bypassSecurityTrustHtml(post.content)
-        };
-      }
+      this.post = this.blogPosts.find(post => post.slug === this.slug);
     });
   }
 }

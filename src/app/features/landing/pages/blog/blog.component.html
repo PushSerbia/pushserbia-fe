@@ -17,26 +17,28 @@
       </p>
 
       <div class="grid gap-8 mb-8">
-        <div *ngFor="let post of blogPosts" class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-          <div class="mb-4 overflow-hidden rounded-lg">
-            <img [src]="post.imageUrl" [alt]="post.title" class="w-full h-auto">
+        @for (post of blogPosts; track post.id) {
+          <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+            <div class="mb-4 overflow-hidden rounded-lg">
+              <img [src]="post.imageUrl" [alt]="post.title" class="w-full h-auto">
+            </div>
+            <div class="flex items-center mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <span>{{ post.date }}</span>
+              <span class="mx-2">•</span>
+              <span>{{ post.author }}</span>
+            </div>
+            <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <a [routerLink]="['/blog', post.slug]" class="hover:text-primary-600 dark:hover:text-primary-500">{{ post.title }}</a>
+            </h2>
+            <p class="mb-4 font-light text-gray-500 dark:text-gray-400">{{ post.excerpt }}</p>
+            <a [routerLink]="['/blog', post.slug]" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+              Pročitaj više
+              <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
           </div>
-          <div class="flex items-center mb-2 text-sm text-gray-500 dark:text-gray-400">
-            <span>{{ post.date }}</span>
-            <span class="mx-2">•</span>
-            <span>{{ post.author }}</span>
-          </div>
-          <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            <a [routerLink]="['/blog', post.slug]" class="hover:text-primary-600 dark:hover:text-primary-500">{{ post.title }}</a>
-          </h2>
-          <p class="mb-4 font-light text-gray-500 dark:text-gray-400">{{ post.excerpt }}</p>
-          <a [routerLink]="['/blog', post.slug]" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
-            Pročitaj više
-            <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
-          </a>
-        </div>
+        }
       </div>
 
       <div class="mt-8 text-center">

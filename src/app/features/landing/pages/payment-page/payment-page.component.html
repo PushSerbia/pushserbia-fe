@@ -32,63 +32,77 @@
         </button>
 
         <!-- Options Selector -->
-        <div *ngIf="showOptionsSelector" class="mt-4 space-y-3">
-          <div *ngFor="let option of donationOptions" 
-               (click)="selectOption(option)"
-               class="p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors"
-               [class.border-primary-500]="selectedOption?.title === option.title"
-          >
-            <div class="flex justify-between items-center">
-              <span class="font-medium">{{ option.title }}</span>
-              <span class="font-bold">{{ option.price | currency:'EUR':'symbol':'1.0' }}</span>
-            </div>
-            <div class="text-xs text-gray-500 dark:text-gray-400">
-              {{ option.isOneTime ? 'Jednokratna donacija' : 'Mesečna pretplata' }}
-            </div>
+        @if (showOptionsSelector) {
+          <div class="mt-4 space-y-3">
+            @for (option of donationOptions; track option.title) {
+              <div 
+                (click)="selectOption(option)"
+                class="p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors"
+                [class.border-primary-500]="selectedOption?.title === option.title"
+              >
+                <div class="flex justify-between items-center">
+                  <span class="font-medium text-gray-900 dark:text-white">{{ option.title }}</span>
+                  <span class="font-bold text-gray-900 dark:text-white">{{ option.price | currency:'EUR':'symbol':'1.0' }}</span>
+                </div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">
+                  {{ option.isOneTime ? 'Jednokratna donacija' : 'Mesečna pretplata' }}
+                </div>
+              </div>
+            }
           </div>
-        </div>
+        }
       </div>
 
       <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="space-y-6">
         <div>
           <label for="fullName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ime i prezime</label>
           <input type="text" id="fullName" formControlName="fullName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Unesite vaše ime i prezime">
-          <div *ngIf="paymentForm.get('fullName')?.invalid && paymentForm.get('fullName')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
-            Ime i prezime je obavezno polje
-          </div>
+          @if (paymentForm.get('fullName')?.invalid && paymentForm.get('fullName')?.touched) {
+            <div class="mt-1 text-sm text-red-600 dark:text-red-500">
+              Ime i prezime je obavezno polje
+            </div>
+          }
         </div>
 
         <div>
           <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email adresa</label>
           <input type="email" id="email" formControlName="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="ime@example.com">
-          <div *ngIf="paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
-            Unesite validnu email adresu
-          </div>
+          @if (paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched) {
+            <div class="mt-1 text-sm text-red-600 dark:text-red-500">
+              Unesite validnu email adresu
+            </div>
+          }
         </div>
 
         <div>
           <label for="cardNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Broj kartice</label>
           <input type="text" id="cardNumber" formControlName="cardNumber" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="1234 5678 9012 3456">
-          <div *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
-            Unesite validan broj kartice (16 cifara)
-          </div>
+          @if (paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched) {
+            <div class="mt-1 text-sm text-red-600 dark:text-red-500">
+              Unesite validan broj kartice (16 cifara)
+            </div>
+          }
         </div>
 
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label for="expiryDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Datum isteka</label>
             <input type="text" id="expiryDate" formControlName="expiryDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="MM/GG">
-            <div *ngIf="paymentForm.get('expiryDate')?.invalid && paymentForm.get('expiryDate')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
-              Unesite validan datum isteka (MM/GG)
-            </div>
+            @if (paymentForm.get('expiryDate')?.invalid && paymentForm.get('expiryDate')?.touched) {
+              <div class="mt-1 text-sm text-red-600 dark:text-red-500">
+                Unesite validan datum isteka (MM/GG)
+              </div>
+            }
           </div>
 
           <div>
             <label for="cvv" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CVV</label>
             <input type="text" id="cvv" formControlName="cvv" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="123">
-            <div *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
-              Unesite validan CVV kod (3-4 cifre)
-            </div>
+            @if (paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched) {
+              <div class="mt-1 text-sm text-red-600 dark:text-red-500">
+                Unesite validan CVV kod (3-4 cifre)
+              </div>
+            }
           </div>
         </div>
 
@@ -100,9 +114,11 @@
             Slažem se sa <a href="#" class="text-primary-600 hover:underline dark:text-primary-500">uslovima korišćenja</a> i potvrđujem da razumem kako će moja donacija biti iskorišćena
           </label>
         </div>
-        <div *ngIf="paymentForm.get('agreeTerms')?.invalid && paymentForm.get('agreeTerms')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
-          Morate se složiti sa uslovima korišćenja
-        </div>
+        @if (paymentForm.get('agreeTerms')?.invalid && paymentForm.get('agreeTerms')?.touched) {
+          <div class="mt-1 text-sm text-red-600 dark:text-red-500">
+            Morate se složiti sa uslovima korišćenja
+          </div>
+        }
 
         <div class="mt-8">
           <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">

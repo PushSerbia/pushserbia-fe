@@ -43,7 +43,6 @@ export class PaymentPageComponent implements OnInit {
       this.amount = Number(params['amount']) || 0;
       this.title = params['title'] || '';
 
-      // Find the selected option from donationOptions
       this.selectedOption = this.donationOptions.find(
         option => option.title === this.title && 
                  option.price === this.amount && 
@@ -71,7 +70,6 @@ export class PaymentPageComponent implements OnInit {
 
   onSubmit(): void {
     if (this.paymentForm.valid) {
-      // In a real application, this would connect to a payment processor
       console.log('Payment submitted', {
         ...this.paymentForm.value,
         amount: this.amount,
@@ -79,10 +77,8 @@ export class PaymentPageComponent implements OnInit {
         title: this.title
       });
 
-      // Simulate successful payment
       alert('Plaćanje uspešno! Hvala na podršci.');
     } else {
-      // Mark all fields as touched to trigger validation messages
       Object.keys(this.paymentForm.controls).forEach(key => {
         const control = this.paymentForm.get(key);
         control?.markAsTouched();
