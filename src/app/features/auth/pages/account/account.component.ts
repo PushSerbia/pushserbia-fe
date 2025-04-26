@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../../../core/auth/auth.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-account',
@@ -24,8 +25,11 @@ export class AccountComponent implements OnInit {
 
     const customToken = this.route.snapshot.queryParams['customToken'];
 
-    this.authService.signInWithCustomToken(customToken).subscribe(() => {
-      this.router.navigateByUrl('/');
-    });
+    this.authService
+      .signInWithCustomToken(customToken)
+      .pipe(first())
+      .subscribe(() => {
+        this.router.navigateByUrl('/');
+      });
   }
 }

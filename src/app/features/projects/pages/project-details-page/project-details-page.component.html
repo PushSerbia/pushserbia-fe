@@ -44,17 +44,34 @@
           <div
             class="flex flex-col p-8 text-gray-500 sm:text-lg dark:text-gray-400"
           >
-            <div class="grid grid-cols-2 gap-4 w-fit">
+            <div class="grid grid-cols-3 gap-4 w-fit">
               <p>Predlagač:</p>
               <span
-                class="bg-gray-100 text-gray-800 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-300 text-center"
+                class="bg-gray-100 text-gray-800 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-300 text-center col-span-2"
               >
                 {{ projectDetails.creator.fullName }}
               </span>
+              <p>Github:</p>
+              @if (projectDetails.github) {
+                <a
+                  class="bg-gray-100 text-gray-800 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-300 hover:underline text-center truncate col-span-2"
+                  [href]="projectDetails.github"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ projectDetails.github }}
+                </a>
+              } @else {
+                <span
+                  class="bg-gray-100 text-gray-800 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-300 text-center col-span-2"
+                >
+                  Link nije dodat
+                </span>
+              }
               <p>Ukupna podrška:</p>
               <div>
                 <span
-                  class="bg-green-100 text-green-800 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300 text-center"
+                  class="bg-green-100 text-green-800 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300 text-center col-span-2"
                 >
                   {{ projectDetails.totalVotes }}
                 </span>
