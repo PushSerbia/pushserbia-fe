@@ -8,9 +8,8 @@ describe('PageLoaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PageLoaderComponent]
-    })
-    .compileComponents();
+      imports: [PageLoaderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PageLoaderComponent);
     component = fixture.componentInstance;

@@ -17,8 +17,6 @@ import { BasicLayoutComponent } from '../../shared/layout/landing-layout/basic-l
     BasicLayoutComponent,
   ],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.css'
+  styleUrl: './landing.component.css',
 })
-export class LandingComponent {
-
-}
+export class LandingComponent {}

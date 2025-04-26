@@ -13,6 +13,6 @@ export class UserService extends ApiService<User> {
   }
 
   getMe() {
-    return this.getById('me')
+    return this.getById('me');
   }
 }

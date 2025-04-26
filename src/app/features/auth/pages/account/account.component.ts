@@ -7,14 +7,14 @@ import { AuthService } from '../../../../core/auth/auth.service';
   selector: 'app-account',
   imports: [],
   templateUrl: './account.component.html',
-  styleUrl: './account.component.css'
+  styleUrl: './account.component.css',
 })
 export class AccountComponent implements OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {

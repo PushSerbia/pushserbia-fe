@@ -11,10 +11,10 @@ import { ProfileProCardComponent } from '../profile-pro-card/profile-pro-card.co
   imports: [
     TitleCasePipe,
     ProfileInformationDialogComponent,
-    ProfileProCardComponent
+    ProfileProCardComponent,
   ],
   templateUrl: './profile-details.component.html',
-  styleUrl: './profile-details.component.css'
+  styleUrl: './profile-details.component.css',
 })
 export class ProfileDetailsComponent {
   data = input.required<User & FirebaseUserData>();
@@ -22,6 +22,6 @@ export class ProfileDetailsComponent {
   constructor() {
     afterRender(() => {
       initFlowbite();
-    })
+    });
   }
 }

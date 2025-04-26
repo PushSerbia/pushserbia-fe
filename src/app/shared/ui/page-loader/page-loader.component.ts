@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-page-loader',
   imports: [],
   templateUrl: './page-loader.component.html',
-  styleUrl: './page-loader.component.css'
+  styleUrl: './page-loader.component.css',
 })
-export class PageLoaderComponent {
-
-}
+export class PageLoaderComponent {}

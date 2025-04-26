@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-profile-feedback',
   imports: [],
   templateUrl: './profile-feedback.component.html',
-  styleUrl: './profile-feedback.component.css'
+  styleUrl: './profile-feedback.component.css',
 })
-export class ProfileFeedbackComponent {
-
-}
+export class ProfileFeedbackComponent {}

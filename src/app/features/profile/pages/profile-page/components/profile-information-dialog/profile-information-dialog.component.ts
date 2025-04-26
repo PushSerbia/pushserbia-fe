@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-profile-information-dialog',
   imports: [],
   templateUrl: './profile-information-dialog.component.html',
-  styleUrl: './profile-information-dialog.component.css'
+  styleUrl: './profile-information-dialog.component.css',
 })
-export class ProfileInformationDialogComponent {
-
-}
+export class ProfileInformationDialogComponent {}

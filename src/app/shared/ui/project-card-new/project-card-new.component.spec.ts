@@ -8,9 +8,8 @@ describe('ProjectCardNewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectCardNewComponent]
-    })
-    .compileComponents();
+      imports: [ProjectCardNewComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectCardNewComponent);
     component = fixture.componentInstance;

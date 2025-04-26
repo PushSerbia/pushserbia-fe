@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-project-list-header',
   imports: [],
   templateUrl: './project-list-header.component.html',
-  styleUrl: './project-list-header.component.css'
+  styleUrl: './project-list-header.component.css',
 })
-export class ProjectListHeaderComponent {
-}
+export class ProjectListHeaderComponent {}

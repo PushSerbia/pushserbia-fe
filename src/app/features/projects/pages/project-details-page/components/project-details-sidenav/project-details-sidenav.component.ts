@@ -5,11 +5,9 @@ import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data
 
 @Component({
   selector: 'app-project-details-sidenav',
-  imports: [
-    RouterLink
-  ],
+  imports: [RouterLink],
   templateUrl: './project-details-sidenav.component.html',
-  styleUrl: './project-details-sidenav.component.css'
+  styleUrl: './project-details-sidenav.component.css',
 })
 export class ProjectDetailsSidenavComponent {
   project = input.required<Project>();

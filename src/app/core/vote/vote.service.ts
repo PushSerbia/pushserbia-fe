@@ -3,9 +3,9 @@ import { ApiService } from '../api/api.service';
 import { Vote } from './vote';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class VoteService extends ApiService<Vote>{
+export class VoteService extends ApiService<Vote> {
   readonly endpoint = 'votes';
 
   getMyVotes() {
