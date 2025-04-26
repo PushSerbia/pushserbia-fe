@@ -18,7 +18,8 @@
     <div class="grid gap-8 mb-8 lg:grid-cols-2 xl:grid-cols-3">
       @for (donation of donationOptions; track $index) {
         <div
-          class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-200 shadow-sm dark:border-gray-700 xl:p-8 dark:text-white dark:bg-gray-800"
+          [ngClass]="{'ring-2 ring-primary-600 scale-105 shadow-lg': donation.isHighlighted}"
+          class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-200 shadow-sm dark:border-gray-700 xl:p-8 dark:text-white dark:bg-gray-800 transition-transform"
         >
           <h3 class="mb-4 text-2xl font-semibold">{{ donation.title }}</h3>
           <p class="text-gray-500 text-light sm:text-lg dark:text-gray-400">
