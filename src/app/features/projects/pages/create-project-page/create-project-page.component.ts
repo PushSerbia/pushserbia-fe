@@ -59,6 +59,7 @@ export class CreateProjectPageComponent implements OnInit {
       slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9-]+$/)]],
       shortDescription: ['', [Validators.required, Validators.maxLength(250)]],
       description: ['', [Validators.required, Validators.minLength(50)]],
+      github: [''],
     });
     this.form.controls['name'].valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -82,6 +83,7 @@ export class CreateProjectPageComponent implements OnInit {
               slug: this.project.slug,
               shortDescription: this.project.shortDescription,
               description: this.project.description,
+              github: this.project.github || '',
             });
           }
         }
@@ -104,8 +106,10 @@ export class CreateProjectPageComponent implements OnInit {
     const endpoint = this.project?.id
       ? this.projectStoreService.update(this.project.id, this.form.value)
       : this.projectStoreService.create(this.form.value);
-    endpoint.subscribe(() => {
-      this.router.navigateByUrl('/projects');
+    endpoint.subscribe((updated) => {
+      this.router.navigateByUrl(
+        `/projects${this.project?.slug ? '/' + updated.slug : ''}`,
+      );
     });
   }
 }
