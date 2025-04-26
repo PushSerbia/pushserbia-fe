@@ -9,7 +9,7 @@ export const projectsRoutes: Route[] = [
       ),
   },
   {
-    path: 'new',
+    path: 'novi',
     pathMatch: 'full',
     loadComponent: () =>
       import('./pages/create-project-page/create-project-page.component').then(
@@ -17,7 +17,7 @@ export const projectsRoutes: Route[] = [
       ),
   },
   {
-    path: ':slug/edit',
+    path: ':slug/izmena',
     loadComponent: () =>
       import('./pages/create-project-page/create-project-page.component').then(
         (m) => m.CreateProjectPageComponent,
@@ -31,7 +31,7 @@ export const projectsRoutes: Route[] = [
       ).then((m) => m.ProjectDetailsPageComponent),
   },
   {
-    path: ':id/meeting-notes',
+    path: ':id/beleske-sastanka',
     loadComponent: () =>
       import(
         './pages/project-meeting-notes-page/project-meeting-notes-page.component'

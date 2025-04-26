@@ -3,27 +3,27 @@ import { AccountComponent } from './pages/account/account.component';
 
 export const authRoutes: Route[] = [
   {
-    path: 'login',
+    path: 'prijava',
     loadComponent: () =>
       import('./pages/login-page/login-page.component').then(
         (m) => m.LoginPageComponent,
       ),
   },
   {
-    path: 'register',
+    path: 'registracija',
     loadComponent: () =>
       import('./pages/register-page/register-page.component').then(
         (m) => m.RegisterPageComponent,
       ),
   },
   {
-    path: 'redirect/linkedin',
+    path: 'preusmeravanje/linkedin',
     resolve: [],
     component: AccountComponent,
   },
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login',
+    redirectTo: 'prijava',
   },
 ];

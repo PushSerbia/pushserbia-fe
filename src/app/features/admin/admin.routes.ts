@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 
 export const adminRoutes: Route[] = [
   {
-    path: 'projects',
+    path: 'projekti',
     loadComponent: () =>
       import(
         './pages/admin-projects-list-page/admin-projects-list-page.component'
@@ -16,7 +16,7 @@ export const adminRoutes: Route[] = [
       ).then((m) => m.AdminProjectDetailsPageComponent),
   },
   {
-    path: 'users',
+    path: 'korisnici',
     loadComponent: () =>
       import(
         './pages/admin-users-list-page/admin-users-list-page.component'
@@ -32,6 +32,6 @@ export const adminRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'projects',
+    redirectTo: 'projekti',
   },
 ];

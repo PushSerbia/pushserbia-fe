@@ -9,7 +9,7 @@ export const profileRoutes: Route[] = [
       ),
   },
   {
-    path: 'notifications',
+    path: 'obavestenja',
     loadComponent: () =>
       import(
         './pages/notifications-list-page/notifications-list-page.component'

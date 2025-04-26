@@ -33,9 +33,9 @@ function onViewTransitionCreated(info: ViewTransitionInfo) {
   const toUrl = router.getCurrentNavigation()?.finalUrl?.toString() ?? '';
 
   if (
-    !toUrl.startsWith('/projects') ||
-    toUrl === '/projects/new' ||
-    toUrl.endsWith('/edit')
+    !toUrl.startsWith('/projekti') ||
+    toUrl === '/projekti/novi' ||
+    toUrl.endsWith('/izmena')
   ) {
     info.transition.skipTransition();
     return;
