@@ -10,7 +10,7 @@
           <li>
             <a
               class="group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              routerLink="/projects"
+              [routerLink]="'/projects' + (slug() ? '/' + slug() : '')"
               queryParamsHandling="merge"
             >
               <svg
@@ -209,7 +209,7 @@
           <button
             type="submit"
             [disabled]="form.invalid"
-            class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             Sačuvaj
           </button>
