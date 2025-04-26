@@ -21,4 +21,12 @@ export const docsRoutes: Routes = [
     path: 'brend-centar',
     loadComponent: () => import('./pages/brand-center/brand-center.component').then(m => m.BrandCenterComponent),
   },
+  {
+    path: 'kontakt',
+    loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent),
+  },
+  {
+    path: 'karijere',
+    loadComponent: () => import('./pages/careers/careers.component').then(m => m.CareersComponent),
+  },
 ];

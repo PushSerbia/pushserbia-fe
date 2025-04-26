@@ -14,16 +14,8 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
-    path: 'kontakt',
-    renderMode: RenderMode.Server,
-  },
-  {
-    path: 'karijere',
-    renderMode: RenderMode.Server,
-  },
-  {
     path: 'dokumentacija/**',
-    renderMode: RenderMode.Server,
+    renderMode: RenderMode.Prerender,
   },
   {
     path: 'blog/**',
@@ -31,7 +23,7 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     path: 'placanja/**',
-    renderMode: RenderMode.Server,
+    renderMode: RenderMode.Prerender,
   },
   {
     path: 'projekti/**',

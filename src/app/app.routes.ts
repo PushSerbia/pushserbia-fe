@@ -14,20 +14,6 @@ export const routes: Routes = [
       import('./features/payments/payments.routes').then((m) => m.paymentsRoutes),
   },
   {
-    path: 'kontakt',
-    loadComponent: () =>
-      import('./features/docs/pages/contact/contact.component').then(
-        (m) => m.ContactComponent,
-      ),
-  },
-  {
-    path: 'karijere',
-    loadComponent: () =>
-      import('./features/docs/pages/careers/careers.component').then(
-        (m) => m.CareersComponent,
-      ),
-  },
-  {
     path: 'dokumentacija',
     loadChildren: () =>
       import('./features/docs/docs.routes').then((m) => m.docsRoutes),
