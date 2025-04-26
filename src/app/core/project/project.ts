@@ -12,7 +12,7 @@ export interface Project {
   creator: {
     id: string;
     fullName: string;
-    image: string;
+    imageUrl: string;
   };
   status: ProjectStatus;
   isBanned: boolean;

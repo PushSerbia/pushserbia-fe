@@ -29,7 +29,7 @@ export class LandingProjectsComponent {
       creator: {
         id: faker.string.uuid(),
         fullName: faker.person.fullName(),
-        image: faker.image.avatar(),
+        imageUrl: faker.image.avatar(),
       },
       status: ProjectStatus.InProgress,
       isBanned: false,
@@ -51,7 +51,7 @@ export class LandingProjectsComponent {
       creator: {
         id: faker.string.uuid(),
         fullName: faker.person.fullName(),
-        image: faker.image.avatar(),
+        imageUrl: faker.image.avatar(),
       },
       status: ProjectStatus.InProgress,
       isBanned: false,
