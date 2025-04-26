@@ -16,7 +16,7 @@ export class BlogStoreService {
         'Vodič za početnike koji žele da se uključe u open-source zajednicu i doprinesu projektima.',
       content: `
         <p>Open-source projekti su srce moderne tehnologije. Oni omogućavaju saradnju između programera širom sveta i stvaraju softver koji je dostupan svima.</p>
-        
+
         <h2>Zašto doprinositi open-source projektima?</h2>
         <p>Doprinošenje open-source projektima ima brojne prednosti:</p>
         <ul>
@@ -25,7 +25,7 @@ export class BlogStoreService {
           <li>Povezivanje sa zajednicom</li>
           <li>Poboljšanje postojećih alata</li>
         </ul>
-        
+
         <h2>Kako početi?</h2>
         <p>Evo nekoliko koraka za početak:</p>
         <ol>
@@ -35,7 +35,7 @@ export class BlogStoreService {
           <li>Budite strpljivi i otvoreni za povratne informacije</li>
         </ol>
       `,
-      image: 'https://example.com/images/open-source.jpg',
+      image: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
       tags: ['open-source', 'programiranje', 'zajednica'],
     },
     {
@@ -47,7 +47,7 @@ export class BlogStoreService {
       excerpt: 'Pregled stanja i trendova u razvoju web aplikacija u Srbiji.',
       content: `
         <p>Srbija je poslednjih godina postala značajan centar za razvoj web aplikacija u regionu. Sa rastućim brojem IT kompanija i freelancera, srpska tech scena je sve prisutnija na globalnom tržištu.</p>
-        
+
         <h2>Trenutno stanje</h2>
         <p>Evo nekoliko ključnih činjenica o web razvoju u Srbiji:</p>
         <ul>
@@ -56,7 +56,7 @@ export class BlogStoreService {
           <li>Godišnji rast sektora od 20%</li>
           <li>Fokus na outsourcing i proizvode za globalno tržište</li>
         </ul>
-        
+
         <h2>Popularni tehnološki stackovi</h2>
         <p>Najčešće korišćene tehnologije uključuju:</p>
         <ul>
@@ -66,7 +66,7 @@ export class BlogStoreService {
           <li>.NET tehnologije</li>
         </ul>
       `,
-      image: 'https://example.com/images/web-dev.jpg',
+      image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80',
       tags: ['web razvoj', 'Srbija', 'tehnologija'],
     },
     {
@@ -79,7 +79,7 @@ export class BlogStoreService {
         'Kako će veštačka inteligencija oblikovati našu budućnost i koje izazove donosi.',
       content: `
         <p>Veštačka inteligencija (AI) rapidno menja način na koji živimo i radimo. Od automatizacije rutinskih zadataka do revolucionarnih otkrića u medicini, AI ima potencijal da transformiše svaki aspekt našeg društva.</p>
-        
+
         <h2>Trenutni trendovi</h2>
         <p>Neki od najvažnijih trendova u AI uključuju:</p>
         <ul>
@@ -88,7 +88,7 @@ export class BlogStoreService {
           <li>Autonomna vozila</li>
           <li>Personalizovano obrazovanje</li>
         </ul>
-        
+
         <h2>Etički izazovi</h2>
         <p>Sa razvojem AI dolaze i brojni etički izazovi:</p>
         <ul>
@@ -98,7 +98,7 @@ export class BlogStoreService {
           <li>Bezbednosni rizici</li>
         </ul>
       `,
-      image: 'https://example.com/images/ai-future.jpg',
+      image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80',
       tags: ['AI', 'veštačka inteligencija', 'tehnologija', 'budućnost'],
     },
   ];
