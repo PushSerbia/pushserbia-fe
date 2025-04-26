@@ -1,0 +1,97 @@
+<div class="bg-white dark:bg-gray-800">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+    <div class="mx-auto max-w-screen-md mb-8 lg:mb-12">
+      <a routerLink="/" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium mb-6">
+        <svg class="mr-1 w-5 h-5 rotate-180" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+        </svg>
+        Nazad na početnu
+      </a>
+      
+      <h1 class="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        {{ isOneTime ? 'Jednokratna donacija' : 'Pretplata' }}: {{ title }}
+      </h1>
+      
+      <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+        <div class="flex justify-between items-center">
+          <span class="text-lg font-medium text-gray-900 dark:text-white">Iznos:</span>
+          <span class="text-2xl font-bold text-gray-900 dark:text-white">{{ amount | currency:'EUR':'symbol':'1.0' }}</span>
+        </div>
+        <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          {{ isOneTime ? 'Jednokratna donacija' : 'Mesečna pretplata' }}
+        </div>
+      </div>
+      
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <div>
+          <label for="fullName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ime i prezime</label>
+          <input type="text" id="fullName" formControlName="fullName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Unesite vaše ime i prezime">
+          <div *ngIf="paymentForm.get('fullName')?.invalid && paymentForm.get('fullName')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
+            Ime i prezime je obavezno polje
+          </div>
+        </div>
+        
+        <div>
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email adresa</label>
+          <input type="email" id="email" formControlName="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="ime@example.com">
+          <div *ngIf="paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
+            Unesite validnu email adresu
+          </div>
+        </div>
+        
+        <div>
+          <label for="cardNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Broj kartice</label>
+          <input type="text" id="cardNumber" formControlName="cardNumber" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="1234 5678 9012 3456">
+          <div *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
+            Unesite validan broj kartice (16 cifara)
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="expiryDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Datum isteka</label>
+            <input type="text" id="expiryDate" formControlName="expiryDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="MM/GG">
+            <div *ngIf="paymentForm.get('expiryDate')?.invalid && paymentForm.get('expiryDate')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
+              Unesite validan datum isteka (MM/GG)
+            </div>
+          </div>
+          
+          <div>
+            <label for="cvv" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CVV</label>
+            <input type="text" id="cvv" formControlName="cvv" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="123">
+            <div *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
+              Unesite validan CVV kod (3-4 cifre)
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <div class="flex items-center h-5">
+            <input id="agreeTerms" type="checkbox" formControlName="agreeTerms" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800">
+          </div>
+          <label for="agreeTerms" class="ml-2 text-sm font-medium text-gray-900 dark:text-white">
+            Slažem se sa <a href="#" class="text-primary-600 hover:underline dark:text-primary-500">uslovima korišćenja</a> i potvrđujem da razumem kako će moja donacija biti iskorišćena
+          </label>
+        </div>
+        <div *ngIf="paymentForm.get('agreeTerms')?.invalid && paymentForm.get('agreeTerms')?.touched" class="mt-1 text-sm text-red-600 dark:text-red-500">
+          Morate se složiti sa uslovima korišćenja
+        </div>
+        
+        <div class="mt-8">
+          <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            {{ isOneTime ? 'Doniraj' : 'Pretplati se' }} {{ amount | currency:'EUR':'symbol':'1.0' }}
+          </button>
+        </div>
+      </form>
+      
+      <div class="mt-8 text-sm text-gray-500 dark:text-gray-400">
+        <p class="mb-2">
+          <strong>Napomena:</strong> Sve donacije se obrađuju sigurno i bezbedno. Vaši podaci o plaćanju se ne čuvaju na našim serverima.
+        </p>
+        <p>
+          Za sva pitanja u vezi sa donacijama, molimo vas da nas kontaktirate na email: podrska&#64;pushserbia.org
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

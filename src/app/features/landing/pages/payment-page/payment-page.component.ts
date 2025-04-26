@@ -1,0 +1,63 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-payment-page',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  templateUrl: './payment-page.component.html',
+  styleUrl: './payment-page.component.css',
+})
+export class PaymentPageComponent implements OnInit {
+  paymentForm: FormGroup;
+  isOneTime: boolean = true;
+  amount: number = 0;
+  title: string = '';
+
+  constructor(
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) {
+    this.paymentForm = this.fb.group({
+      fullName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
+      expiryDate: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)]],
+      cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
+      agreeTerms: [false, [Validators.requiredTrue]]
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.isOneTime = params['isOneTime'] === 'true';
+      this.amount = Number(params['amount']) || 0;
+      this.title = params['title'] || '';
+    });
+  }
+
+  onSubmit(): void {
+    if (this.paymentForm.valid) {
+      // In a real application, this would connect to a payment processor
+      console.log('Payment submitted', {
+        ...this.paymentForm.value,
+        amount: this.amount,
+        isOneTime: this.isOneTime,
+        title: this.title
+      });
+      
+      // Simulate successful payment
+      alert('Plaćanje uspešno! Hvala na podršci.');
+    } else {
+      // Mark all fields as touched to trigger validation messages
+      Object.keys(this.paymentForm.controls).forEach(key => {
+        const control = this.paymentForm.get(key);
+        control?.markAsTouched();
+      });
+    }
+  }
+}
