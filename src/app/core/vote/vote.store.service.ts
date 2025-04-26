@@ -1,5 +1,6 @@
 import {
   computed,
+  effect,
   Inject,
   Injectable,
   makeStateKey,
@@ -16,14 +17,14 @@ import { isPlatformBrowser } from '@angular/common';
 
 type VoteState = Record<string, boolean>;
 const VOTE_STATE_KEY = makeStateKey<Record<string, boolean>>('votes');
-const VOTE_INITIAL_STATE: Record<string, boolean> = {};
+const VOTE_INITIAL_STATE = null;
 
 @Injectable({
   providedIn: 'root',
 })
 export class VoteStoreService {
   private loading = signal<boolean>(false);
-  private itemMap = signal<VoteState>(VOTE_INITIAL_STATE);
+  private itemMap = signal<VoteState | null>(VOTE_INITIAL_STATE);
 
   $loading = this.loading.asReadonly();
 
@@ -34,6 +35,14 @@ export class VoteStoreService {
     private authService: AuthService,
   ) {
     this.loadStateTransfer();
+
+    effect(() => {
+      if (!this.authService.authenticated$()) {
+        if (this.itemMap()) {
+          this.itemMap.set(VOTE_INITIAL_STATE);
+        }
+      }
+    });
   }
 
   isVoted(projectId: string): Signal<boolean> {
@@ -41,18 +50,19 @@ export class VoteStoreService {
       return signal(false);
     }
     const itemMap = this.itemMap();
-    const cachedVote = itemMap && itemMap[projectId];
-    if (!itemMap && !cachedVote && !this.loading()) {
+    if (!itemMap && !this.loading() && this.authService.authenticated$()) {
       this.fetchAll().subscribe();
     }
-
     return computed(() => {
+      if (!this.authService.authenticated$()) {
+        return false;
+      }
       return Boolean(itemMap && itemMap[projectId]);
     });
   }
 
   create(projectId: string): Observable<Vote> {
-    if (!this.authService.isAuthenticated()) {
+    if (!this.authService.authenticated$()) {
       return EMPTY;
     }
 
@@ -85,10 +95,6 @@ export class VoteStoreService {
   }
 
   private fetchAll(): Observable<Vote[]> {
-    if (!this.authService.isAuthenticated()) {
-      return EMPTY;
-    }
-
     this.loading.set(true);
 
     return this.voteService.getMyVotes().pipe(
