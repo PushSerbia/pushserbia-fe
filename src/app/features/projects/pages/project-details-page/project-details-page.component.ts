@@ -16,6 +16,7 @@ import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-load
 import { VoteStoreService } from '../../../../core/vote/vote.store.service';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { AsyncPipe } from '@angular/common';
+import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 
 @Component({
   selector: 'app-project-details-page',
@@ -25,6 +26,7 @@ import { AsyncPipe } from '@angular/common';
     ProjectDetailsSidenavComponent,
     PageLoaderComponent,
     AsyncPipe,
+    AuthRequiredDirective,
   ],
   templateUrl: './project-details-page.component.html',
   styleUrl: './project-details-page.component.scss',
