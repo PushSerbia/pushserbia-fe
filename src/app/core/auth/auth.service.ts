@@ -6,6 +6,7 @@ import firebase from 'firebase/compat/app';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
 import { UserRole } from '../user/user-role';
+import { toSignal } from '@angular/core/rxjs-interop';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({ providedIn: 'root' })
@@ -27,12 +28,9 @@ export class AuthService {
       return userData;
     }),
   );
+  authenticated$ = toSignal(this.userData$.pipe(map(Boolean)));
 
   constructor(private userService: UserService) {}
-
-  isAuthenticated(): boolean {
-    return this.afAuth.currentUser !== null;
-  }
 
   signInWithCustomToken(token: string) {
     return from(this.afAuth.signInWithCustomToken(token)).pipe(

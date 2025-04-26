@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../../../../core/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-profile-sidenav',
@@ -13,8 +14,11 @@ export class ProfileSidenavComponent {
   private router = inject(Router);
 
   onLogoutClick(): void {
-    this.authService.signOut().subscribe(() => {
-      this.router.navigateByUrl('/');
-    });
+    this.authService
+      .signOut()
+      .pipe(first())
+      .subscribe(() => {
+        this.router.navigateByUrl('/');
+      });
   }
 }
