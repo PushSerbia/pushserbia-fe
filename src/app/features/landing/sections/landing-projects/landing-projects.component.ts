@@ -1,62 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Project } from '../../../../core/project/project';
-import { faker } from '@faker-js/faker';
 import { ProjectCardComponent } from '../../../../shared/ui/project-card/project-card.component';
 import { ProjectCardNewComponent } from '../../../../shared/ui/project-card-new/project-card-new.component';
-import { ProjectStatus } from '../../../../core/project/project-status';
+import { ProjectService } from '../../../../core/project/project.service';
+import { Project } from '../../../../core/project/project';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { delay, tap } from 'rxjs';
+import { LoadingSpinnerComponent } from '../../../../shared/ui/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-landing-projects',
-  imports: [RouterLink, ProjectCardComponent, ProjectCardNewComponent],
+  imports: [
+    RouterLink,
+    ProjectCardComponent,
+    ProjectCardNewComponent,
+    LoadingSpinnerComponent,
+  ],
   templateUrl: './landing-projects.component.html',
   styleUrl: './landing-projects.component.css',
 })
-export class LandingProjectsComponent {
-  projects: Project[] = [
-    {
-      id: faker.string.uuid(),
-      name: 'Noteworthy technology acquisitions 2021',
-      slug: 'noteworthy-technology-acquisitions-2021',
-      image:
-        'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/ngo-carousel/image-1.jpg',
-      shortDescription:
-        'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.',
-      description:
-        'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order. They include some of the biggest names in tech, such as Microsoft, Salesforce, and Oracle.',
-      totalVoters: faker.number.int({ min: 0, max: 100 }),
-      totalVotes: faker.number.int({ min: 0, max: 100 }),
-      creator: {
-        id: faker.string.uuid(),
-        fullName: faker.person.fullName(),
-        imageUrl: faker.image.avatar(),
-      },
-      status: ProjectStatus.InProgress,
-      isBanned: false,
-      createdAt: faker.date.past(),
-      updatedAt: faker.date.past(),
-    },
-    {
-      id: faker.string.uuid(),
-      name: 'Noteworthy technology acquisitions 2022',
-      slug: 'noteworthy-technology-acquisitions-2022',
-      image:
-        'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/ngo-carousel/image-4.jpg',
-      shortDescription:
-        'Here are the biggest enterprise technology acquisitions of 2022 so far, in reverse chronological order.',
-      description:
-        'Here are the biggest enterprise technology acquisitions of 2022 so far, in reverse chronological order. They include some of the biggest names in tech, such as Microsoft, Salesforce, and Oracle.',
-      totalVoters: faker.number.int({ min: 0, max: 100 }),
-      totalVotes: faker.number.int({ min: 0, max: 100 }),
-      creator: {
-        id: faker.string.uuid(),
-        fullName: faker.person.fullName(),
-        imageUrl: faker.image.avatar(),
-      },
-      status: ProjectStatus.InProgress,
-      isBanned: false,
-      createdAt: faker.date.past(),
-      updatedAt: faker.date.past(),
-    },
-  ];
+export class LandingProjectsComponent implements OnInit {
+  private readonly projectService = inject(ProjectService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  readonly projects = signal<Project[]>([]);
+  readonly loading = signal<boolean>(true);
+
+  readonly landingPageProjects = this.projectService
+    .getAll({
+      page: 1,
+      pageSize: 2,
+    })
+    .pipe(
+      tap(() => this.loading.set(true)),
+      delay(1000),
+      tap(() => this.loading.set(false)),
+      takeUntilDestroyed(this.destroyRef),
+    );
+
+  ngOnInit(): void {
+    this.landingPageProjects
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .subscribe((projects: any) => {
+        this.projects.set(projects.data);
+      });
+  }
 }

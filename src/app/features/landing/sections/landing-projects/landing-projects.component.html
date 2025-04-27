@@ -14,11 +14,17 @@
     </p>
 
     <div class="flex flex-wrap gap-10 py-16">
-      @for (project of projects; track project.id) {
-        <app-project-card [project]="project" />
+      @if (loading()) {
+          <app-loading-spinner class="text-center w-full h-[440px] flex items-center justify-center" />
+      }
+      @else {
+        @for (project of projects(); track project.id) {
+          <app-project-card [project]="project" />
+        }
+
+        <app-project-card-new />
       }
 
-      <app-project-card-new />
     </div>
 
     <a
