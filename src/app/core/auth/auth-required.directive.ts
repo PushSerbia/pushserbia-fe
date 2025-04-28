@@ -14,7 +14,7 @@ export class AuthRequiredDirective {
     if (!this.authService.authenticated$()) {
       event.preventDefault();
       event.stopPropagation();
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/autentikacija/prijava']);
     }
   }
 }
