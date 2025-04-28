@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { AsyncPipe } from '@angular/common';
@@ -10,6 +10,7 @@ import { User } from '../../../../core/user/user';
 import { FirebaseUserData } from '../../../../core/user/firebase-user-data';
 import { ProfileFeedbackComponent } from './components/profile-feedback/profile-feedback.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
@@ -27,6 +28,7 @@ import { ProfileDetailsComponent } from './components/profile-details/profile-de
 })
 export class ProfilePageComponent {
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   data$: Observable<User & FirebaseUserData> = combineLatest([
     this.authService.userData$.pipe(first()),
@@ -41,4 +43,13 @@ export class ProfilePageComponent {
         }) as User & FirebaseUserData,
     ),
   );
+
+  constructor() {
+    effect(() => {
+      const authenticated = this.authService.authenticated$();
+      if (authenticated === false) {
+        this.router.navigate(['/']);
+      }
+    })
+  }
 }
