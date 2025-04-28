@@ -29,3 +29,5 @@
   --color-secondary-900: #1d2026;
   --color-secondary-950: #030712;
 }
+
+@custom-variant dark (&:where(.dark, .dark *));

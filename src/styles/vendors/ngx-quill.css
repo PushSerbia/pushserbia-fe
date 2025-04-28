@@ -107,20 +107,48 @@
 
 .ql-stroke,
 .ql-stroke-mitter {
+  stroke: var(--color-secondary-700) !important;
+}
+
+.dark .ql-stroke,
+.dark .ql-stroke-mitter {
   stroke: var(--color-secondary-500) !important;
 }
 
 .ql-fill {
+  fill: var(--color-secondary-700) !important;
+}
+
+.dark .ql-fill {
   fill: var(--color-secondary-500) !important;
 }
 
-button:hover,
-button:focus,
-button.ql-active,
+.toolbar button:hover,
+.toolbar button:focus,
+.toolbar button.ql-active,
 .ql-picker-label:hover,
 .ql-picker-label.ql-active,
 .ql-picker-item:hover,
 .ql-picker-item.ql-selected {
+  color: var(--color-primary-700) !important;
+
+  .ql-stroke,
+  .ql-stroke-mitter {
+    stroke: var(--color-primary-700) !important;
+  }
+
+  .ql-fill {
+    fill: var(--color-primary-700) !important;
+  }
+}
+
+.dark .toolbar button:hover,
+.dark .toolbar button:focus,
+.dark .toolbar button.ql-active,
+.dark .ql-picker-label:hover,
+.dark .ql-picker-label.ql-active,
+.dark .ql-picker-item:hover,
+.dark .ql-picker-item.ql-selected {
   color: var(--color-white) !important;
 
   .ql-stroke,
@@ -143,24 +171,28 @@ button.ql-active,
   h1 {
     font-size: var(--text-4xl);
     margin-bottom: 16px;
-    color: var(--color-secondary-100);
+    color: var(--color-secondary-900);
   }
+
 
   h2 {
     font-size: var(--text-3xl);
     margin-bottom: 12px;
-    color: var(--color-secondary-100);
+    color: var(--color-secondary-900);
   }
+
 
   h3 {
     font-size: var(--text-2xl);
-    color: var(--color-secondary-200);
+    color: var(--color-secondary-800);
   }
+
 
   h4 {
     font-size: var(--text-xl);
-    color: var(--color-secondary-300);
+    color: var(--color-secondary-700);
   }
+
 
   h3,
   h4,
@@ -196,4 +228,20 @@ button.ql-active,
   ul li {
     list-style: disc;
   }
+}
+
+.dark .ngx-quill-view-html.ql-container h1 {
+  color: var(--color-secondary-100);
+}
+
+.dark .ngx-quill-view-html.ql-container h2 {
+  color: var(--color-secondary-100);
+}
+
+.dark .ngx-quill-view-html.ql-container h3 {
+  color: var(--color-secondary-200);
+}
+
+.dark .ngx-quill-view-html.ql-container h4 {
+  color: var(--color-secondary-300);
 }
