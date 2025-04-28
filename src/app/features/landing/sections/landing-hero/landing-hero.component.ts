@@ -7,4 +7,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './landing-hero.component.html',
   styleUrl: './landing-hero.component.css',
 })
-export class LandingHeroComponent {}
+export class LandingHeroComponent {
+  members = ['MK', 'SV', 'MM', 'DP'];
+}
