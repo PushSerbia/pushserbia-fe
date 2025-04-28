@@ -9,4 +9,6 @@ export interface User {
   role: UserRole;
   isBlocked: boolean;
   level: number;
+  projectsProposed: number;
+  projectsSupported: number;
 }
