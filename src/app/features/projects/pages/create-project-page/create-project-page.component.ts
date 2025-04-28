@@ -115,7 +115,7 @@ export class CreateProjectPageComponent implements OnInit {
       : this.projectStoreService.create(this.form.value);
     endpoint.subscribe((updated) => {
       this.router.navigateByUrl(
-        `/projects${this.project?.slug ? '/' + updated.slug : ''}`,
+        `/projekti${this.project?.slug ? '/' + updated.slug : ''}`,
       );
     });
   }
