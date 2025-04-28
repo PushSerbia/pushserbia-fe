@@ -1,14 +1,14 @@
-<section class="bg-white dark:bg-gray-800">
+<section id="pricing" class="bg-white dark:bg-gray-800">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
     <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
       <h2
         class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white"
       >
-        Podrži budućnost open-source zajednice
+        Podrži open-source zajednicu
       </h2>
       <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
-        Push Serbia je neprofitna open-source zajednica koju pokreće strast za
-        inovacijama i znanjem.
+        Push Serbia je neprofitna open-source zajednica koja razvija društveno
+        korisne projekte.
       </p>
       <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
         Tvojom donacijom omogućavaš održavanje infrastrukture, razvoj novih
@@ -16,10 +16,14 @@
         razliku – zajedno gradimo održivu i otvorenu tehnološku budućnost!
       </p>
     </div>
-    <div class="grid gap-8 mb-8 xl:grid-cols-3">
+    <div class="grid gap-8 mb-8 lg:grid-cols-2 xl:grid-cols-3">
       @for (donation of donationOptions; track $index) {
         <div
-          class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-200 shadow-sm dark:border-gray-700 xl:p-8 dark:text-white dark:bg-gray-800"
+          [ngClass]="{
+            'ring-2 ring-primary-600 scale-105 shadow-lg':
+              donation.isHighlighted,
+          }"
+          class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-200 shadow-sm dark:border-gray-700 xl:p-8 dark:text-white dark:bg-gray-800 transition-transform"
         >
           <h3 class="mb-4 text-2xl font-semibold">{{ donation.title }}</h3>
           <p class="text-gray-500 text-light sm:text-lg dark:text-gray-400">
@@ -29,7 +33,17 @@
             <span class="mr-2 text-5xl font-extrabold">{{
               donation.price | currency: "EUR" : "symbol" : "1.0"
             }}</span>
-            <span class="text-gray-500">/month</span>
+            <span class="text-gray-500">{{
+              donation.isOneTime ? "jednokratno" : "/mesečno"
+            }}</span>
+          </div>
+          <div class="mb-4 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
+            <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-2">
+              Uticaj donacije:
+            </h4>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">
+              {{ donation.impact }}
+            </p>
           </div>
           <ul role="list" class="mb-8 space-y-4 text-left">
             @for (benefit of donation.benefits; track $index) {
@@ -51,31 +65,42 @@
             }
           </ul>
           <a
-            href="#"
+            routerLink="/placanja/placanje"
+            [queryParams]="{
+              isOneTime: donation.isOneTime,
+              amount: donation.price,
+              title: donation.title,
+            }"
             class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900"
-            >Pretplati se</a
+            >{{ donation.isOneTime ? "Doniraj" : "Pretplati se" }}</a
           >
         </div>
       }
     </div>
-    <button
-      type="button"
-      class="flex justify-center items-center mx-auto font-medium text-primary-600 dark-text-primary-400 hover:text-primary-700"
-      data-collapse-toggle="detailed-pricing"
-    >
-      Pogledaj detaljne informacije
-      <svg
-        class="ml-1 w-5 h-5"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+    <div class="mx-auto max-w-screen-md text-center mt-12">
+      <p class="mb-5 font-light text-gray-500 sm:text-lg dark:text-gray-400">
+        Sve donacije su transparentne i koriste se isključivo za održavanje i
+        razvoj open-source projekata. Mesečno objavljujemo izveštaje o
+        korišćenju sredstava.
+      </p>
+      <a
+        routerLink="/placanja/finansiranje"
+        class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
       >
-        <path
-          fill-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          clip-rule="evenodd"
-        ></path>
-      </svg>
-    </button>
+        Saznaj više o našem finansiranju
+        <svg
+          class="ml-1 w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </a>
+    </div>
   </div>
 </section>

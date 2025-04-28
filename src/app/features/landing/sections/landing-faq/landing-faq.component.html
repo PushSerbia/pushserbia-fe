@@ -1,10 +1,69 @@
-<section class="bg-white dark:bg-gray-900">
+<section id="cesta-pitanja" class="bg-white dark:bg-gray-900">
   <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
     <h2
       class="mb-8 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white"
     >
       Pitanja koja ti mogu zatrebati
     </h2>
+
+    <!-- Search input -->
+    <div class="mb-6">
+      <div class="relative">
+        <div
+          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+        >
+          <svg
+            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
+        </div>
+        <input
+          type="search"
+          [(ngModel)]="searchQuery"
+          class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 outline-0"
+          placeholder="Pretraži pitanja..."
+        />
+        @if (searchQuery) {
+          <button
+            (click)="clearSearch()"
+            class="absolute right-2.5 bottom-2.5 text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
+            Očisti
+          </button>
+        }
+      </div>
+
+      <!-- Search options -->
+      <div class="flex flex-wrap gap-2 mt-3">
+        @for (option of searchOptions; track option.displayText) {
+          <button 
+            (click)="setSearchOption(option)"
+            class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-full hover:bg-primary-100 hover:text-primary-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-primary-700 dark:hover:text-white cursor-pointer transition-colors"
+          >
+            {{ option.displayText }} ({{ option.count }})
+          </button>
+        }
+      </div>
+
+      <!-- Search results count -->
+      @if (searchQuery) {
+        <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          Pronađeno {{ faq.length }} pitanja za "{{ searchQuery }}"
+        </div>
+      }
+    </div>
+
     <div
       class="grid pt-8 text-left border-t border-gray-200 md:gap-16 dark:border-gray-700 md:grid-cols-2"
     >
@@ -33,5 +92,33 @@
         </div>
       }
     </div>
+
+    <!-- Show all questions button -->
+    @if (
+      !showAllQuestions &&
+      !searchQuery &&
+      totalQuestionsCount > initialQuestionsCount
+    ) {
+      <div class="flex justify-center mt-8">
+        <button
+          (click)="toggleShowAll()"
+          class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 cursor-pointer"
+        >
+          Prikaži sva pitanja (još {{ hiddenQuestionsCount }})
+        </button>
+      </div>
+    }
+
+    <!-- Show less button when all questions are shown -->
+    @if (showAllQuestions && !searchQuery) {
+      <div class="flex justify-center mt-8">
+        <button
+          (click)="toggleShowAll()"
+          class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        >
+          Prikaži manje
+        </button>
+      </div>
+    }
   </div>
 </section>

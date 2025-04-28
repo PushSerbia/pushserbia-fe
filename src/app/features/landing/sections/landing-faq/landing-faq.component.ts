@@ -1,13 +1,128 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+interface SearchOption {
+  displayText: string;  // Full word to display
+  searchText: string;   // Text to use for searching (can be partial)
+  count: number;        // Number of questions containing this term
+  importance?: number;  // Importance factor for ordering (higher is more important)
+}
 
 @Component({
   selector: 'app-landing-faq',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './landing-faq.component.html',
   styleUrl: './landing-faq.component.css',
 })
-export class LandingFaqComponent {
-  faq = [
+export class LandingFaqComponent implements OnInit {
+  // State variables for show all functionality and search
+  showAllQuestions = false;
+  searchQuery = '';
+
+  // Number of questions to show initially
+  initialQuestionsCount = 6;
+
+  // Search options for quick filtering
+  searchOptions: SearchOption[] = [];
+
+  // Computed property to get filtered questions
+  get faq() {
+    let filteredFaq = this.originalFaq;
+
+    // Filter by search query if it exists
+    if (this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase();
+      filteredFaq = filteredFaq.filter(
+        item => 
+          item.title.toLowerCase().includes(query) || 
+          item.description.toLowerCase().includes(query)
+      );
+    }
+
+    // Limit the number of questions if not showing all
+    if (!this.showAllQuestions && !this.searchQuery.trim()) {
+      return filteredFaq.slice(0, this.initialQuestionsCount);
+    }
+
+    return filteredFaq;
+  }
+
+  // Toggle show all questions
+  toggleShowAll() {
+    this.showAllQuestions = !this.showAllQuestions;
+  }
+
+  // Clear search query
+  clearSearch() {
+    this.searchQuery = '';
+  }
+
+  // Set search query to the selected option's search text
+  setSearchOption(option: SearchOption) {
+    this.searchQuery = option.searchText;
+  }
+
+  ngOnInit() {
+    // Define the search options with their display text and search text
+    const optionDefinitions = [
+      { displayText: 'Projekat', searchText: 'projekat', importance: 10 },
+      { displayText: 'Platforma', searchText: 'platforma', importance: 9 },
+      { displayText: 'Registracija', searchText: 'registr', importance: 8 },
+      { displayText: 'Glasanje', searchText: 'glas', importance: 7 },
+      { displayText: 'Članstvo', searchText: 'član', importance: 6 },
+      { displayText: 'Open-source', searchText: 'open-source', importance: 5 },
+      { displayText: 'LinkedIn', searchText: 'LinkedIn', importance: 4 },
+      { displayText: 'Notifikacije', searchText: 'notifikacije', importance: 3 },
+      { displayText: 'Nivo', searchText: 'nivo', importance: 2 },
+      { displayText: 'Prijava', searchText: 'prijav', importance: 1 }
+    ];
+
+    // Count occurrences for each option
+    const optionsWithCounts = optionDefinitions.map(option => {
+      const count = this.countQuestionsContaining(option.searchText);
+      return { ...option, count };
+    });
+
+    // Filter options with at least 3 matches
+    const viableOptions = optionsWithCounts.filter(option => option.count >= 3);
+
+    // Select the 6 best options based on a combination of count and importance
+    // This ensures we get options that are both relevant (high count) and important for users
+    this.searchOptions = viableOptions
+      .sort((a, b) => {
+        // First prioritize options with more matches
+        if (b.count !== a.count) {
+          return b.count - a.count;
+        }
+        // If counts are equal, use the importance factor
+        return b.importance - a.importance;
+      })
+      .slice(0, 6) // Take only the top 6
+      // Final sort by importance to ensure the most important options appear first
+      .sort((a, b) => b.importance - a.importance);
+  }
+
+  // Count how many questions contain the given search term
+  private countQuestionsContaining(searchTerm: string): number {
+    const term = searchTerm.toLowerCase();
+    return this.originalFaq.filter(item => 
+      item.title.toLowerCase().includes(term) || 
+      item.description.toLowerCase().includes(term)
+    ).length;
+  }
+
+  // Get total number of questions
+  get totalQuestionsCount() {
+    return this.originalFaq.length;
+  }
+
+  // Get number of hidden questions
+  get hiddenQuestionsCount() {
+    return this.totalQuestionsCount - this.initialQuestionsCount;
+  }
+
+  // Original FAQ data
+  private originalFaq = [
     {
       title: 'Šta je Push Serbia?',
       description:

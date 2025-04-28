@@ -14,7 +14,7 @@
     </p>
 
     <div class="flex flex-wrap gap-10 py-16">
-      @for (project of projects; track project.id) {
+      @for (project of allProjects() | slice: 0 : 2; track project.id) {
         <app-project-card [project]="project" />
       }
 
@@ -22,7 +22,7 @@
     </div>
 
     <a
-      routerLink="/projects"
+      routerLink="/projekti"
       class="inline-flex items-center text-primary-600 hover:text-primary-800 dark:text-primary-500 dark:hover:text-primary-600"
     >
       Istraži open-source projekte

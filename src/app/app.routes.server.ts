@@ -6,8 +6,28 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
-    path: 'profile',
+    path: 'profil',
     renderMode: RenderMode.Client,
+  },
+  {
+    path: '',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'dokumentacija/**',
+    renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'blog/**',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'placanja/**',
+    renderMode: RenderMode.Prerender,
+  },
+  {
+    path: 'projekti/**',
+    renderMode: RenderMode.Server,
   },
   {
     path: '**',
