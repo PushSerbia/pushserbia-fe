@@ -58,34 +58,15 @@
             </p>
             <div class="flex items-center gap-2">
               <div class="flex -space-x-4">
-                <div
-                  class="w-12 h-12 md:w-12 md:h-12 border-2 border-white rounded-full dark:border-gray-800 bg-primary-100 flex items-center justify-center"
-                >
-                  <span class="text-xs md:text-sm font-bold text-primary-800">
-                    MK
-                  </span>
-                </div>
-                <div
-                  class="w-12 h-12 md:w-12 md:h-12 border-2 border-white rounded-full dark:border-gray-800 bg-primary-100 flex items-center justify-center"
-                >
-                  <span class="text-xs md:text-sm font-bold text-primary-800">
-                    SV
-                  </span>
-                </div>
-                <div
-                  class="w-12 h-12 md:w-12 md:h-12 border-2 border-white rounded-full dark:border-gray-800 bg-primary-100 flex items-center justify-center"
-                >
-                  <span class="text-xs md:text-sm font-bold text-primary-800">
-                    MM
-                  </span>
-                </div>
-                <div
-                  class="w-12 h-12 md:w-12 md:h-12 border-2 border-white rounded-full dark:border-gray-800 bg-primary-100 flex items-center justify-center"
-                >
-                  <span class="text-xs md:text-sm font-bold text-primary-800">
-                    DP
-                  </span>
-                </div>
+                @for (member of members; track member) {
+                  <div
+                    class="w-12 h-12 md:w-12 md:h-12 border-2 border-primary-800 rounded-full dark:border-gray-800 bg-primary-100 flex items-center justify-center"
+                  >
+                    <span class="text-xs md:text-sm font-bold text-primary-800">
+                      {{ member }}
+                    </span>
+                  </div>
+                }
               </div>
             </div>
           </div>
