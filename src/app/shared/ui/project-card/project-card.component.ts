@@ -1,7 +1,8 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Project } from '../../../core/project/project';
 import { TransitionService } from '../../../core/transition/transition.service';
+import { VoteStoreService } from '../../../core/vote/vote.store.service';
 
 @Component({
   selector: 'app-project-card',
@@ -13,6 +14,11 @@ export class ProjectCardComponent {
   project = input.required<Project>();
 
   transitionService = inject(TransitionService);
+  private voteStoreService = inject(VoteStoreService);
+
+  isSupported = computed(() => {
+    return this.voteStoreService.isVoted(this.project().id)();
+  });
 
   viewTransitionName(project: Project): string {
     const transition = this.transitionService.current();
