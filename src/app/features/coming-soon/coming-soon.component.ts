@@ -12,9 +12,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { IntegrationsService } from '../../core/integrations/integrations.service';
 
 @Component({
   selector: 'app-coming-soon',
@@ -35,7 +35,7 @@ export class ComingSoonComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
-    private httpClient: HttpClient,
+    private integrationsService: IntegrationsService,
   ) {}
 
   ngOnInit(): void {
@@ -56,14 +56,9 @@ export class ComingSoonComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // todo: move it to the independent service
-    // todo: make environment configurations
     this.savingInProgress.set(true);
-    this.httpClient
-      .post('https://api.pushserbia.com/v1/integrations/subscribe', {
-        email: this.emailCtrl.value,
-        tags: 'coming-soon',
-      })
+    this.integrationsService
+      .subscribeForComingSoon(this.emailCtrl.value!)
       .pipe(
         finalize(() => {
           this.savingInProgress.set(false);
