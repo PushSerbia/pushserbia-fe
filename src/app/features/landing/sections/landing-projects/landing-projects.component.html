@@ -14,8 +14,12 @@
     </p>
 
     <div class="flex flex-wrap gap-10 py-16">
-      @for (project of allProjects() | slice: 0 : 2; track project.id) {
-        <app-project-card [project]="project" />
+      @for (project of $allProjects() | slice: 0 : 2; track project.id) {
+        <app-project-card
+          [project]="project"
+          [supported]="$votesMap()[project.id]"
+          [viewTransitionName]="viewTransitionName(project)"
+        />
       }
 
       <app-project-card-new />
