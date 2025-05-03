@@ -1,36 +1,142 @@
-import { inject, Injectable } from '@angular/core';
+import {
+  computed,
+  inject,
+  Injectable,
+  PLATFORM_ID,
+  REQUEST,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { EMPTY, from, map, Observable, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  EMPTY,
+  first,
+  from,
+  map,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs';
 import { FirebaseUserData } from '../user/firebase-user-data';
 import firebase from 'firebase/compat/app';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
 import { UserRole } from '../user/user-role';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { AuthUtils } from './auth.utils';
+import { HttpClient } from '@angular/common/http';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private afAuth = inject(AngularFireAuth);
-  userData$ = this.afAuth.idTokenResult.pipe(
-    map((result: firebase.auth.IdTokenResult | null) => {
-      if (!result) {
-        return undefined;
-      }
-      const userData: FirebaseUserData = {
-        id: result.claims['app_user_id'],
-        name: result.claims['name'],
-        email: result.claims['email'],
-        emailVerified: result.claims['email_verified'],
-        role: result.claims['app_user_role'] as UserRole,
-        imageUrl: result.claims['picture'],
-      };
-      return userData;
-    }),
-  );
-  authenticated$ = toSignal(this.userData$.pipe(map(Boolean)));
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
-  constructor(private userService: UserService) {}
+  private userDataSubject = new BehaviorSubject<FirebaseUserData | undefined>(
+    undefined,
+  );
+
+  userData$ = this.isBrowser
+    ? this.afAuth.idTokenResult.pipe(
+        map((result: firebase.auth.IdTokenResult | null) => {
+          if (!result) {
+            return undefined;
+          }
+          return this.extractUserDataFromToken(result);
+        }),
+      )
+    : this.userDataSubject.asObservable();
+
+  $userData = toSignal(this.userData$);
+  $authenticated = computed(() => Boolean(this.$userData()));
+
+  private extractUserDataFromToken(
+    result: firebase.auth.IdTokenResult,
+  ): FirebaseUserData {
+    return {
+      id: result.claims['app_user_id'],
+      name: result.claims['name'],
+      email: result.claims['email'],
+      emailVerified: result.claims['email_verified'],
+      role: result.claims['app_user_role'] as UserRole,
+      imageUrl: result.claims['picture'],
+    };
+  }
+
+  constructor(
+    private userService: UserService,
+    private httpClient: HttpClient,
+  ) {
+    if (this.isBrowser) {
+      this.initInBrowser();
+      return;
+    }
+    this.initOnServer();
+  }
+
+  async initOnServer() {
+    try {
+      const request = inject(REQUEST, { optional: true });
+      if (request) {
+        let token;
+        if (request.headers?.get('cookie')) {
+          const cookies = request.headers.get('cookie');
+          const tokenCookie = cookies
+            ?.split(';')
+            .find((c) => c.trim().startsWith('__auth'));
+          if (tokenCookie) {
+            token = tokenCookie.split('=')[1];
+          }
+        }
+
+        if (token && !AuthUtils.isTokenExpired(token)) {
+          try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(
+              atob(base64)
+                .split('')
+                .map(
+                  (c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2),
+                )
+                .join(''),
+            );
+
+            const claims = JSON.parse(jsonPayload);
+            const userData: FirebaseUserData = {
+              id: claims['app_user_id'],
+              name: claims['name'],
+              email: claims['email'],
+              emailVerified: claims['email_verified'],
+              role: claims['app_user_role'] as UserRole,
+              imageUrl: claims['picture'],
+            };
+            this.userDataSubject.next(userData);
+          } catch (error) {
+            console.error('Error decoding token:', error);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error initializing auth service on server:', error);
+    }
+  }
+
+  initInBrowser(): void {
+    this.afAuth.onIdTokenChanged((user) => {
+      const source: Observable<string | null> = user
+        ? from(user.getIdToken())
+        : of(null);
+
+      source
+        .pipe(
+          first(),
+          switchMap((token) => this.setTokenToCookie(token)),
+        )
+        .subscribe();
+    });
+  }
 
   signInWithCustomToken(token: string) {
     return from(this.afAuth.signInWithCustomToken(token)).pipe(
@@ -60,12 +166,21 @@ export class AuthService {
     );
   }
 
+  private setTokenToCookie(token: string | null): Observable<void> {
+    return this.httpClient.post<void>(
+      '/auth/set-token-to-cookie',
+      { token },
+      { withCredentials: true },
+    );
+  }
+
   private loadCurrentUser(userCredential: UserCredential): Observable<User> {
     if (!userCredential?.user?.emailVerified) {
       throw new Error('Email is not verified');
     }
 
     return from(userCredential.user.getIdTokenResult()).pipe(
+      first(),
       switchMap((token: firebase.auth.IdTokenResult) => {
         if (!token.claims['app_user_id']) {
           return this.createAccount({
@@ -79,7 +194,11 @@ export class AuthService {
           );
         }
 
-        return this.getMe();
+        return this.afAuth.idToken.pipe(
+          first(),
+          switchMap((token) => this.setTokenToCookie(token!)),
+          switchMap(() => this.getMe()),
+        );
       }),
     );
   }

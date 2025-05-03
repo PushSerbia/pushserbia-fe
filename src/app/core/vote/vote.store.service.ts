@@ -15,7 +15,7 @@ import { catchError, EMPTY, finalize, first, Observable, of, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 
-type VoteState = Record<string, boolean>;
+export type VoteState = Record<string, boolean>;
 const VOTE_STATE_KEY = makeStateKey<Record<string, boolean>>('votes');
 const VOTE_INITIAL_STATE = null;
 
@@ -34,14 +34,28 @@ export class VoteStoreService {
     private voteService: VoteService,
     private authService: AuthService,
   ) {
-    this.loadStateTransfer();
-
     effect(() => {
-      if (!this.authService.authenticated$()) {
+      if (!this.authService.$authenticated()) {
         if (this.itemMap()) {
           this.itemMap.set(VOTE_INITIAL_STATE);
         }
       }
+    });
+
+    this.loadStateTransfer();
+  }
+
+  getAll(): Signal<VoteState> {
+    if (
+      !this.itemMap() &&
+      !this.loading() &&
+      this.authService.$authenticated()
+    ) {
+      this.fetchAll().subscribe();
+    }
+    return computed(() => {
+      const itemMap = this.itemMap();
+      return itemMap || {};
     });
   }
 
@@ -50,11 +64,11 @@ export class VoteStoreService {
       return signal(false);
     }
     const itemMap = this.itemMap();
-    if (!itemMap && !this.loading() && this.authService.authenticated$()) {
+    if (!itemMap && !this.loading() && this.authService.$authenticated()) {
       this.fetchAll().subscribe();
     }
     return computed(() => {
-      if (!this.authService.authenticated$()) {
+      if (!this.authService.$authenticated()) {
         return false;
       }
       return Boolean(itemMap && itemMap[projectId]);
@@ -62,7 +76,7 @@ export class VoteStoreService {
   }
 
   create(projectId: string): Observable<Vote> {
-    if (!this.authService.authenticated$()) {
+    if (!this.authService.$authenticated()) {
       return EMPTY;
     }
 
