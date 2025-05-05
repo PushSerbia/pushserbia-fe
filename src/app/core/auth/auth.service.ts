@@ -1,17 +1,37 @@
-import { inject, Injectable } from '@angular/core';
+import {
+  computed,
+  inject,
+  Injectable,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { EMPTY, from, map, Observable, of, switchMap } from 'rxjs';
+import { EMPTY, from, iif, map, Observable, of, switchMap, tap } from 'rxjs';
 import { FirebaseUserData } from '../user/firebase-user-data';
 import firebase from 'firebase/compat/app';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
 import { UserRole } from '../user/user-role';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { isPlatformBrowser } from '@angular/common';
 import UserCredential = firebase.auth.UserCredential;
+
+const CURRENT_USER_LOCAL_STORAGE_KEY = 'me';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private afAuth = inject(AngularFireAuth);
+  private readonly afAuth = inject(AngularFireAuth);
+  private readonly userService = inject(UserService);
+  private readonly platformId = inject(PLATFORM_ID);
+
+  readonly #currentUser = signal<User | null>(
+    isPlatformBrowser(this.platformId)
+      ? JSON.parse(localStorage.getItem(CURRENT_USER_LOCAL_STORAGE_KEY) || 'null')
+      : null,
+  );
+
+  readonly currentUser = computed(() => this.#currentUser());
+
   userData$ = this.afAuth.idTokenResult.pipe(
     map((result: firebase.auth.IdTokenResult | null) => {
       if (!result) {
@@ -30,8 +50,6 @@ export class AuthService {
   );
   authenticated$ = toSignal(this.userData$.pipe(map(Boolean)));
 
-  constructor(private userService: UserService) {}
-
   signInWithCustomToken(token: string) {
     return from(this.afAuth.signInWithCustomToken(token)).pipe(
       switchMap((userCredential) => {
@@ -41,11 +59,15 @@ export class AuthService {
   }
 
   signOut(): Observable<void> {
-    return from(this.afAuth.signOut());
+    return from(this.afAuth.signOut()).pipe(tap(() => this.setUser(null)));
   }
 
   getMe(): Observable<User> {
-    return this.userService.getMe();
+    return iif(
+      () => !this.#currentUser(),
+      this.userService.getMe().pipe(tap((user: User) => this.setUser(user))),
+      of(this.#currentUser() as User),
+    );
   }
 
   private createAccount(params: {
@@ -90,5 +112,16 @@ export class AuthService {
         return user ? from(user.getIdToken(true)) : EMPTY;
       }),
     );
+  }
+
+  private setUser(user: User | null) {
+    this.#currentUser.set(user);
+    if (isPlatformBrowser(this.platformId)) {
+      if (user === null) {
+        localStorage.removeItem(CURRENT_USER_LOCAL_STORAGE_KEY);
+      } else {
+        localStorage.setItem(CURRENT_USER_LOCAL_STORAGE_KEY, JSON.stringify(user));
+      }
+    }
   }
 }
