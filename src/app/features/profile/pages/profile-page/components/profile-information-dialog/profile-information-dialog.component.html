@@ -38,8 +38,24 @@
         </button>
       </div>
       <!-- Modal body -->
-      <form class="p-4 md:p-5">
+      <form class="p-4 md:p-5" [formGroup]="form">
         <div class="mb-5 flex flex-col gap-4">
+          <div>
+            <label
+              for="linkedin"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Ime i prezime
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+              placeholder="Petar Petrović"
+              formControlName="fullName"
+            />
+          </div>
+
           <div>
             <label
               for="linkedin"
@@ -53,6 +69,7 @@
               id="linkedin"
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
               placeholder="https://www.linkedin.com/in/your-username"
+              formControlName="linkedInUrl"
             />
           </div>
 
@@ -68,22 +85,25 @@
               id="github"
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
               placeholder="https://github.com/PushSerbia"
+              formControlName="gitHubUrl"
             />
           </div>
 
-          <div class="sm:col-span-2">
-            <label
-              for="address_billing_modal"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-              >Biografija</label
-            >
-            <textarea
-              id="address_billing_modal"
-              rows="4"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-              placeholder="Enter here your address"
-            ></textarea>
-          </div>
+          @if (false) {
+            <div class="sm:col-span-2">
+              <label
+                for="address_billing_modal"
+                class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                >Biografija</label
+              >
+              <textarea
+                id="address_billing_modal"
+                rows="4"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                placeholder="Enter here your address"
+              ></textarea>
+            </div>
+          }
         </div>
 
         <div class="border-t border-gray-200 pt-4 dark:border-gray-700 md:pt-5">

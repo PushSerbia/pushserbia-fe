@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { User } from './user';
+import { UpdateMePayload } from './interfaces/update-me-payload.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +15,9 @@ export class UserService extends ApiService<User> {
 
   getMe() {
     return this.getById('me');
+  }
+
+  updateMe(payload: UpdateMePayload) {
+    return this.update('me', payload);
   }
 }
