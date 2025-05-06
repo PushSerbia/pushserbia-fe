@@ -1,6 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { inject, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,7 @@ export class ThemeService {
   public isDarkMode = signal<boolean>(this.getInitialTheme());
 
   constructor() {
-    this.applyTheme(this.isDarkMode());
+    // Theme initialization moved to AppComponent
   }
 
   public toggleTheme(): void {
@@ -24,7 +23,7 @@ export class ThemeService {
     this.saveTheme(newTheme);
   }
 
-  private applyTheme(isDark: boolean): void {
+  applyTheme(isDark: boolean): void {
     if (isDark) {
       this.document.documentElement.classList.add('dark');
     } else {
@@ -48,7 +47,9 @@ export class ThemeService {
     }
 
     const cookies = this.document.cookie.split(';');
-    const themeCookie = cookies.find(cookie => cookie.trim().startsWith(`${this.storageKey}=`));
+    const themeCookie = cookies.find((cookie) =>
+      cookie.trim().startsWith(`${this.storageKey}=`),
+    );
 
     if (themeCookie) {
       const themeValue = themeCookie.split('=')[1].trim();
