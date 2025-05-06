@@ -13,11 +13,11 @@ export class NotificationsListPageComponent {
   private readonly router = inject(Router);
 
   constructor() {
-      effect(() => {
-        const authenticated = this.authService.authenticated$();
-        if (authenticated === false) {
-          this.router.navigate(['/']);
-        }
-      })
-    }
+    effect(() => {
+      const authenticated = this.authService.$authenticated();
+      if (authenticated === false) {
+        this.router.navigate(['/']);
+      }
+    });
+  }
 }

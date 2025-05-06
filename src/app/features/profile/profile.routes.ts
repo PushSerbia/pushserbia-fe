@@ -1,8 +1,10 @@
 import { Route } from '@angular/router';
+import { authGuard } from '../../core/auth/auth.guard';
 
 export const profileRoutes: Route[] = [
   {
     path: '',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/profile-page/profile-page.component').then(
         (m) => m.ProfilePageComponent,
@@ -10,6 +12,7 @@ export const profileRoutes: Route[] = [
   },
   {
     path: 'obavestenja',
+    canActivate: [authGuard],
     loadComponent: () =>
       import(
         './pages/notifications-list-page/notifications-list-page.component'

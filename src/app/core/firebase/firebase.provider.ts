@@ -13,7 +13,6 @@ import {
   UserTrackingService,
 } from '@angular/fire/analytics';
 import {
-  FirebaseApp,
   initializeApp,
   initializeServerApp,
   provideFirebaseApp,
@@ -45,17 +44,24 @@ export const provideFirebase = (): (Provider | EnvironmentProviders)[] => {
       if (isPlatformBrowser(inject(PLATFORM_ID))) {
         return initializeApp(environment.firebase);
       }
-      // Optional, since it's null in dev-mode and SSG
       const request = inject(REQUEST, { optional: true });
-      const authIdToken = request?.headers
-        .get('authorization')
-        ?.split('Bearer ')[1];
-      return initializeServerApp(environment.firebase, {
-        authIdToken,
+      const cookies = request?.headers.get('cookie');
+      let cookieToken;
+      if (cookies) {
+        const tokenCookie = cookies
+          .split(';')
+          .find((c) => c.trim().startsWith('__auth='));
+        if (tokenCookie) {
+          cookieToken = tokenCookie.split('=')[1];
+        }
+      }
+      const app = initializeApp(environment.firebase);
+      return initializeServerApp(app, {
+        authIdToken: cookieToken,
         releaseOnDeref: request || undefined,
       });
     }),
-    provideAuth(() => getAuth(inject(FirebaseApp))),
+    provideAuth(() => getAuth()),
     provideAnalytics(() => getAnalytics()),
     providePerformance(() => getPerformance()),
     importProvidersFrom([ScreenTrackingService, UserTrackingService]),
