@@ -11,4 +11,6 @@ export interface User {
   level: number;
   projectsProposed: number;
   projectsSupported: number;
+  gitHubUrl?: string;
+  linkedInUrl?: string;
 }
