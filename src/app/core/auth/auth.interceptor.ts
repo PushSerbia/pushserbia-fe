@@ -4,41 +4,55 @@ import {
   HttpHandlerFn,
   HttpRequest,
 } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { catchError, from, Observable, switchMap, throwError } from 'rxjs';
+import { inject, PLATFORM_ID, REQUEST } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AuthUtils } from './auth.utils';
+
+function handleBrowserRequest(
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn,
+  authService: AuthService,
+): Observable<HttpEvent<unknown>> {
+  return next(req.clone({ withCredentials: true })).pipe(
+    catchError((error) => {
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+        authService.signOut();
+        location.reload();
+      }
+      return throwError(error);
+    }),
+  );
+}
+
+function handleServerRequest(
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn,
+): Observable<HttpEvent<unknown>> {
+  const newReq = req.clone({ withCredentials: true, headers: req.headers });
+
+  try {
+    const request = inject(REQUEST, { optional: true });
+
+    const headers = newReq.headers.set(
+      'cookie',
+      request?.headers?.get('cookie') as string,
+    );
+    return next(newReq.clone({ headers }));
+  } catch {
+    return next(newReq);
+  }
+}
 
 export const authInterceptor = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
   const authService = inject(AuthService);
-  const angularFireAuth = inject(AngularFireAuth);
 
-  let newReq = req.clone();
+  if (isPlatformBrowser(inject(PLATFORM_ID))) {
+    return handleBrowserRequest(req, next, authService);
+  }
 
-  return from(angularFireAuth.idToken).pipe(
-    switchMap((token: string | null) => {
-      if (!token) {
-        return next(newReq);
-      }
-      if (token && !AuthUtils.isTokenExpired(token)) {
-        newReq = req.clone({
-          headers: req.headers.set('Authorization', 'Bearer ' + token),
-        });
-      }
-      return next(newReq).pipe(
-        catchError((error) => {
-          if (error instanceof HttpErrorResponse && error.status === 401) {
-            authService.signOut();
-            location.reload();
-          }
-
-          return throwError(error);
-        }),
-      );
-    }),
-  );
+  return handleServerRequest(req, next);
 };

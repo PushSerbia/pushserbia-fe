@@ -11,7 +11,7 @@ export class AuthRequiredDirective {
 
   @HostListener('click', ['$event'])
   onClick(event: Event): void {
-    if (!this.authService.authenticated$()) {
+    if (!this.authService.$authenticated()) {
       event.preventDefault();
       event.stopPropagation();
       this.router.navigate(['/autentikacija/prijava']);

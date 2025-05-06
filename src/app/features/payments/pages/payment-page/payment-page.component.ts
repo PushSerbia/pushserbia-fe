@@ -1,11 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { DonationOption, donationOptions } from '../../../../core/donation/donation-option';
-import { Subscription } from 'rxjs';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  DonationOption,
+  donationOptions,
+} from '../../../../core/donation/donation-option';
+import { catchError, of, Subscription, tap } from 'rxjs';
+import { IntegrationsService } from '../../../../core/integrations/integrations.service';
 
 @Component({
   selector: 'app-payment-page',
@@ -16,41 +24,47 @@ import { Subscription } from 'rxjs';
 })
 export class PaymentPageComponent implements OnInit, OnDestroy {
   paymentForm: FormGroup;
-  isOneTime: boolean = true;
-  amount: number = 0;
-  title: string = '';
+  isOneTime = true;
+  amount = 0;
+  title = '';
   donationOptions = donationOptions;
   selectedOption: DonationOption | null = null;
-  showOptionsSelector: boolean = false;
+  showOptionsSelector = false;
+  currentStep = 1; // Step 1: Collect data, Step 2: Display confirmation
+  isSubmitting = false;
+  submissionSuccess = false;
+  submissionError: string | null = null;
   private queryParamsSubscription: Subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private integrationsService: IntegrationsService,
   ) {
     this.paymentForm = this.fb.group({
       fullName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
-      expiryDate: ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)]],
-      cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
-      agreeTerms: [false, [Validators.requiredTrue]]
+      agreeTerms: [false, [Validators.requiredTrue]],
     });
   }
 
   ngOnInit(): void {
-    this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
-      this.isOneTime = params['isOneTime'] === 'true';
-      this.amount = Number(params['amount']) || 0;
-      this.title = params['title'] || '';
+    this.queryParamsSubscription = this.route.queryParams.subscribe(
+      (params) => {
+        this.isOneTime = params['isOneTime'] === 'true';
+        this.amount = Number(params['amount']) || 0;
+        this.title = params['title'] || '';
 
-      this.selectedOption = this.donationOptions.find(
-        option => option.title === this.title && 
-                 option.price === this.amount && 
-                 option.isOneTime === this.isOneTime
-      ) || null;
-    });
+        this.selectedOption =
+          this.donationOptions.find(
+            (option) =>
+              option.title === this.title &&
+              option.price === this.amount &&
+              option.isOneTime === this.isOneTime,
+          ) || null;
+      },
+    );
   }
 
   ngOnDestroy(): void {
@@ -69,25 +83,47 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
       queryParams: {
         isOneTime: option.isOneTime,
         amount: option.price,
-        title: option.title
+        title: option.title,
       },
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     });
     this.showOptionsSelector = false;
   }
 
   onSubmit(): void {
-    if (this.paymentForm.valid) {
-      console.log('Payment submitted', {
-        ...this.paymentForm.value,
-        amount: this.amount,
-        isOneTime: this.isOneTime,
-        title: this.title
-      });
+    if (this.paymentForm.valid && this.currentStep === 1) {
+      this.isSubmitting = true;
+      this.submissionError = null;
 
-      alert('Plaćanje uspešno! Hvala na podršci.');
+      this.integrationsService
+        .subscribeForPayment(
+          this.paymentForm.value.email,
+          this.paymentForm.value.fullName,
+          JSON.stringify({
+            amount: this.amount,
+            title: this.title,
+            isOneTime: this.isOneTime,
+          }),
+        )
+        .pipe(
+          tap(() => {
+            this.isSubmitting = false;
+            this.submissionSuccess = true;
+            this.currentStep = 2; // Move to confirmation step
+          }),
+          catchError((error) => {
+            this.isSubmitting = false;
+            this.submissionError =
+              'Došlo je do greške prilikom slanja podataka. Molimo pokušajte ponovo.';
+            console.error('Integration subscription error:', error);
+            return of(null); // Return an observable that emits null and completes
+          }),
+        )
+        .subscribe();
+    } else if (this.currentStep === 2) {
+      this.router.navigate(['/']);
     } else {
-      Object.keys(this.paymentForm.controls).forEach(key => {
+      Object.keys(this.paymentForm.controls).forEach((key) => {
         const control = this.paymentForm.get(key);
         control?.markAsTouched();
       });

@@ -46,10 +46,10 @@ export class ProfilePageComponent {
 
   constructor() {
     effect(() => {
-      const authenticated = this.authService.authenticated$();
+      const authenticated = this.authService.$authenticated();
       if (authenticated === false) {
         this.router.navigate(['/']);
       }
-    })
+    });
   }
 }

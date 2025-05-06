@@ -1,8 +1,8 @@
 import {
   Component,
+  computed,
   effect,
   inject,
-  Injector,
   input,
   OnInit,
   signal,
@@ -16,10 +16,13 @@ import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-load
 import { ProjectsFilter } from '../../../../core/project/projects-filter';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { Project } from '../../../../core/project/project';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
-import { VoteStoreService } from '../../../../core/vote/vote.store.service';
+import {
+  VoteState,
+  VoteStoreService,
+} from '../../../../core/vote/vote.store.service';
+import { TransitionService } from '../../../../core/transition/transition.service';
 
 @Component({
   selector: 'app-projects-list-page',
@@ -38,21 +41,62 @@ import { VoteStoreService } from '../../../../core/vote/vote.store.service';
 export class ProjectsListPageComponent implements OnInit {
   public readonly projectStore = inject(ProjectStoreService);
   private readonly authService = inject(AuthService);
-  private readonly voteStoreService = inject(VoteStoreService);
-  private readonly injector = inject(Injector);
+  private readonly voteStore = inject(VoteStoreService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly transitionService = inject(TransitionService);
 
-  readonly $loading = this.projectStore.$loading;
-  readonly $filter = signal<ProjectsFilter>({ myProjectsOnly: false, supportedOnly: false });
+  readonly $loading = computed(() => this.projectStore.$loading());
+  readonly $filter = signal<ProjectsFilter>({
+    myProjectsOnly: false,
+    supportedOnly: false,
+  });
+  readonly $currentUser = this.authService.$userData;
   readonly $projects = signal<Project[]>([]);
-  readonly $currentUser = toSignal(this.authService.userData$);
+  readonly $votesMap = signal<VoteState>({});
 
   myProjectsOnly = input<string>('myProjectsOnly');
   supportedOnly = input<string>('supportedOnly');
 
+  constructor() {
+    effect(() => {
+      const votes = this.voteStore.getAll();
+      this.$votesMap.set(votes());
+
+      const projects = this.projectStore.getAll()();
+
+      const currentUser = this.$currentUser();
+      if (!currentUser) {
+        this.$projects.set(projects);
+        return;
+      }
+
+      const filter = this.$filter();
+      let filteredProjects = projects;
+
+      if (filter.myProjectsOnly) {
+        filteredProjects = filteredProjects.filter(
+          (project) => project.creator.id === currentUser.id,
+        );
+      }
+
+      if (filter.supportedOnly) {
+        const votesMap = this.$votesMap();
+        console.log(votesMap);
+        filteredProjects = filteredProjects.filter((project) =>
+          Boolean(votesMap?.[project.id]),
+        );
+      }
+
+      this.$projects.set(filteredProjects);
+    });
+  }
+
   ngOnInit(): void {
-    const newFilter: ProjectsFilter = { myProjectsOnly: false, supportedOnly: false };
+    const newFilter: ProjectsFilter = {
+      myProjectsOnly: false,
+      supportedOnly: false,
+    };
 
     if (this.myProjectsOnly()) {
       newFilter.myProjectsOnly = true;
@@ -65,36 +109,6 @@ export class ProjectsListPageComponent implements OnInit {
     if (newFilter.myProjectsOnly || newFilter.supportedOnly) {
       this.$filter.set(newFilter);
     }
-
-    effect(
-      () => {
-        const projects = this.projectStore.getAll()();
-
-        const currentUser = this.$currentUser();
-        if (!currentUser) {
-          this.$projects.set(projects);
-          return;
-        }
-
-        const filter = this.$filter();
-        let filteredProjects = projects;
-
-        if (filter.myProjectsOnly) {
-          filteredProjects = filteredProjects.filter(
-            (project) => project.creator.id === currentUser.id,
-          );
-        }
-
-        if (filter.supportedOnly) {
-          filteredProjects = filteredProjects.filter(
-            (project) => this.voteStoreService.isVoted(project.id)()
-          );
-        }
-
-        this.$projects.set(filteredProjects);
-      },
-      { injector: this.injector },
-    );
   }
 
   onFilterUpdate(filter: ProjectsFilter): void {
@@ -114,5 +128,15 @@ export class ProjectsListPageComponent implements OnInit {
       relativeTo: this.route,
       queryParams,
     });
+  }
+
+  viewTransitionName(project: Project): string {
+    const transition = this.transitionService.current();
+
+    const fromSlug = transition?.to.firstChild?.firstChild?.params['slug'];
+    const toSlug = transition?.from.firstChild?.firstChild?.params['slug'];
+
+    const isBannerImg = toSlug === project.slug || fromSlug === project.slug;
+    return isBannerImg ? 'project-img' : '';
   }
 }

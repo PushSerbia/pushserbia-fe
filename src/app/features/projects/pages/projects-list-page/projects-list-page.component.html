@@ -38,8 +38,13 @@
           class="flex items-center justify-center text-center w-full h-96 align-middle"
         />
       } @else {
+        @let votesMap = $votesMap();
         @for (project of $projects(); track project.id) {
-          <app-project-card [project]="project" />
+          <app-project-card
+            [project]="project"
+            [supported]="!!votesMap[project.id]"
+            [viewTransitionName]="viewTransitionName(project)"
+          />
         } @empty {
           <div class="w-full flex items-center justify-center text-center">
             <p class="text-gray-500 dark:text-gray-400">

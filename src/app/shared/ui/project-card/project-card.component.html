@@ -3,7 +3,7 @@
   queryParamsHandling="merge"
   class="flex flex-col max-w-sm min-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 cursor-pointer hover:shadow hover:shadow-primary-500 transition-transform relative"
 >
-  @if (isSupported()) {
+  @if (supported()) {
     <div class="absolute top-4 right-4 z-10">
       <svg
         class="w-8 h-8 text-red-600"
@@ -34,7 +34,7 @@
           class="w-auto max-w-[16rem] h-40 text-gray-800 dark:text-white"
           src="/illustrations/woman-earth-hugging.svg"
           [alt]="project().name"
-          [style.viewTransitionName]="viewTransitionName(project())"
+          [style.viewTransitionName]="viewTransitionName()"
         />
       </div>
     }

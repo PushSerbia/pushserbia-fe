@@ -3,17 +3,31 @@ import {
   inject,
   Injectable,
   PLATFORM_ID,
+  REQUEST,
   signal,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { EMPTY, from, iif, map, Observable, of, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  EMPTY,
+  first,
+  from,
+  iif,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { FirebaseUserData } from '../user/firebase-user-data';
 import firebase from 'firebase/compat/app';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
 import { UserRole } from '../user/user-role';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { isPlatformBrowser } from '@angular/common';
+import { AuthUtils } from './auth.utils';
+import { HttpClient } from '@angular/common/http';
 import UserCredential = firebase.auth.UserCredential;
 
 const CURRENT_USER_LOCAL_STORAGE_KEY = 'me';
@@ -23,6 +37,8 @@ export class AuthService {
   private readonly afAuth = inject(AngularFireAuth);
   private readonly userService = inject(UserService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
+
 
   readonly #currentUser = signal<User | null>(
     isPlatformBrowser(this.platformId)
@@ -32,23 +48,109 @@ export class AuthService {
 
   readonly currentUser = computed(() => this.#currentUser());
 
-  userData$ = this.afAuth.idTokenResult.pipe(
-    map((result: firebase.auth.IdTokenResult | null) => {
-      if (!result) {
-        return undefined;
-      }
-      const userData: FirebaseUserData = {
-        id: result.claims['app_user_id'],
-        name: result.claims['name'],
-        email: result.claims['email'],
-        emailVerified: result.claims['email_verified'],
-        role: result.claims['app_user_role'] as UserRole,
-        imageUrl: result.claims['picture'],
-      };
-      return userData;
-    }),
+  private userDataSubject = new BehaviorSubject<FirebaseUserData | undefined>(
+    undefined,
   );
-  authenticated$ = toSignal(this.userData$.pipe(map(Boolean)));
+
+  userData$ = this.isBrowser
+    ? this.afAuth.idTokenResult.pipe(
+        map((result: firebase.auth.IdTokenResult | null) => {
+          if (!result) {
+            return undefined;
+          }
+          return this.extractUserDataFromToken(result);
+        }),
+      )
+    : this.userDataSubject.asObservable();
+
+  $userData = toSignal(this.userData$);
+  $authenticated = computed(() => Boolean(this.$userData()));
+
+  private extractUserDataFromToken(
+    result: firebase.auth.IdTokenResult,
+  ): FirebaseUserData {
+    return {
+      id: result.claims['app_user_id'],
+      name: result.claims['name'],
+      email: result.claims['email'],
+      emailVerified: result.claims['email_verified'],
+      role: result.claims['app_user_role'] as UserRole,
+      imageUrl: result.claims['picture'],
+    };
+  }
+
+  constructor(
+    private httpClient: HttpClient,
+  ) {
+    if (this.isBrowser) {
+      this.initInBrowser();
+      return;
+    }
+    this.initOnServer();
+  }
+
+  async initOnServer() {
+    try {
+      const request = inject(REQUEST, { optional: true });
+      if (request) {
+        let token;
+        if (request.headers?.get('cookie')) {
+          const cookies = request.headers.get('cookie');
+          const tokenCookie = cookies
+            ?.split(';')
+            .find((c) => c.trim().startsWith('__auth'));
+          if (tokenCookie) {
+            token = tokenCookie.split('=')[1];
+          }
+        }
+
+        if (token && !AuthUtils.isTokenExpired(token)) {
+          try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(
+              atob(base64)
+                .split('')
+                .map(
+                  (c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2),
+                )
+                .join(''),
+            );
+
+            const claims = JSON.parse(jsonPayload);
+            const userData: FirebaseUserData = {
+              id: claims['app_user_id'],
+              name: claims['name'],
+              email: claims['email'],
+              emailVerified: claims['email_verified'],
+              role: claims['app_user_role'] as UserRole,
+              imageUrl: claims['picture'],
+            };
+            this.userDataSubject.next(userData);
+          } catch (error) {
+            console.error('Error decoding token:', error);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error initializing auth service on server:', error);
+    }
+  }
+
+  initInBrowser(): void {
+    this.afAuth.onIdTokenChanged((user) => {
+      const source: Observable<string | null> = user
+        ? from(user.getIdToken())
+        : of(null);
+
+      source
+        .pipe(
+          first(),
+          switchMap((token) => this.setTokenToCookie(token)),
+        )
+        .subscribe();
+    });
+  }
 
   signInWithCustomToken(token: string) {
     return from(this.afAuth.signInWithCustomToken(token)).pipe(
@@ -82,12 +184,21 @@ export class AuthService {
     );
   }
 
+  private setTokenToCookie(token: string | null): Observable<void> {
+    return this.httpClient.post<void>(
+      '/auth/set-token-to-cookie',
+      { token },
+      { withCredentials: true },
+    );
+  }
+
   private loadCurrentUser(userCredential: UserCredential): Observable<User> {
     if (!userCredential?.user?.emailVerified) {
       throw new Error('Email is not verified');
     }
 
     return from(userCredential.user.getIdTokenResult()).pipe(
+      first(),
       switchMap((token: firebase.auth.IdTokenResult) => {
         if (!token.claims['app_user_id']) {
           return this.createAccount({
@@ -101,7 +212,11 @@ export class AuthService {
           );
         }
 
-        return this.getMe();
+        return this.afAuth.idToken.pipe(
+          first(),
+          switchMap((token) => this.setTokenToCookie(token!)),
+          switchMap(() => this.getMe()),
+        );
       }),
     );
   }
