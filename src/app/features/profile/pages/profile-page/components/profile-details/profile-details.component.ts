@@ -3,7 +3,6 @@ import { TitleCasePipe } from '@angular/common';
 import { User } from '../../../../../../core/user/user';
 import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data';
 import { ProfileInformationDialogComponent } from '../profile-information-dialog/profile-information-dialog.component';
-import { ProfileProCardComponent } from '../profile-pro-card/profile-pro-card.component';
 import { ModalService } from '../../../../../../core/modal/modal.service';
 
 @Component({
@@ -11,7 +10,6 @@ import { ModalService } from '../../../../../../core/modal/modal.service';
   imports: [
     TitleCasePipe,
     ProfileInformationDialogComponent,
-    ProfileProCardComponent,
   ],
   templateUrl: './profile-details.component.html',
   styleUrl: './profile-details.component.css',

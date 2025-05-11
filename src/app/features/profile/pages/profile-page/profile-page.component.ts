@@ -4,7 +4,6 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { ProfileSidenavComponent } from './components/profile-sidenav/profile-sidenav.component';
 import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-loader.component';
 import { ProfileStatsComponent } from './components/profile-stats/profile-stats.component';
-import { ProfileFeedbackComponent } from './components/profile-feedback/profile-feedback.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { Router } from '@angular/router';
 
@@ -15,7 +14,6 @@ import { Router } from '@angular/router';
     ProfileSidenavComponent,
     PageLoaderComponent,
     ProfileStatsComponent,
-    ProfileFeedbackComponent,
     ProfileDetailsComponent,
   ],
   templateUrl: './profile-page.component.html',
