@@ -1,17 +1,10 @@
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  inject,
-  viewChild,
-} from '@angular/core';
+import { Component, DestroyRef, inject, input, output } from '@angular/core';
 import {
   ReactiveFormsModule,
   UntypedFormBuilder,
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../../../../../core/auth/auth.service';
-import { UserService } from '../../../../../../core/user/user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -21,12 +14,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './profile-information-dialog.component.css',
 })
 export class ProfileInformationDialogComponent {
+  id = input.required<string>();
+
+  closeClick = output<void>();
+
   private readonly authService = inject(AuthService);
-  private readonly userService = inject(UserService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly formBuilder = inject(UntypedFormBuilder);
-
-  readonly closeButton = viewChild('closeButton', { read: ElementRef });
 
   readonly form = this.formBuilder.group({
     fullName: this.formBuilder.control(
@@ -42,9 +36,9 @@ export class ProfileInformationDialogComponent {
   });
 
   updateMe() {
-    this.userService
+    this.authService
       .updateMe(this.form.value)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.closeButton()?.nativeElement.click());
+      .subscribe(() => this.closeClick.emit());
   }
 }
