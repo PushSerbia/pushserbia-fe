@@ -11,6 +11,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   BehaviorSubject,
   EMPTY,
+  finalize,
   first,
   from,
   map,
@@ -174,9 +175,13 @@ export class AuthService {
       return EMPTY;
     }
 
-    return this.userService
-      .getMe()
-      .pipe(tap((user: User) => this.setUser(user)));
+    this.meLoading = true;
+    return this.userService.getMe().pipe(
+      tap((user: User) => this.setUser(user)),
+      finalize(() => {
+        this.meLoading = false;
+      }),
+    );
   }
 
   updateMe(user: Partial<User>): Observable<User> {
