@@ -39,9 +39,8 @@
           @let linkedInUrl = data().linkedInUrl;
           @if (linkedInUrl) {
             <a [href]="linkedInUrl" target="_blank">{{ linkedInUrl }}</a>
-          }
-          @else {
-            'Unesi podatak'
+          } @else {
+            Unesi podatak
           }
         </dd>
       </dl>
@@ -51,22 +50,20 @@
           @let gitHubUrl = data().gitHubUrl;
           @if (gitHubUrl) {
             <a [href]="gitHubUrl" target="_blank">{{ gitHubUrl }}</a>
-          }
-          @else {
-            'Unesi podatak'
+          } @else {
+            Unesi podatak
           }
         </dd>
       </dl>
     </div>
 
-    <app-profile-pro-card />
+    <!--    <app-profile-pro-card />-->
   </div>
   <div class="border-t border-gray-200 pt-4 dark:border-gray-700 md:pt-6">
     <button
       type="button"
-      data-modal-target="profileInformationDialog"
-      data-modal-toggle="profileInformationDialog"
       class="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:w-auto"
+      (click)="openProfileInformationDialog()"
     >
       <svg
         class="-ms-0.5 me-1.5 h-4 w-4"
@@ -90,4 +87,7 @@
   </div>
 </div>
 
-<app-profile-information-dialog />
+<app-profile-information-dialog
+  [id]="id"
+  (closeClick)="closeProfileInformationDialog()"
+/>
