@@ -39,10 +39,11 @@ export class AuthService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 
-
   readonly #currentUser = signal<User | null>(
     isPlatformBrowser(this.platformId)
-      ? JSON.parse(localStorage.getItem(CURRENT_USER_LOCAL_STORAGE_KEY) || 'null')
+      ? JSON.parse(
+          localStorage.getItem(CURRENT_USER_LOCAL_STORAGE_KEY) || 'null',
+        )
       : null,
   );
 
@@ -79,9 +80,7 @@ export class AuthService {
     };
   }
 
-  constructor(
-    private httpClient: HttpClient,
-  ) {
+  constructor(private httpClient: HttpClient) {
     if (this.isBrowser) {
       this.initInBrowser();
       return;
@@ -172,6 +171,14 @@ export class AuthService {
     );
   }
 
+  updateMe(user: Partial<User>): Observable<User> {
+    return this.userService.updateMe(user).pipe(
+      tap((user: User) => {
+        this.setUser(user);
+      }),
+    );
+  }
+
   private createAccount(params: {
     fullName: string;
     email: string;
@@ -235,7 +242,10 @@ export class AuthService {
       if (user === null) {
         localStorage.removeItem(CURRENT_USER_LOCAL_STORAGE_KEY);
       } else {
-        localStorage.setItem(CURRENT_USER_LOCAL_STORAGE_KEY, JSON.stringify(user));
+        localStorage.setItem(
+          CURRENT_USER_LOCAL_STORAGE_KEY,
+          JSON.stringify(user),
+        );
       }
     }
   }
