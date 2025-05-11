@@ -1,5 +1,6 @@
 <app-basic-layout>
-  @if (data$ | async; as data) {
+  @let data = $data();
+  @if (data) {
     <div class="mx-auto container px-4 2xl:px-0">
       <h2
         class="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6"

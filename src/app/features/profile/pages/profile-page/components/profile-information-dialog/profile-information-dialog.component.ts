@@ -24,14 +24,14 @@ export class ProfileInformationDialogComponent {
 
   readonly form = this.formBuilder.group({
     fullName: this.formBuilder.control(
-      this.authService.currentUser()?.fullName || '',
+      this.authService.$fullUserData()?.fullName || '',
       Validators.required,
     ),
     linkedInUrl: this.formBuilder.control(
-      this.authService.currentUser()?.linkedInUrl || '',
+      this.authService.$fullUserData()?.linkedInUrl || '',
     ),
     gitHubUrl: this.formBuilder.control(
-      this.authService.currentUser()?.gitHubUrl || '',
+      this.authService.$fullUserData()?.gitHubUrl || '',
     ),
   });
 

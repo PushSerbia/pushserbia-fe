@@ -38,7 +38,9 @@
         <dd class="text-gray-500 dark:text-gray-400">
           @let linkedInUrl = data().linkedInUrl;
           @if (linkedInUrl) {
-            <a [href]="linkedInUrl" target="_blank">{{ linkedInUrl }}</a>
+            <a [href]="linkedInUrl" target="_blank" class="hover:underline">
+              {{ linkedInUrl }}
+            </a>
           } @else {
             Unesi podatak
           }
@@ -49,7 +51,9 @@
         <dd class="text-gray-500 dark:text-gray-400">
           @let gitHubUrl = data().gitHubUrl;
           @if (gitHubUrl) {
-            <a [href]="gitHubUrl" target="_blank">{{ gitHubUrl }}</a>
+            <a [href]="gitHubUrl" target="_blank" class="hover:underline">
+              {{ gitHubUrl }}
+            </a>
           } @else {
             Unesi podatak
           }
