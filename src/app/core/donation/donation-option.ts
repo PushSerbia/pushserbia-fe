@@ -16,7 +16,7 @@ export const donationOptions: DonationOption[] = [
     description:
       'Svaki doprinos je važan! Tvoja podrška pomaže održavanju osnovne infrastrukture i omogućava pristup resursima svima.',
     benefits: [
-      'Pristup zajedničkom Discord kanalu',
+      'Pristup zajedničkom Slack kanalu',
       'Zahvalnica na našem sajtu',
       'Transparentni izveštaji o korišćenju sredstava',
       'Učešće u mesečnim anketama zajednice',
