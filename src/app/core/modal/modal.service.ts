@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { inject, Injectable } from '@angular/core';
 import { Modal } from 'flowbite';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ModalService {
+  private readonly document = inject(DOCUMENT);
   private modals: Record<string, Modal> = {};
 
   private getModal(modalId: string): Modal | null {
     if (this.modals[modalId]) {
       return this.modals[modalId];
     }
-    const modalElement = document.getElementById(modalId);
+    const modalElement = this.document.getElementById(modalId);
     if (modalElement) {
       this.modals[modalId] = new Modal(modalElement);
       return this.modals[modalId];
