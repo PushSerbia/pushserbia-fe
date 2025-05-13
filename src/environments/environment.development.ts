@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.pushserbia.com/v1',
+  apiUrl: 'http://localhost:3000/v1',
   firebase: {
     projectId: "pushserbia-be79a",
     appId: "1:245366071118:web:aea6b3a5e48f4d6a71881f",

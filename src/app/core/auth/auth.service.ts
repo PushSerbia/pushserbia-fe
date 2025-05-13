@@ -4,16 +4,16 @@ import {
   Injectable,
   PLATFORM_ID,
   REQUEST,
-  signal,
+  Signal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   BehaviorSubject,
   EMPTY,
+  finalize,
   first,
   from,
-  iif,
   map,
   Observable,
   of,
@@ -30,8 +30,6 @@ import { AuthUtils } from './auth.utils';
 import { HttpClient } from '@angular/common/http';
 import UserCredential = firebase.auth.UserCredential;
 
-const CURRENT_USER_LOCAL_STORAGE_KEY = 'me';
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly afAuth = inject(AngularFireAuth);
@@ -39,15 +37,8 @@ export class AuthService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 
-
-  readonly #currentUser = signal<User | null>(
-    isPlatformBrowser(this.platformId)
-      ? JSON.parse(localStorage.getItem(CURRENT_USER_LOCAL_STORAGE_KEY) || 'null')
-      : null,
-  );
-
-  readonly currentUser = computed(() => this.#currentUser());
-
+  private meLoading = false;
+  private meDataSubject = new BehaviorSubject<User | null>(null);
   private userDataSubject = new BehaviorSubject<FirebaseUserData | undefined>(
     undefined,
   );
@@ -63,8 +54,25 @@ export class AuthService {
       )
     : this.userDataSubject.asObservable();
 
-  $userData = toSignal(this.userData$);
   $authenticated = computed(() => Boolean(this.$userData()));
+  $userData = toSignal(this.userData$);
+  $meData = toSignal(this.meDataSubject.asObservable());
+  $fullUserData: Signal<(User & FirebaseUserData) | null> = computed<
+    (User & FirebaseUserData) | null
+  >(() => {
+    if (!this.$authenticated()) {
+      return null;
+    }
+    const firebaseData = this.$userData();
+    if (!firebaseData) {
+      return null;
+    }
+    const meData = this.$meData();
+    return {
+      ...firebaseData,
+      ...meData,
+    } as User & FirebaseUserData;
+  });
 
   private extractUserDataFromToken(
     result: firebase.auth.IdTokenResult,
@@ -79,9 +87,7 @@ export class AuthService {
     };
   }
 
-  constructor(
-    private httpClient: HttpClient,
-  ) {
+  constructor(private httpClient: HttpClient) {
     if (this.isBrowser) {
       this.initInBrowser();
       return;
@@ -165,10 +171,24 @@ export class AuthService {
   }
 
   getMe(): Observable<User> {
-    return iif(
-      () => !this.#currentUser(),
-      this.userService.getMe().pipe(tap((user: User) => this.setUser(user))),
-      of(this.#currentUser() as User),
+    if (!this.$authenticated() || this.meLoading) {
+      return EMPTY;
+    }
+
+    this.meLoading = true;
+    return this.userService.getMe().pipe(
+      tap((user: User) => this.setUser(user)),
+      finalize(() => {
+        this.meLoading = false;
+      }),
+    );
+  }
+
+  updateMe(user: Partial<User>): Observable<User> {
+    return this.userService.updateMe(user).pipe(
+      tap((user: User) => {
+        this.setUser(user);
+      }),
     );
   }
 
@@ -230,13 +250,6 @@ export class AuthService {
   }
 
   private setUser(user: User | null) {
-    this.#currentUser.set(user);
-    if (isPlatformBrowser(this.platformId)) {
-      if (user === null) {
-        localStorage.removeItem(CURRENT_USER_LOCAL_STORAGE_KEY);
-      } else {
-        localStorage.setItem(CURRENT_USER_LOCAL_STORAGE_KEY, JSON.stringify(user));
-      }
-    }
+    this.meDataSubject.next(user);
   }
 }
