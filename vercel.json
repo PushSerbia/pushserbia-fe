@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "functions": {
     "api/ssr.mjs": {
       "runtime": "vercel/node@@22.x"
