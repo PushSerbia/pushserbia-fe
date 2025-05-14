@@ -1,17 +1,10 @@
 {
-  "version": 2,
-  "public": true,
-  "name": "pushserbia-fe",
-  "devCommand": "node dist/pushserbia-fe/server/server.mjs",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/api"
-    }
-  ],
   "functions": {
-    "api/index.js": {
-      "includeFiles": "dist/pushserbia-fe/browser/**"
+    "api/ssr.mjs": {
+      "runtime": "nodejs18.x"
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/ssr.mjs" }
+  ]
 }
