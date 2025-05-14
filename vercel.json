@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/ssr.mjs": {
-      "runtime": "nodejs"
-    }
-  },
   "rewrites": [
     { "source": "/(.*)", "destination": "/api/ssr.mjs" }
   ]
