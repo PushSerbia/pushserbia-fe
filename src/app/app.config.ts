@@ -27,6 +27,7 @@ import { provideApiEndpointUrl } from './core/providers/api-endpoint-url.provide
 import { environment } from '../environments/environment';
 import { provideQuillConfig } from 'ngx-quill';
 import { TransitionService } from './core/transition/transition.service';
+import { provideGtm } from './core/gtm/gtm.provider';
 
 function onViewTransitionCreated(info: ViewTransitionInfo) {
   const router = inject(Router);
@@ -79,6 +80,7 @@ export const appConfig: ApplicationConfig = {
     },
     // todo: https://docs.sentry.io/platforms/javascript/guides/angular/sourcemaps/
     provideFirebase(),
+    provideGtm(),
     provideQuillConfig({
       modules: {
         // syntax: true,
