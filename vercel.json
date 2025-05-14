@@ -2,6 +2,7 @@
   "version": 2,
   "public": true,
   "name": "pushserbia-fe",
+  "devCommand": "node dist/pushserbia-fe/server/server.mjs",
   "rewrites": [
     {
       "source": "/(.*)",
@@ -10,7 +11,7 @@
   ],
   "functions": {
     "api/index.js": {
-      "includeFiles": "dist/pushserbia-fe/**"
+      "includeFiles": "dist/pushserbia-fe/browser/**"
     }
   }
 }
