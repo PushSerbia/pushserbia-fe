@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/ssr.mjs": {
-      "runtime": "nodejs18.x"
+      "runtime": "nodejs22.x"
     }
   },
   "rewrites": [
