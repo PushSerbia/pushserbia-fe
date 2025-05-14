@@ -1,0 +1,89 @@
+<div
+  class="grid gap-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4"
+>
+  <div class="flex items-center space-x-4">
+    <div
+      class="flex h-12 w-12 items-center justify-center rounded bg-gray-100 dark:bg-gray-700"
+    >
+      <svg
+        class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
+        />
+      </svg>
+    </div>
+    <dl>
+      <dt class="text-gray-500 dark:text-gray-400">Kreiranih projekata</dt>
+      <dd class="text-xl font-bold text-gray-900 dark:text-white">
+        {{ data().projectsProposed }}
+      </dd>
+    </dl>
+  </div>
+  <div class="flex items-center space-x-4">
+    <div
+      class="flex h-12 w-12 items-center justify-center rounded bg-gray-100 dark:bg-gray-700"
+    >
+      <svg
+        class="h-6 w-6 text-gray-500 dark:text-gray-400"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+        />
+      </svg>
+    </div>
+    <dl>
+      <dt class="text-gray-500 dark:text-gray-400">Podržanih projekata</dt>
+      <dd class="text-xl font-bold text-gray-900 dark:text-white">
+        {{ data().projectsSupported }}
+      </dd>
+    </dl>
+  </div>
+  <div class="flex items-center space-x-4">
+    <div
+      class="flex h-12 w-12 items-center justify-center rounded bg-gray-100 dark:bg-gray-700"
+    >
+      <svg
+        class="h-6 w-6 text-gray-500 dark:text-gray-400"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-width="2"
+          d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
+        />
+      </svg>
+    </div>
+    <dl>
+      <dt class="text-gray-500 dark:text-gray-400">Tvoj level</dt>
+      <dd class="text-xl font-bold text-gray-900 dark:text-white">
+        {{ data().level }}
+      </dd>
+    </dl>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<div
+  [id]="id()"
+  tabindex="-1"
+  aria-hidden="true"
+  class="max-h-auto fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden antialiased md:inset-0 dark:bg-gray-900/80"
+>
+  <div class="max-h-auto relative max-h-full w-full max-w-lg p-4">
+    <!-- Modal content -->
+    <div class="relative rounded-lg bg-white shadow dark:bg-gray-800">
+      <!-- Modal header -->
+      <div
+        class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 dark:border-gray-700 md:p-5"
+      >
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+          Informacije o profilu
+        </h3>
+        <button
+          type="button"
+          class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+          (click)="closeClick.emit()"
+        >
+          <svg
+            class="h-3 w-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <form class="p-4 md:p-5" [formGroup]="form" (ngSubmit)="updateMe()">
+        <div class="mb-5 flex flex-col gap-4">
+          <div>
+            <label
+              for="linkedin"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Ime i prezime
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+              placeholder="Petar Petrović"
+              formControlName="fullName"
+            />
+          </div>
+
+          <div>
+            <label
+              for="linkedin"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Linkedin nalog
+              <small>(npr. https://www.linkedin.com/in/your-username)</small>
+            </label>
+            <input
+              type="text"
+              id="linkedin"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+              placeholder="https://www.linkedin.com/in/your-username"
+              formControlName="linkedInUrl"
+            />
+          </div>
+
+          <div>
+            <label
+              for="github"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Github nalog <small>(npr. https://github.com/PushSerbia)</small>
+            </label>
+            <input
+              type="text"
+              id="github"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+              placeholder="https://github.com/PushSerbia"
+              formControlName="gitHubUrl"
+            />
+          </div>
+
+          @if (false) {
+            <div class="sm:col-span-2">
+              <label
+                for="address_billing_modal"
+                class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+                >Biografija</label
+              >
+              <textarea
+                id="address_billing_modal"
+                rows="4"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                placeholder="Enter here your address"
+              ></textarea>
+            </div>
+          }
+        </div>
+
+        <div class="border-t border-gray-200 pt-4 dark:border-gray-700 md:pt-5">
+          <button
+            type="submit"
+            class="me-2 inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 cursor-pointer"
+            [disabled]="form.invalid"
+          >
+            Sačuvaj promene
+          </button>
+          <button
+            type="button"
+            class="me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 cursor-pointer"
+            (click)="closeClick.emit()"
+          >
+            Otkaži
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

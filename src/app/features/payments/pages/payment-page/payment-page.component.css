@@ -1,0 +1,30 @@
+/* Additional custom styles for payment page */
+.dark input:focus, 
+.dark textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+/* Improve focus visibility for accessibility */
+input:focus, 
+textarea:focus, 
+button:focus,
+a:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Custom styling for invalid inputs after they've been touched */
+input.ng-invalid.ng-touched {
+  border-color: #ef4444;
+}
+
+/* Improve hover effects */
+button:hover {
+  transform: translateY(-1px);
+  transition: transform 0.2s;
+}
+
+button:active {
+  transform: translateY(0);
+}

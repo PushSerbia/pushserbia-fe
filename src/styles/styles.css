@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "quill/dist/quill.snow.css";
+@import "tailwindcss";
+@import "./_transitions.css";
+
+@theme {
+  --color-primary-50: #f0fdff;
+  --color-primary-100: #e0feed;
+  --color-primary-200: #bce7c9;
+  --color-primary-300: #86d3bf;
+  --color-primary-400: #56bb7a;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #16a34a;
+  --color-primary-700: #15803d;
+  --color-primary-800: #145e33;
+  --color-primary-900: #124527;
+  --color-primary-950: #052e16;
+
+  --color-secondary-50: #f9fafb;
+  --color-secondary-100: #f3f4f6;
+  --color-secondary-200: #e5e7eb;
+  --color-secondary-300: #d1d5db;
+  --color-secondary-400: #a0aec0;
+  --color-secondary-500: #6b7280;
+  --color-secondary-600: #4b5563;
+  --color-secondary-700: #374151;
+  --color-secondary-800: #293240;
+  --color-secondary-900: #1d2026;
+  --color-secondary-950: #030712;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
