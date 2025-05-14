@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run generate:release && ng build && npm run sourcemaps:move && npm run sentry:sourcemaps",
+    "build:vercel": "npm run build && npm run serve:ssr:pushserbia-fe",
     "sourcemaps:move": "rm -rf ./sourcemaps && mkdir ./sourcemaps && mv ./dist/pushserbia-fe/browser/*.map ./sourcemaps && mv ./dist/pushserbia-fe/server/*.map ./sourcemaps",
     "generate:release": "node -e \"const fs=require('fs'); const release='pushserbia-fe@' + require('./package.json').version + '-' + Math.random().toString(36).substring(2, 8); fs.writeFileSync('./release.txt', release); fs.writeFileSync('./src/environments/release.ts', 'export const release = \\'' + release + '\\';'); console.log('Generated release:', release)\"",
     "sentry:sourcemaps": "RELEASE=$(cat ./release.txt) && echo $RELEASE && ./node_modules/.bin/sentry-cli sourcemaps inject ./sourcemaps && sentry-cli releases new -o pushserbia -p pushserbia-fe $RELEASE && sentry-cli sourcemaps upload -o pushserbia -p pushserbia-fe --release=$RELEASE ./sourcemaps",

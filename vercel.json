@@ -1,5 +1,16 @@
 {
-  "routes": [
-    { "src": "/[^.]+", "dest": "/", "status": 200 }
-  ]
+  "version": 2,
+  "public": true,
+  "name": "PushSerbia",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ],
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "dist/pushserbia-fe/**"
+    }
+  }
 }
