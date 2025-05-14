@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/ssr.mjs": {
-      "runtime": "vercel/node@@22.0.0"
+      "runtime": "vercel/node@@5.1.16"
     }
   },
   "rewrites": [
