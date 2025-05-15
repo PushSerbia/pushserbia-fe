@@ -4,7 +4,7 @@
 const path = require("path");
 const serverDistPath = path.join(
   process.cwd(),
-  "dist/angular-ssr-vercel/server/server.mjs",
+  "dist/pushserbia-fe/server/server.mjs",
 );
 
 export default import(serverDistPath).then((module) => module.app);
