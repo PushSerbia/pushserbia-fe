@@ -2,6 +2,7 @@
   "version": 2,
   "public": true,
   "name": "pushserbia-fe",
+  "installCommand": "npm install --force",
   "rewrites": [
     {
       "source": "/(.*)",
