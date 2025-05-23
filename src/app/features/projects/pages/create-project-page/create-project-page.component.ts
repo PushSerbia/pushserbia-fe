@@ -14,7 +14,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill';
 import slugify from 'slugify';
@@ -28,7 +27,6 @@ import { ProjectStatus } from '../../../../core/project/project-status';
   selector: 'app-create-project-page',
   standalone: true,
   imports: [
-    CommonModule,
     BasicLayoutComponent,
     ReactiveFormsModule,
     QuillEditorComponent,
