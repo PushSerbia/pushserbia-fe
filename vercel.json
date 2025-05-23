@@ -2,21 +2,12 @@
   "version": 2,
   "public": true,
   "name": "pushserbia-fe",
-  "installCommand": "npm install --legacy-peer-deps --force",
-  "buildCommand": "npm run build",
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/api"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/api"
-    }
+  "routes": [
+    { "src": "/(.*)", "dest": "api/index.js" }
   ],
   "functions": {
     "api/index.js": {
-      "includeFiles": "dist/pushserbia-fe/**"
+      "includeFiles": "dist/pushserbia-fe/browser/**"
     }
   },
   "env": {
