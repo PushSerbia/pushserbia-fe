@@ -1,19 +1,24 @@
-<section id="cesta-pitanja" class="bg-white dark:bg-gray-900">
-  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-    <h2
-      class="mb-8 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white"
-    >
-      Pitanja koja ti mogu zatrebati
-    </h2>
+<section id="cesta-pitanja" class="bg-gray-50 dark:bg-gray-900 py-16 sm:py-24">
+  <div class="px-4 mx-auto max-w-screen-xl">
+    <div class="text-center mb-12">
+      <h2
+        class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white sm:text-5xl"
+      >
+        Pitanja koja ti mogu zatrebati
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+        Pronađi odgovore na najčešća pitanja o Push Serbia zajednici, projektima i načinu doprinosa.
+      </p>
+    </div>
 
     <!-- Search input -->
-    <div class="mb-6">
+    <div class="max-w-2xl mx-auto mb-10">
       <div class="relative">
         <div
-          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+          class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
         >
           <svg
-            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+            class="w-5 h-5 text-gray-500 dark:text-gray-400"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -31,13 +36,13 @@
         <input
           type="search"
           [(ngModel)]="searchQuery"
-          class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 outline-0"
+          class="block w-full p-4 pl-12 text-base text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 outline-0 shadow-sm"
           placeholder="Pretraži pitanja..."
         />
         @if (searchQuery) {
           <button
             (click)="clearSearch()"
-            class="absolute right-2.5 bottom-2.5 text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            class="absolute right-3 bottom-3 text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 transition-colors"
           >
             Očisti
           </button>
@@ -45,11 +50,11 @@
       </div>
 
       <!-- Search options -->
-      <div class="flex flex-wrap gap-2 mt-3">
+      <div class="flex flex-wrap gap-2 mt-4 justify-center">
         @for (option of searchOptions; track option.displayText) {
           <button 
             (click)="setSearchOption(option)"
-            class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-full hover:bg-primary-100 hover:text-primary-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-primary-700 dark:hover:text-white cursor-pointer transition-colors"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-lg border border-gray-200 hover:bg-primary-50 hover:text-primary-700 hover:border-primary-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer transition-colors shadow-sm"
           >
             {{ option.displayText }} ({{ option.count }})
           </button>
@@ -58,39 +63,41 @@
 
       <!-- Search results count -->
       @if (searchQuery) {
-        <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        <div class="mt-4 text-base text-gray-600 dark:text-gray-400 text-center font-medium">
           Pronađeno {{ faq.length }} pitanja za "{{ searchQuery }}"
         </div>
       }
     </div>
 
-    <div
-      class="grid pt-8 text-left border-t border-gray-200 md:gap-16 dark:border-gray-700 md:grid-cols-2"
-    >
-      @for (question of faq; track $index) {
-        <div>
-          <h3
-            class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white"
-          >
-            <svg
-              class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-10">
+      <div
+        class="grid gap-8 text-left md:gap-12 md:grid-cols-2"
+      >
+        @for (question of faq; track $index) {
+          <div class="p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <h3
+              class="flex items-start mb-3 text-xl font-bold text-gray-900 dark:text-white"
             >
-              <path
-                fill-rule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            {{ question.title }}
-          </h3>
-          <p class="text-gray-500 dark:text-gray-400">
-            {{ question.description }}
-          </p>
-        </div>
-      }
+              <svg
+                class="flex-shrink-0 mr-3 w-6 h-6 text-primary-600 dark:text-primary-400 mt-0.5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              {{ question.title }}
+            </h3>
+            <p class="ml-9 text-gray-600 dark:text-gray-300">
+              {{ question.description }}
+            </p>
+          </div>
+        }
+      </div>
     </div>
 
     <!-- Show all questions button -->
@@ -99,10 +106,10 @@
       !searchQuery &&
       totalQuestionsCount > initialQuestionsCount
     ) {
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center">
         <button
           (click)="toggleShowAll()"
-          class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 cursor-pointer"
+          class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-lg px-6 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 cursor-pointer shadow-md hover:shadow-lg transition-all"
         >
           Prikaži sva pitanja (još {{ hiddenQuestionsCount }})
         </button>
@@ -111,10 +118,10 @@
 
     <!-- Show less button when all questions are shown -->
     @if (showAllQuestions && !searchQuery) {
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center">
         <button
           (click)="toggleShowAll()"
-          class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+          class="text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-lg px-6 py-3 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 shadow-md hover:shadow-lg transition-all"
         >
           Prikaži manje
         </button>
