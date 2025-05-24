@@ -28,6 +28,10 @@ import { environment } from '../environments/environment';
 import { provideQuillConfig } from 'ngx-quill';
 import { TransitionService } from './core/transition/transition.service';
 import { provideGtm } from './core/gtm/gtm.provider';
+import {
+  provideClientHydration,
+  withEventReplay,
+} from '@angular/platform-browser';
 
 function onViewTransitionCreated(info: ViewTransitionInfo) {
   const router = inject(Router);
@@ -53,6 +57,7 @@ function onViewTransitionCreated(info: ViewTransitionInfo) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideClientHydration(withEventReplay()),
     provideRouter(
       routes,
       withComponentInputBinding(),
