@@ -2,7 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import * as Sentry from '@sentry/angular';
-import { environment } from './environments/environment.development';
+import { environment } from './environments/environment';
 import { release } from './environments/release';
 
 if (environment.production) {
