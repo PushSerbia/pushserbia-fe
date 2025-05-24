@@ -10,7 +10,6 @@
     "sentry:sourcemaps": "RELEASE=$(cat ./release.txt) && echo $RELEASE && ./node_modules/.bin/sentry-cli sourcemaps inject ./sourcemaps && sentry-cli releases new -o pushserbia -p pushserbia-fe $RELEASE && sentry-cli sourcemaps upload -o pushserbia -p pushserbia-fe --release=$RELEASE ./sourcemaps",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:pushserbia-fe": "node dist/pushserbia-fe/server/server.mjs",
     "lint": "ng lint"
   },
   "private": true,

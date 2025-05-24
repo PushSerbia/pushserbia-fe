@@ -18,7 +18,7 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": "dist/pushserbia-fe",
-            "index": "src/index.html",
+            "index": "src/indexFile.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
