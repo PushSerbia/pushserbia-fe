@@ -32,6 +32,8 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 function onViewTransitionCreated(info: ViewTransitionInfo) {
   const router = inject(Router);
@@ -75,6 +77,14 @@ export const appConfig: ApplicationConfig = {
       withFetch(),
       withInterceptors([apiInterceptor, authInterceptor]),
     ),
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: '/assets/i18n/',
+        suffix: '.json',
+      }),
+      fallbackLang: 'en',
+      lang: 'en',
+    }),
     {
       provide: ErrorHandler,
       useValue: Sentry.createErrorHandler(),

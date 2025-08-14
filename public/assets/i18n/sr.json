@@ -1,0 +1,14 @@
+{
+  "APP": {
+    "TITLE": "Push Srbija",
+    "TAGLINE": "Osnaživanje projekata kroz podršku zajednice"
+  },
+  "COMMON": {
+    "LANG": {
+      "EN": "Engleski",
+      "SR": "Srpski"
+    },
+    "OK": "U redu",
+    "CANCEL": "Otkaži"
+  }
+}

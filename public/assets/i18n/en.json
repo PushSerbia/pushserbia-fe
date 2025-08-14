@@ -1,0 +1,14 @@
+{
+  "APP": {
+    "TITLE": "Push Serbia",
+    "TAGLINE": "Empowering projects through community support"
+  },
+  "COMMON": {
+    "LANG": {
+      "EN": "English",
+      "SR": "Serbian"
+    },
+    "OK": "OK",
+    "CANCEL": "Cancel"
+  }
+}
