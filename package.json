@@ -25,6 +25,8 @@
     "@angular/platform-server": "^20.1.7",
     "@angular/router": "^20.1.7",
     "@angular/ssr": "^20.1.6",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
     "@sentry/angular": "^9.5.0",
     "@sentry/cli": "^2.42.2",
     "@tailwindcss/postcss": "^4.0.14",
