@@ -155,17 +155,59 @@
       </div>
     </div>
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-    <div class="flex flex-col justify-between items-center lg:flex-row">
+    <div class="flex flex-col justify-between items-center gap-4 lg:flex-row">
       <a
         href="#"
-        class="flex items-center mb-6 text-2xl font-semibold text-gray-900 lg:mb-0 dark:text-white"
+        class="flex items-center mb-2 text-2xl font-semibold text-gray-900 lg:mb-0 dark:text-white"
       >
         <div class="flex items-center">
           <span class="ml-3 mr-2 text-green-400 text-lg">git</span>
           <span class="text-xl font-bold">push Serbia</span>
         </div>
       </a>
-      <span class="block mb-4 text-sm text-gray-500 dark:text-gray-400 lg:mb-0"
+
+      <div class="flex items-center gap-3 relative">
+        <div class="relative">
+          <button type="button"
+                  class="inline-flex items-center justify-between gap-2 px-3 py-2 text-sm rounded-md border bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-100 dark:border-gray-600"
+                  aria-haspopup="menu"
+                  [attr.aria-expanded]="dropdownOpen"
+                  (click)="toggleDropdown()">
+            <span>{{ currentLangKey | translate }}</span>
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-300" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.25 8.29a.75.75 0 01-.02-1.08z" clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <div *ngIf="dropdownOpen"
+               class="absolute right-0 bottom-full z-20 mb-2 w-44 origin-bottom-right rounded-md bg-white shadow-lg ring-1 ring-black/5 border border-gray-200 dark:bg-gray-700 dark:ring-white/10 dark:border-gray-600">
+            <div role="menu" aria-orientation="vertical" tabindex="-1" class="py-1">
+              <button type="button"
+                      (click)="switchLang('sr')"
+                      class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 flex items-center justify-between"
+                      [class.text-primary-700]="currentLang === 'sr'"
+                      role="menuitem">
+                <span>{{ 'COMMON.LANG.SR' | translate }}</span>
+                <svg *ngIf="currentLang === 'sr'" class="w-4 h-4 text-primary-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.704 5.29a1 1 0 010 1.414l-7.25 7.25a1 1 0 01-1.414 0l-3.5-3.5A1 1 0 016.954 9.04l2.793 2.793 6.543-6.543a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </button>
+              <button type="button"
+                      (click)="switchLang('en')"
+                      class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 flex items-center justify-between"
+                      [class.text-primary-700]="currentLang === 'en'"
+                      role="menuitem">
+                <span>{{ 'COMMON.LANG.EN' | translate }}</span>
+                <svg *ngIf="currentLang === 'en'" class="w-4 h-4 text-primary-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.704 5.29a1 1 0 010 1.414l-7.25 7.25a1 1 0 01-1.414 0l-3.5-3.5A1 1 0 016.954 9.04l2.793 2.793 6.543-6.543a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <span class="block text-sm text-gray-500 dark:text-gray-400 lg:mb-0"
         >© 2024 - {{ currentYear }} <a href="#" class="hover:underline">Push Serbia™</a>. Sva
         prava zadržana.
       </span>
