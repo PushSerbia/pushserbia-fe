@@ -55,18 +55,18 @@
         </h2>
         <ul class="text-gray-500 dark:text-gray-400">
           <li class="mb-4">
-            <a routerLink="/dokumentacija/o-nama" class="hover:underline">O nama</a>
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'o-nama']" class="hover:underline">O nama</a>
           </li>
           <li class="mb-4">
-            <a routerLink="/dokumentacija/karijere" class="hover:underline">Karijere</a>
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'karijere']" class="hover:underline">Karijere</a>
           </li>
           <li class="mb-4">
-            <a routerLink="/dokumentacija/brend-centar" class="hover:underline"
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'brend-centar']" class="hover:underline"
               >Brend Centar</a
             >
           </li>
           <li class="mb-4">
-            <a routerLink="/blog" class="hover:underline">Blog</a>
+            <a [routerLink]="['/', currentLang, 'blog']" class="hover:underline">Blog</a>
           </li>
         </ul>
       </div>
@@ -85,12 +85,12 @@
             >
           </li>
           <li class="mb-4">
-            <a routerLink="/" fragment="cesta-pitanja" class="hover:underline"
+            <a [routerLink]="['/', currentLang]" fragment="cesta-pitanja" class="hover:underline"
               >Česta pitanja</a
             >
           </li>
           <li class="mb-4">
-            <a routerLink="/dokumentacija/kontakt" class="hover:underline"
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'kontakt']" class="hover:underline"
               >Kontaktirajte nas</a
             >
           </li>
@@ -139,15 +139,15 @@
         </h2>
         <ul class="text-gray-500 dark:text-gray-400">
           <li class="mb-4">
-            <a routerLink="/dokumentacija/politika-privatnosti" class="hover:underline"
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'politika-privatnosti']" class="hover:underline"
               >Politika privatnosti</a
             >
           </li>
           <li class="mb-4">
-            <a routerLink="/dokumentacija/licence" class="hover:underline">Licence</a>
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'licence']" class="hover:underline">Licence</a>
           </li>
           <li class="mb-4">
-            <a routerLink="/dokumentacija/uslovi-koriscenja" class="hover:underline"
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'uslovi-koriscenja']" class="hover:underline"
               >Uslovi korišćenja</a
             >
           </li>

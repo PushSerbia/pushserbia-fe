@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-widget',
@@ -10,8 +11,13 @@ import { AuthService } from '../../../core/auth/auth.service';
 })
 export class UserWidgetComponent {
   private authService = inject(AuthService);
+  private translate = inject(TranslateService);
 
   $userData = this.authService.$userData;
+
+  get currentLang(): 'sr' | 'en' {
+    return (this.translate.currentLang as 'sr' | 'en') || 'sr';
+  }
 
   onLogoutClick(): void {
     this.authService.signOut().subscribe();
