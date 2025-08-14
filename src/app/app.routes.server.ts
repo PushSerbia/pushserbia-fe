@@ -6,7 +6,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
-    path: 'profil',
+    path: ':lang/profil/**',
     renderMode: RenderMode.Client,
   },
   {
