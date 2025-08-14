@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
@@ -10,9 +10,9 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './login-page.component.scss',
 })
 export class LoginPageComponent implements OnInit {
-  linkedinUrl!: string;
+  private platformId = inject(PLATFORM_ID);
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+  linkedinUrl!: string;
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {

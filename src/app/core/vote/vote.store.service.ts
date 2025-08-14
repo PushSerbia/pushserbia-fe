@@ -1,12 +1,12 @@
 import {
   computed,
   effect,
-  Inject,
+  inject,
   Injectable,
   makeStateKey,
   PLATFORM_ID,
-  Signal,
   signal,
+  Signal,
   TransferState,
 } from '@angular/core';
 import { VoteService } from './vote.service';
@@ -23,17 +23,17 @@ const VOTE_INITIAL_STATE = null;
   providedIn: 'root',
 })
 export class VoteStoreService {
+  private platformId = inject(PLATFORM_ID);
+  private state = inject(TransferState);
+  private voteService = inject(VoteService);
+  private authService = inject(AuthService);
+
   private loading = signal<boolean>(false);
   private itemMap = signal<VoteState | null>(VOTE_INITIAL_STATE);
 
   $loading = this.loading.asReadonly();
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
-    private state: TransferState,
-    private voteService: VoteService,
-    private authService: AuthService,
-  ) {
+  constructor() {
     effect(() => {
       if (!this.authService.$authenticated()) {
         if (this.itemMap()) {

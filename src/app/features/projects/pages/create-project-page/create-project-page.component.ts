@@ -37,6 +37,10 @@ import { ProjectStatus } from '../../../../core/project/project-status';
   styleUrl: './create-project-page.component.scss',
 })
 export class CreateProjectPageComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+  private injector = inject(Injector);
   private projectStoreService = inject(ProjectStoreService);
   project?: Project;
   projectStatus = ProjectStatus;
@@ -45,13 +49,6 @@ export class CreateProjectPageComponent implements OnInit {
 
   slug = input<string>();
   $loading = this.projectStoreService.$loading;
-
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private destroyRef: DestroyRef,
-    private injector: Injector,
-  ) {}
 
   private initForm(): void {
     const formGroup: Record<string, unknown[]> = {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../../../core/auth/auth.service';
@@ -11,12 +11,10 @@ import { first } from 'rxjs';
   styleUrl: './account.component.css',
 })
 export class AccountComponent implements OnInit {
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
-    private route: ActivatedRoute,
-    private router: Router,
-    private authService: AuthService,
-  ) {}
+  private platformId = inject(PLATFORM_ID);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) {
