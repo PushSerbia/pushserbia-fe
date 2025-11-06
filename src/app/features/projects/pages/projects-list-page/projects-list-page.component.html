@@ -5,7 +5,7 @@
     <div class="flex items-center gap-6 flex-wrap">
       <button
         class="flex items-center justify-center px-2 py-2 text-sm font-medium text-center text-gray-900 bg-transparent border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700 cursor-pointer"
-        routerLink="/projekti/novi"
+        [routerLink]="['/', currentLang, (currentLang === 'en' ? 'projects' : 'projekti'), 'novi']"
         appAuthRequired
       >
         <svg
@@ -21,7 +21,7 @@
           ></path>
         </svg>
 
-        <span class="ml-2">Predloži projekat</span>
+        <span class="ml-2">{{ 'PROJECTS.LIST.SUGGEST_BUTTON' | translate }}</span>
       </button>
 
       @if ($currentUser()) {
@@ -48,7 +48,7 @@
         } @empty {
           <div class="w-full flex items-center justify-center text-center">
             <p class="text-gray-500 dark:text-gray-400">
-              Nema projekata koji odgovaraju tvojim filtrima.
+              {{ 'PROJECTS.LIST.EMPTY' | translate }}
             </p>
           </div>
         }

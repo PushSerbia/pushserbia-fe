@@ -9,6 +9,550 @@
       "SR": "Srpski"
     },
     "OK": "U redu",
-    "CANCEL": "Otkaži"
+    "CANCEL": "Otkaži",
+    "SEND": "Pošalji",
+    "CLEAR": "Očisti",
+    "EMAIL_LABEL": "Email adresa",
+    "EMAIL_PLACEHOLDER": "Unesite email"
+  },
+  "FOOTER": {
+    "NEWSLETTER": {
+      "TITLE": "Prijavite se na naš newsletter"
+    },
+    "SECTIONS": {
+      "COMPANY": "Kompanija",
+      "HELP": "Pomoć",
+      "SOCIAL": "Društvene mreže",
+      "LEGAL": "Pravno"
+    },
+    "LINKS": {
+      "ABOUT_US": "O nama",
+      "CAREERS": "Karijere",
+      "BRAND_CENTER": "Brend Centar",
+      "BLOG": "Blog",
+      "SLACK_COMMUNITY": "Slack zajednica",
+      "FAQ": "Česta pitanja",
+      "CONTACT_US": "Kontaktirajte nas",
+      "LINKEDIN": "LinkedIn",
+      "FACEBOOK": "Facebook",
+      "INSTAGRAM": "Instagram",
+      "GITHUB": "GitHub",
+      "PRIVACY_POLICY": "Politika privatnosti",
+      "LICENSES": "Licence",
+      "TERMS": "Uslovi korišćenja"
+    },
+    "COPYRIGHT": "© 2024 - {{year}} Push Serbia™. Sva prava zadržana."
+  },
+  "LANDING": {
+    "PRICING": {
+      "TITLE": "Podrži open-source zajednicu",
+      "INTRO": "Push Serbia je neprofitna open-source zajednica koja razvija društveno korisne projekte.",
+      "INTRO_DETAILS": "Tvojom donacijom omogućavaš održavanje infrastrukture, razvoj novih projekata i organizaciju edukativnih događaja. Svaka podrška čini razliku – zajedno gradimo održivu i otvorenu tehnološku budućnost!",
+      "PRICE_SUFFIX": {
+        "ONE_TIME": "jednokratno",
+        "MONTHLY": "/mesečno"
+      },
+      "DONATION_IMPACT_LABEL": "Uticaj donacije:",
+      "BUTTON_DONATE": "Doniraj",
+      "BUTTON_SUBSCRIBE": "Pretplati se",
+      "TRANSPARENCY_PARAGRAPH": "Sve donacije su transparentne i koriste se isključivo za održavanje i razvoj open-source projekata. Mesečno objavljujemo izveštaje o korišćenju sredstava.",
+      "FUNDING_CTA": "Saznaj više o našem finansiranju",
+      "PACKAGES": {
+        "FRIEND": {
+          "TITLE": "Prijatelj zajednice",
+          "DESC": "Svaki doprinos je važan! Tvoja podrška pomaže održavanju osnovne infrastrukture i omogućava pristup resursima svima.",
+          "BENEFITS": {
+            "0": "Pristup zajedničkom Slack kanalu",
+            "1": "Zahvalnica na našem sajtu",
+            "2": "Transparentni izveštaji o korišćenju sredstava",
+            "3": "Učešće u mesečnim anketama zajednice",
+            "4": "Doprinos održivosti open-source ekosistema"
+          },
+          "IMPACT": "Pokriva mesečne troškove hostinga i osnovnih servisa"
+        },
+        "MEMBER": {
+          "TITLE": "Aktivni član",
+          "DESC": "Redovna podrška koja omogućava dugoročno planiranje i kontinuirani razvoj projekata od društvenog značaja.",
+          "BENEFITS": {
+            "0": "Sve pogodnosti \"Prijatelja zajednice\"",
+            "1": "Učešće u odlučivanju o prioritetima razvoja",
+            "2": "Pristup zajedničkim resursima za učenje",
+            "3": "Prioritetni glas prilikom glasanja (broji se duplo)",
+            "4": "Povezivanje sa drugim članovima zajednice"
+          },
+          "IMPACT": "Podržava organizaciju događaja i razvoj novih inicijativa"
+        },
+        "ONE_TIME": {
+          "TITLE": "Jednokratna podrška",
+          "DESC": "Jednokratna donacija koja pomaže razvoju konkretnih projekata i inicijativa bez dugoročne obaveze.",
+          "BENEFITS": {
+            "0": "Sve pogodnosti \"Prijatelja zajednice\"",
+            "1": "Mogućnost usmeravanja donacije ka određenom projektu",
+            "2": "Priznanje u dokumentaciji projekta",
+            "3": "Pristup edukativnim materijalima zajednice",
+            "4": "Poziv na online događaje i radionice"
+          },
+          "IMPACT": "Omogućava razvoj novih funkcionalnosti i edukativnih materijala"
+        }
+      }
+    },
+    "HOW_TO": {
+      "TITLE": "Kako funkcioniše open-source zajednica?",
+      "INTRO": "Priključi se open-source zajednici i doprinesi projektima koji menjaju društvo. Bilo da si developer, dizajner ili entuzijasta, ovde možeš da pronađeš projekte, predložiš ideje i učestvuješ u njihovoj realizaciji.",
+      "IMAGE_ALT": "Open-source zajednica — saradnja i razvoj",
+      "SUGGEST": {
+        "TITLE": "Predloži ideju",
+        "DESC": "Imaš inovativnu ideju za open-source projekat? Podeli je sa zajednicom i zajedno je pretvorimo u stvarnost.",
+        "BUTTON": "Dodaj projekat"
+      },
+      "VOTE": {
+        "TITLE": "Glasaj i podrži projekte",
+        "DESC": "Uključi se u zajednicu glasanjem za najbolje projekte i pomogni da se prave ideje razviju u funkcionalna rešenja.",
+        "BUTTON": "Pregledaj projekte"
+      },
+      "REALIZE": {
+        "TITLE": "Zajedno ih realizujemo",
+        "DESC": "Najbolje ideje ulaze u razvoj uz pomoć zajednice. Svi članovi mogu doprineti svojim znanjem i resursima kako bi se ideje pretočile u stvarne projekte.",
+        "BUTTON": "Saznaj više"
+      }
+    },
+    "CURRENT_PROJECTS": {
+      "TITLE": "Aktuelni projekti",
+      "INTRO": "Pregledaj postojeće open-source projekte i pridruži se onima koji te inspirišu. Razvijaj softver, učestvuj u diskusijama i doprinesi inovacijama.",
+      "CTA": "Istraži open-source projekte"
+    },
+    "HERO": {
+      "TITLE": "Unapredi društvo u kome živiš!",
+      "SUBTITLE": "Pridruži se i podrži open-source projekte koji donose pozitivne promene u društvu.",
+      "BUTTONS": {
+        "EXPLORE_PROJECTS": "Istraži projekte",
+        "LEARN_MORE": "Saznaj više"
+      },
+      "COMMUNITY": {
+        "TAGLINE": "Pridruži se rastućoj zajednici entuzijasta koji doprinose boljem društvu.",
+        "OTHERS": "i mnogi drugi"
+      },
+      "IMAGE_ALT": "Ljudi koji sarađuju na projektima"
+    },
+    "FAQ": {
+      "TITLE": "Pitanja koja ti mogu zatrebati",
+      "INTRO": "Pronađi odgovore na najčešća pitanja o Push Serbia zajednici, projektima i načinu doprinosa.",
+      "SEARCH_PLACEHOLDER": "Pretraži pitanja...",
+      "FOUND_RESULTS": "Pronađeno {{count}} pitanja za \"{{query}}\"",
+      "SHOW_ALL": "Prikaži sva pitanja (još {{count}})",
+      "SHOW_LESS": "Prikaži manje",
+      "OPTIONS": {
+        "PROJECT": "Projekat",
+        "PLATFORM": "Platforma",
+        "REGISTRATION": "Registracija",
+        "VOTING": "Glasanje",
+        "MEMBERSHIP": "Članstvo",
+        "OPEN_SOURCE": "Open-source",
+        "LINKEDIN": "LinkedIn",
+        "NOTIFICATIONS": "Notifikacije",
+        "LEVEL": "Nivo",
+        "LOGIN": "Prijava"
+      }
+    },
+    "ITEMS": {
+      "0": {
+        "TITLE": "Šta je Push Serbia?",
+        "DESC": "Push Serbia je neprofitna platforma koja omogućava IT zajednici da predlaže i glasa za društveno korisne open-source projekte. Cilj je povezivanje developera i stručnjaka kako bi zajedno razvijali projekte sa pozitivnim društvenim uticajem."
+      },
+      "1": {
+        "TITLE": "Ko može koristiti platformu?",
+        "DESC": "Platforma je namenjena IT profesionalcima i entuzijastima koji žele da doprinesu open-source projektima."
+      },
+      "2": {
+        "TITLE": "Da li je korišćenje platforme besplatno?",
+        "DESC": "Da, svi korisnici mogu besplatno predlagati projekte i glasati za njih. Međutim, postoji opcioni sistem članstva koji može doneti dodatne benefite."
+      },
+      "3": {
+        "TITLE": "Kako mogu da se registrujem?",
+        "DESC": "Registracija je moguća samo putem LinkedIn naloga, što osigurava da su svi korisnici deo profesionalne zajednice."
+      },
+      "4": {
+        "TITLE": "Zašto ne mogu da se prijavim?",
+        "DESC": "Proverite da li koristite validan LinkedIn nalog. Takođe, ako vam je nalog blokiran od strane administratora, nećete moći da se autentifikujete."
+      },
+      "5": {
+        "TITLE": "Da li mogu koristiti platformu bez registracije?",
+        "DESC": "Možete pregledati projekte bez registracije, ali predlaganje i glasanje su dostupni samo registrovanim korisnicima."
+      },
+      "6": {
+        "TITLE": "Kako mogu predložiti novi projekat?",
+        "DESC": "Nakon prijave, možete koristiti formu za predlaganje projekta. Unesite osnovne informacije, detaljan opis, ciljeve i planirane tehnologije. Takođe, možete dodati GitHub link za repozitorijum projekta."
+      },
+      "7": {
+        "TITLE": "Da li moj projekat mora biti open-source?",
+        "DESC": "Da, svi predloženi projekti moraju biti društveno korisni i open-source."
+      },
+      "8": {
+        "TITLE": "Kako mogu promovisati svoj projekat?",
+        "DESC": "Svaki projekat automatski dobija šerabilan link koji možete podeliti na društvenim mrežama i drugim kanalima."
+      },
+      "9": {
+        "TITLE": "Šta ako moj projekat bude zabranjen?",
+        "DESC": "Projekti koji krše pravila mogu biti zabranjeni od strane administratora. Oni ostaju vidljivi samo vama i administratoru, uz objašnjenje razloga zabrane."
+      },
+      "10": {
+        "TITLE": "Kako funkcioniše glasanje?",
+        "DESC": "Registrovani korisnici mogu glasati za neograničen broj projekata, ali samo jednom po projektu."
+      },
+      "11": {
+        "TITLE": "Šta znači da glas ima različitu težinu?",
+        "DESC": "Svi korisnici počinju sa nivoom 1 (glas vredi 1 poen). Možete povećati nivo doprinoseći projektima ili putem članstva."
+      },
+      "12": {
+        "TITLE": "Kako znam koji su trenutno najpopularniji projekti?",
+        "DESC": "Na glavnoj stranici se prikazuju projekti sa najviše glasova, a možete ih filtrirati prema različitim kriterijumima."
+      },
+      "13": {
+        "TITLE": "Kako funkcioniše sistem nivoa i članstva?",
+        "DESC": "Korisnici mogu napredovati kroz nivoe doprinosom projektima ili putem opcione članarine. Veći nivo znači veću težinu glasa."
+      },
+      "14": {
+        "TITLE": "Gde mogu videti svoj nivo i status članstva?",
+        "DESC": "Na stranici profila možete videti osnovne informacije, trenutni nivo i status članstva."
+      },
+      "15": {
+        "TITLE": "Ko moderira platformu?",
+        "DESC": "Platformu moderiraju administratori koji mogu zabraniti projekte, blokirati korisnike i upravljati sadržajem."
+      },
+      "16": {
+        "TITLE": "Kako prijaviti neprimeren sadržaj?",
+        "DESC": "Ako primetite neprimeren sadržaj, možete ga prijaviti administratorima putem opcije „Prijavi projekat“."
+      },
+      "17": {
+        "TITLE": "Šta se dešava ako budem blokiran?",
+        "DESC": "Ako administrator blokira vaš nalog, gubite mogućnost autentifikacije na platformi."
+      },
+      "18": {
+        "TITLE": "Kako mogu organizovati sastanak za projekat?",
+        "DESC": "Svaki projekat ima opciju „Book Meeting“, koja generiše Meet link dostupan svim zainteresovanim korisnicima."
+      },
+      "19": {
+        "TITLE": "Kako mogu sačuvati beleške sa sastanka?",
+        "DESC": "Nakon sastanka, kreator projekta može dodati Meeting Notes koje će biti dostupne svim učesnicima."
+      },
+      "20": {
+        "TITLE": "Kako ću znati da je moj projekat ušao u fazu razvoja?",
+        "DESC": "Dobijate email notifikaciju kada vaš projekat prikupi dovoljno glasova za prelazak u razvoj."
+      },
+      "21": {
+        "TITLE": "Da li dobijam obaveštenja kada neko glasa za moj projekat?",
+        "DESC": "Da, postoji in-app notifikacija kada vaš projekat dobije novi glas."
+      },
+      "22": {
+        "TITLE": "Kako funkcionišu email i in-app notifikacije?",
+        "DESC": "Email notifikacije šaljemo za važne događaje (npr. kada projekat dobije dovoljno glasova). In-app notifikacije obaveštavaju vas o svakodnevnim aktivnostima (npr. novi glasovi, sastanci)."
+      }
+    }
+  },
+  "USER": {
+    "LOGIN": "Prijava",
+    "LOGOUT": "Odjava",
+    "AVATAR_ALT": "Korisnička slika"
+  },
+  "PROJECTS": {
+    "LIST": {
+      "TITLE": "Projekti",
+      "INTRO": "Pregledaj postojeće open-source projekte i pridruži se onima koji te inspirišu. Razvijaj softver, učestvuj u diskusijama i doprinesi inovacijama.",
+      "SUGGEST_BUTTON": "Predloži projekat",
+      "EMPTY": "Nema projekata koji odgovaraju tvojim filtrima."
+    },
+    "FILTERS": {
+      "MY_PROJECTS": "Moji projekti",
+      "SUPPORTED_PROJECTS": "Podržani projekti"
+    },
+    "CARD": {
+      "READ_DETAILS": "Pročitaj detalje"
+    },
+    "NEW_CARD": {
+      "TITLE": "Dodaj svoj projekat",
+      "DESC": "Unesi ideju za društveno koristan projekat i razvijaj u open-source zajednici.",
+      "BUTTON": "Kreiraj projekat"
+    }
+  },
+  "BLOG": {
+    "BACK_TO_HOME": "Nazad na početnu",
+    "TITLE": "Blog",
+    "INTRO": "Dobrodošli na Push Serbia blog! Ovde delimo naše znanje, iskustva i novosti iz sveta tehnologije, open-source zajednice i programiranja.",
+    "READ_MORE": "Pročitaj više",
+    "CTA": "Imate ideju za blog post?"
+  },
+  "ABOUT": {
+    "TITLE": "O Push Serbia zajednici",
+    "INTRO": "Push Serbia je neprofitna open-source zajednica posvećena razvoju društveno korisnih projekata, edukaciji i povezivanju IT entuzijasta.",
+    "MISSION": {
+      "TITLE": "Naša misija",
+      "DESC": "Naša misija je da osnažimo IT zajednicu kroz otvorenu saradnju, transparentnost i edukaciju, stvarajući održive projekte sa pozitivnim društvenim uticajem."
+    },
+    "VALUES": {
+      "TITLE": "Naše vrednosti",
+      "OPENNESS": {
+        "TITLE": "Otvorenost",
+        "DESC": "Svi projekti i resursi su dostupni svima, bez ograničenja."
+      },
+      "INCLUSION": {
+        "TITLE": "Inkluzija",
+        "DESC": "Podstičemo raznolikost i učešće svih članova zajednice."
+      },
+      "EDUCATION": {
+        "TITLE": "Edukacija",
+        "DESC": "Organizujemo radionice, predavanja i delimo znanje."
+      },
+      "IMPACT": {
+        "TITLE": "Društveni uticaj",
+        "DESC": "Fokusirani smo na projekte koji donose pozitivne promene."
+      }
+    },
+    "TEAM": {
+      "TITLE": "Naš tim",
+      "DESC": "Push Serbia okuplja volontere, developere, dizajnere i edukatore koji zajednički rade na razvoju open-source projekata."
+    },
+    "ACTIVITIES": {
+      "TITLE": "Šta radimo?",
+      "OPEN_SOURCE": {
+        "TITLE": "Razvoj open-source projekata",
+        "DESC": "Pokrećemo i održavamo projekte dostupne svima, sa transparentnim kodom i dokumentacijom."
+      },
+      "EDU": {
+        "TITLE": "Edukacija i mentorstvo",
+        "DESC": "Organizujemo radionice, predavanja i mentorisanje za članove zajednice."
+      },
+      "EVENTS": {
+        "TITLE": "Događaji i okupljanja",
+        "DESC": "Povezujemo članove kroz online i offline događaje, hackathone i meetup-e."
+      },
+      "MENTOR": {
+        "TITLE": "Podrška i mentorstvo",
+        "DESC": "Iskusni članovi pružaju podršku i savete novim učesnicima."
+      }
+    }
+  },
+  "BRAND_CENTER": {
+    "TITLE": "Brend Centar",
+    "INTRO": "Dobrodošli u Push Serbia Brend Centar. Ovde možete pronaći sve resurse potrebne za pravilno korišćenje našeg brenda, uključujući logotipe, boje, tipografiju i smernice za komunikaciju.",
+    "BRAND": {
+      "TITLE": "Naš brend",
+      "DESC": "Push Serbia brend predstavlja našu misiju da osnažimo lokalnu tehnološku zajednicu kroz otvorenu saradnju i deljenje znanja. Naš vizuelni identitet odražava vrednosti otvorenosti, inovacije i zajedništva."
+    },
+    "LOGO": {
+      "TITLE": "Logotip",
+      "PRIMARY": "Primarni logotip",
+      "PRIMARY_DESC": "Naš primarni logotip kombinuje Git komandu \"push\" sa imenom naše zemlje, simbolizujući našu misiju da \"gurnemo\" Srbiju napred u tehnološkom razvoju.",
+      "VARIATIONS": "Varijacije logotipa",
+      "VARIATIONS_DESC": "Logotip se može koristiti u različitim varijacijama boja u zavisnosti od pozadine i konteksta."
+    },
+    "COLORS": {
+      "TITLE": "Boje",
+      "PRIMARY": "Primarna boja",
+      "SECONDARY": "Sekundarna boja",
+      "NEUTRAL": "Neutralna boja"
+    },
+    "TYPOGRAPHY": {
+      "TITLE": "Tipografija",
+      "INTER": {
+        "TITLE": "Inter",
+        "DESC": "Naš primarni font za sve web sadržaje i digitalne materijale. Inter je moderan sans-serif font koji pruža odličnu čitljivost na svim uređajima."
+      },
+      "ROBOTO_MONO": {
+        "TITLE": "Roboto Mono",
+        "DESC": "Naš sekundarni font koji se koristi za prikaz koda i tehničkih detalja. Roboto Mono je monospace font koji obezbeđuje jasno razlikovanje karaktera."
+      }
+    },
+    "GUIDELINES": {
+      "TITLE": "Smernice za komunikaciju",
+      "TONE": {
+        "TITLE": "Ton i glas",
+        "INTRO": "Naša komunikacija treba da bude:",
+        "FRIENDLY": "Prijateljska i pristupačna - Koristimo jednostavan jezik i izbegavamo žargon kad god je to moguće.",
+        "PROFESSIONAL": "Profesionalna - Iako smo neformalni, uvek održavamo profesionalni ton.",
+        "INCLUSIVE": "Inkluzivna - Naš jezik treba da bude inkluzivan i da poštuje različitosti.",
+        "EDUCATIONAL": "Edukativna - Objašnjavamo složene koncepte na jasan i razumljiv način.",
+        "INSPIRING": "Inspirativna - Podstičemo i motivišemo našu zajednicu da uči i doprinosi."
+      }
+    },
+    "DOWNLOAD": {
+      "TITLE": "Preuzimanje resursa",
+      "DESIGN_PACKAGE": {
+        "TITLE": "Paket za dizajnere",
+        "DESC": "Preuzmite kompletni paket sa svim logotipima, bojama i fontovima u različitim formatima (AI, SVG, PNG).",
+        "BUTTON": "Preuzmi paket za dizajnere"
+      },
+      "GUIDELINES": {
+        "TITLE": "Smernice za brend",
+        "DESC": "Preuzmite detaljni PDF dokument sa svim smernicama za korišćenje našeg brenda.",
+        "BUTTON": "Preuzmi smernice za brend"
+      }
+    },
+    "CONTACT": {
+      "BUTTON": "Imate pitanja o našem brendu?"
+    }
+  },
+  "DOCS": {
+    "CAREERS": {
+      "TITLE": "Karijere",
+      "DESCRIPTION": "Pridružite se našem timu entuzijasta koji rade na razvoju open-source zajednice u Srbiji. Iako svako može da doprinosi našim open-source projektima, tražimo posvećene pojedince za naš core tim koji će voditi razvoj i koordinisati zajednicu. Zajedno možemo napraviti razliku!",
+      "WHY_WORK_WITH_US": "Zašto raditi sa nama",
+      "BENEFITS": {
+        "PURPOSE": {
+          "TITLE": "Rad sa svrhom",
+          "DESC": "Radite na projektima koji imaju stvarni društveni uticaj i doprinose zajednici."
+        },
+        "FLEXIBILITY": {
+          "TITLE": "Fleksibilnost",
+          "DESC": "Radite kada i odakle vam najviše odgovara, fokusirajući se na rezultate."
+        },
+        "LEARNING": {
+          "TITLE": "Kontinuirano učenje",
+          "DESC": "Stalno unapređujte svoje veštine kroz rad na raznovrsnim projektima i saradnju sa iskusnim stručnjacima."
+        },
+        "COMMUNITY": {
+          "TITLE": "Zajednica",
+          "DESC": "Pridružite se aktivnoj zajednici saradnika i sarađujte na značajnim open-source projektima."
+        }
+      },
+      "OPEN_POSITIONS": "Otvorene pozicije",
+      "POSITIONS": {
+        "FULLSTACK": {
+          "TITLE": "Full Stack Developer",
+          "DESC": "Tražimo iskusnog Full Stack developera koji će raditi na razvoju i održavanju naših web aplikacija. Idealan kandidat ima iskustva sa modernim JavaScript frameworkima (React, Angular, Vue) i backend tehnologijama (Node.js, Python, Java).",
+          "RESPONSIBILITIES_TITLE": "Ključne odgovornosti:",
+          "RESPONSIBILITIES": [
+            "Razvoj i održavanje web aplikacija",
+            "Implementacija novih funkcionalnosti",
+            "Optimizacija performansi",
+            "Saradnja sa drugim članovima tima"
+          ],
+          "APPLY": "Prijavi se za poziciju"
+        },
+        "UXUI": {
+          "TITLE": "UX/UI Designer",
+          "DESC": "Tražimo kreativnog UX/UI dizajnera koji će kreirati intuitivne i privlačne korisničke interfejse za naše aplikacije. Idealan kandidat ima iskustva u dizajnu korisničkog iskustva, wireframing-u i prototipovanju.",
+          "RESPONSIBILITIES_TITLE": "Ključne odgovornosti:",
+          "RESPONSIBILITIES": [
+            "Kreiranje wireframe-ova i prototipova",
+            "Dizajn korisničkih interfejsa",
+            "Sprovođenje korisničkih istraživanja",
+            "Saradnja sa razvojnim timom"
+          ],
+          "APPLY": "Prijavi se za poziciju"
+        },
+        "COMMUNITY": {
+          "TITLE": "Community Manager",
+          "DESC": "Tražimo energičnog Community Manager-a koji će graditi i održavati našu online zajednicu. Idealan kandidat ima iskustva u upravljanju društvenim mrežama, organizaciji događaja i komunikaciji sa zajednicom.",
+          "RESPONSIBILITIES_TITLE": "Ključne odgovornosti:",
+          "RESPONSIBILITIES": [
+            "Upravljanje društvenim mrežama",
+            "Organizacija online i offline događaja",
+            "Kreiranje sadržaja za zajednicu",
+            "Odgovaranje na pitanja i pružanje podrške članovima zajednice"
+          ],
+          "APPLY": "Prijavi se za poziciju"
+        }
+      },
+      "APPLICATION_PROCESS": "Proces prijave",
+      "PROCESS_DESC": "Naš proces selekcije za core tim je jednostavan i fokusiran na praktične doprinose. Umesto tradicionalnog procesa prijave sa CV-jem i motivacionim pismom, verujemo da je najbolji način da se pridružite našem timu kroz aktivan doprinos našim projektima.",
+      "PROCESS_STEPS": [
+        "Doprinesite razvoju nekog od naših aktivnih open-source projekata (pogledajte našu GitHub organizaciju)",
+        "Nakon što uočimo vaše doprinose, kontaktiraćemo vas za inicijalni razgovor",
+        "Razgovor sa timom o vašim interesovanjima i mogućnostima saradnje",
+        "Ponuda za saradnju u core timu"
+      ]
+    },
+    "LICENSING": {
+      "TITLE": "Licence",
+      "INTRO": "Push Serbia je posvećen otvorenom kodu i transparentnosti. Naši projekti su licencirani pod raznim open-source licencama koje omogućavaju slobodno korišćenje, modifikaciju i distribuciju.",
+      "PROJECT_LICENSES_TITLE": "Licence za naše projekte",
+      "PROJECT_LICENSES_INTRO": "Većina naših projekata je licencirana pod jednom od sledećih licenci:",
+      "MIT": {
+        "TITLE": "MIT Licenca",
+        "DESC": "MIT licenca je permisivna licenca koja omogućava slobodno korišćenje, modifikaciju i distribuciju koda uz minimalna ograničenja. Jedini uslov je da originalna licenca i obaveštenje o autorskim pravima budu uključeni u sve kopije ili značajne delove softvera.",
+        "FEATURES_TITLE": "Ključne karakteristike:",
+        "FEATURES": [
+          "Dozvoljava komercijalnu upotrebu",
+          "Dozvoljava modifikaciju",
+          "Dozvoljava distribuciju",
+          "Dozvoljava privatnu upotrebu",
+          "Uključuje ograničenu odgovornost i bez garancije"
+        ]
+      },
+      "GPL": {
+        "TITLE": "GNU General Public License (GPL)",
+        "DESC": "GPL je licenca koja garantuje krajnjim korisnicima slobodu da pokreću, proučavaju, dele i modifikuju softver. Ključna karakteristika GPL-a je da zahteva da svi izvedeni radovi takođe budu distribuirani pod istom licencom.",
+        "FEATURES_TITLE": "Ključne karakteristike:",
+        "FEATURES": [
+          "Dozvoljava komercijalnu upotrebu",
+          "Dozvoljava modifikaciju",
+          "Dozvoljava distribuciju",
+          "Dozvoljava privatnu upotrebu",
+          "Zahteva da izvorni kod bude dostupan",
+          "Zahteva da promene budu dokumentovane",
+          "Zahteva da izvedeni radovi budu pod istom licencom",
+          "Uključuje ograničenu odgovornost i bez garancije"
+        ]
+      },
+      "APACHE": {
+        "TITLE": "Apache License 2.0",
+        "DESC": "Apache licenca je permisivna licenca koja omogućava slobodno korišćenje, modifikaciju i distribuciju koda. Zahteva očuvanje obaveštenja o autorskim pravima i odricanje od odgovornosti, ali ne zahteva da izvedeni radovi budu pod istom licencom.",
+        "FEATURES_TITLE": "Ključne karakteristike:",
+        "FEATURES": [
+          "Dozvoljava komercijalnu upotrebu",
+          "Dozvoljava modifikaciju",
+          "Dozvoljava distribuciju",
+          "Dozvoljava privatnu upotrebu",
+          "Zahteva očuvanje obaveštenja o autorskim pravima i odricanje od odgovornosti",
+          "Zahteva da promene budu dokumentovane",
+          "Uključuje eksplicitno dodeljivanje prava na patente",
+          "Uključuje ograničenu odgovornost i bez garancije"
+        ]
+      },
+      "CONTENT_TITLE": "Licence za sadržaj",
+      "CONTENT_DESC": "Sadržaj na našem sajtu, uključujući tekstove, slike i druge medije, licenciran je pod Creative Commons Attribution 4.0 International License (CC BY 4.0), osim ako nije drugačije naznačeno.",
+      "CCBY": {
+        "TITLE": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+        "DESC": "Ova licenca omogućava deljenje i adaptaciju materijala u bilo koju svrhu, uključujući komercijalne, pod uslovom da se navede odgovarajuća atribucija.",
+        "FEATURES_TITLE": "Ključne karakteristike:",
+        "FEATURES": [
+          "Dozvoljava komercijalnu upotrebu",
+          "Dozvoljava modifikaciju",
+          "Dozvoljava distribuciju",
+          "Zahteva atribuciju (navođenje autora)"
+        ]
+      },
+      "THIRD_PARTY_TITLE": "Licence trećih strana",
+      "THIRD_PARTY_DESC": "Naši projekti mogu koristiti biblioteke i resurse trećih strana koji su licencirani pod različitim licencama. Detalji o tim licencama mogu se naći u dokumentaciji svakog projekta.",
+      "CONTACT_CTA": "Imate pitanja o licencama?"
+    }
+  },
+  "PAYMENTS": {
+    "PAYMENT_PAGE": {
+      "ONE_TIME_LABEL": "Jednokratna donacija",
+      "SUBSCRIPTION_LABEL": "Pretplata",
+      "AMOUNT_LABEL": "Iznos:",
+      "MONTHLY_SUBSCRIPTION_LABEL": "Mesečna pretplata",
+      "CHANGE_SUPPORT": "Promeni izabranu podršku",
+      "FULL_NAME_LABEL": "Ime i prezime",
+      "FULL_NAME_PLACEHOLDER": "Unesite vaše ime i prezime",
+      "FULL_NAME_REQUIRED": "Ime i prezime je obavezno polje",
+      "EMAIL_LABEL": "Email adresa",
+      "EMAIL_PLACEHOLDER": "ime@example.com",
+      "EMAIL_INVALID": "Unesite validnu email adresu",
+      "TERMS_AGREE_PREFIX": "Slažem se sa",
+      "TERMS_LINK": "uslovima korišćenja",
+      "TERMS_ADDITIONAL": "i potvrđujem da razumem kako će moja donacija biti iskorišćena",
+      "TERMS_REQUIRED": "Morate se složiti sa uslovima korišćenja",
+      "SUBMIT_SENDING": "Slanje...",
+      "SUBMIT_LABEL": "Pošalji podatke",
+      "SUBMISSION_ERROR": "Došlo je do greške prilikom slanja podataka. Molimo pokušajte ponovo.",
+      "SUCCESS_TITLE": "Hvala na podršci!",
+      "SUCCESS_SIGNED": "Uspešno ste se prijavili za podršku paketa",
+      "IN_THE_AMOUNT_OF": "u iznosu od",
+      "SUCCESS_CONTACT_PARAGRAPH": "Kontaktiraćemo vas sa detaljima o načinu podrške. Napominjemo da trenutno ne primamo online uplate. Ako imate bilo kakvih pitanja, slobodno nas kontaktirajte.",
+      "BACK_TO_HOME": "Nazad na početnu",
+      "CONTACT_LINE": "Za sva pitanja u vezi sa donacijama, molimo vas da nas kontaktirate na email: podrska@pushserbia.org"
+    }
   }
 }

@@ -7,18 +7,15 @@
       <h2
         class="mb-6 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white sm:text-5xl"
       >
-        Podrži open-source zajednicu
+        {{ "LANDING.PRICING.TITLE" | translate }}
       </h2>
       <p class="mb-4 text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
-        Push Serbia je neprofitna open-source zajednica koja razvija društveno
-        korisne projekte.
+        {{ "LANDING.PRICING.INTRO" | translate }}
       </p>
       <p
         class="text-lg text-gray-600 dark:text-gray-300 sm:text-xl max-w-3xl mx-auto"
       >
-        Tvojom donacijom omogućavaš održavanje infrastrukture, razvoj novih
-        projekata i organizaciju edukativnih događaja. Svaka podrška čini
-        razliku – zajedno gradimo održivu i otvorenu tehnološku budućnost!
+        {{ "LANDING.PRICING.INTRO_DETAILS" | translate }}
       </p>
     </div>
 
@@ -31,9 +28,11 @@
           }"
           class="flex flex-col p-8 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-xl border border-gray-200 shadow-lg dark:border-gray-700 dark:text-white dark:bg-gray-800 transition-all hover:shadow-xl"
         >
-          <h3 class="mb-4 text-2xl font-bold">{{ donation.title }}</h3>
+          <h3 class="mb-4 text-2xl font-bold">
+            {{ donation.titleKey | translate }}
+          </h3>
           <p class="text-gray-600 sm:text-lg dark:text-gray-300">
-            {{ donation.description }}
+            {{ donation.descriptionKey | translate }}
           </p>
 
           <div class="flex justify-center items-baseline my-8">
@@ -42,7 +41,9 @@
               >{{ donation.price | currency: "EUR" : "symbol" : "1.0" }}</span
             >
             <span class="text-gray-500 text-xl">{{
-              donation.isOneTime ? "jednokratno" : "/mesečno"
+              donation.isOneTime
+                ? ("LANDING.PRICING.PRICE_SUFFIX.ONE_TIME" | translate)
+                : ("LANDING.PRICING.PRICE_SUFFIX.MONTHLY" | translate)
             }}</span>
           </div>
 
@@ -50,30 +51,50 @@
             <h4
               class="text-base font-medium text-gray-900 dark:text-white mb-2"
             >
-              Uticaj donacije:
+              {{ "LANDING.PRICING.DONATION_IMPACT_LABEL" | translate }}
             </h4>
             <p class="text-gray-700 dark:text-gray-300">
-              {{ donation.impact }}
+              {{ donation.impactKey | translate }}
             </p>
           </div>
 
           <ul role="list" class="mb-8 space-y-4 text-left">
-            @for (benefit of donation.benefits; track $index) {
-              <li class="flex items-center space-x-3">
-                <svg
-                  class="flex-shrink-0 w-5 h-5 text-primary-600 dark:text-primary-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <span>{{ benefit }}</span>
-              </li>
+            @if (donation.benefitsKeys?.length) {
+              @for (benefitKey of donation.benefitsKeys; track $index) {
+                <li class="flex items-center space-x-3">
+                  <svg
+                    class="flex-shrink-0 w-5 h-5 text-primary-600 dark:text-primary-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <span>{{ benefitKey | translate }}</span>
+                </li>
+              }
+            } @else {
+              @for (benefit of donation.benefitsKeys; track $index) {
+                <li class="flex items-center space-x-3">
+                  <svg
+                    class="flex-shrink-0 w-5 h-5 text-primary-600 dark:text-primary-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <span>{{ benefit | translate }}</span>
+                </li>
+              }
             }
           </ul>
 
@@ -82,10 +103,14 @@
             [queryParams]="{
               isOneTime: donation.isOneTime,
               amount: donation.price,
-              title: donation.title,
+              title: donation.titleKey,
             }"
             class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-lg px-6 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 shadow-md hover:shadow-lg transition-all mt-auto"
-            >{{ donation.isOneTime ? "Doniraj" : "Pretplati se" }}</a
+            >{{
+              donation.isOneTime
+                ? ("LANDING.PRICING.BUTTON_DONATE" | translate)
+                : ("LANDING.PRICING.BUTTON_SUBSCRIBE" | translate)
+            }}</a
           >
         </div>
       }
@@ -95,15 +120,13 @@
       class="mx-auto max-w-screen-md text-center mt-16 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md"
     >
       <p class="mb-6 text-lg text-gray-600 dark:text-gray-300">
-        Sve donacije su transparentne i koriste se isključivo za održavanje i
-        razvoj open-source projekata. Mesečno objavljujemo izveštaje o
-        korišćenju sredstava.
+        {{ "LANDING.PRICING.TRANSPARENCY_PARAGRAPH" | translate }}
       </p>
       <a
         routerLink="placanja/finansiranje"
         class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-primary-700 bg-primary-50 rounded-lg hover:bg-primary-100 hover:text-primary-800 hover:dark:text-primary-300 transition-colors dark:bg-gray-700 dark:text-primary-400 dark:hover:bg-gray-600"
       >
-        Saznaj više o našem finansiranju
+        {{ "LANDING.PRICING.FUNDING_CTA" | translate }}
         <svg
           class="ml-2 w-5 h-5"
           fill="currentColor"

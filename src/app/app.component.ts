@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './core/theme/theme.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -8,6 +8,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   imports: [RouterOutlet, TranslateModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   private themeService = inject(ThemeService);
@@ -24,12 +25,18 @@ export class AppComponent {
         if (saved === 'sr' || saved === 'en') {
           lang = saved;
         } else {
-          const browserLang = (typeof navigator !== 'undefined' && navigator.language) ? navigator.language : 'en';
+          const browserLang =
+            typeof navigator !== 'undefined' && navigator.language
+              ? navigator.language
+              : 'en';
           lang = browserLang.toLowerCase().startsWith('sr') ? 'sr' : 'en';
         }
       }
     } catch {
-      const browserLang = (typeof navigator !== 'undefined' && navigator.language) ? navigator.language : 'en';
+      const browserLang =
+        typeof navigator !== 'undefined' && navigator.language
+          ? navigator.language
+          : 'en';
       lang = browserLang.toLowerCase().startsWith('sr') ? 'sr' : 'en';
     }
 

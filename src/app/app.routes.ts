@@ -1,4 +1,9 @@
-import { Routes, CanActivateFn, Router, RedirectFunction } from '@angular/router';
+import {
+  Routes,
+  CanActivateFn,
+  Router,
+  RedirectFunction,
+} from '@angular/router';
 import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -33,7 +38,6 @@ function getPreferredLang(): Lang {
   return preferred;
 }
 
-
 const validateLangGuard: CanActivateFn = (route) => {
   const router = inject(Router);
   const translate = inject(TranslateService);
@@ -54,7 +58,6 @@ const validateLangGuard: CanActivateFn = (route) => {
   return true;
 };
 
-
 const childRoutes: Routes = [
   {
     path: '',
@@ -66,7 +69,9 @@ const childRoutes: Routes = [
   {
     path: 'placanja',
     loadChildren: () =>
-      import('./features/payments/payments.routes').then((m) => m.paymentsRoutes),
+      import('./features/payments/payments.routes').then(
+        (m) => m.paymentsRoutes,
+      ),
   },
   {
     path: 'dokumentacija',
@@ -100,6 +105,13 @@ const childRoutes: Routes = [
         (m) => m.projectsRoutes,
       ),
   },
+  {
+    path: 'projects',
+    loadChildren: () =>
+      import('./features/projects/projects.routes').then(
+        (m) => m.projectsRoutes,
+      ),
+  },
 ];
 
 const rootRedirect: RedirectFunction = () => `/${getPreferredLang()}`;
@@ -111,7 +123,10 @@ const wildcardRedirect: RedirectFunction = (data) => {
 
   // If already prefixed with supported lang, keep as-is
   if (first === 'sr' || first === 'en') {
-    return `/${segments.join('/')}` + buildQueryAndFragment(data.queryParams, data.fragment);
+    return (
+      `/${segments.join('/')}` +
+      buildQueryAndFragment(data.queryParams, data.fragment)
+    );
   }
 
   // Build new URL with preferred lang
@@ -120,26 +135,34 @@ const wildcardRedirect: RedirectFunction = (data) => {
   return base + buildQueryAndFragment(data.queryParams, data.fragment);
 };
 
-function buildQueryAndFragment(queryParams: Record<string, any> | undefined, fragment: string | null | undefined): string {
-  const qp = queryParams && Object.keys(queryParams).length
-    ? '?' + new URLSearchParams(
-        Object.entries(queryParams).reduce<Record<string, string>>((acc, [k, v]) => {
-          // Normalize values to string for URLSearchParams
-          if (v == null) {
-            return acc;
-          }
-          if (Array.isArray(v)) {
-            // Repeat key for array values
-            v.forEach((val) => {
-              acc[k] = String(val);
-            });
-          } else {
-            acc[k] = String(v);
-          }
-          return acc;
-        }, {}),
-      ).toString()
-    : '';
+function buildQueryAndFragment(
+  queryParams: Record<string, any> | undefined,
+  fragment: string | null | undefined,
+): string {
+  const qp =
+    queryParams && Object.keys(queryParams).length
+      ? '?' +
+        new URLSearchParams(
+          Object.entries(queryParams).reduce<Record<string, string>>(
+            (acc, [k, v]) => {
+              // Normalize values to string for URLSearchParams
+              if (v == null) {
+                return acc;
+              }
+              if (Array.isArray(v)) {
+                // Repeat key for array values
+                v.forEach((val) => {
+                  acc[k] = String(val);
+                });
+              } else {
+                acc[k] = String(v);
+              }
+              return acc;
+            },
+            {},
+          ),
+        ).toString()
+      : '';
   const frag = fragment ? `#${fragment}` : '';
   return `${qp}${frag}`;
 }

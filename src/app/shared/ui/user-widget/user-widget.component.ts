@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-widget',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslateModule],
   templateUrl: './user-widget.component.html',
   styleUrl: './user-widget.component.css',
 })

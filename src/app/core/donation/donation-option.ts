@@ -1,58 +1,55 @@
 export interface DonationOption {
-  title: string;
   price: number;
   isOneTime: boolean;
-  description: string;
-  benefits: string[];
-  impact: string;
   isHighlighted?: boolean;
+  titleKey?: string;
+  descriptionKey?: string;
+  benefitsKeys?: string[];
+  impactKey?: string;
 }
 
 export const donationOptions: DonationOption[] = [
   {
-    title: 'Prijatelj zajednice',
     price: 5,
     isOneTime: false,
-    description:
-      'Svaki doprinos je važan! Tvoja podrška pomaže održavanju osnovne infrastrukture i omogućava pristup resursima svima.',
-    benefits: [
-      'Pristup zajedničkom Slack kanalu',
-      'Zahvalnica na našem sajtu',
-      'Transparentni izveštaji o korišćenju sredstava',
-      'Učešće u mesečnim anketama zajednice',
-      'Doprinos održivosti open-source ekosistema',
+    titleKey: 'LANDING.PRICING.PACKAGES.FRIEND.TITLE',
+    descriptionKey: 'LANDING.PRICING.PACKAGES.FRIEND.DESC',
+    benefitsKeys: [
+      'LANDING.PRICING.PACKAGES.FRIEND.BENEFITS.0',
+      'LANDING.PRICING.PACKAGES.FRIEND.BENEFITS.1',
+      'LANDING.PRICING.PACKAGES.FRIEND.BENEFITS.2',
+      'LANDING.PRICING.PACKAGES.FRIEND.BENEFITS.3',
+      'LANDING.PRICING.PACKAGES.FRIEND.BENEFITS.4',
     ],
-    impact: 'Pokriva mesečne troškove hostinga i osnovnih servisa',
+    impactKey: 'LANDING.PRICING.PACKAGES.FRIEND.IMPACT',
   },
   {
-    title: 'Aktivni član',
     price: 15,
     isOneTime: false,
-    description:
-      'Redovna podrška koja omogućava dugoročno planiranje i kontinuirani razvoj projekata od društvenog značaja.',
-    benefits: [
-      'Sve pogodnosti "Prijatelja zajednice"',
-      'Učešće u odlučivanju o prioritetima razvoja',
-      'Pristup zajedničkim resursima za učenje',
-      'Prioritetni glas prilikom glasanja (broji se duplo)',
-      'Povezivanje sa drugim članovima zajednice',
-    ],
-    impact: 'Podržava organizaciju događaja i razvoj novih inicijativa',
     isHighlighted: true,
+    titleKey: 'LANDING.PRICING.PACKAGES.MEMBER.TITLE',
+    descriptionKey: 'LANDING.PRICING.PACKAGES.MEMBER.DESC',
+    benefitsKeys: [
+      'LANDING.PRICING.PACKAGES.MEMBER.BENEFITS.0',
+      'LANDING.PRICING.PACKAGES.MEMBER.BENEFITS.1',
+      'LANDING.PRICING.PACKAGES.MEMBER.BENEFITS.2',
+      'LANDING.PRICING.PACKAGES.MEMBER.BENEFITS.3',
+      'LANDING.PRICING.PACKAGES.MEMBER.BENEFITS.4',
+    ],
+    impactKey: 'LANDING.PRICING.PACKAGES.MEMBER.IMPACT',
   },
   {
-    title: 'Jednokratna podrška',
     price: 97,
     isOneTime: true,
-    description:
-      'Jednokratna donacija koja pomaže razvoju konkretnih projekata i inicijativa bez dugoročne obaveze.',
-    benefits: [
-      'Sve pogodnosti "Prijatelja zajednice"',
-      'Mogućnost usmeravanja donacije ka određenom projektu',
-      'Priznanje u dokumentaciji projekta',
-      'Pristup edukativnim materijalima zajednice',
-      'Poziv na online događaje i radionice',
+    titleKey: 'LANDING.PRICING.PACKAGES.ONE_TIME.TITLE',
+    descriptionKey: 'LANDING.PRICING.PACKAGES.ONE_TIME.DESC',
+    benefitsKeys: [
+      'LANDING.PRICING.PACKAGES.ONE_TIME.BENEFITS.0',
+      'LANDING.PRICING.PACKAGES.ONE_TIME.BENEFITS.1',
+      'LANDING.PRICING.PACKAGES.ONE_TIME.BENEFITS.2',
+      'LANDING.PRICING.PACKAGES.ONE_TIME.BENEFITS.3',
+      'LANDING.PRICING.PACKAGES.ONE_TIME.BENEFITS.4',
     ],
-    impact: 'Omogućava razvoj novih funkcionalnosti i edukativnih materijala',
+    impactKey: 'LANDING.PRICING.PACKAGES.ONE_TIME.IMPACT',
   },
 ];

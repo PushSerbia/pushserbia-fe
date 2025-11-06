@@ -17,13 +17,17 @@
             clip-rule="evenodd"
           ></path>
         </svg>
-        Nazad na početnu
+        {{ "BLOG.BACK_TO_HOME" | translate }}
       </a>
 
       <h1
         class="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 dark:text-white"
       >
-        {{ isOneTime ? "Jednokratna donacija" : "Pretplata" }}: {{ title }}
+        {{
+          isOneTime
+            ? ("PAYMENTS.PAYMENT_PAGE.ONE_TIME_LABEL" | translate)
+            : ("PAYMENTS.PAYMENT_PAGE.SUBSCRIPTION_LABEL" | translate)
+        }}: {{ title }}
       </h1>
 
       <!-- Step 1: Collect user data -->
@@ -32,15 +36,20 @@
           class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600"
         >
           <div class="flex justify-between items-center">
-            <span class="text-lg font-medium text-gray-900 dark:text-white"
-              >Iznos:</span
-            >
+            <span class="text-lg font-medium text-gray-900 dark:text-white">{{
+              "PAYMENTS.PAYMENT_PAGE.AMOUNT_LABEL" | translate
+            }}</span>
             <span class="text-2xl font-bold text-gray-900 dark:text-white">{{
               amount | currency: "EUR" : "symbol" : "1.0"
             }}</span>
           </div>
           <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            {{ isOneTime ? "Jednokratna donacija" : "Mesečna pretplata" }}
+            {{
+              isOneTime
+                ? ("PAYMENTS.PAYMENT_PAGE.ONE_TIME_LABEL" | translate)
+                : ("PAYMENTS.PAYMENT_PAGE.MONTHLY_SUBSCRIPTION_LABEL"
+                  | translate)
+            }}
           </div>
           <button
             type="button"
@@ -57,23 +66,27 @@
                 d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
               ></path>
             </svg>
-            Promeni izabranu podršku
+            {{ "PAYMENTS.PAYMENT_PAGE.CHANGE_SUPPORT" | translate }}
           </button>
 
           <!-- Options Selector -->
           @if (showOptionsSelector) {
             <div class="mt-4 space-y-3">
-              @for (option of donationOptions; track option.title) {
-                <div
+              @for (option of donationOptions; track option.titleKey) {
+                <button
+                  type="button"
                   (click)="selectOption(option)"
-                  class="p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors"
+                  [attr.aria-pressed]="
+                    selectedOption?.titleKey === option.titleKey
+                  "
+                  class="w-full text-left p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors"
                   [class.border-primary-500]="
-                    selectedOption?.title === option.title
+                    selectedOption?.titleKey === option.titleKey
                   "
                 >
                   <div class="flex justify-between items-center">
                     <span class="font-medium text-gray-900 dark:text-white">{{
-                      option.title
+                      option.titleKey | translate
                     }}</span>
                     <span class="font-bold text-gray-900 dark:text-white">{{
                       option.price | currency: "EUR" : "symbol" : "1.0"
@@ -82,11 +95,12 @@
                   <div class="text-xs text-gray-500 dark:text-gray-400">
                     {{
                       option.isOneTime
-                        ? "Jednokratna donacija"
-                        : "Mesečna pretplata"
+                        ? ("PAYMENTS.PAYMENT_PAGE.ONE_TIME_LABEL" | translate)
+                        : ("PAYMENTS.PAYMENT_PAGE.MONTHLY_SUBSCRIPTION_LABEL"
+                          | translate)
                     }}
                   </div>
-                </div>
+                </button>
               }
             </div>
           }
@@ -101,21 +115,23 @@
             <label
               for="fullName"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Ime i prezime</label
+              >{{ "PAYMENTS.PAYMENT_PAGE.FULL_NAME_LABEL" | translate }}</label
             >
             <input
               type="text"
               id="fullName"
               formControlName="fullName"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Unesite vaše ime i prezime"
+              placeholder="{{
+                'PAYMENTS.PAYMENT_PAGE.FULL_NAME_PLACEHOLDER' | translate
+              }}"
             />
             @if (
               paymentForm.get("fullName")?.invalid &&
               paymentForm.get("fullName")?.touched
             ) {
               <div class="mt-1 text-sm text-red-600 dark:text-red-500">
-                Ime i prezime je obavezno polje
+                {{ "PAYMENTS.PAYMENT_PAGE.FULL_NAME_REQUIRED" | translate }}
               </div>
             }
           </div>
@@ -124,21 +140,23 @@
             <label
               for="email"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Email adresa</label
+              >{{ "PAYMENTS.PAYMENT_PAGE.EMAIL_LABEL" | translate }}</label
             >
             <input
               type="email"
               id="email"
               formControlName="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="ime@example.com"
+              placeholder="{{
+                'PAYMENTS.PAYMENT_PAGE.EMAIL_PLACEHOLDER' | translate
+              }}"
             />
             @if (
               paymentForm.get("email")?.invalid &&
               paymentForm.get("email")?.touched
             ) {
               <div class="mt-1 text-sm text-red-600 dark:text-red-500">
-                Unesite validnu email adresu
+                {{ "PAYMENTS.PAYMENT_PAGE.EMAIL_INVALID" | translate }}
               </div>
             }
           </div>
@@ -156,14 +174,14 @@
               for="agreeTerms"
               class="ml-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Slažem se sa
+              {{ "PAYMENTS.PAYMENT_PAGE.TERMS_AGREE_PREFIX" | translate }}
               <a
                 routerLink="/dokumentacija/uslovi-koriscenja"
                 target="_blank"
                 class="text-primary-600 hover:underline dark:text-primary-500"
-                >uslovima korišćenja</a
+                >{{ "PAYMENTS.PAYMENT_PAGE.TERMS_LINK" | translate }}</a
               >
-              i potvrđujem da razumem kako će moja donacija biti iskorišćena
+              {{ "PAYMENTS.PAYMENT_PAGE.TERMS_ADDITIONAL" | translate }}
             </label>
           </div>
           @if (
@@ -171,7 +189,7 @@
             paymentForm.get("agreeTerms")?.touched
           ) {
             <div class="mt-1 text-sm text-red-600 dark:text-red-500">
-              Morate se složiti sa uslovima korišćenja
+              {{ "PAYMENTS.PAYMENT_PAGE.TERMS_REQUIRED" | translate }}
             </div>
           }
 
@@ -213,10 +231,10 @@
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Slanje...
+                  {{ "PAYMENTS.PAYMENT_PAGE.SUBMIT_SENDING" | translate }}
                 </span>
               } @else {
-                Pošalji podatke
+                {{ "PAYMENTS.PAYMENT_PAGE.SUBMIT_LABEL" | translate }}
               }
             </button>
           </div>
@@ -242,26 +260,24 @@
               ></path>
             </svg>
             <h2 class="text-xl font-bold text-green-600 dark:text-green-500">
-              Hvala na podršci!
+              {{ "PAYMENTS.PAYMENT_PAGE.SUCCESS_TITLE" | translate }}
             </h2>
           </div>
           <p class="mb-4 text-green-600 dark:text-green-500">
-            Uspešno ste se prijavili za podršku paketa
-            <strong>{{ title }}</strong> u iznosu od
-            <strong>{{ amount | currency: "EUR" : "symbol" : "1.0" }}</strong
-            >.
+            {{ "PAYMENTS.PAYMENT_PAGE.SUCCESS_SIGNED" | translate }}
+            <strong>{{ title }}</strong>
+            {{ "PAYMENTS.PAYMENT_PAGE.IN_THE_AMOUNT_OF" | translate }}
+            <strong>{{ amount | currency: "EUR" : "symbol" : "1.0" }}</strong>
           </p>
           <p class="mb-4 text-green-600 dark:text-green-500">
-            Kontaktiraćemo vas sa detaljima o načinu podrške. Napominjemo da
-            trenutno ne primamo online uplate. Ako imate bilo kakvih pitanja,
-            slobodno nas kontaktirajte.
+            {{ "PAYMENTS.PAYMENT_PAGE.SUCCESS_CONTACT_PARAGRAPH" | translate }}
           </p>
           <div class="mt-6">
             <button
               (click)="onSubmit()"
               class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
-              Nazad na početnu
+              {{ "PAYMENTS.PAYMENT_PAGE.BACK_TO_HOME" | translate }}
             </button>
           </div>
         </div>
@@ -269,8 +285,7 @@
 
       <div class="mt-8 text-sm text-gray-500 dark:text-gray-400">
         <p>
-          Za sva pitanja u vezi sa donacijama, molimo vas da nas kontaktirate na
-          email: podrska&#64;pushserbia.org
+          {{ "PAYMENTS.PAYMENT_PAGE.CONTACT_LINE" | translate }}
         </p>
       </div>
     </div>

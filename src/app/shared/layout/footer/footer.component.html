@@ -4,14 +4,14 @@
       class="justify-between items-center p-4 mx-auto max-w-screen-md bg-gray-50 rounded-lg sm:flex dark:bg-gray-700"
     >
       <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
-        Prijavite se na newsletter
+        {{ 'FOOTER.NEWSLETTER.TITLE' | translate }}
       </p>
       <form action="#" class="flex mt-4 ml-0 w-full sm:mt-0 sm:ml-5">
         <div class="relative w-full">
           <label
             for="email-subscribe"
             class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Email adresa</label
+            >{{ 'COMMON.EMAIL_LABEL' | translate }}</label
           >
           <div
             class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
@@ -34,7 +34,7 @@
             type="email"
             id="email-subscribe"
             class="block p-3 pl-10 w-full text-sm text-gray-900 bg-white rounded-l-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            placeholder="Vaš email"
+            [placeholder]="'COMMON.EMAIL_PLACEHOLDER' | translate"
             required
           />
         </div>
@@ -42,7 +42,7 @@
           type="submit"
           class="py-3 px-5 text-sm text-center text-white rounded-r-lg border cursor-pointer bg-primary-600 border-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
         >
-          Pošalji
+          {{ 'COMMON.SEND' | translate }}
         </button>
       </form>
     </div>
@@ -51,22 +51,22 @@
         <h2
           class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
         >
-          Kompanija
+          {{ 'FOOTER.SECTIONS.COMPANY' | translate }}
         </h2>
         <ul class="text-gray-500 dark:text-gray-400">
           <li class="mb-4">
-            <a [routerLink]="['/', currentLang, 'dokumentacija', 'o-nama']" class="hover:underline">O nama</a>
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'o-nama']" class="hover:underline">{{ 'FOOTER.LINKS.ABOUT_US' | translate }}</a>
           </li>
           <li class="mb-4">
-            <a [routerLink]="['/', currentLang, 'dokumentacija', 'karijere']" class="hover:underline">Karijere</a>
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'karijere']" class="hover:underline">{{ 'FOOTER.LINKS.CAREERS' | translate }}</a>
           </li>
           <li class="mb-4">
             <a [routerLink]="['/', currentLang, 'dokumentacija', 'brend-centar']" class="hover:underline"
-              >Brend Centar</a
+              >{{ 'FOOTER.LINKS.BRAND_CENTER' | translate }}</a
             >
           </li>
           <li class="mb-4">
-            <a [routerLink]="['/', currentLang, 'blog']" class="hover:underline">Blog</a>
+            <a [routerLink]="['/', currentLang, 'blog']" class="hover:underline">{{ 'FOOTER.LINKS.BLOG' | translate }}</a>
           </li>
         </ul>
       </div>
@@ -74,24 +74,24 @@
         <h2
           class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
         >
-          Pomoć
+          {{ 'FOOTER.SECTIONS.HELP' | translate }}
         </h2>
         <ul class="text-gray-500 dark:text-gray-400">
           <li class="mb-4">
             <a
               href="https://join.slack.com/t/pushserbia/shared_invite/zt-34h9oiyc4-w8eLTnI9f5I6EbTueg8HWQ"
               class="hover:underline"
-              >Slack zajednica</a
+              >{{ 'FOOTER.LINKS.SLACK_COMMUNITY' | translate }}</a
             >
           </li>
           <li class="mb-4">
             <a [routerLink]="['/', currentLang]" fragment="cesta-pitanja" class="hover:underline"
-              >Česta pitanja</a
+              >{{ 'FOOTER.LINKS.FAQ' | translate }}</a
             >
           </li>
           <li class="mb-4">
             <a [routerLink]="['/', currentLang, 'dokumentacija', 'kontakt']" class="hover:underline"
-              >Kontaktirajte nas</a
+              >{{ 'FOOTER.LINKS.CONTACT_US' | translate }}</a
             >
           </li>
         </ul>
@@ -100,33 +100,33 @@
         <h2
           class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
         >
-          Društvene mreže
+          {{ 'FOOTER.SECTIONS.SOCIAL' | translate }}
         </h2>
         <ul class="text-gray-500 dark:text-gray-400">
           <li class="mb-4">
             <a
               href="https://www.linkedin.com/company/pushserbia"
               class="hover:underline"
-              >LinkedIn</a
+              >{{ 'FOOTER.LINKS.LINKEDIN' | translate }}</a
             >
           </li>
           <li class="mb-4">
             <a
               href="https://www.facebook.com/pushserbia"
               class="hover:underline"
-              >Facebook</a
+              >{{ 'FOOTER.LINKS.FACEBOOK' | translate }}</a
             >
           </li>
           <li class="mb-4">
             <a
               href="https://www.instagram.com/pushserbia"
               class="hover:underline"
-              >Instagram</a
+              >{{ 'FOOTER.LINKS.INSTAGRAM' | translate }}</a
             >
           </li>
           <li class="mb-4">
             <a href="https://github.com/pushserbia" class="hover:underline"
-              >GitHub</a
+              >{{ 'FOOTER.LINKS.GITHUB' | translate }}</a
             >
           </li>
         </ul>
@@ -135,20 +135,20 @@
         <h2
           class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"
         >
-          Pravno
+          {{ 'FOOTER.SECTIONS.LEGAL' | translate }}
         </h2>
         <ul class="text-gray-500 dark:text-gray-400">
           <li class="mb-4">
             <a [routerLink]="['/', currentLang, 'dokumentacija', 'politika-privatnosti']" class="hover:underline"
-              >Politika privatnosti</a
+              >{{ 'FOOTER.LINKS.PRIVACY_POLICY' | translate }}</a
             >
           </li>
           <li class="mb-4">
-            <a [routerLink]="['/', currentLang, 'dokumentacija', 'licence']" class="hover:underline">Licence</a>
+            <a [routerLink]="['/', currentLang, 'dokumentacija', 'licence']" class="hover:underline">{{ 'FOOTER.LINKS.LICENSES' | translate }}</a>
           </li>
           <li class="mb-4">
             <a [routerLink]="['/', currentLang, 'dokumentacija', 'uslovi-koriscenja']" class="hover:underline"
-              >Uslovi korišćenja</a
+              >{{ 'FOOTER.LINKS.TERMS' | translate }}</a
             >
           </li>
         </ul>
@@ -207,9 +207,8 @@
         </div>
       </div>
 
-      <span class="block text-sm text-gray-500 dark:text-gray-400 lg:mb-0"
-        >© 2024 - {{ currentYear }} <a href="#" class="hover:underline">Push Serbia™</a>. Sva
-        prava zadržana.
+      <span class="block text-sm text-gray-500 dark:text-gray-400 lg:mb-0">
+        {{ 'FOOTER.COPYRIGHT' | translate: { year: currentYear } }}
       </span>
     </div>
   </div>
