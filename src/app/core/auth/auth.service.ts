@@ -32,6 +32,7 @@ import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private readonly httpClient = inject(HttpClient);
   private readonly afAuth = inject(AngularFireAuth);
   private readonly userService = inject(UserService);
   private readonly platformId = inject(PLATFORM_ID);
@@ -87,7 +88,7 @@ export class AuthService {
     };
   }
 
-  constructor(private httpClient: HttpClient) {
+  constructor() {
     if (this.isBrowser) {
       this.initInBrowser();
       return;

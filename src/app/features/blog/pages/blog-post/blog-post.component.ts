@@ -1,4 +1,4 @@
-import { Component, OnInit, input } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { QuillViewHTMLComponent } from 'ngx-quill';
 import { BlogStoreService } from '../../../../core/blog/blog.store.service';
@@ -12,12 +12,10 @@ import { BlogPost } from '../../../../core/blog/blog';
   styleUrl: './blog-post.component.css',
 })
 export class BlogPostComponent implements OnInit {
+  private blogStoreService = inject(BlogStoreService);
+
   readonly slug = input.required<string>();
   post: BlogPost | undefined;
-
-  constructor(
-    private blogStoreService: BlogStoreService
-  ) {}
 
   ngOnInit() {
     this.post = this.blogStoreService.getBlogPostBySlug(this.slug());
