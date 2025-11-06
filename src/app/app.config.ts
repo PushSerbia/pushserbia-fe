@@ -32,15 +32,19 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 function onViewTransitionCreated(info: ViewTransitionInfo) {
   const router = inject(Router);
   const toUrl = router.getCurrentNavigation()?.finalUrl?.toString() ?? '';
 
   if (
-    !toUrl.startsWith('/projekti') ||
-    toUrl === '/projekti/novi' ||
-    toUrl.endsWith('/izmena')
+    (!toUrl.endsWith('/projekti') && !toUrl.endsWith('/projects')) ||
+    toUrl.endsWith('/projekti/novi') ||
+    toUrl.endsWith('/projects/new') ||
+    toUrl.endsWith('/izmena') ||
+    toUrl.endsWith('/edit')
   ) {
     info.transition.skipTransition();
     return;
@@ -75,6 +79,14 @@ export const appConfig: ApplicationConfig = {
       withFetch(),
       withInterceptors([apiInterceptor, authInterceptor]),
     ),
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: '/assets/i18n/',
+        suffix: '.json',
+      }),
+      fallbackLang: 'en',
+      lang: 'en',
+    }),
     {
       provide: ErrorHandler,
       useValue: Sentry.createErrorHandler(),

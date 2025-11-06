@@ -6,27 +6,26 @@
           <h1
             class="text-4xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl"
           >
-            Unapredi društvo u kome živiš!
+            {{ 'LANDING.HERO.TITLE' | translate }}
           </h1>
           <p
             class="mt-6 text-lg font-normal text-gray-600 dark:text-gray-300 md:max-w-3xl sm:text-xl"
           >
-            Pridruži se i podrži open-source projekte koji donose pozitivne
-            promene u društvu.
+            {{ 'LANDING.HERO.SUBTITLE' | translate }}
           </p>
         </div>
 
         <div class="flex flex-col gap-5 mt-10 sm:flex-row sm:justify-center lg:justify-start">
           <a
-            routerLink="/projekti"
+            [routerLink]="currentLang === 'en' ? 'projects' : 'projekti'"
             class="sm:w-[200px] px-6 py-4 w-full text-lg font-medium text-center text-white bg-primary-700 rounded-lg shrink-0 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 shadow-lg hover:shadow-xl transition-all"
             role="button"
           >
-            Istraži projekte
+            {{ 'LANDING.HERO.BUTTONS.EXPLORE_PROJECTS' | translate }}
           </a>
 
           <a
-            routerLink="/dokumentacija/o-nama"
+            routerLink="dokumentacija/o-nama"
             class="sm:w-[200px] inline-flex w-full justify-center items-center px-6 py-4 text-lg font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg shrink-0 focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 transition-all"
             role="button"
           >
@@ -43,7 +42,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            Saznaj više
+            {{ 'LANDING.HERO.BUTTONS.LEARN_MORE' | translate }}
           </a>
         </div>
 
@@ -52,7 +51,7 @@
         >
           <div class="flex flex-col max-w-md mx-auto lg:mx-0">
             <p class="text-xl text-gray-600 dark:text-gray-300 mb-6 text-center lg:text-left">
-              Pridruži se rastućoj zajednici entuzijasta koji doprinose boljem društvu.
+              {{ 'LANDING.HERO.COMMUNITY.TAGLINE' | translate }}
             </p>
             <div class="flex items-center justify-center lg:justify-start gap-3">
               <div class="flex -space-x-2">
@@ -66,7 +65,7 @@
                   </div>
                 }
               </div>
-              <span class="ml-2 text-gray-600 dark:text-gray-300 font-medium">i mnogi drugi</span>
+              <span class="ml-2 text-gray-600 dark:text-gray-300 font-medium">{{ 'LANDING.HERO.COMMUNITY.OTHERS' | translate }}</span>
             </div>
           </div>
         </div>
@@ -76,7 +75,7 @@
         <img
           src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/ngo-carousel/image-2.jpg"
           class="rounded-lg shadow-xl w-full object-cover h-[500px]"
-          alt="People collaborating on projects"
+          [attr.alt]="('LANDING.HERO.IMAGE_ALT' | translate)"
         />
       </div>
     </div>

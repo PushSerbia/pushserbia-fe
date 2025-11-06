@@ -18,6 +18,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { Project } from '../../../../core/project/project';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   VoteState,
   VoteStoreService,
@@ -34,6 +35,7 @@ import { TransitionService } from '../../../../core/transition/transition.servic
     PageLoaderComponent,
     RouterLink,
     AuthRequiredDirective,
+    TranslateModule,
   ],
   templateUrl: './projects-list-page.component.html',
   styleUrl: './projects-list-page.component.scss',
@@ -45,6 +47,7 @@ export class ProjectsListPageComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly transitionService = inject(TransitionService);
+  private readonly translate = inject(TranslateService);
 
   readonly $loading = computed(() => this.projectStore.$loading());
   readonly $filter = signal<ProjectsFilter>({
@@ -128,6 +131,10 @@ export class ProjectsListPageComponent implements OnInit {
       relativeTo: this.route,
       queryParams,
     });
+  }
+
+  get currentLang(): 'sr' | 'en' {
+    return (this.translate.currentLang as 'sr' | 'en') || 'sr';
   }
 
   viewTransitionName(project: Project): string {

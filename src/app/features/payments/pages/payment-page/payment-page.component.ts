@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
@@ -8,6 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   DonationOption,
   donationOptions,
@@ -18,11 +19,23 @@ import { IntegrationsService } from '../../../../core/integrations/integrations.
 @Component({
   selector: 'app-payment-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterLink,
+    TranslateModule,
+  ],
   templateUrl: './payment-page.component.html',
   styleUrl: './payment-page.component.css',
 })
 export class PaymentPageComponent implements OnInit, OnDestroy {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+  private integrationsService = inject(IntegrationsService);
+  private translate = inject(TranslateService);
+
   paymentForm: FormGroup;
   isOneTime = true;
   amount = 0;
@@ -36,12 +49,7 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
   submissionError: string | null = null;
   private queryParamsSubscription: Subscription = new Subscription();
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private fb: FormBuilder,
-    private integrationsService: IntegrationsService,
-  ) {
+  constructor() {
     this.paymentForm = this.fb.group({
       fullName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -59,7 +67,7 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
         this.selectedOption =
           this.donationOptions.find(
             (option) =>
-              option.title === this.title &&
+              option.titleKey === this.title &&
               option.price === this.amount &&
               option.isOneTime === this.isOneTime,
           ) || null;
@@ -83,7 +91,7 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
       queryParams: {
         isOneTime: option.isOneTime,
         amount: option.price,
-        title: option.title,
+        title: option.titleKey,
       },
       queryParamsHandling: 'merge',
     });
@@ -113,8 +121,9 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
           }),
           catchError((error) => {
             this.isSubmitting = false;
-            this.submissionError =
-              'Došlo je do greške prilikom slanja podataka. Molimo pokušajte ponovo.';
+            this.submissionError = this.translate.instant(
+              'PAYMENTS.PAYMENT_PAGE.SUBMISSION_ERROR',
+            );
             console.error('Integration subscription error:', error);
             return of(null); // Return an observable that emits null and completes
           }),

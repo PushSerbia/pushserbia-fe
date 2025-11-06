@@ -1,5 +1,5 @@
 <a
-  routerLink="/projekti/novi"
+  [routerLink]="['/', currentLang, (currentLang === 'en' ? 'projects' : 'projekti'), 'novi']"
   class="flex flex-col max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:shadow hover:shadow-primary-500 transition-transform"
   appAuthRequired
 >
@@ -13,16 +13,15 @@
     <h5
       class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
     >
-      Dodaj svoj projekat
+      {{ 'PROJECTS.NEW_CARD.TITLE' | translate }}
     </h5>
     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 h-20">
-      Unesi ideju za društveno koristan projekat i razvijaj u open-source
-      zajednici.
+      {{ 'PROJECTS.NEW_CARD.DESC' | translate }}
     </p>
     <div
       class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
     >
-      Kreiraj projekat
+      {{ 'PROJECTS.NEW_CARD.BUTTON' | translate }}
       <svg
         class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
         aria-hidden="true"

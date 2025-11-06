@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export interface SubscriptionData {
@@ -15,8 +14,7 @@ export interface SubscriptionData {
 })
 export class IntegrationsService {
   private apiUrl = `${environment.apiUrl}/integrations`;
-
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   private subscribe(data: SubscriptionData) {
     return this.httpClient.post(`${this.apiUrl}/subscribe`, data);
@@ -28,13 +26,6 @@ export class IntegrationsService {
       name,
       message,
       tags: 'newsletter',
-    });
-  }
-
-  subscribeForComingSoon(email: string): Observable<any> {
-    return this.subscribe({
-      email,
-      tags: 'coming-soon',
     });
   }
 }

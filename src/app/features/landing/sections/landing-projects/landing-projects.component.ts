@@ -10,6 +10,7 @@ import {
   VoteStoreService,
 } from '../../../../core/vote/vote.store.service';
 import { TransitionService } from '../../../../core/transition/transition.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-landing-projects',
@@ -18,24 +19,30 @@ import { TransitionService } from '../../../../core/transition/transition.servic
     ProjectCardComponent,
     ProjectCardNewComponent,
     SlicePipe,
+    TranslateModule,
   ],
   templateUrl: './landing-projects.component.html',
   styleUrl: './landing-projects.component.css',
 })
 export class LandingProjectsComponent {
+  private projectStoreService = inject(ProjectStoreService);
+  private voteStoreService = inject(VoteStoreService);
+  private transitionService = inject(TransitionService);
+  private translate = inject(TranslateService);
+
   $allProjects: Signal<Project[]>;
   $votesMap = signal<VoteState>({});
-  private transitionService = inject(TransitionService);
 
-  constructor(
-    private projectStoreService: ProjectStoreService,
-    private voteStoreService: VoteStoreService,
-  ) {
+  constructor() {
     this.$allProjects = this.projectStoreService.getAll();
     effect(() => {
       const votesMap = this.voteStoreService.getAll();
       this.$votesMap.set(votesMap());
     });
+  }
+
+  get currentLang(): 'sr' | 'en' {
+    return (this.translate.currentLang as 'sr' | 'en') || 'sr';
   }
 
   viewTransitionName(project: Project): string {

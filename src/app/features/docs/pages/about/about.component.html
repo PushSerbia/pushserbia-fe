@@ -1,115 +1,205 @@
 <div class="bg-white dark:bg-gray-800">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
     <div class="mx-auto max-w-screen-md mb-8 lg:mb-12">
-      <a routerLink="/" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium mb-6">
-        <svg class="mr-1 w-5 h-5 rotate-180" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+      <a
+        [routerLink]="['/', currentLang]"
+        class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium mb-6"
+      >
+        <svg
+          class="mr-1 w-5 h-5 rotate-180"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clip-rule="evenodd"
+          ></path>
         </svg>
-        Nazad na početnu
+        {{ "BLOG.BACK_TO_HOME" | translate }}
       </a>
 
-      <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-        O nama
+      <h1
+        class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white"
+      >
+        {{ "ABOUT.TITLE" | translate }}
       </h1>
 
       <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
-        Push Serbia je neprofitna organizacija posvećena razvoju open-source zajednice i tehnološke edukacije u Srbiji.
+        {{ "ABOUT.INTRO" | translate }}
       </p>
 
       <h2 class="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-        Naša misija
+        {{ "ABOUT.MISSION.TITLE" | translate }}
       </h2>
 
       <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
-        Naša misija je da osnažimo lokalnu tehnološku zajednicu kroz otvorenu saradnju, deljenje znanja i razvoj projekata koji imaju pozitivan društveni uticaj.
+        {{ "ABOUT.MISSION.DESC" | translate }}
       </p>
 
       <h2 class="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-        Naše vrednosti
+        {{ "ABOUT.VALUES.TITLE" | translate }}
       </h2>
 
       <ul class="space-y-4 text-gray-500 dark:text-gray-400">
         <li class="flex items-start">
-          <svg class="flex-shrink-0 w-5 h-5 text-green-500 mt-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          <svg
+            class="flex-shrink-0 w-5 h-5 text-green-500 mt-1"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
           </svg>
           <div class="ml-3">
-            <strong class="font-medium text-gray-900 dark:text-white">Otvorenost</strong> - Verujemo u otvoreni kod, otvorene podatke i otvorenu saradnju kao temelj tehnološkog napretka.
+            <strong class="font-medium text-gray-900 dark:text-white">{{
+              "ABOUT.VALUES.OPENNESS.TITLE" | translate
+            }}</strong>
+            - {{ "ABOUT.VALUES.OPENNESS.DESC" | translate }}
           </div>
         </li>
         <li class="flex items-start">
-          <svg class="flex-shrink-0 w-5 h-5 text-green-500 mt-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          <svg
+            class="flex-shrink-0 w-5 h-5 text-green-500 mt-1"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
           </svg>
           <div class="ml-3">
-            <strong class="font-medium text-gray-900 dark:text-white">Inkluzivnost</strong> - Stvaramo okruženje u kojem se svačiji glas čuje i gde su svi dobrodošli bez obzira na nivo iskustva.
+            <strong class="font-medium text-gray-900 dark:text-white">{{
+              "ABOUT.VALUES.INCLUSION.TITLE" | translate
+            }}</strong>
+            - {{ "ABOUT.VALUES.INCLUSION.DESC" | translate }}
           </div>
         </li>
         <li class="flex items-start">
-          <svg class="flex-shrink-0 w-5 h-5 text-green-500 mt-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          <svg
+            class="flex-shrink-0 w-5 h-5 text-green-500 mt-1"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
           </svg>
           <div class="ml-3">
-            <strong class="font-medium text-gray-900 dark:text-white">Edukacija</strong> - Kontinuirano učenje i deljenje znanja su ključni za napredak pojedinaca i zajednice.
+            <strong class="font-medium text-gray-900 dark:text-white">{{
+              "ABOUT.VALUES.EDUCATION.TITLE" | translate
+            }}</strong>
+            - {{ "ABOUT.VALUES.EDUCATION.DESC" | translate }}
           </div>
         </li>
         <li class="flex items-start">
-          <svg class="flex-shrink-0 w-5 h-5 text-green-500 mt-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          <svg
+            class="flex-shrink-0 w-5 h-5 text-green-500 mt-1"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
           </svg>
           <div class="ml-3">
-            <strong class="font-medium text-gray-900 dark:text-white">Društveni uticaj</strong> - Razvijamo projekte koji rešavaju stvarne probleme i doprinose društvu.
+            <strong class="font-medium text-gray-900 dark:text-white">{{
+              "ABOUT.VALUES.IMPACT.TITLE" | translate
+            }}</strong>
+            - {{ "ABOUT.VALUES.IMPACT.DESC" | translate }}
           </div>
         </li>
       </ul>
 
       <h2 class="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-        Naš tim
+        {{ "ABOUT.TEAM.TITLE" | translate }}
       </h2>
 
       <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
-        Push Serbia čini grupa entuzijasta, programera, dizajnera i edukatora koji veruju u moć tehnologije da transformiše društvo. Naš tim je posvećen stvaranju otvorenih tehnoloških rešenja i edukaciji novih generacija tehnoloških stručnjaka.
+        {{ "ABOUT.TEAM.DESC" | translate }}
       </p>
 
       <h2 class="mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-        Naše aktivnosti
+        {{ "ABOUT.ACTIVITIES.TITLE" | translate }}
       </h2>
 
       <div class="grid gap-8 mb-8 lg:grid-cols-2">
-        <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-          <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">Razvoj open-source projekata</h3>
+        <div
+          class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600"
+        >
+          <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+            {{ "ABOUT.ACTIVITIES.OPEN_SOURCE.TITLE" | translate }}
+          </h3>
           <p class="text-gray-500 dark:text-gray-400">
-            Razvijamo i održavamo projekte otvorenog koda koji rešavaju specifične probleme u našoj zajednici i šire.
+            {{ "ABOUT.ACTIVITIES.OPEN_SOURCE.DESC" | translate }}
           </p>
         </div>
 
-        <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-          <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">Edukativni programi</h3>
+        <div
+          class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600"
+        >
+          <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+            {{ "ABOUT.ACTIVITIES.EDU.TITLE" | translate }}
+          </h3>
           <p class="text-gray-500 dark:text-gray-400">
-            Organizujemo radionice, webinare i kurseve za različite nivoe znanja, od početnika do naprednih programera.
+            {{ "ABOUT.ACTIVITIES.EDU.DESC" | translate }}
           </p>
         </div>
 
-        <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-          <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">Događaji i umrežavanje</h3>
+        <div
+          class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600"
+        >
+          <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+            {{ "ABOUT.ACTIVITIES.EVENTS.TITLE" | translate }}
+          </h3>
           <p class="text-gray-500 dark:text-gray-400">
-            Redovno organizujemo meetup-e, hakatone i konferencije gde se članovi zajednice mogu upoznati i sarađivati.
+            {{ "ABOUT.ACTIVITIES.EVENTS.DESC" | translate }}
           </p>
         </div>
 
-        <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-          <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">Mentorstvo</h3>
+        <div
+          class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600"
+        >
+          <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">
+            {{ "ABOUT.ACTIVITIES.MENTOR.TITLE" | translate }}
+          </h3>
           <p class="text-gray-500 dark:text-gray-400">
-            Pružamo podršku i mentorstvo novim članovima zajednice i pomažemo im da razviju svoje veštine.
+            {{ "ABOUT.ACTIVITIES.MENTOR.DESC" | translate }}
           </p>
         </div>
       </div>
 
       <div class="mt-8 text-center">
-        <a routerLink="/dokumentacija/kontakt" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-          Kontaktirajte nas
-          <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        <a
+          [routerLink]="['/', currentLang, 'dokumentacija', 'kontakt']"
+          class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+        >
+          {{ "FOOTER.LINKS.CONTACT_US" | translate }}
+          <svg
+            class="ml-2 -mr-1 w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
           </svg>
         </a>
       </div>

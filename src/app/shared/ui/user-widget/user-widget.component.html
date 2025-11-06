@@ -1,11 +1,11 @@
 <div class="flex items-center gap-1 h-10">
   @if ($userData(); as user) {
     <a
-      routerLink="/profil"
+      [routerLink]="['/', currentLang, 'profil']"
       class="flex items-center gap-2 dark:bg-gray-800 hover:dark:bg-gray-700 bg-gray-50 hover:bg-gray-100 px-2 py-1 rounded-lg"
     >
       @if (user.imageUrl) {
-        <img [src]="user.imageUrl" alt="user" class="w-8 h-8 rounded-full" />
+        <img [src]="user.imageUrl" [attr.alt]="('USER.AVATAR_ALT' | translate)" class="w-8 h-8 rounded-full" />
       }
       <span class="text-sm text-gray-500 dark:text-gray-400">
         {{ user.name }}
@@ -15,14 +15,14 @@
       class="ml-4 text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:text-gray-400 hover:dark:text-gray-300"
       (click)="onLogoutClick()"
     >
-      Odjava
+      {{ 'USER.LOGOUT' | translate }}
     </button>
   } @else {
     <a
-      routerLink="/autentikacija/prijava"
+      [routerLink]="['/', currentLang, 'autentikacija', 'prijava']"
       class="text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:text-gray-400 hover:dark:text-gray-300"
     >
-      Prijava
+      {{ 'USER.LOGIN' | translate }}
     </a>
   }
 </div>

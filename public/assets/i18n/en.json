@@ -1,0 +1,558 @@
+{
+  "APP": {
+    "TITLE": "Push Serbia",
+    "TAGLINE": "Empowering projects through community support"
+  },
+  "COMMON": {
+    "LANG": {
+      "EN": "English",
+      "SR": "Serbian"
+    },
+    "OK": "OK",
+    "CANCEL": "Cancel",
+    "SEND": "Send",
+    "CLEAR": "Clear",
+    "EMAIL_LABEL": "Email address",
+    "EMAIL_PLACEHOLDER": "Enter your email"
+  },
+  "FOOTER": {
+    "NEWSLETTER": {
+      "TITLE": "Subscribe to our newsletter"
+    },
+    "SECTIONS": {
+      "COMPANY": "Company",
+      "HELP": "Help",
+      "SOCIAL": "Social",
+      "LEGAL": "Legal"
+    },
+    "LINKS": {
+      "ABOUT_US": "About us",
+      "CAREERS": "Careers",
+      "BRAND_CENTER": "Brand Center",
+      "BLOG": "Blog",
+      "SLACK_COMMUNITY": "Slack community",
+      "FAQ": "FAQ",
+      "CONTACT_US": "Contact us",
+      "LINKEDIN": "LinkedIn",
+      "FACEBOOK": "Facebook",
+      "INSTAGRAM": "Instagram",
+      "GITHUB": "GitHub",
+      "PRIVACY_POLICY": "Privacy policy",
+      "LICENSES": "Licenses",
+      "TERMS": "Terms of use"
+    },
+    "COPYRIGHT": "© 2024 - {{year}} Push Serbia™. All rights reserved."
+  },
+  "LANDING": {
+    "PRICING": {
+      "TITLE": "Support the open-source community",
+      "INTRO": "Push Serbia is a non-profit open-source community developing socially beneficial projects.",
+      "INTRO_DETAILS": "With your donation, you enable infrastructure maintenance, development of new projects, and organization of educational events. Every contribution makes a difference – together we build a sustainable and open technological future!",
+      "PRICE_SUFFIX": {
+        "ONE_TIME": "one-time",
+        "MONTHLY": "/month"
+      },
+      "DONATION_IMPACT_LABEL": "Donation impact:",
+      "BUTTON_DONATE": "Donate",
+      "BUTTON_SUBSCRIBE": "Subscribe",
+      "TRANSPARENCY_PARAGRAPH": "All donations are transparent and used exclusively for maintaining and developing open-source projects. We publish monthly reports on the use of funds.",
+      "FUNDING_CTA": "Learn more about our funding",
+      "PACKAGES": {
+        "FRIEND": {
+          "TITLE": "Community Friend",
+          "DESC": "Every contribution matters! Your support helps maintain essential infrastructure and ensures access to resources for everyone.",
+          "BENEFITS": {
+            "0": "Access to the shared Slack channel",
+            "1": "Thank you mention on our website",
+            "2": "Transparent reports on the use of funds",
+            "3": "Participation in monthly community surveys",
+            "4": "Contributing to a sustainable open-source ecosystem"
+          },
+          "IMPACT": "Covers monthly hosting and core services costs"
+        },
+        "MEMBER": {
+          "TITLE": "Active Member",
+          "DESC": "Regular support that enables long-term planning and continuous development of socially impactful projects.",
+          "BENEFITS": {
+            "0": "All benefits of a ‘Community Friend’",
+            "1": "Participation in prioritizing development",
+            "2": "Access to shared learning resources",
+            "3": "Priority vote when voting (counts double)",
+            "4": "Networking with other community members"
+          },
+          "IMPACT": "Supports organizing events and developing new initiatives"
+        },
+        "ONE_TIME": {
+          "TITLE": "One‑time support",
+          "DESC": "A one-time donation that helps develop specific projects and initiatives without a long-term commitment.",
+          "BENEFITS": {
+            "0": "All benefits of a ‘Community Friend’",
+            "1": "Option to direct your donation to a specific project",
+            "2": "Acknowledgment in the project documentation",
+            "3": "Access to community educational materials",
+            "4": "Invitation to online events and workshops"
+          },
+          "IMPACT": "Enables development of new features and educational materials"
+        }
+      }
+    },
+    "HOW_TO": {
+      "TITLE": "How does the open-source community work?",
+      "INTRO": "Join the open-source community and contribute to projects that make a difference. Whether you are a developer, designer, or enthusiast, you can discover projects, propose ideas, and participate in bringing them to life.",
+      "IMAGE_ALT": "Open-source community — collaboration and development",
+      "SUGGEST": {
+        "TITLE": "Propose an idea",
+        "DESC": "Have an innovative idea for an open-source project? Share it with the community and let’s turn it into reality together.",
+        "BUTTON": "Add project"
+      },
+      "VOTE": {
+        "TITLE": "Vote for and support projects",
+        "DESC": "Get involved by voting for the best projects and help turn great ideas into working solutions.",
+        "BUTTON": "Browse projects"
+      },
+      "REALIZE": {
+        "TITLE": "We build them together",
+        "DESC": "The best ideas enter development with the help of the community. Everyone can contribute their knowledge and resources to turn ideas into real projects.",
+        "BUTTON": "Learn more"
+      }
+    },
+    "CURRENT_PROJECTS": {
+      "TITLE": "Current projects",
+      "INTRO": "Browse existing open-source projects and join the ones that inspire you. Build software, participate in discussions, and contribute to innovation.",
+      "CTA": "Explore open-source projects"
+    },
+    "HERO": {
+      "TITLE": "Improve the society you live in!",
+      "SUBTITLE": "Join and support open-source projects that bring positive changes to society.",
+      "BUTTONS": {
+        "EXPLORE_PROJECTS": "Explore projects",
+        "LEARN_MORE": "Learn more"
+      },
+      "COMMUNITY": {
+        "TAGLINE": "Join a growing community of enthusiasts contributing to a better society.",
+        "OTHERS": "and many others"
+      },
+      "IMAGE_ALT": "People collaborating on projects"
+    },
+    "FAQ": {
+      "TITLE": "Questions you might need",
+      "INTRO": "Find answers to the most common questions about the Push Serbia community, projects, and ways to contribute.",
+      "SEARCH_PLACEHOLDER": "Search questions...",
+      "FOUND_RESULTS": "Found {{count}} questions for \"{{query}}\"",
+      "SHOW_ALL": "Show all questions ({{count}} more)",
+      "SHOW_LESS": "Show less",
+      "OPTIONS": {
+        "PROJECT": "Project",
+        "PLATFORM": "Platform",
+        "REGISTRATION": "Registration",
+        "VOTING": "Voting",
+        "MEMBERSHIP": "Membership",
+        "OPEN_SOURCE": "Open-source",
+        "LINKEDIN": "LinkedIn",
+        "NOTIFICATIONS": "Notifications",
+        "LEVEL": "Level",
+        "LOGIN": "Login"
+      }
+    },
+    "ITEMS": {
+      "0": {
+        "TITLE": "What is Push Serbia?",
+        "DESC": "Push Serbia is a non-profit platform that enables the IT community to propose and vote for socially beneficial open-source projects. The goal is to connect developers and experts to collaboratively build projects with a positive social impact."
+      },
+      "1": {
+        "TITLE": "Who can use the platform?",
+        "DESC": "The platform is intended for IT professionals and enthusiasts who want to contribute to open-source projects."
+      },
+      "2": {
+        "TITLE": "Is using the platform free?",
+        "DESC": "Yes, all users can propose projects and vote for them for free. However, there is an optional membership system that can provide additional benefits."
+      },
+      "3": {
+        "TITLE": "How can I register?",
+        "DESC": "Registration is possible only via a LinkedIn account, which ensures that all users are part of a professional community."
+      },
+      "4": {
+        "TITLE": "Why can't I log in?",
+        "DESC": "Check if you are using a valid LinkedIn account. Also, if your account has been blocked by an administrator, you will not be able to authenticate."
+      },
+      "5": {
+        "TITLE": "Can I use the platform without registration?",
+        "DESC": "You can browse projects without registration, but proposing and voting are available only to registered users."
+      },
+      "6": {
+        "TITLE": "How can I suggest a new project?",
+        "DESC": "After logging in, you can use the project suggestion form. Enter the basic information, detailed description, goals, and planned technologies. You can also add a GitHub link to the project repository."
+      },
+      "7": {
+        "TITLE": "Does my project have to be open-source?",
+        "DESC": "Yes, all proposed projects must be socially beneficial and open-source."
+      },
+      "8": {
+        "TITLE": "How can I promote my project?",
+        "DESC": "Each project automatically gets a shareable link that you can post on social networks and other channels."
+      },
+      "9": {
+        "TITLE": "What if my project gets banned?",
+        "DESC": "Projects that violate the rules may be banned by administrators. They remain visible only to you and the administrator, along with an explanation of the reason for the ban."
+      },
+      "10": {
+        "TITLE": "How does voting work?",
+        "DESC": "Registered users can vote for an unlimited number of projects, but only once per project."
+      },
+      "11": {
+        "TITLE": "What does it mean that a vote has different weight?",
+        "DESC": "All users start at level 1 (a vote is worth 1 point). You can increase your level by contributing to projects or through membership."
+      },
+      "12": {
+        "TITLE": "How do I know which projects are currently the most popular?",
+        "DESC": "The home page displays the projects with the most votes, and you can filter them by different criteria."
+      },
+      "13": {
+        "TITLE": "How do the level and membership systems work?",
+        "DESC": "Users can progress through levels by contributing to projects or through an optional membership. A higher level means a higher vote weight."
+      },
+      "14": {
+        "TITLE": "Where can I see my level and membership status?",
+        "DESC": "On your profile page, you can see basic information, your current level, and your membership status."
+      },
+      "15": {
+        "TITLE": "Who moderates the platform?",
+        "DESC": "The platform is moderated by administrators who can ban projects, block users, and manage content."
+      },
+      "16": {
+        "TITLE": "How do I report inappropriate content?",
+        "DESC": "If you notice inappropriate content, you can report it to the administrators using the ‘Report project’ option."
+      },
+      "17": {
+        "TITLE": "What happens if I get blocked?",
+        "DESC": "If an administrator blocks your account, you lose the ability to authenticate on the platform."
+      },
+      "18": {
+        "TITLE": "How can I schedule a meeting for a project?",
+        "DESC": "Each project has a ‘Book Meeting’ option that generates a Meet link available to all interested users."
+      },
+      "19": {
+        "TITLE": "How can I save meeting notes?",
+        "DESC": "After the meeting, the project creator can add Meeting Notes, which will be available to all participants."
+      },
+      "20": {
+        "TITLE": "How will I know that my project has entered the development phase?",
+        "DESC": "You will receive an email notification when your project collects enough votes to move into development."
+      },
+      "21": {
+        "TITLE": "Do I get notifications when someone votes for my project?",
+        "DESC": "Yes, there is an in-app notification when your project receives a new vote."
+      },
+      "22": {
+        "TITLE": "How do email and in-app notifications work?",
+        "DESC": "We send email notifications for important events (e.g., when a project receives enough votes). In-app notifications inform you about everyday activities (e.g., new votes, meetings)."
+      }
+    }
+  },
+  "USER": {
+    "LOGIN": "Log in",
+    "LOGOUT": "Log out",
+    "AVATAR_ALT": "User avatar"
+  },
+  "PROJECTS": {
+    "LIST": {
+      "TITLE": "Projects",
+      "INTRO": "Browse existing open-source projects and join the ones that inspire you. Build software, participate in discussions, and contribute to innovation.",
+      "SUGGEST_BUTTON": "Suggest a project",
+      "EMPTY": "No projects match your filters."
+    },
+    "FILTERS": {
+      "MY_PROJECTS": "My projects",
+      "SUPPORTED_PROJECTS": "Supported projects"
+    },
+    "CARD": {
+      "READ_DETAILS": "Read details"
+    },
+    "NEW_CARD": {
+      "TITLE": "Add your project",
+      "DESC": "Enter an idea for a socially beneficial project and develop it within the open-source community.",
+      "BUTTON": "Create project"
+    }
+  },
+  "BLOG": {
+    "BACK_TO_HOME": "Back to home",
+    "TITLE": "Blog",
+    "INTRO": "Welcome to the Push Serbia blog! Here we share knowledge, experiences, and news from the world of technology, the open-source community, and programming.",
+    "READ_MORE": "Read more",
+    "CTA": "Have an idea for a blog post?"
+  },
+  "ABOUT": {
+    "TITLE": "About Push Serbia Community",
+    "INTRO": "Push Serbia is a non-profit open-source community dedicated to developing socially beneficial projects, education, and connecting IT enthusiasts.",
+    "MISSION": {
+      "TITLE": "Our Mission",
+      "DESC": "Our mission is to empower the IT community through open collaboration, transparency, and education, creating sustainable projects with a positive social impact."
+    },
+    "VALUES": {
+      "TITLE": "Our Values",
+      "OPENNESS": {
+        "TITLE": "Openness",
+        "DESC": "All projects and resources are available to everyone, without restrictions."
+      },
+      "INCLUSION": {
+        "TITLE": "Inclusion",
+        "DESC": "We encourage diversity and participation from all community members."
+      },
+      "EDUCATION": {
+        "TITLE": "Education",
+        "DESC": "We organize workshops, lectures, and share knowledge."
+      },
+      "IMPACT": {
+        "TITLE": "Social Impact",
+        "DESC": "We focus on projects that bring positive change."
+      }
+    },
+    "TEAM": {
+      "TITLE": "Our Team",
+      "DESC": "Push Serbia brings together volunteers, developers, designers, and educators who work together on open-source projects."
+    },
+    "ACTIVITIES": {
+      "TITLE": "What do we do?",
+      "OPEN_SOURCE": {
+        "TITLE": "Open-source project development",
+        "DESC": "We launch and maintain projects accessible to all, with transparent code and documentation."
+      },
+      "EDU": {
+        "TITLE": "Education and mentoring",
+        "DESC": "We organize workshops, lectures, and mentoring for community members."
+      },
+      "EVENTS": {
+        "TITLE": "Events and gatherings",
+        "DESC": "We connect members through online and offline events, hackathons, and meetups."
+      },
+      "MENTOR": {
+        "TITLE": "Support and mentoring",
+        "DESC": "Experienced members provide support and advice to newcomers."
+      }
+    }
+  },
+  "BRAND_CENTER": {
+    "TITLE": "Brand Center",
+    "INTRO": "Welcome to the Push Serbia Brand Center. Here you can find all resources needed for proper use of our brand, including logos, colors, typography, and communication guidelines.",
+    "BRAND": {
+      "TITLE": "Our Brand",
+      "DESC": "The Push Serbia brand represents our mission to empower the local tech community through open collaboration and knowledge sharing. Our visual identity reflects the values of openness, innovation, and community."
+    },
+    "LOGO": {
+      "TITLE": "Logo",
+      "PRIMARY": "Primary logo",
+      "PRIMARY_DESC": "Our primary logo combines the Git command \"push\" with our country’s name, symbolizing our mission to ‘push’ Serbia forward in technological development.",
+      "VARIATIONS": "Logo variations",
+      "VARIATIONS_DESC": "The logo can be used in different color variations depending on background and context."
+    },
+    "COLORS": {
+      "TITLE": "Colors",
+      "PRIMARY": "Primary color",
+      "SECONDARY": "Secondary color",
+      "NEUTRAL": "Neutral color"
+    },
+    "TYPOGRAPHY": {
+      "TITLE": "Typography",
+      "INTER": {
+        "TITLE": "Inter",
+        "DESC": "Our primary font for all web content and digital materials. Inter is a modern sans-serif font that provides excellent readability on all devices."
+      },
+      "ROBOTO_MONO": {
+        "TITLE": "Roboto Mono",
+        "DESC": "Our secondary font used for code and technical details. Roboto Mono is a monospace font that ensures clear character distinction."
+      }
+    },
+    "GUIDELINES": {
+      "TITLE": "Communication Guidelines",
+      "TONE": {
+        "TITLE": "Tone and Voice",
+        "INTRO": "Our communication should be:",
+        "FRIENDLY": "Friendly and approachable – We use simple language and avoid jargon whenever possible.",
+        "PROFESSIONAL": "Professional – While informal, we always maintain a professional tone.",
+        "INCLUSIVE": "Inclusive – Our language should be inclusive and respect diversity.",
+        "EDUCATIONAL": "Educational – We explain complex concepts in a clear and understandable way.",
+        "INSPIRING": "Inspiring – We encourage and motivate our community to learn and contribute."
+      }
+    },
+    "DOWNLOAD": {
+      "TITLE": "Download resources",
+      "DESIGN_PACKAGE": {
+        "TITLE": "Designer package",
+        "DESC": "Download the complete package with all logos, colors, and fonts in various formats (AI, SVG, PNG).",
+        "BUTTON": "Download designer package"
+      },
+      "GUIDELINES": {
+        "TITLE": "Brand guidelines",
+        "DESC": "Download the detailed PDF document with all brand usage guidelines.",
+        "BUTTON": "Download brand guidelines"
+      }
+    },
+    "CONTACT": {
+      "BUTTON": "Have questions about our brand?"
+    }
+  },
+  "DOCS": {
+    "CAREERS": {
+      "TITLE": "Careers",
+      "DESCRIPTION": "Join our team of enthusiasts working to develop the open-source community in Serbia. While anyone can contribute to our open-source projects, we are looking for dedicated individuals for our core team to lead development and coordinate the community. Together we can make a difference!",
+      "WHY_WORK_WITH_US": "Why work with us",
+      "BENEFITS": {
+        "PURPOSE": {
+          "TITLE": "Work with purpose",
+          "DESC": "Work on projects that have real social impact and contribute to the community."
+        },
+        "FLEXIBILITY": {
+          "TITLE": "Flexibility",
+          "DESC": "Work when and from where it suits you best, focusing on results."
+        },
+        "LEARNING": {
+          "TITLE": "Continuous learning",
+          "DESC": "Constantly improve your skills by working on diverse projects and collaborating with experienced professionals."
+        },
+        "COMMUNITY": {
+          "TITLE": "Community",
+          "DESC": "Join an active community of contributors and collaborate on meaningful open-source projects."
+        }
+      },
+      "OPEN_POSITIONS": "Open positions",
+      "POSITIONS": {
+        "FULLSTACK": {
+          "TITLE": "Full Stack Developer",
+          "DESC": "We are looking for an experienced Full Stack developer to work on the development and maintenance of our web applications. The ideal candidate has experience with modern JavaScript frameworks (React, Angular, Vue) and backend technologies (Node.js, Python, Java).",
+          "RESPONSIBILITIES_TITLE": "Key responsibilities:",
+          "RESPONSIBILITIES": [
+            "Development and maintenance of web applications",
+            "Implementation of new features",
+            "Performance optimization",
+            "Collaboration with other team members"
+          ],
+          "APPLY": "Apply for position"
+        },
+        "UXUI": {
+          "TITLE": "UX/UI Designer",
+          "DESC": "We are looking for a creative UX/UI designer to create intuitive and attractive user interfaces for our applications. The ideal candidate has experience in user experience design, wireframing, and prototyping.",
+          "RESPONSIBILITIES_TITLE": "Key responsibilities:",
+          "RESPONSIBILITIES": [
+            "Creating wireframes and prototypes",
+            "Designing user interfaces",
+            "Conducting user research",
+            "Collaboration with the development team"
+          ],
+          "APPLY": "Apply for position"
+        },
+        "COMMUNITY": {
+          "TITLE": "Community Manager",
+          "DESC": "We are looking for an energetic Community Manager to build and maintain our online community. The ideal candidate has experience managing social networks, organizing events, and communicating with the community.",
+          "RESPONSIBILITIES_TITLE": "Key responsibilities:",
+          "RESPONSIBILITIES": [
+            "Managing social networks",
+            "Organizing online and offline events",
+            "Creating content for the community",
+            "Answering questions and providing support to community members"
+          ],
+          "APPLY": "Apply for position"
+        }
+      },
+      "APPLICATION_PROCESS": "Application process",
+      "PROCESS_DESC": "Our selection process for the core team is simple and focused on practical contributions. Instead of the traditional application process with a CV and motivation letter, we believe the best way to join our team is through active contribution to our projects.",
+      "PROCESS_STEPS": [
+        "Contribute to the development of one of our active open-source projects (see our GitHub organization)",
+        "After we notice your contributions, we will contact you for an initial interview",
+        "Interview with the team about your interests and collaboration opportunities",
+        "Offer to join the core team"
+      ]
+    },
+    "LICENSING": {
+      "TITLE": "Licenses",
+      "INTRO": "Push Serbia is committed to open source and transparency. Our projects are licensed under various open-source licenses that allow free use, modification, and distribution.",
+      "PROJECT_LICENSES_TITLE": "Project licenses",
+      "PROJECT_LICENSES_INTRO": "Most of our projects are licensed under one of the following licenses:",
+      "MIT": {
+        "TITLE": "MIT License",
+        "DESC": "The MIT License is a permissive license that allows free use, modification, and distribution of code with minimal restrictions. The only requirement is that the original license and copyright notice be included in all copies or significant portions of the software.",
+        "FEATURES_TITLE": "Key features:",
+        "FEATURES": [
+          "Allows commercial use",
+          "Allows modification",
+          "Allows distribution",
+          "Allows private use",
+          "Includes limited liability and no warranty"
+        ]
+      },
+      "GPL": {
+        "TITLE": "GNU General Public License (GPL)",
+        "DESC": "The GPL guarantees end users the freedom to run, study, share, and modify the software. A key characteristic of the GPL is that it requires derived works to be distributed under the same license.",
+        "FEATURES_TITLE": "Key features:",
+        "FEATURES": [
+          "Allows commercial use",
+          "Allows modification",
+          "Allows distribution",
+          "Allows private use",
+          "Requires source code to be available",
+          "Requires changes to be documented",
+          "Requires derived works to be under the same license",
+          "Includes limited liability and no warranty"
+        ]
+      },
+      "APACHE": {
+        "TITLE": "Apache License 2.0",
+        "DESC": "The Apache License is a permissive license that allows free use, modification, and distribution of code. It requires preservation of copyright notices and a disclaimer, but does not require derived works to be distributed under the same license.",
+        "FEATURES_TITLE": "Key features:",
+        "FEATURES": [
+          "Allows commercial use",
+          "Allows modification",
+          "Allows distribution",
+          "Allows private use",
+          "Requires preservation of copyright notices and disclaimer",
+          "Requires changes to be documented",
+          "Includes an explicit patent grant",
+          "Includes limited liability and no warranty"
+        ]
+      },
+      "CONTENT_TITLE": "Content licenses",
+      "CONTENT_DESC": "Content on our site, including texts, images and other media, is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0), unless otherwise noted.",
+      "CCBY": {
+        "TITLE": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+        "DESC": "This license allows sharing and adapting the material for any purpose, including commercial, provided appropriate attribution is given.",
+        "FEATURES_TITLE": "Key features:",
+        "FEATURES": [
+          "Allows commercial use",
+          "Allows modification",
+          "Allows distribution",
+          "Requires attribution (credit to the author)"
+        ]
+      },
+      "THIRD_PARTY_TITLE": "Third-party licenses",
+      "THIRD_PARTY_DESC": "Our projects may use third-party libraries and resources licensed under various licenses. Details about those licenses can be found in each project's documentation.",
+      "CONTACT_CTA": "Questions about licenses?"
+    }
+  },
+  "PAYMENTS": {
+    "PAYMENT_PAGE": {
+      "ONE_TIME_LABEL": "One-time donation",
+      "SUBSCRIPTION_LABEL": "Subscription",
+      "AMOUNT_LABEL": "Amount:",
+      "MONTHLY_SUBSCRIPTION_LABEL": "Monthly subscription",
+      "CHANGE_SUPPORT": "Change selected support",
+      "FULL_NAME_LABEL": "Full name",
+      "FULL_NAME_PLACEHOLDER": "Enter your full name",
+      "FULL_NAME_REQUIRED": "Full name is required",
+      "EMAIL_LABEL": "Email address",
+      "EMAIL_PLACEHOLDER": "name@example.com",
+      "EMAIL_INVALID": "Enter a valid email address",
+      "TERMS_AGREE_PREFIX": "I agree to",
+      "TERMS_LINK": "terms of use",
+      "TERMS_ADDITIONAL": "and confirm that I understand how my donation will be used",
+      "TERMS_REQUIRED": "You must agree to the terms of use",
+      "SUBMIT_SENDING": "Sending...",
+      "SUBMIT_LABEL": "Send data",
+      "SUBMISSION_ERROR": "There was an error sending the data. Please try again.",
+      "SUCCESS_TITLE": "Thank you for your support!",
+      "SUCCESS_SIGNED": "You have successfully signed up for the support package",
+      "IN_THE_AMOUNT_OF": "in the amount of",
+      "SUCCESS_CONTACT_PARAGRAPH": "We will contact you with details about how to support. Note that we currently do not accept online payments. If you have any questions, feel free to contact us.",
+      "BACK_TO_HOME": "Back to home",
+      "CONTACT_LINE": "For any questions regarding donations, please contact us at email: support@pushserbia.org"
+    }
+  }
+}

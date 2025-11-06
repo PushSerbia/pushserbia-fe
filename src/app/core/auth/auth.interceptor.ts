@@ -43,7 +43,6 @@ function handleServerRequest(
     return next(newReq);
   }
 }
-
 export const authInterceptor = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
