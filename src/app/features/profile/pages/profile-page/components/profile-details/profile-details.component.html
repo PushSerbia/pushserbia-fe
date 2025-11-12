@@ -4,7 +4,7 @@
   <h3
     class="flex items-center border-b border-gray-200 pb-4 text-xl font-semibold leading-none text-gray-900 dark:border-gray-700 dark:text-white md:pb-6"
   >
-    Podaci o nalogu
+    {{ 'PROFILE.DETAILS.TITLE' | translate }}
   </h3>
   <div class="my-4 grid gap-4 md:my-6 md:grid-cols-2 md:gap-12">
     <div class="space-y-4">
@@ -29,12 +29,12 @@
       </div>
       <dl>
         <dt class="font-semibold text-gray-900 dark:text-white">
-          Email Address
+          {{ 'PROFILE.DETAILS.EMAIL' | translate }}
         </dt>
         <dd class="text-gray-500 dark:text-gray-400">{{ data().email }}</dd>
       </dl>
       <dl>
-        <dt class="font-semibold text-gray-900 dark:text-white">Linkedin</dt>
+        <dt class="font-semibold text-gray-900 dark:text-white">{{ 'PROFILE.DETAILS.LINKEDIN' | translate }}</dt>
         <dd class="text-gray-500 dark:text-gray-400">
           @let linkedInUrl = data().linkedInUrl;
           @if (linkedInUrl) {
@@ -42,12 +42,12 @@
               {{ linkedInUrl }}
             </a>
           } @else {
-            Unesi podatak
+            {{ 'PROFILE.DETAILS.ENTER_VALUE' | translate }}
           }
         </dd>
       </dl>
       <dl>
-        <dt class="font-semibold text-gray-900 dark:text-white">Github</dt>
+        <dt class="font-semibold text-gray-900 dark:text-white">{{ 'PROFILE.DETAILS.GITHUB' | translate }}</dt>
         <dd class="text-gray-500 dark:text-gray-400">
           @let gitHubUrl = data().gitHubUrl;
           @if (gitHubUrl) {
@@ -55,7 +55,7 @@
               {{ gitHubUrl }}
             </a>
           } @else {
-            Unesi podatak
+            {{ 'PROFILE.DETAILS.ENTER_VALUE' | translate }}
           }
         </dd>
       </dl>
@@ -86,7 +86,7 @@
           d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
         />
       </svg>
-      Ažuriraj podatke
+      {{ 'PROFILE.DETAILS.UPDATE_BUTTON' | translate }}
     </button>
   </div>
 </div>

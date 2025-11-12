@@ -6,6 +6,7 @@ import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-load
 import { ProfileStatsComponent } from './components/profile-stats/profile-stats.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile-page',
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
     PageLoaderComponent,
     ProfileStatsComponent,
     ProfileDetailsComponent,
+    TranslatePipe,
   ],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss',

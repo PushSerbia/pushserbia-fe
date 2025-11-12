@@ -43,6 +43,31 @@
     },
     "COPYRIGHT": "© 2024 - {{year}} Push Serbia™. All rights reserved."
   },
+  "PROFILE": {
+    "PAGE": {
+      "TITLE": "Account settings"
+    },
+    "SIDENAV": {
+      "MY_PROJECTS": "My projects",
+      "SUPPORTED_PROJECTS": "Supported projects",
+      "HOW_TO_CONTRIBUTE": "How to contribute?",
+      "PRICING": "Subscriptions",
+      "LOGOUT": "Log out"
+    },
+    "STATS": {
+      "CREATED_PROJECTS": "Created projects",
+      "SUPPORTED_PROJECTS": "Supported projects",
+      "YOUR_LEVEL": "Your level"
+    },
+    "DETAILS": {
+      "TITLE": "Account information",
+      "EMAIL": "Email address",
+      "LINKEDIN": "LinkedIn",
+      "GITHUB": "GitHub",
+      "ENTER_VALUE": "Enter value",
+      "UPDATE_BUTTON": "Update information"
+    }
+  },
   "LANDING": {
     "PRICING": {
       "TITLE": "Support the open-source community",

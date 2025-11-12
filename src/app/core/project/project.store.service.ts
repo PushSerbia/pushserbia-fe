@@ -12,6 +12,7 @@ import { ProjectService } from './project.service';
 import { Project } from './project';
 import { finalize, first, Observable, tap } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 interface ProjectState {
   slugs: string[];
@@ -27,9 +28,10 @@ const PROJECT_INITIAL_STATE: ProjectState = {
   providedIn: 'root',
 })
 export class ProjectStoreService {
-  private platformId = inject(PLATFORM_ID);
-  private state = inject(TransferState);
-  private projectService = inject(ProjectService);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly state = inject(TransferState);
+  private readonly projectService = inject(ProjectService);
+  private readonly translate = inject(TranslateService);
 
   private loading = signal<boolean>(false);
   private items = signal<ProjectState>(PROJECT_INITIAL_STATE);
@@ -56,23 +58,28 @@ export class ProjectStoreService {
   private fetchAll(): Observable<Project[]> {
     this.loading.set(true);
 
-    return this.projectService.getAll().pipe(
-      first(),
-      finalize(() => this.loading.set(false)),
-      tap((projects) => {
-        const state = projects.reduce(
-          (acc, project) => {
-            acc.slugs.push(project.slug);
-            acc.entitiesMap[project.slug] = project;
-            return acc;
-          },
-          { slugs: [], entitiesMap: {} } as ProjectState,
-        );
-        this.items.set(state);
+    return this.projectService
+      .getAll({
+        language:
+          this.translate.currentLang || this.translate.getDefaultLang() || 'sr',
+      })
+      .pipe(
+        first(),
+        finalize(() => this.loading.set(false)),
+        tap((projects) => {
+          const state = projects.reduce(
+            (acc, project) => {
+              acc.slugs.push(project.slug);
+              acc.entitiesMap[project.slug] = project;
+              return acc;
+            },
+            { slugs: [], entitiesMap: {} } as ProjectState,
+          );
+          this.items.set(state);
 
-        this.setStateTransfer(state);
-      }),
-    );
+          this.setStateTransfer(state);
+        }),
+      );
   }
 
   getAll(): Signal<Project[]> {

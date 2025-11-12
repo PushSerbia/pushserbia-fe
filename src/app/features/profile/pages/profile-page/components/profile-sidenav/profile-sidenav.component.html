@@ -5,7 +5,7 @@
   <ul class="space-y-2">
     <li>
       <a
-        routerLink="/projekti"
+        [routerLink]="['/', currentLang, 'projekti']"
         [queryParams]="{ myProjectsOnly: true }"
         class="group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
       >
@@ -26,12 +26,12 @@
             d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
           />
         </svg>
-        <span class="ml-3 flex-1 whitespace-nowrap">Moji projekti</span>
+        <span class="ml-3 flex-1 whitespace-nowrap">{{ 'PROFILE.SIDENAV.MY_PROJECTS' | translate }}</span>
       </a>
     </li>
     <li>
       <a
-        routerLink="/projekti"
+        [routerLink]="['/', currentLang, 'projekti']"
         [queryParams]="{ supportedOnly: true }"
         class="group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
       >
@@ -52,12 +52,12 @@
             d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
           />
         </svg>
-        <span class="ml-3 flex-1 whitespace-nowrap">Podržani projekti</span>
+        <span class="ml-3 flex-1 whitespace-nowrap">{{ 'PROFILE.SIDENAV.SUPPORTED_PROJECTS' | translate }}</span>
       </a>
     </li>
     <li>
       <a
-        routerLink="/dokumentacija/kontakt"
+        [routerLink]="['/', currentLang, 'dokumentacija', 'kontakt']"
         class="group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
       >
         <svg
@@ -77,13 +77,13 @@
             d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
           />
         </svg>
-        <span class="ml-3">Kako da doprtineseš?</span>
+        <span class="ml-3">{{ 'PROFILE.SIDENAV.HOW_TO_CONTRIBUTE' | translate }}</span>
       </a>
     </li>
     <li>
       <a
-        routerLink="/"
-        fragment="pricing"
+        [routerLink]="['/', currentLang]"
+        [fragment]="'pricing'"
         class="group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
       >
         <svg
@@ -101,7 +101,7 @@
             d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"
           />
         </svg>
-        <span class="ml-3 flex-1 whitespace-nowrap">Pretplate</span>
+        <span class="ml-3 flex-1 whitespace-nowrap">{{ 'PROFILE.SIDENAV.PRICING' | translate }}</span>
       </a>
     </li>
   </ul>
@@ -128,7 +128,7 @@
             d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"
           />
         </svg>
-        <span class="ml-3 whitespace-nowrap">Odjava</span>
+        <span class="ml-3 whitespace-nowrap">{{ 'PROFILE.SIDENAV.LOGOUT' | translate }}</span>
       </button>
     </li>
   </ul>

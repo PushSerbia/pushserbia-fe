@@ -43,6 +43,31 @@
     },
     "COPYRIGHT": "© 2024 - {{year}} Push Serbia™. Sva prava zadržana."
   },
+  "PROFILE": {
+    "PAGE": {
+      "TITLE": "Podešavanje naloga"
+    },
+    "SIDENAV": {
+      "MY_PROJECTS": "Moji projekti",
+      "SUPPORTED_PROJECTS": "Podržani projekti",
+      "HOW_TO_CONTRIBUTE": "Kako da doprineseš?",
+      "PRICING": "Pretplate",
+      "LOGOUT": "Odjava"
+    },
+    "STATS": {
+      "CREATED_PROJECTS": "Kreiranih projekata",
+      "SUPPORTED_PROJECTS": "Podržanih projekata",
+      "YOUR_LEVEL": "Tvoj level"
+    },
+    "DETAILS": {
+      "TITLE": "Podaci o nalogu",
+      "EMAIL": "Email adresa",
+      "LINKEDIN": "LinkedIn",
+      "GITHUB": "GitHub",
+      "ENTER_VALUE": "Unesi podatak",
+      "UPDATE_BUTTON": "Ažuriraj podatke"
+    }
+  },
   "LANDING": {
     "PRICING": {
       "TITLE": "Podrži open-source zajednicu",
