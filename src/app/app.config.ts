@@ -40,7 +40,7 @@ function onViewTransitionCreated(info: ViewTransitionInfo) {
   const toUrl = router.getCurrentNavigation()?.finalUrl?.toString() ?? '';
 
   if (
-    (!toUrl.endsWith('/projekti') && !toUrl.endsWith('/projects')) ||
+    // (!toUrl.endsWith('/projekti') && !toUrl.endsWith('/projects')) ||
     toUrl.endsWith('/projekti/novi') ||
     toUrl.endsWith('/projects/new') ||
     toUrl.endsWith('/izmena') ||
