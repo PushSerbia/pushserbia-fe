@@ -65,11 +65,17 @@
               <div class="flex -space-x-2">
                 @for (member of members; track member) {
                   @if (member.imageUrl) {
-                    <a [href]="member.linkedinUrl" target="_blank">
+                    <a
+                      [title]="member.name"
+                      [href]="member.linkedinUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="rounded-full border-2 border-primary-700 dark:border-gray-600 shadow-md overflow-hidden hover:scale-110 transition-transform"
+                    >
                       <img
                         [src]="member.imageUrl"
-                        alt="member"
-                        class="w-12 h-12 rounded-full border-2 border-primary-700 dark:border-gray-600 shadow-md"
+                        [alt]="member.name"
+                        class="w-12 h-12"
                       />
                     </a>
                   } @else {

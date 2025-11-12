@@ -32,7 +32,7 @@ export class LandingHeroComponent {
       name: 'Dušan Perišić',
       initials: 'DP',
       imageUrl: '/images/users/dusan-perisic.jpg',
-      linkedinUrl: 'https://www.linkedin.com/in/dusan-perisic-672772202/',
+      linkedinUrl: 'https://www.linkedin.com/in/dusanperisic',
     },
   ];
 }
