@@ -16,7 +16,12 @@ import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-load
 import { ProjectsFilter } from '../../../../core/project/projects-filter';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { Project } from '../../../../core/project/project';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  Router,
+  RouterLink,
+} from '@angular/router';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
@@ -140,10 +145,20 @@ export class ProjectsListPageComponent implements OnInit {
   viewTransitionName(project: Project): string {
     const transition = this.transitionService.current();
 
-    const fromSlug = transition?.to.firstChild?.firstChild?.params['slug'];
-    const toSlug = transition?.from.firstChild?.firstChild?.params['slug'];
+    const fromSlug = this.findSlug(transition?.to);
+    const toSlug = this.findSlug(transition?.from);
 
     const isBannerImg = toSlug === project.slug || fromSlug === project.slug;
     return isBannerImg ? 'project-img' : '';
+  }
+
+  private findSlug(routeSnapshot?: ActivatedRouteSnapshot | null): string {
+    if (!routeSnapshot) {
+      return '';
+    }
+    if (routeSnapshot.params['slug']) {
+      return routeSnapshot.params['slug'];
+    }
+    return this.findSlug(routeSnapshot.firstChild);
   }
 }
