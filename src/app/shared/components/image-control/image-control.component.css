@@ -1,0 +1,27 @@
+
+
+/* Panel animations */
+.dropdown-panel {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Image grid item hover effect */
+.image-grid-item {
+  transition: all 0.2s ease-in-out;
+}
+
+.image-grid-item:hover {
+  transform: scale(1.05);
+}
+

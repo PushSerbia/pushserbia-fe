@@ -22,6 +22,7 @@ import { ProjectStoreService } from '../../../../core/project/project.store.serv
 import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-loader.component';
 import { Project } from '../../../../core/project/project';
 import { ProjectStatus } from '../../../../core/project/project-status';
+import { ImageControlComponent } from '../../../../shared/components/image-control/image-control.component';
 
 @Component({
   selector: 'app-create-project-page',
@@ -32,6 +33,7 @@ import { ProjectStatus } from '../../../../core/project/project-status';
     QuillEditorComponent,
     PageLoaderComponent,
     RouterLink,
+    ImageControlComponent
   ],
   templateUrl: './create-project-page.component.html',
   styleUrl: './create-project-page.component.scss',
@@ -57,6 +59,7 @@ export class CreateProjectPageComponent implements OnInit {
       shortDescription: ['', [Validators.required, Validators.maxLength(250)]],
       description: ['', [Validators.required, Validators.minLength(50)]],
       github: [''],
+      image: ['/illustrations/woman-earth-hugging.svg'],
     };
     if (this.project) {
       formGroup['status'] = [this.project.status];
@@ -86,6 +89,7 @@ export class CreateProjectPageComponent implements OnInit {
               description: this.project.description,
               github: this.project.github || '',
               status: this.project.status || '',
+              image: this.project.image ?? '/illustrations/woman-earth-hugging.svg',
             });
           }
         }

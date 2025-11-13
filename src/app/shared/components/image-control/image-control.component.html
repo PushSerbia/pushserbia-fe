@@ -1,0 +1,65 @@
+<div class="relative w-full flex flex-col gap-4 items-center">
+  <!-- Image Control Button -->
+  <button
+    type="button"
+    (click)="togglePanel()"
+    [disabled]="disabled()"
+    class="absolute sm:w-[200px] inline-flex w-full justify-center items-center px-6 py-4 m-2 text-sm font-small text-center text-gray-900 bg-white border border-gray-200 rounded-sm shrink-0 focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 transition-all z-10 top-0 right-0"
+    role="button">
+    Postavi sliku
+  </button>
+
+  <!-- Current Image Preview -->
+  <img
+    class="w-full h-100 text-gray-800 dark:text-white object-cover object-center"
+    [src]="value() ?? '/illustrations/woman-earth-hugging.svg'"
+    alt="Slika projekta" />
+
+  <!-- Dropdown Panel -->
+  @if (isPanelOpen()) {
+    <div appClickOutside (outsideClick)="close()" class="absolute top-[70px] left-0 mt-0 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-20 p-4">
+      <!-- Search Input -->
+      <div class="mb-4">
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="Pretraži slike..."
+          class="w-full px-3 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        />
+      </div>
+
+      <!-- Image Grid -->
+      <div class="grid grid-cols-4 gap-4 max-h-64 overflow-y-auto">
+        @for (imagePath of filteredImages; track imagePath) {
+          <button
+            type="button"
+            (click)="selectImage(imagePath)"
+            class="relative aspect-square overflow-hidden rounded-lg border-2 transition-all hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+            [class.border-primary-500]="value() === imagePath"
+            [class.border-gray-200]="value() !== imagePath"
+            [class.dark:border-primary-500]="value() === imagePath"
+            [class.dark:border-gray-600]="value() !== imagePath">
+            <img
+              [src]="imagePath"
+              [alt]="imagePath"
+              class="w-full h-full object-cover"
+            />
+          </button>
+        } @empty {
+          <p class="col-span-3 text-center text-gray-500 dark:text-gray-400 py-4">
+            Nisu pronađene slike
+          </p>
+        }
+      </div>
+
+      <!-- Close Button -->
+      <button
+        type="button"
+        (click)="togglePanel()"
+        class="mt-4 w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-all">
+        Zatvori
+      </button>
+    </div>
+  }
+</div>
+
