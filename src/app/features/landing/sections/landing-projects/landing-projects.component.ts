@@ -23,14 +23,14 @@ import { TransitionService } from '../../../../core/transition/transition.servic
   styleUrl: './landing-projects.component.css',
 })
 export class LandingProjectsComponent {
-  $allProjects: Signal<Project[]>;
-  $votesMap = signal<VoteState>({});
+  private projectStoreService = inject(ProjectStoreService);
+  private voteStoreService = inject(VoteStoreService);
   private transitionService = inject(TransitionService);
 
-  constructor(
-    private projectStoreService: ProjectStoreService,
-    private voteStoreService: VoteStoreService,
-  ) {
+  $allProjects: Signal<Project[]>;
+  $votesMap = signal<VoteState>({});
+
+  constructor() {
     this.$allProjects = this.projectStoreService.getAll();
     effect(() => {
       const votesMap = this.voteStoreService.getAll();

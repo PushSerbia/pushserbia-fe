@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BlogStoreService } from '../../../../core/blog/blog.store.service';
-import { BlogPost } from '../../../../core/blog/blog';
 
 @Component({
   selector: 'app-blog',
@@ -11,9 +10,7 @@ import { BlogPost } from '../../../../core/blog/blog';
   styleUrl: './blog.component.css',
 })
 export class BlogComponent {
-  blogPosts: BlogPost[] = [];
+  private blogStoreService = inject(BlogStoreService);
 
-  constructor(private blogStoreService: BlogStoreService) {
-    this.blogPosts = this.blogStoreService.getBlogPosts();
-  }
+  blogPosts = this.blogStoreService.getBlogPosts();
 }

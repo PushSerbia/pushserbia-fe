@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
@@ -23,6 +23,11 @@ import { IntegrationsService } from '../../../../core/integrations/integrations.
   styleUrl: './payment-page.component.css',
 })
 export class PaymentPageComponent implements OnInit, OnDestroy {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+  private integrationsService = inject(IntegrationsService);
+
   paymentForm: FormGroup;
   isOneTime = true;
   amount = 0;
@@ -36,12 +41,7 @@ export class PaymentPageComponent implements OnInit, OnDestroy {
   submissionError: string | null = null;
   private queryParamsSubscription: Subscription = new Subscription();
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private fb: FormBuilder,
-    private integrationsService: IntegrationsService,
-  ) {
+  constructor() {
     this.paymentForm = this.fb.group({
       fullName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],

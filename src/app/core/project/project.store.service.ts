@@ -1,11 +1,11 @@
 import {
   computed,
-  Inject,
+  inject,
   Injectable,
   makeStateKey,
   PLATFORM_ID,
-  Signal,
   signal,
+  Signal,
   TransferState,
 } from '@angular/core';
 import { ProjectService } from './project.service';
@@ -27,16 +27,16 @@ const PROJECT_INITIAL_STATE: ProjectState = {
   providedIn: 'root',
 })
 export class ProjectStoreService {
+  private platformId = inject(PLATFORM_ID);
+  private state = inject(TransferState);
+  private projectService = inject(ProjectService);
+
   private loading = signal<boolean>(false);
   private items = signal<ProjectState>(PROJECT_INITIAL_STATE);
 
   $loading = this.loading.asReadonly();
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: object,
-    private state: TransferState,
-    private projectService: ProjectService,
-  ) {
+  constructor() {
     this.loadStateTransfer();
   }
 
