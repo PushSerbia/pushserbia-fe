@@ -22,7 +22,7 @@ import { ProjectStoreService } from '../../../../core/project/project.store.serv
 import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-loader.component';
 import { Project } from '../../../../core/project/project';
 import { ProjectStatus } from '../../../../core/project/project-status';
-import { ImageControlComponent } from '../../../../shared/components/image-control/image-control.component';
+import { ImageControlComponent } from '../../../../shared/ui/image-control/image-control.component';
 
 @Component({
   selector: 'app-create-project-page',

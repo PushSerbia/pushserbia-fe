@@ -31,6 +31,7 @@
       <!-- Image Grid -->
       <div class="grid grid-cols-4 gap-4 max-h-64 overflow-y-auto">
         @for (imagePath of filteredImages; track imagePath) {
+          <div>
           <button
             type="button"
             (click)="selectImage(imagePath)"
@@ -45,6 +46,8 @@
               class="w-full h-full object-cover"
             />
           </button>
+          <p class="text-xs text-gray-500 dark:text-gray-400">by <a href="#" class="hover:underline">Unsplash User</a></p>
+          </div>
         } @empty {
           <p class="col-span-3 text-center text-gray-500 dark:text-gray-400 py-4">
             Nisu pronađene slike

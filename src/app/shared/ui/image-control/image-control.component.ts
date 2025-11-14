@@ -84,7 +84,7 @@ export class ImageControlComponent implements ControlValueAccessor {
 
   selectImage(imagePath: string): void {
     this.value.set(imagePath);
-    //this.isPanelOpen.set(false);
+    this.isPanelOpen.set(false);
     this.onTouched();
   }
 
