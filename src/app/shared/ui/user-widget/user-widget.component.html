@@ -4,8 +4,14 @@
       routerLink="/profil"
       class="flex items-center gap-2 dark:bg-gray-800 hover:dark:bg-gray-700 bg-gray-50 hover:bg-gray-100 px-2 py-1 rounded-lg"
     >
-      @if (user.imageUrl) {
-        <img [src]="user.imageUrl" alt="user" class="w-8 h-8 rounded-full" />
+      @if (user.email) {
+        <img ngxGravatar [email]="user.email" class="w-8 h-8" alt="user" />
+      } @else {
+        <span
+          class="text-gray-900 text-lg font-medium flex items-center justify-center rounded-full w-8 h-8 dark:text-gray-300 bg-gray-300 dark:bg-gray-600"
+        >
+          {{ user.name.charAt(0) }}
+        </span>
       }
       <span class="text-sm text-gray-500 dark:text-gray-400">
         {{ user.name }}
