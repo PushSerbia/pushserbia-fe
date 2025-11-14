@@ -25,8 +25,8 @@ export class LandingHeroComponent {
     {
       name: 'Marko Makarić',
       initials: 'MM',
-      imageUrl: '',
-      linkedinUrl: '',
+      imageUrl: '/images/users/marko-makaric.jpg',
+      linkedinUrl: 'https://www.linkedin.com/in/marko-makari%C4%87-547a91ba/',
     },
     {
       name: 'Dušan Perišić',
