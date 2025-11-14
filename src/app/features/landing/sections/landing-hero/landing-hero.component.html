@@ -1,4 +1,6 @@
-<section class="bg-gradient-to-b from-primary-50 to-white dark:from-gray-900 dark:to-gray-800">
+<section
+  class="bg-gradient-to-b from-primary-50 to-white dark:from-gray-900 dark:to-gray-800"
+>
   <div class="container px-4 py-12 mx-auto lg:px-8 sm:py-20 lg:py-32">
     <div class="flex flex-col gap-12 lg:items-center lg:gap-20 lg:flex-row">
       <div class="lg:max-w-2xl xl:shrink-0">
@@ -16,7 +18,9 @@
           </p>
         </div>
 
-        <div class="flex flex-col gap-5 mt-10 sm:flex-row sm:justify-center lg:justify-start">
+        <div
+          class="flex flex-col gap-5 mt-10 sm:flex-row sm:justify-center lg:justify-start"
+        >
           <a
             routerLink="/projekti"
             class="sm:w-[200px] px-6 py-4 w-full text-lg font-medium text-center text-white bg-primary-700 rounded-lg shrink-0 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 shadow-lg hover:shadow-xl transition-all"
@@ -47,26 +51,49 @@
           </a>
         </div>
 
-        <div
-          class="mt-12 pt-8 border-t border-gray-100 dark:border-gray-700"
-        >
+        <div class="mt-12 pt-8 border-t border-gray-100 dark:border-gray-700">
           <div class="flex flex-col max-w-md mx-auto lg:mx-0">
-            <p class="text-xl text-gray-600 dark:text-gray-300 mb-6 text-center lg:text-left">
-              Pridruži se rastućoj zajednici entuzijasta koji doprinose boljem društvu.
+            <p
+              class="text-xl text-gray-600 dark:text-gray-300 mb-6 text-center lg:text-left"
+            >
+              Pridruži se rastućoj zajednici entuzijasta koji doprinose boljem
+              društvu.
             </p>
-            <div class="flex items-center justify-center lg:justify-start gap-3">
+            <div
+              class="flex items-center justify-center lg:justify-start gap-3"
+            >
               <div class="flex -space-x-2">
                 @for (member of members; track member) {
-                  <div
-                    class="w-12 h-12 border-2 border-primary-700 rounded-full dark:border-gray-600 bg-primary-100 dark:bg-primary-900 flex items-center justify-center shadow-md"
-                  >
-                    <span class="text-sm font-bold text-primary-800 dark:text-primary-300">
-                      {{ member }}
-                    </span>
-                  </div>
+                  @if (member.imageUrl) {
+                    <a
+                      [title]="member.name"
+                      [href]="member.linkedinUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="rounded-full border-2 border-primary-700 dark:border-gray-600 shadow-md overflow-hidden hover:scale-110 transition-transform"
+                    >
+                      <img
+                        [src]="member.imageUrl"
+                        [alt]="member.name"
+                        class="w-12 h-12"
+                      />
+                    </a>
+                  } @else {
+                    <div
+                      class="w-12 h-12 border-2 border-primary-700 rounded-full dark:border-gray-600 bg-primary-100 dark:bg-primary-900 flex items-center justify-center shadow-md"
+                    >
+                      <span
+                        class="text-sm font-bold text-primary-800 dark:text-primary-300"
+                      >
+                        {{ member.initials }}
+                      </span>
+                    </div>
+                  }
                 }
               </div>
-              <span class="ml-2 text-gray-600 dark:text-gray-300 font-medium">i mnogi drugi</span>
+              <span class="ml-2 text-gray-600 dark:text-gray-300 font-medium"
+                >i mnogi drugi</span
+              >
             </div>
           </div>
         </div>
