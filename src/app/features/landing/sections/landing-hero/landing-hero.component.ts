@@ -19,8 +19,8 @@ export class LandingHeroComponent {
     {
       name: 'Miloš Krstić',
       initials: 'MK',
-      imageUrl: '',
-      linkedinUrl: '',
+      imageUrl: '/images/users/milos-krstic.jpg',
+      linkedinUrl: 'https://www.linkedin.com/in/mustackio',
     },
     {
       name: 'Marko Makarić',
