@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, effect, input, model, signal } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, model, signal } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
+import { AbstractControlValueAccessorDirective } from '../../directives/abstract-control-value-accessor.directive';
 
 @Component({
   selector: 'app-image-control',
@@ -15,21 +16,10 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
     multi: true,
   }],
 })
-export class ImageControlComponent implements ControlValueAccessor {
-  readonly value = model<string | null>(null);
-  readonly disabled = model<boolean>(false);
+export class ImageControlComponent extends AbstractControlValueAccessorDirective<string> {
   readonly searchQuery = model<string>('');
 
-  readonly readonly = input<boolean>(false);
-
   protected readonly isPanelOpen = signal<boolean>(false);
-
-
-  // Callback functions for ControlValueAccessor - initialized as no-ops and replaced by Angular Forms
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private onChange: (value: string | null) => void = () => {};
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private onTouched: () => void = () => {};
 
   // Available images - you can expand this list or load from a service
   readonly availableImages = signal<string[]>([
@@ -51,27 +41,8 @@ export class ImageControlComponent implements ControlValueAccessor {
     // Add more image paths as needed
   ]);
 
-
-  readonly _valueChangeEffect = effect(() => {
-      // Notify Angular forms of value changes
-      this.onChange(this.value());
-  });
-
-  writeValue(value: string | null): void {
+  override writeValue(value: string | null): void {
     this.value.set(value ?? '/illustrations/woman-earth-hugging.svg');
-  }
-
-  registerOnChange(fn: (value: string | null) => void): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-
-  setDisabledState?(disabled: boolean): void {
-    this.disabled.set(disabled);
   }
 
   togglePanel(): void {
