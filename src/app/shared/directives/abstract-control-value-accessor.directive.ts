@@ -1,9 +1,7 @@
 import { Directive, effect, input, model } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
-@Directive({
-  selector: '[appAbstractControlValueAccessor]'
-})
+@Directive()
 export abstract class AbstractControlValueAccessorDirective<T> implements ControlValueAccessor {
   readonly value = model<T | null>(null);
   readonly disabled = model<boolean>(false);
