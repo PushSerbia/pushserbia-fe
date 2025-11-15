@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
@@ -19,6 +19,8 @@ export class ImageControlComponent implements ControlValueAccessor {
   readonly value = model<string | null>(null);
   readonly disabled = model<boolean>(false);
   readonly searchQuery = model<string>('');
+
+  readonly readonly = input<boolean>(false);
 
   protected readonly isPanelOpen = signal<boolean>(false);
 
@@ -49,12 +51,11 @@ export class ImageControlComponent implements ControlValueAccessor {
     // Add more image paths as needed
   ]);
 
-  constructor() {
-    effect(() => {
+
+  readonly _valueChangeEffect = effect(() => {
       // Notify Angular forms of value changes
       this.onChange(this.value());
-    });
-  }
+  });
 
   writeValue(value: string | null): void {
     this.value.set(value ?? '/illustrations/woman-earth-hugging.svg');
