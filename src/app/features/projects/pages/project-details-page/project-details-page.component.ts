@@ -17,6 +17,7 @@ import { VoteStoreService } from '../../../../core/vote/vote.store.service';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { AsyncPipe } from '@angular/common';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
+import { GravatarModule } from 'ngx-gravatar';
 
 @Component({
   selector: 'app-project-details-page',
@@ -27,6 +28,7 @@ import { AuthRequiredDirective } from '../../../../core/auth/auth-required.direc
     PageLoaderComponent,
     AsyncPipe,
     AuthRequiredDirective,
+    GravatarModule,
   ],
   templateUrl: './project-details-page.component.html',
   styleUrl: './project-details-page.component.scss',
