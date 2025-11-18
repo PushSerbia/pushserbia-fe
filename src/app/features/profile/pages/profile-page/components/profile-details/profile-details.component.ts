@@ -4,10 +4,11 @@ import { User } from '../../../../../../core/user/user';
 import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data';
 import { ProfileInformationDialogComponent } from '../profile-information-dialog/profile-information-dialog.component';
 import { ModalService } from '../../../../../../core/modal/modal.service';
+import { GravatarModule } from 'ngx-gravatar';
 
 @Component({
   selector: 'app-profile-details',
-  imports: [TitleCasePipe, ProfileInformationDialogComponent],
+  imports: [TitleCasePipe, ProfileInformationDialogComponent, GravatarModule],
   templateUrl: './profile-details.component.html',
   styleUrl: './profile-details.component.css',
 })

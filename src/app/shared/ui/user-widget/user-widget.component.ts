@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
+import { GravatarModule } from 'ngx-gravatar';
 
 @Component({
   selector: 'app-user-widget',
-  imports: [RouterLink],
+  imports: [RouterLink, GravatarModule],
   templateUrl: './user-widget.component.html',
   styleUrl: './user-widget.component.css',
 })

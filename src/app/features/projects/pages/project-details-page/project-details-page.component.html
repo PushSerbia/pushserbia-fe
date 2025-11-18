@@ -47,12 +47,18 @@
             <div class="grid grid-cols-3 gap-4 w-fit">
               <p>Predlagač:</p>
               <div class="flex items-center gap-3 col-span-2">
-                @if (projectDetails.creator.imageUrl) {
+                @if (projectDetails.creator.gravatar) {
                   <img
-                    [src]="projectDetails.creator.imageUrl"
-                    alt="user"
-                    class="w-8 h-8 rounded-full"
+                    ngxGravatar
+                    [md5Hash]="projectDetails.creator.gravatar"
+                    alt="creator"
                   />
+                } @else {
+                  <span
+                    class="text-gray-900 text-lg font-medium flex items-center justify-center rounded-full w-8 h-8 dark:text-gray-300 bg-gray-300 dark:bg-gray-600"
+                  >
+                    {{ projectDetails.creator.fullName.charAt(0) }}
+                  </span>
                 }
                 <span
                   class="text-gray-800 text-lg font-medium rounded-sm dark:text-gray-300"
@@ -63,7 +69,7 @@
               <p>Github:</p>
               @if (projectDetails.github) {
                 <a
-                  class="text-gray-800 text-lg font-medium me-2 rounded-sm dark:text-gray-300 hover:underline text-center truncate col-span-2"
+                  class="text-gray-800 text-lg font-medium me-2 rounded-sm dark:text-gray-300 hover:underline truncate col-span-2"
                   [href]="projectDetails.github"
                   target="_blank"
                   rel="noopener noreferrer"

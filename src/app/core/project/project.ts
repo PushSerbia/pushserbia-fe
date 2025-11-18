@@ -13,6 +13,7 @@ export interface Project {
     id: string;
     fullName: string;
     imageUrl: string;
+    gravatar: string;
   };
   status: ProjectStatus;
   isBanned: boolean;
