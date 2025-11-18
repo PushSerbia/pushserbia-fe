@@ -1,25 +1,25 @@
 import { Route } from '@angular/router';
-import { AccountComponent } from './pages/account/account.component';
+import { Account } from './account/account';
 
 export const authRoutes: Route[] = [
   {
     path: 'prijava',
     loadComponent: () =>
-      import('./pages/login-page/login-page.component').then(
-        (m) => m.LoginPageComponent,
+      import('./login/login').then(
+        (m) => m.Login,
       ),
   },
   {
     path: 'registracija',
     loadComponent: () =>
-      import('./pages/register-page/register-page.component').then(
-        (m) => m.RegisterPageComponent,
+      import('./register/register').then(
+        (m) => m.Register,
       ),
   },
   {
     path: 'preusmeravanje/linkedin',
     resolve: [],
-    component: AccountComponent,
+    component: Account,
   },
   {
     path: '',
