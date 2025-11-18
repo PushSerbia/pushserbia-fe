@@ -12,16 +12,13 @@
 .project-img img {
   view-transition-name: project-img;
   contain: layout;
+  display: block;
+  width: 100%;
+  max-width: 450px;
 }
 
 .gallery img {
   contain: layout;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
 }
 
 @keyframes fade-out {
@@ -30,30 +27,12 @@
   }
 }
 
-@keyframes slide-from-right {
-  from {
-    transform: translateX(30px);
-  }
-}
-
-@keyframes slide-to-left {
-  to {
-    transform: translateX(-30px);
-  }
-}
-
-::view-transition-old(project-img),
 ::view-transition-new(project-img) {
   animation: none;
   mix-blend-mode: normal;
 }
 
-::view-transition-image-pair(project-img) {
-  isolation: none;
-}
-
-.project-img img {
-  display: block;
-  width: 100%;
-  max-width: 450px;
+::view-transition-old(project-img) {
+  animation: fade-out 0.3s ease-in-out forwards;
+  mix-blend-mode: normal;
 }
