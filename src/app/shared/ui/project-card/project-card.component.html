@@ -25,6 +25,7 @@
         class="h-full w-full object-cover object-center"
         [src]="project().image"
         [alt]="project().name"
+        [style.viewTransitionName]="viewTransitionName()"
       />
     } @else {
       <div
