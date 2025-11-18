@@ -25,7 +25,7 @@ import { Project } from '../../../../core/project/project';
 import { ProjectStatus } from '../../../../core/project/project-status';
 import { ImageControlComponent, ImageControlOption } from '../../../../shared/ui/image-control/image-control.component';
 import { UnsplashService } from '../../../../core/unsplash/services/unsplash.service';
-import { debounceTime, map, startWith, Subject, switchMap } from 'rxjs';
+import { debounceTime, filter, map, startWith, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-create-project-page',
@@ -129,15 +129,14 @@ export class CreateProjectPageComponent implements OnInit {
   }
 
   setUnsplashSearchQuery(query: string): void {
-    if (query.trim()) {
-      this.unsplashSearchQuerySubject.next(query);
-    }
+    this.unsplashSearchQuerySubject.next(query);
   }
 
   private loadUnsplashImages(): void {
     this.unsplashSearchQuerySubject.pipe(
       startWith('Community'),
       debounceTime(1000),
+      filter(query => query.trim().length > 0),
       switchMap(query => this.unsplash.searchPhotos(query)),
       map(response => response.map(item => ({label: item.alt_description, value: item.urls.regular, author: `${item.user.first_name} ${item.user.last_name}`, cover: item.urls.small}) as ImageControlOption)),
       takeUntilDestroyed(this.destroyRef)
