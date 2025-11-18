@@ -48,16 +48,18 @@ export class CreateProjectPageComponent implements OnInit {
   private injector = inject(Injector);
   private projectStoreService = inject(ProjectStoreService);
   private readonly unsplash = inject(UnsplashService);
-  project?: Project;
-  projectStatus = ProjectStatus;
+  private readonly unsplashSearchQuerySubject = new Subject<string>();
 
-  form!: FormGroup;
+  protected project?: Project;
+  protected projectStatus = ProjectStatus;
 
-  slug = input<string>();
-  $loading = this.projectStoreService.$loading;
+  protected form!: FormGroup;
+
+  readonly slug = input<string>();
+  readonly $loading = this.projectStoreService.$loading;
 
   protected readonly unsplashOptions = signal<ImageControlOption[]>([]);
-  protected readonly unsplashSearchQuerySubject = new Subject<string>();
+
 
   private initForm(): void {
     const formGroup: Record<string, unknown[]> = {
