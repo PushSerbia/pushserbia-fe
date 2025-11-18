@@ -6,6 +6,7 @@ import {
   Injector,
   input,
   OnInit,
+  signal,
 } from '@angular/core';
 import { BasicLayoutComponent } from '../../../../shared/layout/landing-layout/basic-layout.component';
 import {
@@ -22,7 +23,9 @@ import { ProjectStoreService } from '../../../../core/project/project.store.serv
 import { PageLoaderComponent } from '../../../../shared/ui/page-loader/page-loader.component';
 import { Project } from '../../../../core/project/project';
 import { ProjectStatus } from '../../../../core/project/project-status';
-import { ImageControlComponent } from '../../../../shared/ui/image-control/image-control.component';
+import { ImageControlComponent, ImageControlOption } from '../../../../shared/ui/image-control/image-control.component';
+import { UnsplashService } from '../../../../core/unsplash/services/unsplash.service';
+import { debounceTime, map, startWith, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-create-project-page',
@@ -44,6 +47,7 @@ export class CreateProjectPageComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private injector = inject(Injector);
   private projectStoreService = inject(ProjectStoreService);
+  private readonly unsplash = inject(UnsplashService);
   project?: Project;
   projectStatus = ProjectStatus;
 
@@ -51,6 +55,9 @@ export class CreateProjectPageComponent implements OnInit {
 
   slug = input<string>();
   $loading = this.projectStoreService.$loading;
+
+  protected readonly unsplashOptions = signal<ImageControlOption[]>([]);
+  protected readonly unsplashSearchQuerySubject = new Subject<string>();
 
   private initForm(): void {
     const formGroup: Record<string, unknown[]> = {
@@ -75,6 +82,15 @@ export class CreateProjectPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.unsplashSearchQuerySubject.pipe(
+      startWith('popular'),
+      debounceTime(2000),
+      switchMap(query => this.unsplash.searchPhotos(query)),
+      map(response => response.map(item => ({label: item.alt_description, value: item.urls.full, author: `${item.user.first_name} ${item.user.last_name}`, cover: item.urls.thumb}) as ImageControlOption))
+    ).subscribe(options => {
+      this.unsplashOptions.set(options);
+    });
+
     effect(
       () => {
         const slug = this.slug();
@@ -117,5 +133,10 @@ export class CreateProjectPageComponent implements OnInit {
         `/projekti${this.project?.slug ? '/' + updated.slug : ''}`,
       );
     });
+  }
+
+  setUnsplashSearchQuery(query: string): void {
+    console.log(query);
+    this.unsplashSearchQuerySubject.next(query);
   }
 }

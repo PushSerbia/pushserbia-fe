@@ -9,8 +9,15 @@ import { UnsplashPhoto, UnsplashSearchResponse } from '../interfaces/unsplash-ph
 export class UnsplashService extends ApiService<UnsplashPhoto> {
   protected override endpoint = 'unsplash';
 
+  override getAll(): Observable<UnsplashPhoto[]> {
+    return this.httpClient.get<UnsplashSearchResponse>(`/${this.endpoint}`)
+      .pipe(
+        map(this.mapSearchResponseToResults.bind(this))
+      );
+  }
+
   searchPhotos(query: string): Observable<UnsplashPhoto[]> {
-    return this.httpClient.get<UnsplashSearchResponse>(`${this.endpoint}/search`, {
+    return this.httpClient.get<UnsplashSearchResponse>(`/${this.endpoint}/search`, {
       params: { query },
     })
     .pipe(

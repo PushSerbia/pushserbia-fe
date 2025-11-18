@@ -8,6 +8,7 @@ export interface ImageControlOption {
   author?: string;
   label?: string;
   value: string;
+  cover: string;
 }
 
 @Component({
