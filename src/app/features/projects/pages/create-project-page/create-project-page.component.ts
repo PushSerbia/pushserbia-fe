@@ -82,14 +82,7 @@ export class CreateProjectPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.unsplashSearchQuerySubject.pipe(
-      startWith('popular'),
-      debounceTime(2000),
-      switchMap(query => this.unsplash.searchPhotos(query)),
-      map(response => response.map(item => ({label: item.alt_description, value: item.urls.regular, author: `${item.user.first_name} ${item.user.last_name}`, cover: item.urls.small}) as ImageControlOption))
-    ).subscribe(options => {
-      this.unsplashOptions.set(options);
-    });
+    this.loadUnsplashImages();
 
     effect(
       () => {
@@ -136,7 +129,20 @@ export class CreateProjectPageComponent implements OnInit {
   }
 
   setUnsplashSearchQuery(query: string): void {
-    console.log(query);
-    this.unsplashSearchQuerySubject.next(query);
+    if (query.trim()) {
+      this.unsplashSearchQuerySubject.next(query);
+    }
+  }
+
+  private loadUnsplashImages(): void {
+    this.unsplashSearchQuerySubject.pipe(
+      startWith('Community'),
+      debounceTime(1000),
+      switchMap(query => this.unsplash.searchPhotos(query)),
+      map(response => response.map(item => ({label: item.alt_description, value: item.urls.regular, author: `${item.user.first_name} ${item.user.last_name}`, cover: item.urls.small}) as ImageControlOption)),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(options => {
+      this.unsplashOptions.set(options);
+    });
   }
 }
