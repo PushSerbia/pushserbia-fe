@@ -4,15 +4,15 @@ export const blogRoutes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./pages/blog/blog.component').then(
-        (m) => m.BlogComponent,
+      import('./blog/blog').then(
+        (m) => m.Blog,
       ),
   },
   {
     path: ':slug',
     loadComponent: () =>
-      import('./pages/blog-post/blog-post.component').then(
-        (m) => m.BlogPostComponent,
+      import('./blog-post-details/blog-post-details').then(
+        (m) => m.BlogPostDetails,
       ),
   },
 ];
