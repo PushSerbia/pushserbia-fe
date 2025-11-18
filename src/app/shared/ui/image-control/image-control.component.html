@@ -35,23 +35,23 @@
 
       <!-- Image Grid -->
       <div class="grid grid-cols-4 gap-4 max-h-64 overflow-y-auto">
-        @for (imagePath of filteredImages(); track imagePath) {
+        @for (option of options(); track option.value) {
           <div>
           <button
             type="button"
-            (click)="selectImage(imagePath)"
+            (click)="selectImage(option.value)"
             class="relative aspect-square overflow-hidden rounded-lg border-2 transition-all hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            [class.border-primary-500]="value() === imagePath"
-            [class.border-gray-200]="value() !== imagePath"
-            [class.dark:border-primary-500]="value() === imagePath"
-            [class.dark:border-gray-600]="value() !== imagePath">
+            [class.border-primary-500]="value() === option.value"
+            [class.border-gray-200]="value() !== option.value"
+            [class.dark:border-primary-500]="value() === option.value"
+            [class.dark:border-gray-600]="value() !== option.value">
             <img
-              [src]="imagePath"
-              [alt]="imagePath"
+              [src]="option.value"
+              [alt]="option.label"
               class="w-full h-full object-cover"
             />
           </button>
-          <p class="text-xs text-gray-500 dark:text-gray-400">by <a href="#" class="hover:underline">Unsplash User</a></p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">by <a href="#" class="hover:underline">{{ option.author }}</a></p>
           </div>
         } @empty {
           <p class="col-span-12 text-center text-gray-500 dark:text-gray-400 py-4">
