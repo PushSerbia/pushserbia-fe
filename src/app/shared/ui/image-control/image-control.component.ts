@@ -3,6 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 import { AbstractControlValueAccessorDirective } from '../../directives/abstract-control-value-accessor.directive';
+import { NgTemplateOutlet } from '@angular/common';
 
 export interface ImageControlOption {
   author?: string;
@@ -13,7 +14,7 @@ export interface ImageControlOption {
 
 @Component({
   selector: 'app-image-control',
-  imports: [ClickOutsideDirective, FormsModule],
+  imports: [ClickOutsideDirective, FormsModule, NgTemplateOutlet],
   templateUrl: './image-control.component.html',
   styleUrl: './image-control.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

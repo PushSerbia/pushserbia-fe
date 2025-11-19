@@ -19,7 +19,12 @@
 
   <!-- Dropdown Panel -->
   @if (isPanelOpen()) {
-    <div appClickOutside animate.enter="enter-animation" animate.leave="leave-animation" (outsideClick)="close()" class="absolute top-[70px] left-0 mt-0 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-20 p-4">
+    <ng-container [ngTemplateOutlet]="panel"/>
+  }
+</div>
+
+<ng-template #panel>
+  <div appClickOutside animate.enter="enter-animation" animate.leave="leave-animation" (outsideClick)="close()" class="absolute top-[70px] left-0 mt-0 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-20 p-4">
       <!-- Search Input -->
       <div>
         <ng-content></ng-content>
@@ -68,6 +73,4 @@
         Zatvori
       </button>
     </div>
-  }
-</div>
-
+</ng-template>
