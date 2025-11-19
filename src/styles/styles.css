@@ -31,31 +31,3 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
-
-.enter-animation {
-  animation: slide-fade 1s;
-}
-.leave-animation {
-  animation: slide-up-down 1s forwards;
-}
-@keyframes slide-fade {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-up-down {
-  from {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-}
