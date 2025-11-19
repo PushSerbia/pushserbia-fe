@@ -3,6 +3,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 import { AbstractControlValueAccessorDirective } from '../../directives/abstract-control-value-accessor.directive';
+import { NgTemplateOutlet } from '@angular/common';
 
 export interface ImageControlOption {
   author?: string;
@@ -13,7 +14,7 @@ export interface ImageControlOption {
 
 @Component({
   selector: 'app-image-control',
-  imports: [ClickOutsideDirective, FormsModule],
+  imports: [ClickOutsideDirective, FormsModule, NgTemplateOutlet],
   templateUrl: './image-control.component.html',
   styleUrl: './image-control.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,20 +27,11 @@ export interface ImageControlOption {
 export class ImageControlComponent extends AbstractControlValueAccessorDirective<string> {
   readonly searchQuery = model<string>('');
   readonly options = input<ImageControlOption[]>([]);
+  readonly isLoading = input<boolean>(false);
 
   protected readonly isPanelOpen = signal<boolean>(false);
 
   readonly images = computed<string[]>(() => this.options().map(option => option.value));
-
-  readonly filteredImages = computed(() => {
-    const query = this.searchQuery().toLowerCase();
-    if (!query) {
-      return this.images();
-    }
-    return this.images().filter(img =>
-      img.toLowerCase().includes(query)
-    );
-  });
 
   override writeValue(value: string | null): void {
     this.value.set(value ?? '/illustrations/woman-earth-hugging.svg');
