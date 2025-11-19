@@ -52,6 +52,7 @@
                   class="flex justify-center items-center"
                   formControlName="image"
                   [options]="unsplashOptions()"
+                  [isLoading]="loadingUnsplashImages()"
                   (searchQueryChange)="setUnsplashSearchQuery($event)"
                 ></app-image-control>
               </div>

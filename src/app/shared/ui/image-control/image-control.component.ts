@@ -27,20 +27,11 @@ export interface ImageControlOption {
 export class ImageControlComponent extends AbstractControlValueAccessorDirective<string> {
   readonly searchQuery = model<string>('');
   readonly options = input<ImageControlOption[]>([]);
+  readonly isLoading = input<boolean>(false);
 
   protected readonly isPanelOpen = signal<boolean>(false);
 
   readonly images = computed<string[]>(() => this.options().map(option => option.value));
-
-  readonly filteredImages = computed(() => {
-    const query = this.searchQuery().toLowerCase();
-    if (!query) {
-      return this.images();
-    }
-    return this.images().filter(img =>
-      img.toLowerCase().includes(query)
-    );
-  });
 
   override writeValue(value: string | null): void {
     this.value.set(value ?? '/illustrations/woman-earth-hugging.svg');

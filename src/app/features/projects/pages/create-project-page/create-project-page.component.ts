@@ -25,7 +25,7 @@ import { Project } from '../../../../core/project/project';
 import { ProjectStatus } from '../../../../core/project/project-status';
 import { ImageControlComponent, ImageControlOption } from '../../../../shared/ui/image-control/image-control.component';
 import { UnsplashService } from '../../../../core/unsplash/services/unsplash.service';
-import { debounceTime, filter, map, startWith, Subject, switchMap } from 'rxjs';
+import { debounceTime, map, startWith, Subject, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-create-project-page',
@@ -59,7 +59,7 @@ export class CreateProjectPageComponent implements OnInit {
   readonly $loading = this.projectStoreService.$loading;
 
   protected readonly unsplashOptions = signal<ImageControlOption[]>([]);
-
+  protected readonly loadingUnsplashImages = signal<boolean>(false);
 
   private initForm(): void {
     const formGroup: Record<string, unknown[]> = {
@@ -131,16 +131,19 @@ export class CreateProjectPageComponent implements OnInit {
   }
 
   setUnsplashSearchQuery(query: string): void {
-    this.unsplashSearchQuerySubject.next(query);
+    if (query.trim().length > 0) {
+      this.unsplashSearchQuerySubject.next(query);
+    }
   }
 
   private loadUnsplashImages(): void {
     this.unsplashSearchQuerySubject.pipe(
       startWith('Community'),
+      tap(() => this.loadingUnsplashImages.set(true)),
       debounceTime(1000),
-      filter(query => query.trim().length > 0),
       switchMap(query => this.unsplash.searchPhotos(query)),
       map(response => response.map(item => ({label: item.alt_description, value: item.urls.regular, author: `${item.user.first_name} ${item.user.last_name}`, cover: item.urls.small}) as ImageControlOption)),
+      tap(() => this.loadingUnsplashImages.set(false)),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(options => {
       this.unsplashOptions.set(options);
