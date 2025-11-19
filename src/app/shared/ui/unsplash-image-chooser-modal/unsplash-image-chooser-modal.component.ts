@@ -40,10 +40,10 @@ export class UnsplashImageChooserModalComponent implements OnInit {
   private loadUnsplashImagesOnSearchQueryChange(): void {
     this.searchQuery.valueChanges.pipe(
       startWith('Community'),
-      tap(() => this.isLoading.set(true)),
       debounce(() => this.initialLoading ? timer(0) : timer(1500)),
       filter(query => query.trim().length > 0),
       distinctUntilChanged(),
+      tap(() => this.isLoading.set(true)),
       switchMap(query => this.unsplash.searchPhotos(query)),
       takeUntilDestroyed(this.destroyRef),
     ).subscribe({
