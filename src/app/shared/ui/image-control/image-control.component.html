@@ -3,7 +3,7 @@
   @if(!readonly()) {
     <button
       type="button"
-      (click)="togglePanel()"
+      (click)="openDialog()"
       [disabled]="disabled()"
       class="absolute sm:w-[200px] inline-flex w-full justify-center items-center px-6 py-4 m-2 text-sm font-small text-center text-gray-900 bg-white border border-gray-200 rounded-sm shrink-0 focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 transition-all z-10 top-0 right-0 cursor-pointer"
       role="button">
@@ -13,70 +13,8 @@
 
   <!-- Current Image Preview -->
   <img
-    class="w-full h-100 text-gray-800 dark:text-white object-cover object-center"
+    class="w-full h-100 text-gray-800 dark:text-white object-contain object-center"
     [src]="value() ?? '/illustrations/woman-earth-hugging.svg'"
     alt="Slika projekta" />
 
-  <!-- Dropdown Panel -->
-  @if (isPanelOpen()) {
-    <ng-container [ngTemplateOutlet]="panel"/>
-  }
 </div>
-
-<ng-template #panel>
-  <div appClickOutside animate.enter="enter-animation" animate.leave="leave-animation" (outsideClick)="close()" class="absolute top-[70px] left-0 mt-0 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-20 p-4 drop-shadow-sm">
-      <!-- Search Input -->
-      <div>
-        <ng-content></ng-content>
-      </div>
-      <div class="mb-4">
-        <input
-          type="text"
-          [(ngModel)]="searchQuery"
-          placeholder="Pretraži slike..."
-          class="w-full px-3 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-        />
-      </div>
-
-      <!-- Image Grid -->
-      <div class="grid grid-cols-4 gap-4 max-h-64 overflow-y-auto">
-        @if (isLoading()) {
-          <p class="col-span-12 text-center text-gray-500 dark:text-gray-400 py-4">
-            Učitavanje slika...
-          </p>
-        } @else {
-          @for (option of options(); track option.value) {
-            <div>
-            <button
-              type="button"
-              (click)="selectImage(option.value)"
-              class="relative aspect-square overflow-hidden rounded-lg border-2 transition-all hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-              [class.border-primary-500]="value() === option.value"
-              [class.border-gray-200]="value() !== option.value"
-              [class.dark:border-primary-500]="value() === option.value"
-              [class.dark:border-gray-600]="value() !== option.value">
-              <img
-                [src]="option.cover"
-                [alt]="option.label"
-                class="w-full h-full object-cover"
-              />
-            </button>
-            <p class="text-xs text-gray-500 dark:text-gray-400">by <a href="#" class="hover:underline">{{ option.author }}</a></p>
-            </div>
-          } @empty {
-            <p class="col-span-12 text-center text-gray-500 dark:text-gray-400 py-4">
-              Nisu pronađene slike
-            </p>
-          }
-        }
-      </div>
-
-      <!-- Close Button -->
-      <button
-        type="button"
-        (click)="togglePanel()"
-        class="mt-4 w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-all">
-        Zatvori
-      </button>
-    </div>
-</ng-template>
