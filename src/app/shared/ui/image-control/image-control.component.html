@@ -19,7 +19,7 @@
 
   <!-- Dropdown Panel -->
   @if (isPanelOpen()) {
-    <div appClickOutside (outsideClick)="close()" class="absolute top-[70px] left-0 mt-0 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-20 p-4">
+    <div appClickOutside animate.enter="enter-animation" animate.leave="leave-animation" (outsideClick)="close()" class="absolute top-[70px] left-0 mt-0 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-20 p-4">
       <!-- Search Input -->
       <div>
         <ng-content></ng-content>
