@@ -11,12 +11,13 @@ import { ImageControlOption } from '../image-control/image-control';
 import { DialogRef } from '@angular/cdk/dialog';
 import { UnsplashService } from '../../../core/unsplash/services/unsplash.service';
 import {
+  catchError,
   debounce,
   distinctUntilChanged,
   filter,
+  of,
   startWith,
   switchMap,
-  take,
   tap,
   timer,
 } from 'rxjs';
@@ -37,6 +38,7 @@ export class UnsplashImageChooserModal implements OnInit {
   readonly searchQuery = new FormControl<string>('', { nonNullable: true });
   readonly value = model<string | null>(null);
   readonly isLoading = signal<boolean>(true);
+  readonly hasError = signal<boolean>(false);
 
   private initialLoading = true;
 
@@ -62,12 +64,16 @@ export class UnsplashImageChooserModal implements OnInit {
         debounce(() => (this.initialLoading ? timer(0) : timer(1500))),
         filter((query) => query.trim().length > 0),
         distinctUntilChanged(),
-        tap(() => this.isLoading.set(true)),
+        tap(() => {
+          this.isLoading.set(true);
+          this.hasError.set(false);
+        }),
         switchMap((query) => this.unsplash.searchPhotos(query)),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe({
-        next: (photos) => {
+        catchError(() => {
+          this.hasError.set(true);
+          return of([]);
+        }),
+        tap((photos) => {
           const options = photos.map((photo) => ({
             value: photo.urls.small,
             cover: photo.urls.thumb,
@@ -78,6 +84,11 @@ export class UnsplashImageChooserModal implements OnInit {
             },
           }));
           this.options.set(options);
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: () => {
           this.initialLoading = false;
           this.isLoading.set(false);
         },

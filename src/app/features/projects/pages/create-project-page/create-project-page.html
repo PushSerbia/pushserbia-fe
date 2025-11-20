@@ -52,6 +52,22 @@
                   class="flex justify-center items-center"
                   formControlName="image"
                 ></app-image-control>
+
+                <div
+                  class="text-red-500 text-sm mt-1"
+                  [class.invisible]="
+                    form.controls['image'].valid ||
+                    !(
+                      form.controls['image'].dirty || form.controls['image'].touched
+                    )
+                  "
+                >
+                <div class="h-5">
+                  @if (form.controls["image"].errors?.["required"] && form.controls["image"].touched) {
+                    Slika za projekat je obavezna
+                  }
+                </div>
+              </div>
               </div>
             <!-- #endregion Image Selector -->
 

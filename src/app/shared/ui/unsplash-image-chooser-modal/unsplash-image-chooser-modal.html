@@ -16,28 +16,34 @@
             Učitavanje slika...
           </p>
         } @else {
-          @for (option of options(); track option.value) {
-            <div>
-            <button
-              type="button"
-              (click)="selectImage(option.value)"
-              class="relative aspect-square overflow-hidden rounded-lg border-2 transition-all hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-              [class.border-primary-500]="value() === option.value"
-              [class.border-gray-200]="value() !== option.value"
-              [class.dark:border-primary-500]="value() === option.value"
-              [class.dark:border-gray-600]="value() !== option.value">
-              <img
-                [src]="option.cover"
-                [alt]="option.label"
-                class="w-full h-full object-cover object-center cursor-pointer"
-              />
-            </button>
-            <p class="text-xs text-gray-500 dark:text-gray-400">by <a href="{{ option.author.profileUrl }}" target="_blank" class="hover:underline">{{ option.author.fullName }}</a></p>
-            </div>
-          } @empty {
-            <p class="col-span-12 text-center text-gray-500 dark:text-gray-400 py-12">
-              Nisu pronađene slike
+          @if (hasError()) {
+            <p class="col-span-12 text-center text-red-500 dark:text-red-400 py-12">
+              Došlo je do greške prilikom učitavanja slika. Pokušajte ponovo.
             </p>
+          } @else {
+            @for (option of options(); track option.value) {
+              <div>
+              <button
+                type="button"
+                (click)="selectImage(option.value)"
+                class="relative aspect-square overflow-hidden rounded-lg border-2 transition-all hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                [class.border-primary-500]="value() === option.value"
+                [class.border-gray-200]="value() !== option.value"
+                [class.dark:border-primary-500]="value() === option.value"
+                [class.dark:border-gray-600]="value() !== option.value">
+                <img
+                  [src]="option.cover"
+                  [alt]="option.label"
+                  class="w-full h-full object-cover object-center cursor-pointer"
+                />
+              </button>
+              <p class="text-xs text-gray-500 dark:text-gray-400">by <a href="{{ option.author.profileUrl }}" target="_blank" class="hover:underline">{{ option.author.fullName }}</a></p>
+              </div>
+            } @empty {
+              <p class="col-span-12 text-center text-gray-500 dark:text-gray-400 py-12">
+                Nisu pronađene slike
+              </p>
+            }
           }
         }
       </div>

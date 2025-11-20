@@ -43,6 +43,7 @@ export class ImageControl extends AbstractControlValueAccessorDirective<string> 
 
     dialogRef.closed.pipe(take(1)).subscribe((result) => {
       this.value.set(result ?? this.value());
+      this.onTouched();
     });
   }
 }
