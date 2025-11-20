@@ -1,17 +1,17 @@
 import { Component, inject, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { QuillViewHTMLComponent } from 'ngx-quill';
-import { BlogStoreService } from '../../../../core/blog/blog.store.service';
-import { BlogPost } from '../../../../core/blog/blog';
+import { BlogStoreService } from '../../../core/blog/blog.store.service';
+import { BlogPost } from '../../../core/blog/blog';
 
 @Component({
-  selector: 'app-blog-post',
+  selector: 'app-blog-post-details',
   standalone: true,
   imports: [RouterLink, QuillViewHTMLComponent],
-  templateUrl: './blog-post.component.html',
-  styleUrl: './blog-post.component.css',
+  templateUrl: './blog-post-details.html',
+  styleUrl: './blog-post-details.css',
 })
-export class BlogPostComponent implements OnInit {
+export class BlogPostDetails implements OnInit {
   private blogStoreService = inject(BlogStoreService);
 
   readonly slug = input.required<string>();

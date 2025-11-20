@@ -1,15 +1,15 @@
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { environment } from '../../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'app-login',
   imports: [RouterLink],
-  templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss',
+  templateUrl: './login.html',
+  styleUrl: './login.scss',
 })
-export class LoginPageComponent implements OnInit {
+export class Login implements OnInit {
   private platformId = inject(PLATFORM_ID);
 
   linkedinUrl!: string;

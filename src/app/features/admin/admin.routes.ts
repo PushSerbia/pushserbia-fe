@@ -5,29 +5,29 @@ export const adminRoutes: Route[] = [
     path: 'projekti',
     loadComponent: () =>
       import(
-        './pages/admin-projects-list-page/admin-projects-list-page.component'
-      ).then((m) => m.AdminProjectsListPageComponent),
+        './admin-projects-list/admin-projects-list'
+      ).then((m) => m.AdminProjectsList),
   },
   {
-    path: 'projects/:id',
+    path: 'projekti/:id',
     loadComponent: () =>
       import(
-        './pages/admin-project-details-page/admin-project-details-page.component'
-      ).then((m) => m.AdminProjectDetailsPageComponent),
+        './admin-project-details/admin-project-details'
+      ).then((m) => m.AdminProjectDetails),
   },
   {
     path: 'korisnici',
     loadComponent: () =>
       import(
-        './pages/admin-users-list-page/admin-users-list-page.component'
-      ).then((m) => m.AdminUsersListPageComponent),
+        './admin-users-list/admin-users-list'
+      ).then((m) => m.AdminUsersList),
   },
   {
-    path: 'users/:id',
+    path: 'korisnici/:id',
     loadComponent: () =>
       import(
-        './pages/admin-user-details-page/admin-user-details-page.component'
-      ).then((m) => m.AdminUserDetailsPageComponent),
+        './admin-user-details/admin-user-details'
+      ).then((m) => m.AdminUserDetails),
   },
   {
     path: '',
