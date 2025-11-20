@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/v1',
-  gtmId: 'GTM-PT7QGW6W',
+  gtmId: '',
   firebase: {
     projectId: 'pushserbia-dev',
     appId: '1:34186746652:web:abc560be50b607fd3c38d9',
