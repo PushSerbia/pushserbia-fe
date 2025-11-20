@@ -6,16 +6,14 @@ export const profileRoutes: Route[] = [
     path: '',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./pages/profile-page/profile-page.component').then(
-        (m) => m.ProfilePageComponent,
-      ),
+      import('./pages/profile-page/profile-page').then((m) => m.ProfilePage),
   },
   {
     path: 'obavestenja',
     canActivate: [authGuard],
     loadComponent: () =>
-      import(
-        './pages/notifications-list-page/notifications-list-page.component'
-      ).then((m) => m.NotificationsListPageComponent),
+      import('./pages/notifications-list-page/notifications-list-page').then(
+        (m) => m.NotificationsListPage,
+      ),
   },
 ];

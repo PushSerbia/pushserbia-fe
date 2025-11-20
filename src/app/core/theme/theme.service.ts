@@ -19,7 +19,7 @@ export class ThemeService {
   public isDarkMode = signal<boolean>(this.getInitialTheme());
 
   constructor() {
-    // Theme initialization moved to AppComponent
+    // Theme initialization moved to App
   }
 
   public toggleTheme(): void {

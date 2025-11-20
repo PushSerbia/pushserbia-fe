@@ -4,14 +4,14 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./features/landing/landing.component').then(
-        (m) => m.LandingComponent,
-      ),
+      import('./features/landing/landing').then((m) => m.Landing),
   },
   {
     path: 'placanja',
     loadChildren: () =>
-      import('./features/payments/payments.routes').then((m) => m.paymentsRoutes),
+      import('./features/payments/payments.routes').then(
+        (m) => m.paymentsRoutes,
+      ),
   },
   {
     path: 'dokumentacija',
