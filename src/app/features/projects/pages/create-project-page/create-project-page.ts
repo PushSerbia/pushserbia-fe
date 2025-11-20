@@ -60,7 +60,7 @@ export class CreateProjectPage implements OnInit {
       shortDescription: ['', [Validators.required, Validators.maxLength(250)]],
       description: ['', [Validators.required, Validators.minLength(50)]],
       github: [''],
-      image: ['/illustrations/woman-earth-hugging.svg', [Validators.required]],
+      image: [null, [Validators.required]],
     };
     if (this.project) {
       formGroup['status'] = [this.project.status];
