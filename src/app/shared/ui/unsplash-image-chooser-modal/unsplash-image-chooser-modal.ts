@@ -87,15 +87,9 @@ export class UnsplashImageChooserModal implements OnInit {
         }),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe({
-        next: () => {
-          this.initialLoading = false;
-          this.isLoading.set(false);
-        },
-        error: () => {
-          this.initialLoading = false;
-          this.isLoading.set(false);
-        },
+      .subscribe(() => {
+        this.initialLoading = false;
+        this.isLoading.set(false);
       });
   }
 }
