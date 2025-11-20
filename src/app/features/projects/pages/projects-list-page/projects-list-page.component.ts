@@ -82,7 +82,6 @@ export class ProjectsListPageComponent implements OnInit {
 
       if (filter.supportedOnly) {
         const votesMap = this.$votesMap();
-        console.log(votesMap);
         filteredProjects = filteredProjects.filter((project) =>
           Boolean(votesMap?.[project.id]),
         );
