@@ -30,6 +30,7 @@ export class VoteStoreService {
 
   private loading = signal<boolean>(false);
   private itemMap = signal<VoteState | null>(VOTE_INITIAL_STATE);
+  private fetchedOnce = signal<boolean>(false);
 
   $loading = this.loading.asReadonly();
 
@@ -39,6 +40,7 @@ export class VoteStoreService {
         if (this.itemMap()) {
           this.itemMap.set(VOTE_INITIAL_STATE);
         }
+        this.fetchedOnce.set(false);
       }
     });
 
@@ -46,13 +48,8 @@ export class VoteStoreService {
   }
 
   getAll(): Signal<VoteState> {
-    if (
-      !this.itemMap() &&
-      !this.loading() &&
-      this.authService.$authenticated()
-    ) {
-      this.fetchAll().subscribe();
-    }
+    this.ensureFetched();
+
     return computed(() => {
       const itemMap = this.itemMap();
       return itemMap || {};
@@ -63,14 +60,14 @@ export class VoteStoreService {
     if (!projectId) {
       return signal(false);
     }
-    const itemMap = this.itemMap();
-    if (!itemMap && !this.loading() && this.authService.$authenticated()) {
-      this.fetchAll().subscribe();
-    }
+
+    this.ensureFetched();
+
     return computed(() => {
       if (!this.authService.$authenticated()) {
         return false;
       }
+      const itemMap = this.itemMap();
       return Boolean(itemMap && itemMap[projectId]);
     });
   }
@@ -109,6 +106,7 @@ export class VoteStoreService {
   }
 
   private fetchAll(): Observable<Vote[]> {
+    this.fetchedOnce.set(true);
     this.loading.set(true);
 
     return this.voteService.getMyVotes().pipe(
@@ -130,5 +128,17 @@ export class VoteStoreService {
       }),
       finalize(() => this.loading.set(false)),
     );
+  }
+
+  private ensureFetched(): void {
+    if (
+      this.fetchedOnce() ||
+      this.loading() ||
+      this.itemMap() !== null ||
+      !this.authService.$authenticated()
+    ) {
+      return;
+    }
+    this.fetchAll().subscribe();
   }
 }
