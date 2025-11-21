@@ -1,0 +1,9 @@
+node_modules
+dist
+.dist
+coverage
+sourcemaps
+**/*.min.*
+*.log
+package.json
+package-lock.json
