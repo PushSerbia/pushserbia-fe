@@ -19,14 +19,14 @@ The Landing page aims to convert visitors into active community members by clear
 
 The Landing page is structured as a single-page layout with five distinct sections:
 
-1. **Hero Section (LandingHeroComponent)**
+1. **Hero Section (LandingHero)**
    - Displays a prominent headline "Unapredi društvo u kome živiš!" (Improve the society you live in!)
    - Features a subheading explaining the platform's purpose
    - Provides two primary call-to-action buttons: "Istraži projekte" (Explore projects) and "Saznaj više" (Learn more)
    - Shows community member avatars to create social proof
    - Includes a relevant image that illustrates collaboration
 
-2. **Projects Section (LandingProjectsComponent)**
+2. **Projects Section (LandingProjects)**
    - Displays a heading "Aktuelni projekti" (Current Projects)
    - Shows a curated selection of 2 active projects from the platform
    - Includes a "New Project" card to encourage project creation
@@ -34,14 +34,14 @@ The Landing page is structured as a single-page layout with five distinct sectio
    - Uses signals to track which projects the user has supported
    - Implements view transitions for smooth navigation to project details
 
-3. **How It Works Section (LandingHowToComponent)**
+3. **How It Works Section (LandingHowTo)**
    - Explains the open-source community process in three steps:
      a. "Predloži ideju" (Suggest an idea) - How to propose new projects
      b. "Glasaj i podrži projekte" (Vote and support projects) - How to vote for the best ideas
      c. "Zajedno ih realizujemo" (We realize them together) - How the community develops selected projects
    - Each step includes a descriptive icon, explanation text, and a relevant call-to-action button
 
-4. **Pricing/Donation Section (LandingPricingComponent)**
+4. **Pricing/Donation Section (LandingPricing)**
    - Presents three donation options:
      a. "Prijatelj zajednice" (Community Friend) - €5/month basic support
      b. "Aktivni član" (Active Member) - €15/month enhanced support (highlighted option)
@@ -50,7 +50,7 @@ The Landing page is structured as a single-page layout with five distinct sectio
    - Provides buttons to donate or subscribe
    - Includes information about transparency in fund usage
 
-5. **FAQ Section (LandingFaqComponent)**
+5. **FAQ Section (LandingFaq)**
    - Features a searchable list of frequently asked questions
    - Includes quick filter buttons for common question categories
    - Initially displays 6 questions with an option to show more

@@ -19,7 +19,7 @@ export class ThemeService {
   public isDarkMode = signal<boolean>(this.getInitialTheme());
 
   constructor() {
-    // Theme initialization moved to AppComponent
+    // Theme initialization moved to App
   }
 
   public toggleTheme(): void {
@@ -48,8 +48,11 @@ export class ThemeService {
   }
 
   private getInitialTheme(): boolean {
+    // SSR default: render dark theme by default on the server
+    // When running on the server there is no access to cookies or media queries.
+    // Returning true ensures the 'dark' class is applied during SSR, so initial HTML is dark.
     if (!this.isBrowser) {
-      return false;
+      return true;
     }
 
     const cookies = this.document.cookie.split(';');

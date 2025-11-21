@@ -2,7 +2,7 @@ import {
   ApplicationConfig,
   ErrorHandler,
   inject,
-  provideZoneChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import {
   provideRouter,
@@ -56,7 +56,7 @@ function onViewTransitionCreated(info: ViewTransitionInfo) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideClientHydration(withEventReplay()),
     provideRouter(
       routes,

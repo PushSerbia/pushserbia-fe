@@ -1,0 +1,79 @@
+<a
+  [routerLink]="['/projekti', project().slug]"
+  queryParamsHandling="merge"
+  class="flex flex-col max-w-sm min-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 cursor-pointer hover:shadow hover:shadow-primary-500 transition-transform relative"
+>
+  @if (supported()) {
+    <div class="absolute top-4 right-4 z-10">
+      <svg
+        class="w-8 h-8 text-red-600"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+        />
+      </svg>
+    </div>
+  }
+
+  <!--#region Image -->
+  <div class="h-52 overflow-hidden rounded-t-lg">
+    @if (project().image) {
+      <img
+        class="h-full w-full object-cover object-center"
+        [src]="project().image"
+        [alt]="project().name"
+        [style.viewTransitionName]="viewTransitionName()"
+      />
+    } @else {
+      <div
+        class="h-full w-full flex justify-center items-center bg-gray-200 dark:bg-gray-700 pt-3"
+      >
+        <img
+          class="w-auto max-w-[16rem] h-40 text-gray-800 dark:text-white"
+          src="/illustrations/woman-earth-hugging.svg"
+          [alt]="project().name"
+          [style.viewTransitionName]="viewTransitionName()"
+        />
+      </div>
+    }
+  </div>
+  <!--#endregion Image -->
+
+  <!--#region Content -->
+  <div class="p-5">
+    <h5
+      class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-1"
+    >
+      {{ project().name }}
+    </h5>
+    <p
+      class="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-4 h-24"
+    >
+      {{ project().shortDescription }}
+    </p>
+    <div
+      class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+    >
+      Čitaj detalje
+      <svg
+        class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 14 10"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 5h12m0 0L9 1m4 4L9 9"
+        />
+      </svg>
+    </div>
+  </div>
+  <!--#endregion Content -->
+</a>

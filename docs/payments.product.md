@@ -80,8 +80,8 @@ Sistem nudi tri predefinisane opcije donacije:
 ## Tehničke napomene (visok nivo)
 
 ### Komponente
-- **FinancingDetailsComponent** - statička komponenta za prikaz informacija o finansiranju
-- **PaymentPageComponent** - interaktivna komponenta za prikupljanje podataka o donaciji
+- **FinancingDetails** - statička komponenta za prikaz informacija o finansiranju
+- **PaymentPage** - interaktivna komponenta za prikupljanje podataka o donaciji
 
 ### Modeli podataka
 - **DonationOption** - interfejs koji definiše strukturu opcije donacije (naslov, cena, tip, opis, benefiti, uticaj)

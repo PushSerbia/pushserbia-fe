@@ -4,14 +4,14 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./features/landing/landing.component').then(
-        (m) => m.LandingComponent,
-      ),
+      import('./features/landing/landing').then((m) => m.Landing),
   },
   {
     path: 'placanja',
     loadChildren: () =>
-      import('./features/payments/payments.routes').then((m) => m.paymentsRoutes),
+      import('./features/payments/payments.routes').then(
+        (m) => m.paymentsRoutes,
+      ),
   },
   {
     path: 'dokumentacija',
@@ -27,11 +27,6 @@ export const routes: Routes = [
     path: 'autentikacija',
     loadChildren: () =>
       import('./features/auth/auth.routes').then((m) => m.authRoutes),
-  },
-  {
-    path: 'admin',
-    loadChildren: () =>
-      import('./features/admin/admin.routes').then((m) => m.adminRoutes),
   },
   {
     path: 'profil',

@@ -33,6 +33,8 @@ export class ProjectStoreService {
 
   private loading = signal<boolean>(false);
   private items = signal<ProjectState>(PROJECT_INITIAL_STATE);
+  // Guard to prevent repeated fetch attempts when API returns an empty list
+  private fetchedOnce = signal<boolean>(false);
 
   $loading = this.loading.asReadonly();
 
@@ -54,6 +56,7 @@ export class ProjectStoreService {
   }
 
   private fetchAll(): Observable<Project[]> {
+    this.fetchedOnce.set(true);
     this.loading.set(true);
 
     return this.projectService.getAll().pipe(
@@ -75,10 +78,18 @@ export class ProjectStoreService {
     );
   }
 
-  getAll(): Signal<Project[]> {
-    if (!this.items().slugs.length && !this.loading()) {
-      this.fetchAll().subscribe();
+  private ensureFetched(): void {
+    // Fetch only once per service lifecycle to avoid infinite loops
+    // when backend legitimately returns an empty array.
+    // If we already have data (from SSR TransferState or previous fetch), skip.
+    if (this.fetchedOnce() || this.loading() || this.items().slugs.length > 0) {
+      return;
     }
+    this.fetchAll().subscribe();
+  }
+
+  getAll(): Signal<Project[]> {
+    this.ensureFetched();
 
     return computed(() => {
       const entities = this.items();
@@ -87,9 +98,7 @@ export class ProjectStoreService {
   }
 
   getBySlug(slug: string): Signal<Project> {
-    if (!this.items().slugs?.length && !this.loading()) {
-      this.fetchAll().subscribe();
-    }
+    this.ensureFetched();
 
     return computed(() => this.items().entitiesMap[slug]);
   }
@@ -111,7 +120,7 @@ export class ProjectStoreService {
           ...currentState.entitiesMap,
           [newProject.slug]: newProject,
         };
-        const slugs = [...currentState.slugs, newProject.slug];
+        const slugs = [newProject.slug, ...currentState.slugs];
         this.items.set({ slugs, entitiesMap });
       }),
     );
