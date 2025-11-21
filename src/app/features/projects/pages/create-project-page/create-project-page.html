@@ -42,30 +42,28 @@
         <h2
           class="text-2xl font-bold text-gray-900 dark:text-white border-b-2 border-gray-200 dark:border-gray-700 pb-8"
         >
-          {{ project ? "Ažuriraj" : "Predloži novi" }} projekat
+          {{ project ? 'Ažuriraj' : 'Predloži novi' }} projekat
         </h2>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="grid gap-4 sm:grid-cols-2 sm:gap-2">
             <!-- #region Image Selector -->
-              <div class="sm:col-span-2">
-                <app-image-control
-                  class="flex justify-center items-center"
-                  formControlName="image"
-                ></app-image-control>
+            <div class="sm:col-span-2">
+              <app-image-control
+                class="flex justify-center items-center"
+                formControlName="image"
+              ></app-image-control>
 
-                <div
-                  [class]="form.controls['image'].valid ||
-                    !(
-                      form.touched
-                    ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
-                >
+              <div
+                class="text-red-500 text-sm mt-1"
+                [class.invisible]="form.controls['image'].valid || !form.touched"
+              >
                 <div class="h-5">
-                  @if (form.controls["image"].errors?.["required"]) {
+                  @if (form.controls['image'].errors?.['required']) {
                     Slika za projekat je obavezna
                   }
                 </div>
               </div>
-              </div>
+            </div>
             <!-- #endregion Image Selector -->
 
             <!--#region Name -->
@@ -84,22 +82,18 @@
                 placeholder="Kreativno ime projekta"
               />
               <div
-                [class]="form.controls['name'].valid ||
-                  !(
-                    form.controls['name'].dirty || form.controls['name'].touched
-                  ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
+                class="text-red-500 text-sm mt-1"
+                [class.invisible]="
+                  form.controls['name'].valid ||
+                  !(form.controls['name'].dirty || form.controls['name'].touched)
+                "
               >
                 <div class="h-5">
-                  @if (form.controls["name"].errors?.["required"]) {
+                  @if (form.controls['name'].errors?.['required']) {
                     Ime projekta je obavezno
-                  } @else if (form.controls["name"].errors?.["minlength"]) {
-                    Ime projekta mora imati
-                    {{
-                      form.controls["name"].errors?.["minlength"]?.[
-                        "requiredLength"
-                      ]
-                    }}
-                    najmanje karaktera
+                  } @else if (form.controls['name'].errors?.['minlength']) {
+                    Ime projekta mora imati najmanje
+                    {{ form.controls['name'].errors?.['minlength']?.['requiredLength'] }} karaktera
                   }
                 </div>
               </div>
@@ -122,15 +116,16 @@
                 placeholder="kreativno-ime-projekta"
               />
               <div
-                [class]="form.controls['slug'].valid ||
-                  !(
-                    form.controls['slug'].dirty || form.controls['slug'].touched
-                  ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
+                class="text-red-500 text-sm mt-1"
+                [class.invisible]="
+                  form.controls['slug'].valid ||
+                  !(form.controls['slug'].dirty || form.controls['slug'].touched)
+                "
               >
                 <div class="h-5">
-                  @if (form.controls["slug"].errors?.["required"]) {
+                  @if (form.controls['slug'].errors?.['required']) {
                     Slug je obavezan
-                  } @else if (form.controls["slug"].errors?.["pattern"]) {
+                  } @else if (form.controls['slug'].errors?.['pattern']) {
                     Slug može sadržati samo mala slova, brojeve i crtice
                   }
                 </div>
@@ -216,24 +211,21 @@
                 placeholder="Biće vidljiv na karticama projekta"
               ></textarea>
               <div
-                [class]="form.controls['shortDescription'].valid ||
+                class="text-red-500 text-sm mt-1"
+                [class.invisible]="
+                  form.controls['shortDescription'].valid ||
                   !(
                     form.controls['shortDescription'].dirty ||
                     form.controls['shortDescription'].touched
-                  ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
+                  )
+                "
               >
                 <div class="h-5">
-                  @if (form.controls["shortDescription"].errors?.["required"]) {
+                  @if (form.controls['shortDescription'].errors?.['required']) {
                     Kratak opis je obavezan
-                  } @else if (
-                    form.controls["shortDescription"].errors?.["maxlength"]
-                  ) {
+                  } @else if (form.controls['shortDescription'].errors?.['maxlength']) {
                     Kratak opis ne može biti duži od
-                    {{
-                      form.controls["shortDescription"].errors?.["maxlength"][
-                        "requiredLength"
-                      ]
-                    }}
+                    {{ form.controls['shortDescription'].errors?.['maxlength']['requiredLength'] }}
                     karaktera
                   }
                 </div>
@@ -256,24 +248,18 @@
                 placeholder="Biće vidljiv samo na stranici projekta"
               />
               <div
-                [class]="form.controls['description'].valid ||
-                  !(
-                    form.controls['description'].dirty ||
-                    form.controls['description'].touched
-                  ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
+                class="text-red-500 text-sm mt-1"
+                [class.invisible]="
+                  form.controls['description'].valid ||
+                  !(form.controls['description'].dirty || form.controls['description'].touched)
+                "
               >
                 <div class="h-5">
-                  @if (form.controls["description"].errors?.["required"]) {
+                  @if (form.controls['description'].errors?.['required']) {
                     Opis je obavezan
-                  } @else if (
-                    form.controls["description"].errors?.["minlength"]
-                  ) {
+                  } @else if (form.controls['description'].errors?.['minlength']) {
                     Opis mora imati najmanje
-                    {{
-                      form.controls["description"].errors?.["minlength"][
-                        "requiredLength"
-                      ]
-                    }}
+                    {{ form.controls['description'].errors?.['minlength']['requiredLength'] }}
                     karaktera
                   }
                 </div>
