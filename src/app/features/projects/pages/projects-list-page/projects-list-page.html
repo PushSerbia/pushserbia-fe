@@ -25,10 +25,7 @@
       </button>
 
       @if ($currentUser()) {
-        <app-project-list-filters
-          [state]="$filter()"
-          (updated)="onFilterUpdate($event)"
-        />
+        <app-project-list-filters [state]="$filter()" (updated)="onFilterUpdate($event)" />
       }
     </div>
 

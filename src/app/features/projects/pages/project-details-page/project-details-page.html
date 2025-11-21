@@ -41,18 +41,12 @@
               />
             }
           </div>
-          <div
-            class="flex flex-col p-8 text-gray-500 sm:text-lg dark:text-gray-400"
-          >
+          <div class="flex flex-col p-8 text-gray-500 sm:text-lg dark:text-gray-400">
             <div class="grid grid-cols-3 gap-4 w-fit">
               <p>Predlagač:</p>
               <div class="flex items-center gap-3 col-span-2">
                 @if (projectDetails.creator.gravatar) {
-                  <img
-                    ngxGravatar
-                    [md5Hash]="projectDetails.creator.gravatar"
-                    alt="creator"
-                  />
+                  <img ngxGravatar [md5Hash]="projectDetails.creator.gravatar" alt="creator" />
                 } @else {
                   <span
                     class="text-gray-900 text-lg font-medium flex items-center justify-center rounded-full w-8 h-8 dark:text-gray-300 bg-gray-300 dark:bg-gray-600"
@@ -60,9 +54,7 @@
                     {{ projectDetails.creator.fullName.charAt(0) }}
                   </span>
                 }
-                <span
-                  class="text-gray-800 text-lg font-medium rounded-sm dark:text-gray-300"
-                >
+                <span class="text-gray-800 text-lg font-medium rounded-sm dark:text-gray-300">
                   {{ projectDetails.creator.fullName }}
                 </span>
               </div>
@@ -136,12 +128,8 @@
             </div>
           </div>
         </div>
-        <div
-          class="w-full font-light text-gray-500 sm:text-lg dark:text-gray-400"
-        >
-          <h1
-            class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white"
-          >
+        <div class="w-full font-light text-gray-500 sm:text-lg dark:text-gray-400">
+          <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
             {{ projectDetails.name }}
           </h1>
           <quill-view-html [content]="projectDetails.description" />

@@ -20,15 +20,13 @@
         Nazad na početnu
       </a>
 
-      <h1
-        class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white"
-      >
+      <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
         Blog
       </h1>
 
       <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
-        Dobrodošli na Push Serbia blog! Ovde delimo naše znanje, iskustva i
-        novosti iz sveta tehnologije, open-source zajednice i programiranja.
+        Dobrodošli na Push Serbia blog! Ovde delimo naše znanje, iskustva i novosti iz sveta
+        tehnologije, open-source zajednice i programiranja.
       </p>
 
       <div class="grid gap-8 mb-8">
@@ -37,22 +35,14 @@
             class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600"
           >
             <div class="mb-4 overflow-hidden rounded-lg">
-              <img
-                [src]="post.image"
-                [alt]="post.title"
-                class="w-full h-auto"
-              />
+              <img [src]="post.image" [alt]="post.title" class="w-full h-auto" />
             </div>
-            <div
-              class="flex items-center mb-2 text-sm text-gray-500 dark:text-gray-400"
-            >
+            <div class="flex items-center mb-2 text-sm text-gray-500 dark:text-gray-400">
               <span>{{ post.date }}</span>
               <span class="mx-2">•</span>
               <span>{{ post.author }}</span>
             </div>
-            <h2
-              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-            >
+            <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               <a
                 [routerLink]="['/blog', post.slug]"
                 class="hover:text-primary-600 dark:hover:text-primary-500"
