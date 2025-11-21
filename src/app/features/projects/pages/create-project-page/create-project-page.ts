@@ -91,7 +91,7 @@ export class CreateProjectPage implements OnInit {
               github: this.project.github || '',
               status: this.project.status || '',
               image:
-                this.project.image ?? '/illustrations/woman-earth-hugging.svg',
+                this.project.image || null,
             });
           }
         }

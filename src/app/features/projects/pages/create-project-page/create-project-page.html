@@ -54,16 +54,13 @@
                 ></app-image-control>
 
                 <div
-                  class="text-red-500 text-sm mt-1"
-                  [class.invisible]="
-                    form.controls['image'].valid ||
+                  [class]="form.controls['image'].valid ||
                     !(
-                      form.controls['image'].dirty || form.controls['image'].touched
-                    )
-                  "
+                      form.touched
+                    ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
                 >
                 <div class="h-5">
-                  @if (form.controls["image"].errors?.["required"] && form.touched) {
+                  @if (form.controls["image"].errors?.["required"]) {
                     Slika za projekat je obavezna
                   }
                 </div>
@@ -87,13 +84,10 @@
                 placeholder="Kreativno ime projekta"
               />
               <div
-                class="text-red-500 text-sm mt-1"
-                [class.invisible]="
-                  form.controls['name'].valid ||
+                [class]="form.controls['name'].valid ||
                   !(
                     form.controls['name'].dirty || form.controls['name'].touched
-                  )
-                "
+                  ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
               >
                 <div class="h-5">
                   @if (form.controls["name"].errors?.["required"]) {
@@ -128,13 +122,10 @@
                 placeholder="kreativno-ime-projekta"
               />
               <div
-                class="text-red-500 text-sm mt-1"
-                [class.invisible]="
-                  form.controls['slug'].valid ||
+                [class]="form.controls['slug'].valid ||
                   !(
                     form.controls['slug'].dirty || form.controls['slug'].touched
-                  )
-                "
+                  ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
               >
                 <div class="h-5">
                   @if (form.controls["slug"].errors?.["required"]) {
@@ -225,14 +216,11 @@
                 placeholder="Biće vidljiv na karticama projekta"
               ></textarea>
               <div
-                class="text-red-500 text-sm mt-1"
-                [class.invisible]="
-                  form.controls['shortDescription'].valid ||
+                [class]="form.controls['shortDescription'].valid ||
                   !(
                     form.controls['shortDescription'].dirty ||
                     form.controls['shortDescription'].touched
-                  )
-                "
+                  ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
               >
                 <div class="h-5">
                   @if (form.controls["shortDescription"].errors?.["required"]) {
@@ -268,14 +256,11 @@
                 placeholder="Biće vidljiv samo na stranici projekta"
               />
               <div
-                class="text-red-500 text-sm mt-1"
-                [class.invisible]="
-                  form.controls['description'].valid ||
+                [class]="form.controls['description'].valid ||
                   !(
                     form.controls['description'].dirty ||
                     form.controls['description'].touched
-                  )
-                "
+                  ) ? 'invisible' : 'text-red-500 text-sm mt-1'"
               >
                 <div class="h-5">
                   @if (form.controls["description"].errors?.["required"]) {

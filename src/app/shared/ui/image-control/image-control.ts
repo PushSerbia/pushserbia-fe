@@ -34,6 +34,7 @@ export class ImageControl extends AbstractControlValueAccessorDirective<string> 
   readonly dialog = inject(Dialog);
 
   openDialog(): void {
+    this.onTouched();
     const dialogRef = this.dialog.open<string | null>(
       UnsplashImageChooserModal,
       {
@@ -43,7 +44,6 @@ export class ImageControl extends AbstractControlValueAccessorDirective<string> 
 
     dialogRef.closed.pipe(take(1)).subscribe((result) => {
       this.value.set(result ?? this.value());
-      this.onTouched();
     });
   }
 }
