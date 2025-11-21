@@ -120,7 +120,7 @@ export class ProjectStoreService {
           ...currentState.entitiesMap,
           [newProject.slug]: newProject,
         };
-        const slugs = [...currentState.slugs, newProject.slug];
+        const slugs = [newProject.slug, ...currentState.slugs];
         this.items.set({ slugs, entitiesMap });
       }),
     );
