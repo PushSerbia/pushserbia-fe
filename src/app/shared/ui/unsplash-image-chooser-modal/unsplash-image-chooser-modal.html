@@ -1,0 +1,58 @@
+<div animate.enter="enter-animation" animate.leave="leave-animation" class="min-w-fit bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-20 p-4 drop-shadow-sm">
+      <!-- Search Input -->
+      <div class="mb-4">
+        <input
+          type="text"
+          [formControl]="searchQuery"
+          placeholder="Pretraži slike..."
+          class="w-full px-3 py-2 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        />
+      </div>
+
+      <!-- Image Grid -->
+      <div class="grid grid-cols-4 gap-4 max-h-92 overflow-y-auto">
+        @if (isLoading()) {
+          <p class="col-span-12 text-center text-gray-500 dark:text-gray-400 py-12">
+            Učitavanje slika...
+          </p>
+        } @else {
+          @if (hasError()) {
+            <p class="col-span-12 text-center text-red-500 dark:text-red-400 py-12">
+              Došlo je do greške prilikom učitavanja slika. Pokušajte ponovo.
+            </p>
+          } @else {
+            @for (option of options(); track option.value) {
+              <div>
+              <button
+                type="button"
+                (click)="selectImage(option.value)"
+                class="relative aspect-square overflow-hidden rounded-lg border-2 transition-all hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                [class.border-primary-500]="value() === option.value"
+                [class.border-gray-200]="value() !== option.value"
+                [class.dark:border-primary-500]="value() === option.value"
+                [class.dark:border-gray-600]="value() !== option.value">
+                <img
+                  [src]="option.cover"
+                  [alt]="option.label"
+                  class="w-full h-full object-cover object-center cursor-pointer"
+                />
+              </button>
+              <p class="text-xs text-gray-500 dark:text-gray-400">by <a href="{{ option.author.profileUrl }}" target="_blank" class="hover:underline">{{ option.author.fullName }}</a></p>
+              </div>
+            } @empty {
+              <p class="col-span-12 text-center text-gray-500 dark:text-gray-400 py-12">
+                Nisu pronađene slike
+              </p>
+            }
+          }
+        }
+      </div>
+
+      <!-- Close Button -->
+      <button
+        type="button"
+        (click)="close()"
+        class="mt-4 w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-all">
+        Zatvori
+      </button>
+    </div>

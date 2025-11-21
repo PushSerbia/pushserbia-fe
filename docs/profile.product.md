@@ -20,33 +20,33 @@ The Profile page is designed to provide users with a centralized location to man
 
 The Profile page is structured with a main content area and a sidebar navigation, containing several components:
 
-1. **Profile Details Component (ProfileDetailsComponent)**
+1. **Profile Details Component (ProfileDetails)**
    - Displays the user's profile image, name, and role
    - Shows the user's email address
    - Displays the user's LinkedIn and GitHub URLs (if provided)
    - Provides a button to open a dialog for updating profile information
    - Includes a commented-out section for a potential pro card feature
 
-2. **Profile Information Dialog (ProfileInformationDialogComponent)**
+2. **Profile Information Dialog (ProfileInformationDialog)**
    - Allows users to edit their full name
    - Enables users to add or update their LinkedIn URL
    - Enables users to add or update their GitHub URL
    - Includes a commented-out section for a potential biography field
    - Provides buttons to save changes or cancel
 
-3. **Profile Statistics Component (ProfileStatsComponent)**
+3. **Profile Statistics Component (ProfileStats)**
    - Displays the number of projects proposed by the user
    - Shows the number of projects supported by the user
    - Indicates the user's current level on the platform
 
-4. **Profile Sidebar Navigation (ProfileSidenavComponent)**
+4. **Profile Sidebar Navigation (ProfileSidenav)**
    - Provides links to the user's created projects
    - Offers access to projects supported by the user
    - Includes a link to information about how to contribute
    - Contains a link to subscription options
    - Features a logout button to sign out of the platform
 
-5. **Notifications Page (NotificationsListPageComponent)**
+5. **Notifications Page (NotificationsListPage)**
    - Accessible via the "obavestenja" route
    - Currently a placeholder for future implementation of notifications functionality
 

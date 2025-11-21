@@ -1,6 +1,6 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { App } from './app/app';
 import * as Sentry from '@sentry/angular';
 import { environment } from './environments/environment';
 import { release } from './environments/release';
@@ -13,6 +13,4 @@ if (environment.production) {
   });
 }
 
-bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err),
-);
+bootstrapApplication(App, appConfig).catch((err) => console.error(err));
