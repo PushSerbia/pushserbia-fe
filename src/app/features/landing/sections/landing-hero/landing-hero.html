@@ -51,28 +51,24 @@
             <p class="text-xl text-gray-600 dark:text-gray-300 mb-6 text-center lg:text-left">
               Pridruži se rastućoj zajednici entuzijasta koji doprinose boljem društvu.
             </p>
-            <div class="flex items-center justify-center lg:justify-start gap-3">
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
               <div class="flex -space-x-2">
                 @for (member of members; track member) {
-                  @if (member.imageUrl) {
-                    <a
-                      [title]="member.name"
-                      [href]="member.linkedinUrl"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="rounded-full border-2 border-primary-700 dark:border-gray-600 shadow-md overflow-hidden hover:scale-110 transition-transform"
-                    >
-                      <img [src]="member.imageUrl" [alt]="member.name" class="w-12 h-12" />
-                    </a>
-                  } @else {
-                    <div
-                      class="w-12 h-12 border-2 border-primary-700 rounded-full dark:border-gray-600 bg-primary-100 dark:bg-primary-900 flex items-center justify-center shadow-md"
-                    >
-                      <span class="text-sm font-bold text-primary-800 dark:text-primary-300">
-                        {{ member.initials }}
-                      </span>
-                    </div>
-                  }
+                  <a
+                    [title]="member.name"
+                    [href]="member.linkedinUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="rounded-full border-2 border-primary-700 dark:border-gray-600 shadow-md overflow-hidden hover:scale-110 transition-transform"
+                  >
+                    <img
+                      [src]="member.imageUrl"
+                      [alt]="member.name"
+                      width="48"
+                      height="48"
+                      class="w-12 h-12"
+                    />
+                  </a>
                 }
               </div>
               <span class="ml-2 text-gray-600 dark:text-gray-300 font-medium">i mnogi drugi</span>
