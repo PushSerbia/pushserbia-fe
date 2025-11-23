@@ -1,4 +1,4 @@
-<div class="flex items-center gap-1 h-10">
+<div class="flex items-center gap-1 h-auto">
   @if ($userData(); as user) {
     <a
       routerLink="/profil"
@@ -13,7 +13,9 @@
           {{ user.name.charAt(0) }}
         </span>
       }
-      <span class="text-sm text-gray-500 dark:text-gray-400">
+      <span
+        class="text-sm text-gray-500 dark:text-gray-400 max-w-[60vw] truncate sm:max-w-none hidden sm:block"
+      >
         {{ user.name }}
       </span>
     </a>

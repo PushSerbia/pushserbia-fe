@@ -1,7 +1,7 @@
 <a
   [routerLink]="['/projekti', project().slug]"
   queryParamsHandling="merge"
-  class="flex flex-col max-w-sm min-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 cursor-pointer hover:shadow hover:shadow-primary-500 transition-transform relative"
+  class="flex flex-col w-sm max-w-[calc(100svw-32px)] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 cursor-pointer hover:shadow hover:shadow-primary-500 transition-transform relative"
 >
   @if (supported()) {
     <div class="absolute top-4 right-4 z-10">
@@ -28,7 +28,7 @@
     } @else {
       <div class="h-full w-full flex justify-center items-center bg-gray-200 dark:bg-gray-700 pt-3">
         <img
-          class="w-auto max-w-[16rem] h-40 text-gray-800 dark:text-white"
+          class="w-full max-w-full h-40 object-contain text-gray-800 dark:text-white"
           src="/illustrations/woman-earth-hugging.svg"
           [alt]="project().name"
           [style.viewTransitionName]="viewTransitionName()"
