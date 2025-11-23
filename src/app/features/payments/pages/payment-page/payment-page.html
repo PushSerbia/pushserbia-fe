@@ -20,10 +20,8 @@
         Nazad na početnu
       </a>
 
-      <h1
-        class="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 dark:text-white"
-      >
-        {{ isOneTime ? "Jednokratna donacija" : "Pretplata" }}: {{ title }}
+      <h1 class="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        {{ isOneTime ? 'Jednokratna donacija' : 'Pretplata' }}: {{ title }}
       </h1>
 
       <!-- Step 1: Collect user data -->
@@ -32,15 +30,13 @@
           class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600"
         >
           <div class="flex justify-between items-center">
-            <span class="text-lg font-medium text-gray-900 dark:text-white"
-              >Iznos:</span
-            >
+            <span class="text-lg font-medium text-gray-900 dark:text-white">Iznos:</span>
             <span class="text-2xl font-bold text-gray-900 dark:text-white">{{
-              amount | currency: "EUR" : "symbol" : "1.0"
+              amount | currency: 'EUR' : 'symbol' : '1.0'
             }}</span>
           </div>
           <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            {{ isOneTime ? "Jednokratna donacija" : "Mesečna pretplata" }}
+            {{ isOneTime ? 'Jednokratna donacija' : 'Mesečna pretplata' }}
           </div>
           <button
             type="button"
@@ -67,24 +63,18 @@
                 <div
                   (click)="selectOption(option)"
                   class="p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500 transition-colors"
-                  [class.border-primary-500]="
-                    selectedOption?.title === option.title
-                  "
+                  [class.border-primary-500]="selectedOption?.title === option.title"
                 >
                   <div class="flex justify-between items-center">
                     <span class="font-medium text-gray-900 dark:text-white">{{
                       option.title
                     }}</span>
                     <span class="font-bold text-gray-900 dark:text-white">{{
-                      option.price | currency: "EUR" : "symbol" : "1.0"
+                      option.price | currency: 'EUR' : 'symbol' : '1.0'
                     }}</span>
                   </div>
                   <div class="text-xs text-gray-500 dark:text-gray-400">
-                    {{
-                      option.isOneTime
-                        ? "Jednokratna donacija"
-                        : "Mesečna pretplata"
-                    }}
+                    {{ option.isOneTime ? 'Jednokratna donacija' : 'Mesečna pretplata' }}
                   </div>
                 </div>
               }
@@ -92,11 +82,7 @@
           }
         </div>
 
-        <form
-          [formGroup]="paymentForm"
-          (ngSubmit)="onSubmit()"
-          class="space-y-6"
-        >
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="space-y-6">
           <div>
             <label
               for="fullName"
@@ -110,10 +96,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               placeholder="Unesite vaše ime i prezime"
             />
-            @if (
-              paymentForm.get("fullName")?.invalid &&
-              paymentForm.get("fullName")?.touched
-            ) {
+            @if (paymentForm.get('fullName')?.invalid && paymentForm.get('fullName')?.touched) {
               <div class="mt-1 text-sm text-red-600 dark:text-red-500">
                 Ime i prezime je obavezno polje
               </div>
@@ -121,9 +104,7 @@
           </div>
 
           <div>
-            <label
-              for="email"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Email adresa</label
             >
             <input
@@ -133,10 +114,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               placeholder="ime@example.com"
             />
-            @if (
-              paymentForm.get("email")?.invalid &&
-              paymentForm.get("email")?.touched
-            ) {
+            @if (paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched) {
               <div class="mt-1 text-sm text-red-600 dark:text-red-500">
                 Unesite validnu email adresu
               </div>
@@ -152,10 +130,7 @@
                 class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
               />
             </div>
-            <label
-              for="agreeTerms"
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label for="agreeTerms" class="ml-2 text-sm font-medium text-gray-900 dark:text-white">
               Slažem se sa
               <a
                 routerLink="/dokumentacija/uslovi-koriscenja"
@@ -166,10 +141,7 @@
               i potvrđujem da razumem kako će moja donacija biti iskorišćena
             </label>
           </div>
-          @if (
-            paymentForm.get("agreeTerms")?.invalid &&
-            paymentForm.get("agreeTerms")?.touched
-          ) {
+          @if (paymentForm.get('agreeTerms')?.invalid && paymentForm.get('agreeTerms')?.touched) {
             <div class="mt-1 text-sm text-red-600 dark:text-red-500">
               Morate se složiti sa uslovima korišćenja
             </div>
@@ -241,20 +213,17 @@
                 clip-rule="evenodd"
               ></path>
             </svg>
-            <h2 class="text-xl font-bold text-green-600 dark:text-green-500">
-              Hvala na podršci!
-            </h2>
+            <h2 class="text-xl font-bold text-green-600 dark:text-green-500">Hvala na podršci!</h2>
           </div>
           <p class="mb-4 text-green-600 dark:text-green-500">
             Uspešno ste se prijavili za podršku paketa
             <strong>{{ title }}</strong> u iznosu od
-            <strong>{{ amount | currency: "EUR" : "symbol" : "1.0" }}</strong
+            <strong>{{ amount | currency: 'EUR' : 'symbol' : '1.0' }}</strong
             >.
           </p>
           <p class="mb-4 text-green-600 dark:text-green-500">
-            Kontaktiraćemo vas sa detaljima o načinu podrške. Napominjemo da
-            trenutno ne primamo online uplate. Ako imate bilo kakvih pitanja,
-            slobodno nas kontaktirajte.
+            Kontaktiraćemo vas sa detaljima o načinu podrške. Napominjemo da trenutno ne primamo
+            online uplate. Ako imate bilo kakvih pitanja, slobodno nas kontaktirajte.
           </p>
           <div class="mt-6">
             <button
@@ -269,8 +238,8 @@
 
       <div class="mt-8 text-sm text-gray-500 dark:text-gray-400">
         <p>
-          Za sva pitanja u vezi sa donacijama, molimo vas da nas kontaktirate na
-          email: podrska&#64;pushserbia.com
+          Za sva pitanja u vezi sa donacijama, molimo vas da nas kontaktirate na email:
+          podrska&#64;pushserbia.com
         </p>
       </div>
     </div>

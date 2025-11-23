@@ -10,15 +10,12 @@
         Podrži open-source zajednicu
       </h2>
       <p class="mb-4 text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
-        Push Serbia je neprofitna open-source zajednica koja razvija društveno
-        korisne projekte.
+        Push Serbia je neprofitna open-source zajednica koja razvija društveno korisne projekte.
       </p>
-      <p
-        class="text-lg text-gray-600 dark:text-gray-300 sm:text-xl max-w-3xl mx-auto"
-      >
-        Tvojom donacijom omogućavaš održavanje infrastrukture, razvoj novih
-        projekata i organizaciju edukativnih događaja. Svaka podrška čini
-        razliku – zajedno gradimo održivu i otvorenu tehnološku budućnost!
+      <p class="text-lg text-gray-600 dark:text-gray-300 sm:text-xl max-w-3xl mx-auto">
+        Tvojom donacijom omogućavaš održavanje infrastrukture, razvoj novih projekata i organizaciju
+        edukativnih događaja. Svaka podrška čini razliku – zajedno gradimo održivu i otvorenu
+        tehnološku budućnost!
       </p>
     </div>
 
@@ -38,18 +35,17 @@
 
           <div class="flex justify-center items-baseline my-8">
             <span
-              class="mr-2 text-6xl font-extrabold text-primary-700 dark:text-primary-400"
-              >{{ donation.price | currency: "EUR" : "symbol" : "1.0" }}</span
+              class="mr-2 text-4xl sm:text-6xl font-extrabold text-primary-700 dark:text-primary-400"
             >
-            <span class="text-gray-500 text-xl">{{
-              donation.isOneTime ? "jednokratno" : "/mesečno"
-            }}</span>
+              {{ donation.price | currency: 'EUR' : 'symbol' : '1.0' }}
+            </span>
+            <span class="text-gray-500 dark:text-gray-400 text-base sm:text-xl">
+              {{ donation.isOneTime ? '/jednokratno' : '/mesečno' }}
+            </span>
           </div>
 
           <div class="mb-6 p-4 bg-primary-50 dark:bg-gray-700 rounded-lg">
-            <h4
-              class="text-base font-medium text-gray-900 dark:text-white mb-2"
-            >
+            <h4 class="text-base font-medium text-gray-900 dark:text-white mb-2">
               Uticaj donacije:
             </h4>
             <p class="text-gray-700 dark:text-gray-300">
@@ -84,8 +80,8 @@
               amount: donation.price,
               title: donation.title,
             }"
-            class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-lg px-6 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 shadow-md hover:shadow-lg transition-all mt-auto"
-            >{{ donation.isOneTime ? "Doniraj" : "Pretplati se" }}</a
+            class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-lg px-6 py-3 text-center dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800 shadow-md hover:shadow-lg transition-all mt-auto"
+            >{{ donation.isOneTime ? 'Doniraj' : 'Pretplati se' }}</a
           >
         </div>
       }
@@ -95,13 +91,12 @@
       class="mx-auto max-w-screen-md text-center mt-16 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md"
     >
       <p class="mb-6 text-lg text-gray-600 dark:text-gray-300">
-        Sve donacije su transparentne i koriste se isključivo za održavanje i
-        razvoj open-source projekata. Mesečno objavljujemo izveštaje o
-        korišćenju sredstava.
+        Sve donacije su transparentne i koriste se isključivo za održavanje i razvoj open-source
+        projekata. Mesečno objavljujemo izveštaje o korišćenju sredstava.
       </p>
       <a
         routerLink="/placanja/finansiranje"
-        class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-primary-700 bg-primary-50 rounded-lg hover:bg-primary-100 hover:text-primary-800 hover:dark:text-primary-300 transition-colors dark:bg-gray-700 dark:text-primary-400 dark:hover:bg-gray-600"
+        class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-primary-800 bg-primary-50 rounded-lg hover:bg-primary-100 hover:text-primary-900 hover:dark:text-primary-300 transition-colors dark:bg-gray-700 dark:text-primary-300 dark:hover:bg-gray-600"
       >
         Saznaj više o našem finansiranju
         <svg
