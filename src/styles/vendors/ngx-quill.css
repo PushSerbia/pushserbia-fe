@@ -96,6 +96,10 @@
   padding: 0;
 }
 
+.ql-snow.ngx-quill-view-html .ql-editor p {
+  min-height: 16px;
+}
+
 .quill-editor-custom .ql-editor.ql-blank::before {
   color: #9ca3af;
   font-style: normal;

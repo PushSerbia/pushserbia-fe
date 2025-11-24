@@ -21,7 +21,11 @@
     @if (project().image) {
       <img
         class="h-full w-full object-cover object-center"
-        [src]="project().image"
+        width="381"
+        height="208"
+        decoding="async"
+        [priority]="priorityImg"
+        [ngSrc]="project().image"
         [alt]="project().name"
         [style.viewTransitionName]="viewTransitionName()"
       />
@@ -29,7 +33,11 @@
       <div class="h-full w-full flex justify-center items-center bg-gray-200 dark:bg-gray-700 pt-3">
         <img
           class="w-full max-w-full h-40 object-contain text-gray-800 dark:text-white"
-          src="/illustrations/woman-earth-hugging.svg"
+          width="381"
+          height="208"
+          decoding="async"
+          ngSrc="/illustrations/woman-earth-hugging.svg"
+          [priority]="priorityImg"
           [alt]="project().name"
           [style.viewTransitionName]="viewTransitionName()"
         />

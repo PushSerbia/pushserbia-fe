@@ -36,11 +36,12 @@
         />
       } @else {
         @let votesMap = $votesMap();
-        @for (project of $projects(); track project.id) {
+        @for (project of $projects(); track project.id; let i = $index) {
           <app-project-card
             [project]="project"
             [supported]="!!votesMap[project.id]"
             [viewTransitionName]="viewTransitionName(project)"
+            [priorityImg]="i < 3"
           />
         } @empty {
           <div class="w-full flex items-center justify-center text-center">
