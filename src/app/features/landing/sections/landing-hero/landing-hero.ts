@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 
 interface Member {
   name: string;
@@ -9,12 +10,12 @@ interface Member {
 
 @Component({
   selector: 'app-landing-hero',
-  imports: [RouterLink],
+  imports: [RouterLink, NgOptimizedImage],
   templateUrl: './landing-hero.html',
   styleUrl: './landing-hero.css',
 })
 export class LandingHero {
-  members: Member[] = [
+  readonly members: Member[] = [
     {
       name: 'Miloš Krstić',
       imageUrl: '/images/users/milos-krstic.webp',

@@ -1,19 +1,6 @@
-import {
-  Component,
-  DestroyRef,
-  effect,
-  inject,
-  Injector,
-  input,
-  OnInit,
-} from '@angular/core';
+import { Component, DestroyRef, effect, inject, Injector, input, OnInit } from '@angular/core';
 import { BasicLayout } from '../../../../shared/layout/landing-layout/basic-layout';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { QuillEditorComponent } from 'ngx-quill';
 import slugify from 'slugify';
@@ -23,6 +10,7 @@ import { PageLoader } from '../../../../shared/ui/page-loader/page-loader';
 import { Project } from '../../../../core/project/project';
 import { ProjectStatus } from '../../../../core/project/project-status';
 import { ImageControl } from '../../../../shared/ui/image-control/image-control';
+import { quillNbspFix } from '../../../../core/quill/quill-nbsp-fix';
 
 @Component({
   selector: 'app-create-project-page',
@@ -52,6 +40,7 @@ export class CreateProjectPage implements OnInit {
 
   readonly slug = input<string>();
   readonly $loading = this.projectStoreService.$loading;
+  readonly quillNbspFix = quillNbspFix;
 
   private initForm(): void {
     const formGroup: Record<string, unknown[]> = {

@@ -1,58 +1,21 @@
-import {
-  ApplicationConfig,
-  ErrorHandler,
-  inject,
-  provideZonelessChangeDetection,
-} from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideZonelessChangeDetection } from '@angular/core';
 import {
   provideRouter,
   Router,
-  ViewTransitionInfo,
   withComponentInputBinding,
   withInMemoryScrolling,
-  withViewTransitions,
+  withViewTransitions
 } from '@angular/router';
-
 import { routes } from './app.routes';
 import * as Sentry from '@sentry/angular';
-import {
-  provideHttpClient,
-  withFetch,
-  withInterceptors,
-} from '@angular/common/http';
-import { provideFirebase } from './core/firebase/firebase.provider';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { apiInterceptor } from './core/api/api.interceptor';
-import { provideApiEndpointUrl } from './core/providers/api-endpoint-url.provider';
-import { environment } from '../environments/environment';
 import { provideQuillConfig } from 'ngx-quill';
-import { TransitionService } from './core/transition/transition.service';
+import { provideFirebase } from './core/firebase/firebase.provider';
 import { provideGtm } from './core/gtm/gtm.provider';
-import {
-  provideClientHydration,
-  withEventReplay,
-} from '@angular/platform-browser';
-
-function onViewTransitionCreated(info: ViewTransitionInfo) {
-  const router = inject(Router);
-  const toUrl = router.getCurrentNavigation()?.finalUrl?.toString() ?? '';
-
-  if (
-    !toUrl.startsWith('/projekti') ||
-    toUrl === '/projekti/novi' ||
-    toUrl.endsWith('/izmena')
-  ) {
-    info.transition.skipTransition();
-    return;
-  }
-
-  const currentTransitionService = inject(TransitionService);
-  currentTransitionService.current.set(info);
-
-  info.transition.finished.finally(() => {
-    currentTransitionService.current.set(null);
-  });
-}
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { onViewTransitionCreated } from './core/transitions/on-view-transition-created';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -70,7 +33,6 @@ export const appConfig: ApplicationConfig = {
         onViewTransitionCreated,
       }),
     ),
-    provideApiEndpointUrl(environment.apiUrl),
     provideHttpClient(
       withFetch(),
       withInterceptors([apiInterceptor, authInterceptor]),
@@ -80,10 +42,10 @@ export const appConfig: ApplicationConfig = {
       useValue: Sentry.createErrorHandler(),
     },
     {
+      // todo: https://docs.sentry.io/platforms/javascript/guides/angular/sourcemaps/
       provide: Sentry.TraceService,
       deps: [Router],
     },
-    // todo: https://docs.sentry.io/platforms/javascript/guides/angular/sourcemaps/
     provideFirebase(),
     provideGtm(),
     provideQuillConfig({
