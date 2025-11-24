@@ -10,49 +10,48 @@ export interface DonationOption {
 
 export const donationOptions: DonationOption[] = [
   {
-    title: 'Prijatelj zajednice',
+    title: 'Supporter',
     price: 5,
     isOneTime: false,
     description:
-      'Svaki doprinos je važan! Tvoja podrška pomaže održavanju osnovne infrastrukture i omogućava pristup resursima svima.',
+      'Osnovni nivo podrške za održavanje zajedničkih projekata.',
+    impact:
+      'Tvoja podrška pokriva osnovne tehničke troškove i omogućava stabilno funkcionisanje servisa.',
     benefits: [
-      'Pristup zajedničkom Slack kanalu',
-      'Zahvalnica na našem sajtu',
-      'Transparentni izveštaji o korišćenju sredstava',
-      'Učešće u mesečnim anketama zajednice',
-      'Doprinos održivosti open-source ekosistema',
-    ],
-    impact: 'Pokriva mesečne troškove hostinga i osnovnih servisa',
+      'Pokrivanje dela troškova hostinga i servera',
+      'Održavanje redovnog rada servisa',
+      'Omogućavanje dostupnosti projekata svakodnevnim korisnicima'
+    ]
   },
   {
-    title: 'Aktivni član',
-    price: 15,
+    title: 'Contributor',
+    price: 9,
+    isOneTime: false,
+    isHighlighted: true,
+    description:
+      'Za članove koji žele da podrže skaliranje i širenje projekata.',
+    impact:
+      'Tvoja podrška omogućava proširenje infrastrukture i skaliranje servisa kako bi više ljudi moglo koristiti projekte.',
+    benefits: [
+      'Proširenje kapaciteta servera i resursa',
+      'Omogućavanje skalabilnosti postojećih projekata',
+      'Podrška rastu zajednice i novih inicijativa'
+    ]
+  },
+  {
+    title: 'Guardian',
+    price: 990,
     isOneTime: false,
     description:
-      'Redovna podrška koja omogućava dugoročno planiranje i kontinuirani razvoj projekata od društvenog značaja.',
+      'Najviši nivo podrške za dugoročnu održivost zajednice i njenih projekata.',
+    impact:
+      'Tvoja podrška omogućava da inicijativa i zajednica žive i razvijaju se na duge staze, održavajući ideje i projekte dostupnim svima.',
     benefits: [
-      'Sve pogodnosti "Prijatelja zajednice"',
-      'Učešće u odlučivanju o prioritetima razvoja',
-      'Pristup zajedničkim resursima za učenje',
-      'Prioritetni glas prilikom glasanja (broji se duplo)',
-      'Povezivanje sa drugim članovima zajednice',
-    ],
-    impact: 'Podržava organizaciju događaja i razvoj novih inicijativa',
-    isHighlighted: true,
-  },
-  {
-    title: 'Jednokratna podrška',
-    price: 97,
-    isOneTime: true,
-    description:
-      'Jednokratna donacija koja pomaže razvoju konkretnih projekata i inicijativa bez dugoročne obaveze.',
-    benefits: [
-      'Sve pogodnosti "Prijatelja zajednice"',
-      'Mogućnost usmeravanja donacije ka određenom projektu',
-      'Priznanje u dokumentaciji projekta',
-      'Pristup edukativnim materijalima zajednice',
-      'Poziv na online događaje i radionice',
-    ],
-    impact: 'Omogućava razvoj novih funkcionalnosti i edukativnih materijala',
-  },
+      'Održavanje i unapređenje infrastrukture zajednice',
+      'Podrška razvoju novih projekata i ideja',
+      'Omogućavanje zajednici da samostalno rešava administrativne i birokratske stvari',
+      'Osiguravanje kontinuiteta i stabilnosti zajednice'
+    ]
+  }
 ];
+
