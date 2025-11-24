@@ -51,39 +51,48 @@
             <p class="text-xl text-gray-600 dark:text-gray-300 mb-6 text-center lg:text-left">
               Pridruži se rastućoj zajednici entuzijasta koji doprinose boljem društvu.
             </p>
-            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4">
               <div class="flex -space-x-2">
-                @for (member of members; track member) {
+                @for (member of members; track member.linkedinUrl) {
                   <a
                     [title]="member.name"
                     [href]="member.linkedinUrl"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="rounded-full border-2 border-primary-700 dark:border-gray-600 shadow-md overflow-hidden hover:scale-110 transition-transform"
+                    class="rounded-full border-2 border-primary-700 dark:border-gray-600 shadow-md overflow-hidden hover:scale-110 transition-transform w-12 h-12"
                   >
                     <img
-                      [src]="member.imageUrl"
+                      [ngSrc]="member.imageUrl"
                       [alt]="member.name"
                       width="48"
                       height="48"
-                      class="w-12 h-12"
+                      decoding="async"
+                      priority
                     />
                   </a>
                 }
               </div>
-              <span class="ml-2 text-gray-600 dark:text-gray-300 font-medium">i mnogi drugi</span>
+              <span class="text-gray-600 dark:text-gray-300 font-medium">i mnogi drugi</span>
             </div>
           </div>
         </div>
       </div>
 
       <div class="relative w-full hidden lg:block lg:flex-1">
-        <img
-          src="/images/homepage/community-tree.webp"
-          class="rounded-lg shadow-xl w-full object-cover h-[500px]"
-          alt="People collaborating on projects"
-          fetchpriority="high"
-        />
+        <picture>
+          <source media="(min-width: 1024px)" srcset="/images/homepage/community-tree.webp" />
+          <source media="(max-width: 1023px)" srcset="" />
+
+          <img
+            src=""
+            width="720"
+            height="450"
+            class="rounded-lg shadow-xl w-full object-cover h-[500px]"
+            alt="People collaborating on projects"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </picture>
       </div>
     </div>
   </div>
