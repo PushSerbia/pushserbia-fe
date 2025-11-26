@@ -57,10 +57,9 @@
                 [class.invisible]="form.image().valid() || !form.image().touched()"
               >
                 <div class="h-5">
-                  @for (error of form.image().errors(); track error.kind) {
-                    @if (error.kind === 'required') {
-                      {{ error.message }}
-                    }
+                  @if (form.image().errors().length > 0) {
+                    @let error = form.image().errors()[0];
+                    {{ error.message }}
                   }
                 </div>
               </div>
@@ -90,13 +89,9 @@
                 "
               >
                 <div class="h-5">
-                  @for (error of form.name().errors(); track error.kind) {
-                    @if (error.kind === 'required') {
-                      {{ error.message }}
-                    }
-                    @else if (error.kind === 'minLength') {
-                      {{ error.message }}
-                    }
+                  @if (form.name().errors().length > 0) {
+                    @let error = form.name().errors()[0];
+                    {{ error.message }}
                   }
                 </div>
               </div>
@@ -126,16 +121,9 @@
                 "
               >
                 <div class="h-5">
-                  @for (error of form.slug().errors(); track error.kind) {
-                    @if (error.kind === 'required') {
-                      {{ error.message }}
-                    }
-                    @else if (error.kind === 'pattern') {
-                      {{ error.message }}
-                    }
-                    @else if (error.kind === 'duplicateSlug') {
-                      {{ error.message }}
-                    }
+                  @if (form.slug().errors().length > 0) {
+                    @let error = form.slug().errors()[0];
+                    {{ error.message }}
                   }
                 </div>
               </div>
@@ -230,13 +218,9 @@
                 "
               >
                 <div class="h-5">
-                  @for (error of form.shortDescription().errors(); track error.kind) {
-                    @if (error.kind === 'required') {
-                      {{ error.message }}
-                    }
-                    @else if (error.kind === 'maxLength') {
-                      {{ error.message }}
-                    }
+                  @if (form.shortDescription().errors().length > 0) {
+                    @let error = form.shortDescription().errors()[0];
+                    {{ error.message }}
                   }
                 </div>
               </div>
@@ -268,13 +252,9 @@
                 "
               >
                 <div class="h-5">
-                  @for (error of form.description().errors(); track error.kind) {
-                    @if (error.kind === 'required') {
-                      {{ error.message }}
-                    }
-                    @else if (error.kind === 'minLength') {
-                      {{ error.message }}
-                    }
+                  @if (form.description().errors().length > 0) {
+                    @let error = form.description().errors()[0];
+                    {{ error.message }}
                   }
                 </div>
               </div>

@@ -144,7 +144,7 @@ export class CreateProjectPage implements OnInit {
     const newContent = event.html || '';
     if (newContent !== this.model().description) {
       this.model.update(value => ({...value, description: newContent}));
-      this.form.description().markAsDirty();
+      this.form.description().markAsTouched();
     }
   }
 
