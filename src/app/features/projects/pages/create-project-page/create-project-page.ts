@@ -9,7 +9,6 @@ import { ProjectStatus } from '../../../../core/project/project-status';
 import { ImageControl } from '../../../../shared/ui/image-control/image-control';
 import { quillNbspFix } from '../../../../core/quill/quill-nbsp-fix';
 import { Field, form, maxLength, minLength, pattern, required, submit } from '@angular/forms/signals'
-import { JsonPipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -33,7 +32,6 @@ interface CreateProjectModel {
     PageLoader,
     RouterLink,
     ImageControl,
-    JsonPipe,
     Field
   ],
   templateUrl: './create-project-page.html',
@@ -95,9 +93,13 @@ export class CreateProjectPage implements OnInit {
   readonly $loading = this.projectStoreService.$loading;
   readonly quillNbspFix = quillNbspFix;
 
+  protected quillEditor?: unknown;
+
   private readonly _nameToSlugEffect = effect(() => {
-    const name = this.model().name;
-    const currentSlug = untracked(() => this.model().slug);
+    const name = this.form.name().value();
+    const currentSlug = untracked(() => this.form.slug().value());
+
+    console.log('name change effect', {name, currentSlug});
 
     if (name) {
       const slugified = slugify(name, { lower: true, strict: true });
@@ -177,6 +179,18 @@ export class CreateProjectPage implements OnInit {
     //   );
     // });
   //}
+
+  onQuillCreated(quill: unknown): void {
+    this.quillEditor = quill;
+    this.quillNbspFix(quill);
+  }
+
+  onQuillContentChanged(event: { html?: string | null }): void {
+    const newContent = event.html || '';
+    if (newContent !== this.model().description) {
+      this.model.update(value => ({...value, description: newContent}));
+    }
+  }
 
   onSubmit(event: Event): void {
     event.preventDefault();

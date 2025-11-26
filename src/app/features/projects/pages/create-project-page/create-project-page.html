@@ -253,10 +253,10 @@
               </label>
               <quill-editor
                 id="description"
-                [field]="form.description"
                 class="quill-editor-custom"
                 placeholder="Biće vidljiv samo na stranici projekta"
-                (onEditorCreated)="quillNbspFix($event)"
+                (onEditorCreated)="onQuillCreated($event)"
+                (onContentChanged)="onQuillContentChanged($event)"
               />
               <div
                 class="text-red-500 text-sm mt-1"
