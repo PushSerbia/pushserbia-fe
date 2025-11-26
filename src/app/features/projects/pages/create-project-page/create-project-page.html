@@ -1,5 +1,5 @@
 <app-basic-layout>
-  @if (form) {
+  @if (form()) {
     <section
       class="bg-white dark:bg-gray-900 flex justify-center flex-wrap flex-col-reverse xl:flex-nowrap xl:flex-row gap-8 relative pb-8"
     >
@@ -44,22 +44,23 @@
         >
           {{ project ? 'Ažuriraj' : 'Predloži novi' }} projekat
         </h2>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form (submit)="onSubmit($event)">
           <div class="grid gap-4 sm:grid-cols-2 sm:gap-2">
             <!-- #region Image Selector -->
             <div class="sm:col-span-2">
               <app-image-control
                 class="flex justify-center items-center"
-                formControlName="image"
+                [field]="form.image"
               ></app-image-control>
-
               <div
                 class="text-red-500 text-sm mt-1"
-                [class.invisible]="form.controls['image'].valid || !form.touched"
+                [class.invisible]="form.image().valid() || !form.image().touched()"
               >
                 <div class="h-5">
-                  @if (form.controls['image'].errors?.['required']) {
-                    Slika za projekat je obavezna
+                  @for (error of form.image().errors(); track error.kind) {
+                    @if (error.kind === 'required') {
+                      {{ error.message }}
+                    }
                   }
                 </div>
               </div>
@@ -77,23 +78,25 @@
               <input
                 type="text"
                 id="name"
-                formControlName="name"
+                [field]="form.name"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Kreativno ime projekta"
               />
               <div
                 class="text-red-500 text-sm mt-1"
                 [class.invisible]="
-                  form.controls['name'].valid ||
-                  !(form.controls['name'].dirty || form.controls['name'].touched)
+                  form.name().valid() ||
+                  !(form.name().dirty() || form.name().touched())
                 "
               >
                 <div class="h-5">
-                  @if (form.controls['name'].errors?.['required']) {
-                    Ime projekta je obavezno
-                  } @else if (form.controls['name'].errors?.['minlength']) {
-                    Ime projekta mora imati najmanje
-                    {{ form.controls['name'].errors?.['minlength']?.['requiredLength'] }} karaktera
+                  @for (error of form.name().errors(); track error.kind) {
+                    @if (error.kind === 'required') {
+                      {{ error.message }}
+                    }
+                    @else if (error.kind === 'minLength') {
+                      {{ error.message }}
+                    }
                   }
                 </div>
               </div>
@@ -111,22 +114,28 @@
               <input
                 type="text"
                 id="slug"
-                formControlName="slug"
+                [field]="form.slug"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="kreativno-ime-projekta"
               />
               <div
                 class="text-red-500 text-sm mt-1"
                 [class.invisible]="
-                  form.controls['slug'].valid ||
-                  !(form.controls['slug'].dirty || form.controls['slug'].touched)
+                  form.slug().valid() ||
+                  !(form.slug().dirty() || form.slug().touched())
                 "
               >
                 <div class="h-5">
-                  @if (form.controls['slug'].errors?.['required']) {
-                    Slug je obavezan
-                  } @else if (form.controls['slug'].errors?.['pattern']) {
-                    Slug može sadržati samo mala slova, brojeve i crtice
+                  @for (error of form.slug().errors(); track error.kind) {
+                    @if (error.kind === 'required') {
+                      {{ error.message }}
+                    }
+                    @else if (error.kind === 'pattern') {
+                      {{ error.message }}
+                    }
+                    @else if (error.kind === 'duplicateSlug') {
+                      {{ error.message }}
+                    }
                   }
                 </div>
               </div>
@@ -144,7 +153,7 @@
               <input
                 type="text"
                 id="github"
-                formControlName="github"
+                [field]="form.github"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="https://github.com/username/repository"
               />
@@ -166,7 +175,7 @@
                 </label>
                 <select
                   id="status"
-                  formControlName="status"
+                  [field]="form.status!"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 >
                   <option [value]="projectStatus.Pending">
@@ -205,7 +214,7 @@
               </label>
               <textarea
                 id="shortDescription"
-                formControlName="shortDescription"
+                [field]="form.shortDescription"
                 rows="5"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Biće vidljiv na karticama projekta"
@@ -213,20 +222,21 @@
               <div
                 class="text-red-500 text-sm mt-1"
                 [class.invisible]="
-                  form.controls['shortDescription'].valid ||
+                  form.shortDescription().valid() ||
                   !(
-                    form.controls['shortDescription'].dirty ||
-                    form.controls['shortDescription'].touched
+                    form.shortDescription().dirty() ||
+                    form.shortDescription().touched()
                   )
                 "
               >
                 <div class="h-5">
-                  @if (form.controls['shortDescription'].errors?.['required']) {
-                    Kratak opis je obavezan
-                  } @else if (form.controls['shortDescription'].errors?.['maxlength']) {
-                    Kratak opis ne može biti duži od
-                    {{ form.controls['shortDescription'].errors?.['maxlength']['requiredLength'] }}
-                    karaktera
+                  @for (error of form.shortDescription().errors(); track error.kind) {
+                    @if (error.kind === 'required') {
+                      {{ error.message }}
+                    }
+                    @else if (error.kind === 'maxLength') {
+                      {{ error.message }}
+                    }
                   }
                 </div>
               </div>
@@ -243,7 +253,7 @@
               </label>
               <quill-editor
                 id="description"
-                formControlName="description"
+                [field]="form.description"
                 class="quill-editor-custom"
                 placeholder="Biće vidljiv samo na stranici projekta"
                 (onEditorCreated)="quillNbspFix($event)"
@@ -251,17 +261,18 @@
               <div
                 class="text-red-500 text-sm mt-1"
                 [class.invisible]="
-                  form.controls['description'].valid ||
-                  !(form.controls['description'].dirty || form.controls['description'].touched)
+                  form.description().valid() ||
+                  !(form.description().dirty() || form.description().touched())
                 "
               >
                 <div class="h-5">
-                  @if (form.controls['description'].errors?.['required']) {
-                    Opis je obavezan
-                  } @else if (form.controls['description'].errors?.['minlength']) {
-                    Opis mora imati najmanje
-                    {{ form.controls['description'].errors?.['minlength']['requiredLength'] }}
-                    karaktera
+                  @for (error of form.description().errors(); track error.kind) {
+                    @if (error.kind === 'required') {
+                      {{ error.message }}
+                    }
+                    @else if (error.kind === 'minLength') {
+                      {{ error.message }}
+                    }
                   }
                 </div>
               </div>
@@ -271,7 +282,7 @@
 
           <button
             type="submit"
-            [disabled]="form.invalid"
+            [disabled]="form().invalid() || form().submitting()"
             class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             Sačuvaj

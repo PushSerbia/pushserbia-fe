@@ -1,12 +1,17 @@
 import { Directive, effect, input, model } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
+import { FormUiControl, ValidationError, WithOptionalField } from '@angular/forms/signals';
 
 @Directive()
-export abstract class AbstractControlValueAccessorDirective<T> implements ControlValueAccessor {
+export abstract class AbstractControlValueAccessorDirective<T> implements ControlValueAccessor, FormUiControl {
   readonly value = model<T | null>(null);
   readonly disabled = model<boolean>(false);
 
   readonly readonly = input<boolean>(false);
+  readonly valid = input<boolean>(true);
+  readonly errors = input<readonly WithOptionalField<ValidationError>[]>([]);
+  readonly touched = model<boolean>(false);
+  readonly dirty = input<boolean>(false);
 
   // Callback functions for ControlValueAccessor - initialized as no-ops and replaced by Angular Forms
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -30,7 +35,6 @@ export abstract class AbstractControlValueAccessorDirective<T> implements Contro
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
-
 
   setDisabledState?(disabled: boolean): void {
     this.disabled.set(disabled);

@@ -29,12 +29,16 @@ export interface ImageControlOption {
       multi: true,
     },
   ],
+  host: {
+    '(click)': 'touched.set(true)'
+  }
 })
 export class ImageControl extends AbstractControlValueAccessorDirective<string> {
   readonly dialog = inject(Dialog);
 
   openDialog(): void {
     this.onTouched();
+    this.touched.set(true);
     const dialogRef = this.dialog.open<string | null>(
       UnsplashImageChooserModal,
       {
