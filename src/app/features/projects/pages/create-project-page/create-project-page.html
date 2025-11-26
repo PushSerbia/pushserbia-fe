@@ -255,6 +255,8 @@
                 id="description"
                 class="quill-editor-custom"
                 placeholder="Biće vidljiv samo na stranici projekta"
+                [ngModel]="model().description"
+                name="description"
                 (onEditorCreated)="onQuillCreated($event)"
                 (onContentChanged)="onQuillContentChanged($event)"
               />

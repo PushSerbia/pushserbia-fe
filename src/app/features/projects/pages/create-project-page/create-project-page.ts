@@ -1,4 +1,4 @@
-import { Component, effect, inject, Injector, input, OnInit, signal, untracked } from '@angular/core';
+import { Component, computed, effect, inject, Injector, input, OnInit, signal, untracked } from '@angular/core';
 import { BasicLayout } from '../../../../shared/layout/landing-layout/basic-layout';
 import { QuillEditorComponent } from 'ngx-quill';
 import slugify from 'slugify';
@@ -12,6 +12,7 @@ import { Field, form, maxLength, minLength, pattern, required, submit } from '@a
 import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 interface CreateProjectModel {
   name: string;
@@ -32,16 +33,15 @@ interface CreateProjectModel {
     PageLoader,
     RouterLink,
     ImageControl,
-    Field
+    Field,
+    FormsModule
   ],
   templateUrl: './create-project-page.html',
   styleUrl: './create-project-page.scss',
 
 })
 export class CreateProjectPage implements OnInit {
-  //private fb = inject(FormBuilder);
   private readonly router = inject(Router);
-  //private destroyRef = inject(DestroyRef);
   private readonly injector = inject(Injector);
   private readonly projectStoreService = inject(ProjectStoreService);
 
@@ -87,7 +87,6 @@ export class CreateProjectPage implements OnInit {
       message: 'Slika je obavezna'
     });
   });
-  //protected form!: FormGroup;
 
   readonly slug = input<string>();
   readonly $loading = this.projectStoreService.$loading;
@@ -95,11 +94,11 @@ export class CreateProjectPage implements OnInit {
 
   protected quillEditor?: unknown;
 
-  private readonly _nameToSlugEffect = effect(() => {
-    const name = this.form.name().value();
-    const currentSlug = untracked(() => this.form.slug().value());
+  private readonly name = computed(() => this.form.name().value());
 
-    console.log('name change effect', {name, currentSlug});
+  private readonly _nameToSlugEffect = effect(() => {
+    const name = this.name();
+    const currentSlug = untracked(() => this.form.slug().value());
 
     if (name) {
       const slugified = slugify(name, { lower: true, strict: true });
@@ -112,28 +111,6 @@ export class CreateProjectPage implements OnInit {
     }
   });
 
-  private initForm(): void {
-    // const formGroup: Record<string, unknown[]> = {
-    //   name: ['', [Validators.required, Validators.minLength(3)]],
-    //   slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9-]+$/)]],
-    //   shortDescription: ['', [Validators.required, Validators.maxLength(250)]],
-    //   description: ['', [Validators.required, Validators.minLength(50)]],
-    //   github: [''],
-    //   image: [null, [Validators.required]],
-    // };
-    // if (this.project) {
-    //   formGroup['status'] = [this.project.status];
-    // }
-    // this.form = this.fb.group(formGroup);
-    // this.form.controls['name'].valueChanges
-    //   .pipe(takeUntilDestroyed(this.destroyRef))
-    //   .subscribe((name) => {
-    //     this.form.controls['slug'].setValue(
-    //       slugify(name, { lower: true, strict: true }),
-    //     );
-    //   });
-  }
-
   ngOnInit(): void {
     effect(
       () => {
@@ -141,7 +118,6 @@ export class CreateProjectPage implements OnInit {
         if (slug) {
           this.project = this.projectStoreService.getBySlug(slug)();
           if (this.project) {
-            // this.initForm();
             this.model.set({
               name: this.project.name,
               slug: this.project.slug,
@@ -157,28 +133,7 @@ export class CreateProjectPage implements OnInit {
       },
       { injector: this.injector },
     );
-    if (!this.slug()) {
-      this.initForm();
-    }
   }
-
-  //onSubmit(): void {
-    //if (this.projectStoreService.$loading()) {
-    //  return;
-    //}
-    // if (this.form.invalid) {
-    //   this.form.markAllAsTouched();
-    //   return;
-    // }
-    // const endpoint = this.project?.id
-    //   ? this.projectStoreService.update(this.project.id, this.form.value)
-    //   : this.projectStoreService.create(this.form.value);
-    // endpoint.subscribe((updated) => {
-    //   this.router.navigateByUrl(
-    //     `/projekti${this.project?.slug ? '/' + updated.slug : ''}`,
-    //   );
-    // });
-  //}
 
   onQuillCreated(quill: unknown): void {
     this.quillEditor = quill;
@@ -189,6 +144,7 @@ export class CreateProjectPage implements OnInit {
     const newContent = event.html || '';
     if (newContent !== this.model().description) {
       this.model.update(value => ({...value, description: newContent}));
+      this.form.description().markAsDirty();
     }
   }
 
@@ -203,10 +159,14 @@ export class CreateProjectPage implements OnInit {
       return;
     }
 
-    submit(this.form, async () => {
+    submit(this.form, async (form) => {
+      const value = form().value() as Partial<Project>;
+      if (this.project?.id) {
+        delete value.slug;
+      }
       const request = this.project?.id
-      ? this.projectStoreService.update(this.project.id, this.form().value() as Partial<Project>)
-      : this.projectStoreService.create(this.form().value() as Partial<Project>);
+      ? this.projectStoreService.update(this.project.id, value)
+      : this.projectStoreService.create(value);
 
       try {
         const response: Project = await firstValueFrom(request);
@@ -228,5 +188,9 @@ export class CreateProjectPage implements OnInit {
         }
       }
     })
+  }
+
+  quillEditorChanged(value: string): void {
+    this.model.update(model => ({...model, description: value}));
   }
 }
