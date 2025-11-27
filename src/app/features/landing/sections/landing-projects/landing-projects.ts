@@ -1,14 +1,11 @@
-import { Component, effect, inject, signal, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal, Signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Project } from '../../../../core/project/project';
 import { ProjectCard } from '../../../../shared/ui/project-card/project-card';
 import { ProjectCardNew } from '../../../../shared/ui/project-card-new/project-card-new';
 import { ProjectStoreService } from '../../../../core/project/project.store.service';
 import { SlicePipe } from '@angular/common';
-import {
-  VoteState,
-  VoteStoreService,
-} from '../../../../core/vote/vote.store.service';
+import { VoteState, VoteStoreService } from '../../../../core/vote/vote.store.service';
 import { TransitionService } from '../../../../core/transition/transition.service';
 
 @Component({
@@ -16,6 +13,7 @@ import { TransitionService } from '../../../../core/transition/transition.servic
   imports: [RouterLink, ProjectCard, ProjectCardNew, SlicePipe],
   templateUrl: './landing-projects.html',
   styleUrl: './landing-projects.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingProjects {
   private projectStoreService = inject(ProjectStoreService);

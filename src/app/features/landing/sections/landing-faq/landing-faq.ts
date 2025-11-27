@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 interface SearchOption {
@@ -13,6 +13,7 @@ interface SearchOption {
   imports: [FormsModule],
   templateUrl: './landing-faq.html',
   styleUrl: './landing-faq.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingFaq implements OnInit {
   // State variables for show all functionality and search
@@ -88,9 +89,7 @@ export class LandingFaq implements OnInit {
     });
 
     // Filter options with at least 3 matches
-    const viableOptions = optionsWithCounts.filter(
-      (option) => option.count >= 3,
-    );
+    const viableOptions = optionsWithCounts.filter((option) => option.count >= 3);
 
     // Select the 6 best options based on a combination of count and importance
     // This ensures we get options that are both relevant (high count) and important for users
@@ -113,8 +112,7 @@ export class LandingFaq implements OnInit {
     const term = searchTerm.toLowerCase();
     return this.originalFaq.filter(
       (item) =>
-        item.title.toLowerCase().includes(term) ||
-        item.description.toLowerCase().includes(term),
+        item.title.toLowerCase().includes(term) || item.description.toLowerCase().includes(term),
     ).length;
   }
 
@@ -167,8 +165,7 @@ export class LandingFaq implements OnInit {
     },
     {
       title: 'Da li moj projekat mora biti open-source?',
-      description:
-        'Da, svi predloženi projekti moraju biti društveno korisni i open-source.',
+      description: 'Da, svi predloženi projekti moraju biti društveno korisni i open-source.',
     },
     {
       title: 'Kako mogu promovisati svoj projekat?',
@@ -237,8 +234,7 @@ export class LandingFaq implements OnInit {
     },
     {
       title: 'Da li dobijam obaveštenja kada neko glasa za moj projekat?',
-      description:
-        'Da, postoji in-app notifikacija kada vaš projekat dobije novi glas.',
+      description: 'Da, postoji in-app notifikacija kada vaš projekat dobije novi glas.',
     },
     {
       title: 'Kako funkcionišu email i in-app notifikacije?',

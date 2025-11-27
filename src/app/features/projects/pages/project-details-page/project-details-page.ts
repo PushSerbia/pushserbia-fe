@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   effect,
   inject,
@@ -32,6 +33,7 @@ import { GravatarModule } from 'ngx-gravatar';
   ],
   templateUrl: './project-details-page.html',
   styleUrl: './project-details-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectDetailsPage implements OnInit {
   public readonly projectStore = inject(ProjectStoreService);

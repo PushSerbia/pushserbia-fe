@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   effect,
@@ -46,7 +47,6 @@ interface CreateProjectModel {
 
 @Component({
   selector: 'app-create-project-page',
-  standalone: true,
   imports: [
     BasicLayout,
     QuillEditorComponent,
@@ -59,6 +59,7 @@ interface CreateProjectModel {
   ],
   templateUrl: './create-project-page.html',
   styleUrl: './create-project-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateProjectPage implements OnInit {
   private readonly router = inject(Router);

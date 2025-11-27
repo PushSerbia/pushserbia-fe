@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 
@@ -13,6 +13,7 @@ interface Member {
   imports: [RouterLink, NgOptimizedImage],
   templateUrl: './landing-hero.html',
   styleUrl: './landing-hero.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingHero {
   readonly members: Member[] = [

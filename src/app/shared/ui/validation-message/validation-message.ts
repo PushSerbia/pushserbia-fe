@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { FieldTree } from '@angular/forms/signals';
 
 @Component({
@@ -6,6 +6,7 @@ import { FieldTree } from '@angular/forms/signals';
   imports: [],
   templateUrl: './validation-message.html',
   styleUrl: './validation-message.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ValidationMessage {
   control = input.required<FieldTree<unknown>>();
