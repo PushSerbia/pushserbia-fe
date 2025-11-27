@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { AbstractFormUiControlDirective } from '../../directives/abstract-form-ui-control.directive';
+import { AbstractFormUiControl } from '../../directives/abstract-form-ui-control';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { UnsplashImageChooserModal } from '../unsplash-image-chooser-modal/unsplash-image-chooser-modal';
 import { take } from 'rxjs';
@@ -33,7 +33,7 @@ export interface ImageControlOption {
     '(click)': 'touched.set(true)'
   }
 })
-export class ImageControl extends AbstractFormUiControlDirective<string> {
+export class ImageControl extends AbstractFormUiControl<string> {
   readonly dialog = inject(Dialog);
 
   openDialog(): void {
