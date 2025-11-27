@@ -32,6 +32,7 @@ import { firstValueFrom } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import Quill from 'quill';
+import { ValidationMessage } from '../../../../shared/ui/validation-message/validation-message';
 
 interface CreateProjectModel {
   name: string;
@@ -54,6 +55,7 @@ interface CreateProjectModel {
     ImageControl,
     Field,
     FormsModule,
+    ValidationMessage,
   ],
   templateUrl: './create-project-page.html',
   styleUrl: './create-project-page.scss',

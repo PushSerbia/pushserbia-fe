@@ -50,17 +50,7 @@
             <div class="sm:col-span-2">
               <app-image-control class="flex justify-center items-center" [field]="form.image" />
 
-              <div
-                class="text-red-500 text-sm mt-1"
-                [class.invisible]="form.image().valid() || !form.image().touched()"
-              >
-                <div class="h-5">
-                  @let imageErrors = form.image().errors();
-                  @if (imageErrors.length > 0) {
-                    {{ imageErrors[0].message }}
-                  }
-                </div>
-              </div>
+              <app-validation-message [control]="form.image" />
             </div>
             <!-- #endregion Image Selector -->
 
@@ -79,19 +69,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Kreativno ime projekta"
               />
-              <div
-                class="text-red-500 text-sm mt-1"
-                [class.invisible]="
-                  form.name().valid() || !(form.name().dirty() || form.name().touched())
-                "
-              >
-                <div class="h-5">
-                  @let nameErrors = form.name().errors();
-                  @if (nameErrors.length > 0) {
-                    {{ nameErrors[0].message }}
-                  }
-                </div>
-              </div>
+              <app-validation-message [control]="form.name" />
             </div>
             <!--#endregion Name -->
 
@@ -110,19 +88,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="kreativno-ime-projekta"
               />
-              <div
-                class="text-red-500 text-sm mt-1"
-                [class.invisible]="
-                  form.slug().valid() || !(form.slug().dirty() || form.slug().touched())
-                "
-              >
-                <div class="h-5">
-                  @let slugErrors = form.slug().errors();
-                  @if (slugErrors.length > 0) {
-                    {{ slugErrors[0].message }}
-                  }
-                </div>
-              </div>
+              <app-validation-message [control]="form.slug" />
             </div>
             <!--#endregion Slug -->
 
@@ -141,10 +107,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="https://github.com/username/repository"
               />
-
-              <div class="text-red-500 text-sm mt-1 invisible">
-                <div class="h-5"></div>
-              </div>
+              <app-validation-message [control]="form.github" />
             </div>
             <!--#endregion GitHub Link -->
 
@@ -171,9 +134,7 @@
                   <option [value]="projectStatus.Closed">{{ projectStatus.Closed }}</option>
                   <option [value]="projectStatus.Declined">{{ projectStatus.Declined }}</option>
                 </select>
-                <div class="text-red-500 text-sm mt-1 invisible">
-                  <div class="h-5"></div>
-                </div>
+                <app-validation-message [control]="form.status!" />
               </div>
             }
             <!--#endregion Status -->
@@ -193,20 +154,7 @@
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Biće vidljiv na karticama projekta"
               ></textarea>
-              <div
-                class="text-red-500 text-sm mt-1"
-                [class.invisible]="
-                  form.shortDescription().valid() ||
-                  !(form.shortDescription().dirty() || form.shortDescription().touched())
-                "
-              >
-                <div class="h-5">
-                  @let shortDescriptionErrors = form.shortDescription().errors();
-                  @if (shortDescriptionErrors.length > 0) {
-                    {{ shortDescriptionErrors[0].message }}
-                  }
-                </div>
-              </div>
+              <app-validation-message [control]="form.shortDescription" />
             </div>
             <!--#endregion Short Description -->
 
@@ -227,20 +175,7 @@
                 (onEditorCreated)="onQuillCreated($event)"
                 (onContentChanged)="onQuillContentChanged($event)"
               />
-              <div
-                class="text-red-500 text-sm mt-1"
-                [class.invisible]="
-                  form.description().valid() ||
-                  !(form.description().dirty() || form.description().touched())
-                "
-              >
-                <div class="h-5">
-                  @let descriptionErrors = form.description().errors();
-                  @if (descriptionErrors.length > 0) {
-                    {{ descriptionErrors[0].message }}
-                  }
-                </div>
-              </div>
+              <app-validation-message [control]="form.description" />
             </div>
             <!--#endregion Description -->
           </div>
