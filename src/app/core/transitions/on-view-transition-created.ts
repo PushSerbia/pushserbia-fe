@@ -4,7 +4,7 @@ import { TransitionService } from '../transition/transition.service';
 
 export function onViewTransitionCreated(info: ViewTransitionInfo) {
   const router = inject(Router);
-  const toUrl = router.getCurrentNavigation()?.finalUrl?.toString() ?? '';
+  const toUrl = router.currentNavigation()?.finalUrl?.toString() ?? '';
 
   if (
     !toUrl.startsWith('/projekti') ||
