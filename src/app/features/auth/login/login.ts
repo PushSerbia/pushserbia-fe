@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
@@ -8,6 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
   imports: [RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Login implements OnInit {
   private platformId = inject(PLATFORM_ID);

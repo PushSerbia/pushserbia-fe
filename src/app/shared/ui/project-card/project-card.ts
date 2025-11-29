@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Project } from '../../../core/project/project';
 import { NgOptimizedImage } from '@angular/common';
@@ -8,6 +8,7 @@ import { NgOptimizedImage } from '@angular/common';
   imports: [RouterLink, NgOptimizedImage],
   templateUrl: './project-card.html',
   styleUrl: './project-card.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectCard {
   project = input.required<Project>();

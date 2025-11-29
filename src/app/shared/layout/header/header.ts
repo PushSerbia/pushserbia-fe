@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UserWidget } from '../../ui/user-widget/user-widget';
 import { RouterLink } from '@angular/router';
 import { ThemeSwitcher } from '../../ui/theme-switcher/theme-switcher';
@@ -8,5 +8,6 @@ import { ThemeSwitcher } from '../../ui/theme-switcher/theme-switcher';
   imports: [UserWidget, RouterLink, ThemeSwitcher],
   templateUrl: './header.html',
   styleUrl: './header.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {}

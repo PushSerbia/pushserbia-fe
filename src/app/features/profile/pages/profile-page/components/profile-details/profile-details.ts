@@ -1,4 +1,4 @@
-import { Component, inject, input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnDestroy } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { User } from '../../../../../../core/user/user';
 import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data';
@@ -11,6 +11,7 @@ import { GravatarModule } from 'ngx-gravatar';
   imports: [TitleCasePipe, ProfileInformationDialog, GravatarModule],
   templateUrl: './profile-details.html',
   styleUrl: './profile-details.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileDetails implements OnDestroy {
   private modal = inject(ModalService);
