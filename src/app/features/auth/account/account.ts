@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../../core/auth/auth.service';
@@ -9,6 +9,7 @@ import { first } from 'rxjs';
   imports: [],
   templateUrl: './account.html',
   styleUrl: './account.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Account implements OnInit {
   private platformId = inject(PLATFORM_ID);

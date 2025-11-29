@@ -132,13 +132,7 @@
   },
   "schematics": {
     "@schematics/angular:component": {
-      "type": "component"
-    },
-    "@schematics/angular:directive": {
-      "type": "directive"
-    },
-    "@schematics/angular:service": {
-      "type": "service"
+      "changeDetection": "OnPush"
     },
     "@schematics/angular:guard": {
       "typeSeparator": "."
