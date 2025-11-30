@@ -1,11 +1,4 @@
-import {
-  computed,
-  inject,
-  Injectable,
-  PLATFORM_ID,
-  REQUEST,
-  Signal,
-} from '@angular/core';
+import { computed, inject, Injectable, PLATFORM_ID, REQUEST, Signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
@@ -40,9 +33,7 @@ export class AuthService {
 
   private meLoading = false;
   private meDataSubject = new BehaviorSubject<User | null>(null);
-  private userDataSubject = new BehaviorSubject<FirebaseUserData | undefined>(
-    undefined,
-  );
+  private userDataSubject = new BehaviorSubject<FirebaseUserData | undefined>(undefined);
 
   userData$ = this.isBrowser
     ? this.afAuth.idTokenResult.pipe(
@@ -75,9 +66,7 @@ export class AuthService {
     } as User & FirebaseUserData;
   });
 
-  private extractUserDataFromToken(
-    result: firebase.auth.IdTokenResult,
-  ): FirebaseUserData {
+  private extractUserDataFromToken(result: firebase.auth.IdTokenResult): FirebaseUserData {
     return {
       id: result.claims['app_user_id'],
       name: result.claims['name'],
@@ -103,9 +92,7 @@ export class AuthService {
         let token;
         if (request.headers?.get('cookie')) {
           const cookies = request.headers.get('cookie');
-          const tokenCookie = cookies
-            ?.split(';')
-            .find((c) => c.trim().startsWith('__auth'));
+          const tokenCookie = cookies?.split(';').find((c) => c.trim().startsWith('__auth'));
           if (tokenCookie) {
             token = tokenCookie.split('=')[1];
           }
@@ -118,9 +105,7 @@ export class AuthService {
             const jsonPayload = decodeURIComponent(
               atob(base64)
                 .split('')
-                .map(
-                  (c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2),
-                )
+                .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
                 .join(''),
             );
 
@@ -146,9 +131,7 @@ export class AuthService {
 
   initInBrowser(): void {
     this.afAuth.onIdTokenChanged((user) => {
-      const source: Observable<string | null> = user
-        ? from(user.getIdToken())
-        : of(null);
+      const source: Observable<string | null> = user ? from(user.getIdToken()) : of(null);
 
       source
         .pipe(
@@ -193,11 +176,7 @@ export class AuthService {
     );
   }
 
-  private createAccount(params: {
-    fullName: string;
-    email: string;
-    imageUrl: string;
-  }) {
+  private createAccount(params: { fullName: string; email: string; imageUrl: string }) {
     return this.userService.createAccount(params).pipe(
       switchMap((account) => {
         return this.fetchNewToken().pipe(map(() => account));
