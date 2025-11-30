@@ -243,7 +243,7 @@ export class AuthService {
   }
 
   private fetchNewToken() {
-    return from(this.afAuth.currentUser).pipe(
+    return this.afAuth.user.pipe(
       switchMap((user: firebase.User | null) => {
         return user ? from(user.getIdToken(true)) : EMPTY;
       }),
