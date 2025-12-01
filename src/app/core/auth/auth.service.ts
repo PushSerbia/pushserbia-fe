@@ -6,6 +6,7 @@ import {
   EMPTY,
   finalize,
   first,
+  firstValueFrom,
   from,
   map,
   Observable,
@@ -37,12 +38,9 @@ export class AuthService {
 
   userData$ = this.isBrowser
     ? this.afAuth.idTokenResult.pipe(
-        map((result: firebase.auth.IdTokenResult | null) => {
-          if (!result) {
-            return undefined;
-          }
-          return this.extractUserDataFromToken(result);
-        }),
+        map((result: firebase.auth.IdTokenResult | null) =>
+          result ? this.extractUserDataFromToken(result) : undefined,
+        ),
       )
     : this.userDataSubject.asObservable();
 
@@ -66,6 +64,47 @@ export class AuthService {
     } as User & FirebaseUserData;
   });
 
+  initialize() {
+    if (this.isBrowser) {
+      return this.initInBrowser();
+    }
+    return this.initOnServer();
+  }
+
+  signInWithCustomToken(token: string) {
+    return from(this.afAuth.signInWithCustomToken(token)).pipe(
+      switchMap((userCredential) => {
+        return this.loadCurrentUser(userCredential);
+      }),
+    );
+  }
+
+  signOut(): Observable<void> {
+    return from(this.afAuth.signOut()).pipe(tap(() => this.setUser(null)));
+  }
+
+  getMe(): Observable<User> {
+    if (!this.$authenticated() || this.meLoading) {
+      return EMPTY;
+    }
+
+    this.meLoading = true;
+    return this.userService.getMe().pipe(
+      tap((user: User) => this.setUser(user)),
+      finalize(() => {
+        this.meLoading = false;
+      }),
+    );
+  }
+
+  updateMe(user: Partial<User>): Observable<User> {
+    return this.userService.updateMe(user).pipe(
+      tap((user: User) => {
+        this.setUser(user);
+      }),
+    );
+  }
+
   private extractUserDataFromToken(result: firebase.auth.IdTokenResult): FirebaseUserData {
     return {
       id: result.claims['app_user_id'],
@@ -77,15 +116,7 @@ export class AuthService {
     };
   }
 
-  constructor() {
-    if (this.isBrowser) {
-      this.initInBrowser();
-      return;
-    }
-    this.initOnServer();
-  }
-
-  async initOnServer() {
+  private async initOnServer() {
     try {
       const request = inject(REQUEST, { optional: true });
       if (request) {
@@ -129,51 +160,13 @@ export class AuthService {
     }
   }
 
-  initInBrowser(): void {
-    this.afAuth.onIdTokenChanged((user) => {
-      const source: Observable<string | null> = user ? from(user.getIdToken()) : of(null);
-
-      source
-        .pipe(
-          first(),
-          switchMap((token) => this.setTokenToCookie(token)),
-        )
-        .subscribe();
+  private async initInBrowser() {
+    this.afAuth.onIdTokenChanged(async (user) => {
+      const token = user ? await user.getIdToken() : null;
+      this.setTokenToCookie(token).subscribe();
     });
-  }
 
-  signInWithCustomToken(token: string) {
-    return from(this.afAuth.signInWithCustomToken(token)).pipe(
-      switchMap((userCredential) => {
-        return this.loadCurrentUser(userCredential);
-      }),
-    );
-  }
-
-  signOut(): Observable<void> {
-    return from(this.afAuth.signOut()).pipe(tap(() => this.setUser(null)));
-  }
-
-  getMe(): Observable<User> {
-    if (!this.$authenticated() || this.meLoading) {
-      return EMPTY;
-    }
-
-    this.meLoading = true;
-    return this.userService.getMe().pipe(
-      tap((user: User) => this.setUser(user)),
-      finalize(() => {
-        this.meLoading = false;
-      }),
-    );
-  }
-
-  updateMe(user: Partial<User>): Observable<User> {
-    return this.userService.updateMe(user).pipe(
-      tap((user: User) => {
-        this.setUser(user);
-      }),
-    );
+    return firstValueFrom(this.afAuth.idTokenResult);
   }
 
   private createAccount(params: { fullName: string; email: string; imageUrl: string }) {

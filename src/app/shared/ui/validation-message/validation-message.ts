@@ -11,7 +11,7 @@ import { FieldTree } from '@angular/forms/signals';
 export class ValidationMessage {
   control = input.required<FieldTree<unknown>>();
 
-  invisible = computed(() => {
+  $invisible = computed(() => {
     // FieldTree is a signal-like function returning FieldState.
     // Call it first to get the function,
     // then call that function to obtain the actual FieldState instance.
@@ -21,5 +21,5 @@ export class ValidationMessage {
     return field.valid() || !(field.dirty() || field.touched());
   });
 
-  firstErrorMessage = computed(() => this.control()().errors()?.[0]?.message || '');
+  $firstErrorMessage = computed(() => this.control()().errors()?.[0]?.message || '');
 }
