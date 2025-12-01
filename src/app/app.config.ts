@@ -4,7 +4,7 @@ import {
   Router,
   withComponentInputBinding,
   withInMemoryScrolling,
-  withViewTransitions
+  withViewTransitions,
 } from '@angular/router';
 import { routes } from './app.routes';
 import * as Sentry from '@sentry/angular';
@@ -16,6 +16,7 @@ import { provideFirebase } from './core/firebase/firebase.provider';
 import { provideGtm } from './core/gtm/gtm.provider';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { onViewTransitionCreated } from './core/transitions/on-view-transition-created';
+import { provideAuth } from './core/auth/auth.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,10 +34,7 @@ export const appConfig: ApplicationConfig = {
         onViewTransitionCreated,
       }),
     ),
-    provideHttpClient(
-      withFetch(),
-      withInterceptors([apiInterceptor, authInterceptor]),
-    ),
+    provideHttpClient(withFetch(), withInterceptors([apiInterceptor, authInterceptor])),
     {
       provide: ErrorHandler,
       useValue: Sentry.createErrorHandler(),
@@ -47,6 +45,7 @@ export const appConfig: ApplicationConfig = {
       deps: [Router],
     },
     provideFirebase(),
+    provideAuth(),
     provideGtm(),
     provideQuillConfig({
       modules: {
