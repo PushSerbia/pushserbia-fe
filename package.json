@@ -12,7 +12,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "postbuild": "node scripts/fix-index-file-name.js"
+    "postbuild": "node scripts/fix-index-file-name.ts"
   },
   "private": true,
   "dependencies": {
