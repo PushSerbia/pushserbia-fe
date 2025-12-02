@@ -1,8 +1,8 @@
 import { Directive, input, model } from '@angular/core';
-import { FormUiControl, ValidationError, WithOptionalField } from '@angular/forms/signals';
+import { FormValueControl, ValidationError, WithOptionalField } from '@angular/forms/signals';
 
 @Directive()
-export abstract class AbstractFormUiControl<T> implements FormUiControl {
+export abstract class AbstractFormUiControl<T> implements FormValueControl<T | null> {
   readonly value = model<T | null>(null);
   readonly disabled = model<boolean>(false);
   readonly readonly = input<boolean>(false);
