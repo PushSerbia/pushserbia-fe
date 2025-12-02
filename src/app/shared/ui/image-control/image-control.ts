@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
 import { AbstractFormUiControl } from '../../directives/abstract-form-ui-control';
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { UnsplashImageChooserModal } from '../unsplash-image-chooser-modal/unsplash-image-chooser-modal';
@@ -18,17 +16,10 @@ export interface ImageControlOption {
 
 @Component({
   selector: 'app-image-control',
-  imports: [FormsModule, DialogModule],
+  imports: [DialogModule],
   templateUrl: './image-control.html',
   styleUrl: './image-control.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: ImageControl,
-      multi: true,
-    },
-  ],
   host: {
     '(click)': 'touched.set(true)'
   }
