@@ -40,7 +40,9 @@ export class VoteStoreService {
         if (this.itemMap()) {
           this.itemMap.set(VOTE_INITIAL_STATE);
         }
-        this.fetchedOnce.set(false);
+        if (this.fetchedOnce()) {
+          this.fetchedOnce.set(false);
+        }
       }
     });
 
@@ -95,7 +97,9 @@ export class VoteStoreService {
   private loadStateTransfer(): void {
     if (isPlatformBrowser(this.platformId)) {
       const state = this.state.get(VOTE_STATE_KEY, VOTE_INITIAL_STATE);
-      this.itemMap.set(state);
+      if (this.itemMap() !== state) {
+        this.itemMap.set(state);
+      }
     }
   }
 

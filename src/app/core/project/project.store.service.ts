@@ -12,6 +12,7 @@ import { ProjectService } from './project.service';
 import { Project } from './project';
 import { finalize, first, Observable, tap } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { PaginatedResponse } from '../api/paginated-response';
 
 interface ProjectState {
   slugs: string[];
@@ -55,7 +56,7 @@ export class ProjectStoreService {
     }
   }
 
-  private fetchAll(): Observable<Project[]> {
+  private fetchAll(): Observable<PaginatedResponse<Project>> {
     this.fetchedOnce.set(true);
     this.loading.set(true);
 
@@ -63,7 +64,7 @@ export class ProjectStoreService {
       first(),
       finalize(() => this.loading.set(false)),
       tap((projects) => {
-        const state = projects.reduce(
+        const state = projects.data.reduce(
           (acc, project) => {
             acc.slugs.push(project.slug);
             acc.entitiesMap[project.slug] = project;
