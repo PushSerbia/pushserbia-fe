@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PaginatedResponse } from './paginated-response';
 
 @Injectable()
 export abstract class ApiService<Model> {
@@ -11,12 +12,9 @@ export abstract class ApiService<Model> {
   getAll(
     params?:
       | HttpParams
-      | Record<
-          string,
-          string | number | boolean | readonly (string | number | boolean)[]
-        >,
-  ): Observable<Model[]> {
-    return this.httpClient.get<Model[]>(`/${this.endpoint}`, { params });
+      | Record<string, string | number | boolean | readonly (string | number | boolean)[]>,
+  ): Observable<PaginatedResponse<Model>> {
+    return this.httpClient.get<PaginatedResponse<Model>>(`/${this.endpoint}`, { params });
   }
 
   getById<R = Model>(id: string): Observable<R> {
