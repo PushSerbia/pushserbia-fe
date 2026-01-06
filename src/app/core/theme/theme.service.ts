@@ -67,7 +67,7 @@ export class ThemeService {
 
     try {
       return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    } catch (e) {
+    } catch (_e) {
       return false;
     }
   }
