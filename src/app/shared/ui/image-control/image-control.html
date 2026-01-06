@@ -15,7 +15,7 @@
   <!-- Current Image Preview -->
   <img
     class="w-full h-100 text-gray-800 dark:text-white object-contain object-center"
-    [src]="value() ?? '/illustrations/woman-earth-hugging.svg'"
+    [src]="value() ? (value()! | unsplashUrlFormatter: [600, 400]) : '/illustrations/woman-earth-hugging.svg'"
     alt="Slika projekta"
   />
 </div>
