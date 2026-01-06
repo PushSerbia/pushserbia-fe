@@ -10,6 +10,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class UnsplashUrlFormatterPipe implements PipeTransform {
   transform(unsplashBaseUrl: string, dimensions: [number, number]): string {
+    unsplashBaseUrl = unsplashBaseUrl.split('?')[0]; // Remove existing query params if any
+
     const crop = 'entropy';
     const [width, height] = dimensions;
     const quality = 80;

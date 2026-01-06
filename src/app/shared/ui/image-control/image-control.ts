@@ -39,7 +39,7 @@ export class ImageControl extends AbstractFormUiControl<string> {
     );
 
     dialogRef.closed.pipe(take(1)).subscribe((result) => {
-      this.value.set(result?.split('?')[0] ?? this.value());
+      this.value.set(result ?? this.value());
     });
   }
 }
