@@ -9,14 +9,16 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'unsplashUrlFormatter'
 })
 export class UnsplashUrlFormatterPipe implements PipeTransform {
-  transform(unsplashBaseUrl: string, dimensions: [number, number]): string {
-    unsplashBaseUrl = unsplashBaseUrl.split('?')[0]; // Remove existing query params if any
+  transform(unsplashBaseUrl: string, [width, height]: [number, number]): string {
+    const baseUrl = unsplashBaseUrl.split('?')[0];
+    const params = new URLSearchParams({
+      crop: 'entropy',
+      w: width.toString(),
+      h: height.toString(),
+      fm: 'webp',
+      q: '80'
+    });
 
-    const crop = 'entropy';
-    const [width, height] = dimensions;
-    const quality = 80;
-    const format = 'webp';
-
-    return `${unsplashBaseUrl}?crop=${crop}&w=${width}&h=${height}&fm=${format}&q=${quality}`;
+    return `${baseUrl}?${params}`;
   }
 }
