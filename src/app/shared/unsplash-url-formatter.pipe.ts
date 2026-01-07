@@ -1,10 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-/*
-  &w=1080
-  &h=720
-  &fm=jpg
-  &q=80
-*/
+
 @Pipe({
   name: 'unsplashUrlFormatter'
 })
