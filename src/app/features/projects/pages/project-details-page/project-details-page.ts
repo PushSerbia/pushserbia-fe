@@ -20,7 +20,6 @@ import { AsyncPipe } from '@angular/common';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 import { GravatarModule } from 'ngx-gravatar';
 import { UnsplashUrlFormatterPipe } from '../../../../shared/unsplash-url-formatter.pipe';
-import { TransitionService } from '../../../../core/transition/transition.service';
 
 @Component({
   selector: 'app-project-details-page',
@@ -43,7 +42,6 @@ export class ProjectDetailsPage implements OnInit {
   public readonly voteStore = inject(VoteStoreService);
   private readonly authService = inject(AuthService);
   private readonly injector = inject(Injector);
-  private readonly transitionService = inject(TransitionService);
 
   readonly slug = input.required<string>();
 
