@@ -19,6 +19,8 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { AsyncPipe } from '@angular/common';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 import { GravatarModule } from 'ngx-gravatar';
+import { UnsplashUrlFormatterPipe } from '../../../../shared/unsplash-url-formatter.pipe';
+import { TransitionService } from '../../../../core/transition/transition.service';
 
 @Component({
   selector: 'app-project-details-page',
@@ -30,6 +32,7 @@ import { GravatarModule } from 'ngx-gravatar';
     AsyncPipe,
     AuthRequiredDirective,
     GravatarModule,
+    UnsplashUrlFormatterPipe
   ],
   templateUrl: './project-details-page.html',
   styleUrl: './project-details-page.scss',
@@ -40,6 +43,7 @@ export class ProjectDetailsPage implements OnInit {
   public readonly voteStore = inject(VoteStoreService);
   private readonly authService = inject(AuthService);
   private readonly injector = inject(Injector);
+  private readonly transitionService = inject(TransitionService);
 
   readonly slug = input.required<string>();
 
@@ -73,5 +77,15 @@ export class ProjectDetailsPage implements OnInit {
         totalVotes: project.totalVotes + vote.weight,
       });
     });
+  }
+
+  viewTransitionName(project: Project): string {
+    const transition = this.transitionService.current();
+
+    const fromSlug = transition?.to.firstChild?.firstChild?.params['slug'];
+    const toSlug = transition?.from.firstChild?.firstChild?.params['slug'];
+
+    const isBannerImg = toSlug === project.slug || fromSlug === project.slug;
+    return isBannerImg ? 'project-img' : '';
   }
 }

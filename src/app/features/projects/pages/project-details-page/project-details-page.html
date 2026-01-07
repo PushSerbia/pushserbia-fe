@@ -30,7 +30,7 @@
             @if (projectDetails!.image) {
               <img
                 class="w-full h-full rounded-lg object-center object-cover"
-                [src]="projectDetails.image"
+                [src]="projectDetails.image | unsplashUrlFormatter: [381, 208]"
                 [alt]="projectDetails.name"
               />
             } @else {
