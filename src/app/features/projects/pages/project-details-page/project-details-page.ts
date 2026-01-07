@@ -78,14 +78,4 @@ export class ProjectDetailsPage implements OnInit {
       });
     });
   }
-
-  viewTransitionName(project: Project): string {
-    const transition = this.transitionService.current();
-
-    const fromSlug = transition?.to.firstChild?.firstChild?.params['slug'];
-    const toSlug = transition?.from.firstChild?.firstChild?.params['slug'];
-
-    const isBannerImg = toSlug === project.slug || fromSlug === project.slug;
-    return isBannerImg ? 'project-img' : '';
-  }
 }
