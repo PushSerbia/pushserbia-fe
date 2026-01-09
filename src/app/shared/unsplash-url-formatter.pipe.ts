@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'unsplashUrlFormatter'
 })
 export class UnsplashUrlFormatterPipe implements PipeTransform {
-  transform(unsplashBaseUrl: string, [width, height]: [number, number]): string {
+  transform(unsplashBaseUrl: string, {width, height}: {width: number, height: number}): string {
     const baseUrl = unsplashBaseUrl.split('?')[0];
     const params = new URLSearchParams({
       crop: 'entropy',

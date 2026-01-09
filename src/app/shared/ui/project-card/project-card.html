@@ -25,7 +25,7 @@
         height="208"
         decoding="async"
         [priority]="priorityImg"
-        [ngSrc]="project().image | unsplashUrlFormatter: [381, 208]"
+        [ngSrc]="project().image | unsplashUrlFormatter: {width: 381, height: 208}"
         [alt]="project().name"
         [style.viewTransitionName]="viewTransitionName()"
       />
