@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AuthService } from '../../../../../../core/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { first } from 'rxjs';
@@ -8,6 +8,7 @@ import { first } from 'rxjs';
   imports: [RouterLink],
   templateUrl: './profile-sidenav.html',
   styleUrl: './profile-sidenav.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileSidenav {
   private authService = inject(AuthService);

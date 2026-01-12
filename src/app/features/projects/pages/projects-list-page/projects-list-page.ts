@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   effect,
@@ -18,10 +19,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { Project } from '../../../../core/project/project';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
-import {
-  VoteState,
-  VoteStoreService,
-} from '../../../../core/vote/vote.store.service';
+import { VoteState, VoteStoreService } from '../../../../core/vote/vote.store.service';
 import { TransitionService } from '../../../../core/transition/transition.service';
 
 @Component({
@@ -37,6 +35,7 @@ import { TransitionService } from '../../../../core/transition/transition.servic
   ],
   templateUrl: './projects-list-page.html',
   styleUrl: './projects-list-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsListPage implements OnInit {
   public readonly projectStore = inject(ProjectStoreService);
@@ -82,9 +81,7 @@ export class ProjectsListPage implements OnInit {
 
       if (filter.supportedOnly) {
         const votesMap = this.$votesMap();
-        filteredProjects = filteredProjects.filter((project) =>
-          Boolean(votesMap?.[project.id]),
-        );
+        filteredProjects = filteredProjects.filter((project) => Boolean(votesMap?.[project.id]));
       }
 
       this.$projects.set(filteredProjects);

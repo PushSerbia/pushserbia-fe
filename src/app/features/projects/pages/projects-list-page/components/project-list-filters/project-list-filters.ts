@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ProjectsFilter } from '../../../../../../core/project/projects-filter';
 
 @Component({
@@ -6,6 +6,7 @@ import { ProjectsFilter } from '../../../../../../core/project/projects-filter';
   imports: [],
   templateUrl: './project-list-filters.html',
   styleUrl: './project-list-filters.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectListFilters {
   state = input<ProjectsFilter>();

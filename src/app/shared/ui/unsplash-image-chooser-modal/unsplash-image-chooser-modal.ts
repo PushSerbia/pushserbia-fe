@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
@@ -28,12 +29,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [ReactiveFormsModule],
   templateUrl: './unsplash-image-chooser-modal.html',
   styleUrl: './unsplash-image-chooser-modal.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UnsplashImageChooserModal implements OnInit {
   private readonly unsplash = inject(UnsplashService);
-  private readonly dialogRef = inject<DialogRef<string | null>>(
-    DialogRef<string | null>,
-  );
+  private readonly dialogRef = inject<DialogRef<string | null>>(DialogRef<string | null>);
   private readonly destroyRef = inject(DestroyRef);
   readonly searchQuery = new FormControl<string>('', { nonNullable: true });
   readonly value = model<string | null>(null);

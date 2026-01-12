@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
@@ -8,19 +8,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  DonationOption,
-  donationOptions,
-} from '../../../../core/donation/donation-option';
+import { DonationOption, donationOptions } from '../../../../core/donation/donation-option';
 import { catchError, of, Subscription, tap } from 'rxjs';
 import { IntegrationsService } from '../../../../core/integrations/integrations.service';
 
 @Component({
   selector: 'app-payment-page',
-  standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './payment-page.html',
   styleUrl: './payment-page.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentPage implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
@@ -50,21 +47,19 @@ export class PaymentPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.queryParamsSubscription = this.route.queryParams.subscribe(
-      (params) => {
-        this.isOneTime = params['isOneTime'] === 'true';
-        this.amount = Number(params['amount']) || 0;
-        this.title = params['title'] || '';
+    this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
+      this.isOneTime = params['isOneTime'] === 'true';
+      this.amount = Number(params['amount']) || 0;
+      this.title = params['title'] || '';
 
-        this.selectedOption =
-          this.donationOptions.find(
-            (option) =>
-              option.title === this.title &&
-              option.price === this.amount &&
-              option.isOneTime === this.isOneTime,
-          ) || null;
-      },
-    );
+      this.selectedOption =
+        this.donationOptions.find(
+          (option) =>
+            option.title === this.title &&
+            option.price === this.amount &&
+            option.isOneTime === this.isOneTime,
+        ) || null;
+    });
   }
 
   ngOnDestroy(): void {

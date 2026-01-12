@@ -6,5 +6,12 @@
   "semicolon": true,
   "quoteProps": "preserve",
   "bracketSpacing": true,
-  "parser": "angular"
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "angular"
+      }
+    }
+  ]
 }

@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { Router } from '@angular/router';
 
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   imports: [],
   templateUrl: './notifications-list-page.html',
   styleUrl: './notifications-list-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsListPage {
   private readonly authService = inject(AuthService);

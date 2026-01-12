@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthRequiredDirective } from '../../../core/auth/auth-required.directive';
 
@@ -7,5 +7,6 @@ import { AuthRequiredDirective } from '../../../core/auth/auth-required.directiv
   imports: [RouterLink, AuthRequiredDirective],
   templateUrl: './project-card-new.html',
   styleUrl: './project-card-new.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectCardNew {}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 
@@ -7,5 +7,6 @@ import { NgOptimizedImage } from '@angular/common';
   imports: [RouterLink, NgOptimizedImage],
   templateUrl: './landing-how-to.html',
   styleUrl: './landing-how-to.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingHowTo {}

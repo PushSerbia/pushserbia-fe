@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
 
@@ -7,5 +7,6 @@ import { Footer } from '../footer/footer';
   imports: [Header, Footer],
   templateUrl: './basic-layout.html',
   styleUrl: './basic-layout.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicLayout {}

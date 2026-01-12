@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { BasicLayout } from '../../../../shared/layout/landing-layout/basic-layout';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { ProfileSidenav } from './components/profile-sidenav/profile-sidenav';
@@ -9,15 +9,10 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
-  imports: [
-    BasicLayout,
-    ProfileSidenav,
-    PageLoader,
-    ProfileStats,
-    ProfileDetails,
-  ],
+  imports: [BasicLayout, ProfileSidenav, PageLoader, ProfileStats, ProfileDetails],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilePage {
   private readonly authService = inject(AuthService);

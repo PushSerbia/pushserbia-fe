@@ -1,11 +1,4 @@
-import {
-  computed,
-  inject,
-  Injectable,
-  PLATFORM_ID,
-  REQUEST,
-  Signal,
-} from '@angular/core';
+import { computed, inject, Injectable, PLATFORM_ID, REQUEST, Signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
@@ -13,6 +6,7 @@ import {
   EMPTY,
   finalize,
   first,
+  firstValueFrom,
   from,
   map,
   Observable,
@@ -40,18 +34,13 @@ export class AuthService {
 
   private meLoading = false;
   private meDataSubject = new BehaviorSubject<User | null>(null);
-  private userDataSubject = new BehaviorSubject<FirebaseUserData | undefined>(
-    undefined,
-  );
+  private userDataSubject = new BehaviorSubject<FirebaseUserData | undefined>(undefined);
 
   userData$ = this.isBrowser
     ? this.afAuth.idTokenResult.pipe(
-        map((result: firebase.auth.IdTokenResult | null) => {
-          if (!result) {
-            return undefined;
-          }
-          return this.extractUserDataFromToken(result);
-        }),
+        map((result: firebase.auth.IdTokenResult | null) =>
+          result ? this.extractUserDataFromToken(result) : undefined,
+        ),
       )
     : this.userDataSubject.asObservable();
 
@@ -75,88 +64,11 @@ export class AuthService {
     } as User & FirebaseUserData;
   });
 
-  private extractUserDataFromToken(
-    result: firebase.auth.IdTokenResult,
-  ): FirebaseUserData {
-    return {
-      id: result.claims['app_user_id'],
-      name: result.claims['name'],
-      email: result.claims['email'],
-      emailVerified: result.claims['email_verified'],
-      role: result.claims['app_user_role'] as UserRole,
-      imageUrl: result.claims['picture'],
-    };
-  }
-
-  constructor() {
+  initialize() {
     if (this.isBrowser) {
-      this.initInBrowser();
-      return;
+      return this.initInBrowser();
     }
-    this.initOnServer();
-  }
-
-  async initOnServer() {
-    try {
-      const request = inject(REQUEST, { optional: true });
-      if (request) {
-        let token;
-        if (request.headers?.get('cookie')) {
-          const cookies = request.headers.get('cookie');
-          const tokenCookie = cookies
-            ?.split(';')
-            .find((c) => c.trim().startsWith('__auth'));
-          if (tokenCookie) {
-            token = tokenCookie.split('=')[1];
-          }
-        }
-
-        if (token && !AuthUtils.isTokenExpired(token)) {
-          try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(
-              atob(base64)
-                .split('')
-                .map(
-                  (c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2),
-                )
-                .join(''),
-            );
-
-            const claims = JSON.parse(jsonPayload);
-            const userData: FirebaseUserData = {
-              id: claims['app_user_id'],
-              name: claims['name'],
-              email: claims['email'],
-              emailVerified: claims['email_verified'],
-              role: claims['app_user_role'] as UserRole,
-              imageUrl: claims['picture'],
-            };
-            this.userDataSubject.next(userData);
-          } catch (error) {
-            console.error('Error decoding token:', error);
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error initializing auth service on server:', error);
-    }
-  }
-
-  initInBrowser(): void {
-    this.afAuth.onIdTokenChanged((user) => {
-      const source: Observable<string | null> = user
-        ? from(user.getIdToken())
-        : of(null);
-
-      source
-        .pipe(
-          first(),
-          switchMap((token) => this.setTokenToCookie(token)),
-        )
-        .subscribe();
-    });
+    return this.initOnServer();
   }
 
   signInWithCustomToken(token: string) {
@@ -193,11 +105,71 @@ export class AuthService {
     );
   }
 
-  private createAccount(params: {
-    fullName: string;
-    email: string;
-    imageUrl: string;
-  }) {
+  private extractUserDataFromToken(result: firebase.auth.IdTokenResult): FirebaseUserData {
+    return {
+      id: result.claims['app_user_id'],
+      name: result.claims['name'],
+      email: result.claims['email'],
+      emailVerified: result.claims['email_verified'],
+      role: result.claims['app_user_role'] as UserRole,
+      imageUrl: result.claims['picture'],
+    };
+  }
+
+  private async initOnServer() {
+    try {
+      const request = inject(REQUEST, { optional: true });
+      if (request) {
+        let token;
+        if (request.headers?.get('cookie')) {
+          const cookies = request.headers.get('cookie');
+          const tokenCookie = cookies?.split(';').find((c) => c.trim().startsWith('__auth'));
+          if (tokenCookie) {
+            token = tokenCookie.split('=')[1];
+          }
+        }
+
+        if (token && !AuthUtils.isTokenExpired(token)) {
+          try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(
+              atob(base64)
+                .split('')
+                .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                .join(''),
+            );
+
+            const claims = JSON.parse(jsonPayload);
+            const userData: FirebaseUserData = {
+              id: claims['app_user_id'],
+              name: claims['name'],
+              email: claims['email'],
+              emailVerified: claims['email_verified'],
+              role: claims['app_user_role'] as UserRole,
+              imageUrl: claims['picture'],
+            };
+            this.userDataSubject.next(userData);
+          } catch (error) {
+            console.error('Error decoding token:', error);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error initializing auth service on server:', error);
+    }
+  }
+
+  private async initInBrowser() {
+    this.afAuth.onIdTokenChanged(async (user) => {
+      const token = user ? await user.getIdToken() : null;
+      this.setTokenToCookie(token).subscribe();
+    });
+
+    return firstValueFrom(this.afAuth.idTokenResult);
+  }
+
+  private createAccount(params: { fullName: string; email: string; imageUrl: string }) {
     return this.userService.createAccount(params).pipe(
       switchMap((account) => {
         return this.fetchNewToken().pipe(map(() => account));
@@ -243,7 +215,7 @@ export class AuthService {
   }
 
   private fetchNewToken() {
-    return from(this.afAuth.currentUser).pipe(
+    return this.afAuth.user.pipe(
       switchMap((user: firebase.User | null) => {
         return user ? from(user.getIdToken(true)) : EMPTY;
       }),
