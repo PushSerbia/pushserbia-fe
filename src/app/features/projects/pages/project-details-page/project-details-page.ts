@@ -19,6 +19,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { AsyncPipe } from '@angular/common';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 import { GravatarModule } from 'ngx-gravatar';
+import { UnsplashUrlFormatterPipe } from '../../../../shared/unsplash-url-formatter.pipe';
 
 @Component({
   selector: 'app-project-details-page',
@@ -30,6 +31,7 @@ import { GravatarModule } from 'ngx-gravatar';
     AsyncPipe,
     AuthRequiredDirective,
     GravatarModule,
+    UnsplashUrlFormatterPipe
   ],
   templateUrl: './project-details-page.html',
   styleUrl: './project-details-page.scss',
