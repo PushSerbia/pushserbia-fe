@@ -1,5 +1,27 @@
 <footer class="bg-black border-t border-white/5">
   <div class="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
+    <!-- Newsletter -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-xl border border-white/5 bg-neutral-950 mb-12">
+      <div>
+        <h3 class="text-sm font-semibold text-white mb-1">Ostani u toku</h3>
+        <p class="text-xs text-neutral-500">Novosti iz zajednice, novi projekti, eventi. Bez spama.</p>
+      </div>
+      <form action="#" class="flex flex-col sm:flex-row w-full sm:w-auto gap-2">
+        <input
+          type="email"
+          placeholder="tvoj@email.com"
+          required
+          class="w-full sm:w-64 px-4 py-2.5 text-sm text-white bg-black border border-white/10 rounded-lg placeholder-neutral-700 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 outline-0"
+        />
+        <button
+          type="submit"
+          class="px-5 py-2.5 text-sm font-semibold text-black bg-white rounded-lg hover:bg-neutral-200 transition-colors shrink-0"
+        >
+          Prijavi se
+        </button>
+      </form>
+    </div>
+
     <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
       <div class="lg:col-span-2">
         <a routerLink="/" class="flex items-center whitespace-nowrap mb-4">
@@ -36,7 +58,7 @@
           <li><a href="https://github.com/pushserbia" class="hover:text-white transition-colors">GitHub</a></li>
           <li><a href="https://join.slack.com/t/pushserbia/shared_invite/zt-34h9oiyc4-w8eLTnI9f5I6EbTueg8HWQ" class="hover:text-white transition-colors">Slack</a></li>
           <li><a routerLink="/dokumentacija/karijere" class="hover:text-white transition-colors">Karijere</a></li>
-          <li><a routerLink="/placanja/placanje" class="hover:text-white transition-colors">Podrži nas</a></li>
+          <li><a routerLink="/placanja/finansiranje" class="hover:text-white transition-colors">Podrži nas</a></li>
         </ul>
       </div>
       <div>
