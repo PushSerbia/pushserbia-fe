@@ -1,4 +1,4 @@
-<div class="bg-black min-h-screen">
+<main class="bg-black min-h-screen">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
     <div class="mx-auto max-w-screen-md mb-8 lg:mb-12">
       <a
@@ -75,7 +75,7 @@
                       option.price | currency: 'EUR' : 'symbol' : '1.0'
                     }}</span>
                   </div>
-                  <div class="text-xs text-neutral-500">
+                  <div class="text-xs text-neutral-400">
                     {{ option.isOneTime ? 'Jednokratna donacija' : 'Mesečna pretplata' }}
                   </div>
                 </div>
@@ -131,7 +131,7 @@
               <a
                 routerLink="/dokumentacija/uslovi-koriscenja"
                 target="_blank"
-                class="text-primary-400 hover:text-primary-300"
+                class="text-primary-400 hover:text-primary-300 underline"
                 >uslovima korišćenja</a
               >
               i potvrđujem da razumem kako će moja donacija biti iskorišćena
@@ -228,7 +228,7 @@
         </div>
       }
 
-      <div class="mt-8 text-sm text-neutral-500">
+      <div class="mt-8 text-sm text-neutral-400">
         <p>
           Za sva pitanja u vezi sa donacijama, molimo vas da nas kontaktirate na email:
           podrska&#64;pushserbia.com
@@ -236,4 +236,4 @@
       </div>
     </div>
   </div>
-</div>
+</main>

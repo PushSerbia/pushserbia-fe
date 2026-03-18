@@ -23,9 +23,9 @@
               </div>
             }
             <div>
-              <div class="flex items-center gap-3 mb-4 text-xs text-neutral-500">
+              <div class="flex items-center gap-3 mb-4 text-xs text-neutral-400">
                 <span>{{ blogPosts[0].date }}</span>
-                <span class="text-neutral-500" aria-hidden="true">·</span>
+                <span class="text-neutral-400" aria-hidden="true">·</span>
                 <span>{{ blogPosts[0].author }}</span>
               </div>
               @if (blogPosts[0].tags) {
@@ -69,16 +69,16 @@
                     </div>
                   }
                   <div class="p-5">
-                    <div class="flex items-center gap-2 mb-3 text-xs text-neutral-500">
+                    <div class="flex items-center gap-2 mb-3 text-xs text-neutral-400">
                       <span>{{ post.date }}</span>
-                      <span class="text-neutral-500" aria-hidden="true">·</span>
+                      <span class="text-neutral-400" aria-hidden="true">·</span>
                       <span>{{ post.author }}</span>
                     </div>
                     @if (post.tags) {
                       <div class="flex flex-wrap gap-1.5 mb-3">
                         @for (tag of post.tags; track tag) {
                           <span
-                            class="px-2 py-0.5 text-[10px] text-neutral-500 border border-white/5 rounded-full"
+                            class="px-2 py-0.5 text-[10px] text-neutral-400 border border-white/5 rounded-full"
                             >{{ tag }}</span
                           >
                         }
@@ -89,7 +89,7 @@
                     >
                       {{ post.title }}
                     </h2>
-                    <p class="text-sm text-neutral-500 line-clamp-3">{{ post.excerpt }}</p>
+                    <p class="text-sm text-neutral-400 line-clamp-3">{{ post.excerpt }}</p>
                   </div>
                 </a>
               }
@@ -99,7 +99,7 @@
       }
 
       <div class="mt-16 pt-12 border-t border-white/5 text-center">
-        <p class="text-neutral-500 mb-4">Imaš ideju za tekst ili želiš da pišeš za blog?</p>
+        <p class="text-neutral-400 mb-4">Imaš ideju za tekst ili želiš da pišeš za blog?</p>
         <a
           routerLink="/dokumentacija/kontakt"
           class="inline-flex items-center px-6 py-3 text-sm font-semibold text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
