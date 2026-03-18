@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LandingHero } from './sections/landing-hero/landing-hero';
 import { LandingBenefits } from './sections/landing-benefits/landing-benefits';
 import { LandingProjects } from './sections/landing-projects/landing-projects';
@@ -7,6 +7,7 @@ import { LandingTestimonials } from './sections/landing-testimonials/landing-tes
 import { LandingFaq } from './sections/landing-faq/landing-faq';
 import { LandingCta } from './sections/landing-cta/landing-cta';
 import { BasicLayout } from '../../shared/layout/landing-layout/basic-layout';
+import { SeoService } from '../../core/seo/seo.service';
 
 @Component({
   selector: 'app-landing',
@@ -24,4 +25,10 @@ import { BasicLayout } from '../../shared/layout/landing-layout/basic-layout';
   styleUrl: './landing.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Landing {}
+export class Landing {
+  constructor() {
+    inject(SeoService).update({
+      url: 'https://pushserbia.com',
+    });
+  }
+}

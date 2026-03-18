@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SeoService } from '../../../../core/seo/seo.service';
 
 @Component({
   selector: 'app-contact',
@@ -8,4 +9,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './contact.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Contact {}
+export class Contact {
+  constructor() {
+    inject(SeoService).update({
+      title: 'Kontakt',
+      description:
+        'Kontaktiraj Push Serbia tim — email, društvene mreže, Slack i GitHub.',
+    });
+  }
+}

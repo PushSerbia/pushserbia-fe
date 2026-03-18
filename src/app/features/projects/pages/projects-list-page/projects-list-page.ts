@@ -21,6 +21,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 import { VoteState, VoteStoreService } from '../../../../core/vote/vote.store.service';
 import { TransitionService } from '../../../../core/transition/transition.service';
+import { SeoService } from '../../../../core/seo/seo.service';
 
 @Component({
   selector: 'app-projects-list-page',
@@ -58,6 +59,12 @@ export class ProjectsListPage implements OnInit {
   supportedOnly = input<string>('supportedOnly');
 
   constructor() {
+    inject(SeoService).update({
+      title: 'Projekti',
+      description:
+        'Pregledaj open-source projekte sa društvenim uticajem u Srbiji. Glasaj, predloži ili doprinesi.',
+    });
+
     effect(() => {
       const votes = this.voteStore.getAll();
       this.$votesMap.set(votes());

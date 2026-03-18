@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SeoService } from '../../../../core/seo/seo.service';
 
 @Component({
   selector: 'app-about',
@@ -8,4 +9,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './about.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class About {}
+export class About {
+  constructor() {
+    inject(SeoService).update({
+      title: 'O nama',
+      description:
+        'Saznaj više o Push Serbia zajednici — ko smo, šta radimo i zašto podržavamo open-source projekte u Srbiji.',
+    });
+  }
+}
