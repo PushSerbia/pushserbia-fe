@@ -16,6 +16,7 @@ import { ProjectStoreService } from '../../../../core/project/project.store.serv
 import { PageLoader } from '../../../../shared/ui/page-loader/page-loader';
 import { VoteStoreService } from '../../../../core/vote/vote.store.service';
 import { AuthService } from '../../../../core/auth/auth.service';
+import { AsyncPipe } from '@angular/common';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 import { GravatarModule } from 'ngx-gravatar';
 import { UnsplashUrlFormatterPipe } from '../../../../shared/unsplash-url-formatter.pipe';
@@ -28,6 +29,7 @@ import { SeoService } from '../../../../core/seo/seo.service';
     QuillViewHTMLComponent,
     ProjectDetailsSidenav,
     PageLoader,
+    AsyncPipe,
     AuthRequiredDirective,
     GravatarModule,
     UnsplashUrlFormatterPipe,
