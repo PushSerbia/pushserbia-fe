@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(npx ng:*)",
+      "Bash(npm run:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(find C:Projectspushserbia-fesrcappfeaturesprojects -name *header* -o -name *filter* -type f)",
+      "Bash(grep -E \"\\\\.\\(ts|html\\)$\")"
+    ]
+  }
+}
