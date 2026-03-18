@@ -6,7 +6,10 @@
       "Bash(npm run:*)",
       "WebFetch(domain:localhost)",
       "Bash(find C:Projectspushserbia-fesrcappfeaturesprojects -name *header* -o -name *filter* -type f)",
-      "Bash(grep -E \"\\\\.\\(ts|html\\)$\")"
+      "Bash(grep -E \"\\\\.\\(ts|html\\)$\")",
+      "Bash(wmic logicaldisk:*)",
+      "Bash(powershell -c \"Get-PSDrive C | Select-Object Free\")",
+      "WebSearch"
     ]
   }
 }
