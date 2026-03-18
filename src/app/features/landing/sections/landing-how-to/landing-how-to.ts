@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-landing-how-to',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './landing-how-to.html',
   styleUrl: './landing-how-to.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
