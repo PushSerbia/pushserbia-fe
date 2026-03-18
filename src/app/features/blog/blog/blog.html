@@ -2,7 +2,9 @@
   <div class="bg-black min-h-screen">
     <div class="container px-4 mx-auto lg:px-8 py-16 lg:py-24 max-w-screen-xl">
       <div class="max-w-2xl mb-16">
-        <h1 class="font-mono text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Blog</h1>
+        <h1 class="font-mono text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+          Blog
+        </h1>
         <p class="mt-4 text-lg text-neutral-400">Znanje, iskustva i novosti iz zajednice.</p>
       </div>
 
@@ -11,24 +13,36 @@
           <div class="grid lg:grid-cols-2 gap-8 items-center">
             @if (blogPosts[0].image) {
               <div class="overflow-hidden rounded-xl border border-white/5">
-                <img [src]="blogPosts[0].image" [alt]="blogPosts[0].title"
-                  class="w-full h-48 sm:h-64 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img
+                  [src]="blogPosts[0].image"
+                  [alt]="blogPosts[0].title"
+                  width="1470"
+                  height="980"
+                  class="w-full h-48 sm:h-64 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
             }
             <div>
               <div class="flex items-center gap-3 mb-4 text-xs text-neutral-500">
                 <span>{{ blogPosts[0].date }}</span>
-                <span class="text-neutral-700">·</span>
+                <span class="text-neutral-500" aria-hidden="true">·</span>
                 <span>{{ blogPosts[0].author }}</span>
               </div>
               @if (blogPosts[0].tags) {
                 <div class="flex flex-wrap gap-2 mb-4">
                   @for (tag of blogPosts[0].tags; track tag) {
-                    <span class="px-2 py-0.5 text-xs text-primary-400 bg-primary-500/10 border border-primary-500/20 rounded-full">{{ tag }}</span>
+                    <span
+                      class="px-2 py-0.5 text-xs text-primary-400 bg-primary-500/10 border border-primary-500/20 rounded-full"
+                      >{{ tag }}</span
+                    >
                   }
                 </div>
               }
-              <h2 class="text-2xl lg:text-3xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors">{{ blogPosts[0].title }}</h2>
+              <h2
+                class="text-2xl lg:text-3xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors"
+              >
+                {{ blogPosts[0].title }}
+              </h2>
               <p class="text-neutral-400 leading-relaxed mb-4">{{ blogPosts[0].excerpt }}</p>
               <span class="text-sm font-medium text-primary-400">Pročitaj više →</span>
             </div>
@@ -39,28 +53,42 @@
           <div class="border-t border-white/5 pt-12">
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               @for (post of blogPosts.slice(1); track post.id) {
-                <a [routerLink]="['/blog', post.slug]"
-                  class="group rounded-xl border border-white/5 bg-neutral-950 overflow-hidden hover:border-white/10 transition-colors">
+                <a
+                  [routerLink]="['/blog', post.slug]"
+                  class="group rounded-xl border border-white/5 bg-neutral-950 overflow-hidden hover:border-white/10 transition-colors"
+                >
                   @if (post.image) {
                     <div class="overflow-hidden">
-                      <img [src]="post.image" [alt]="post.title"
-                        class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <img
+                        [src]="post.image"
+                        [alt]="post.title"
+                        width="1470"
+                        height="980"
+                        class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
                     </div>
                   }
                   <div class="p-5">
                     <div class="flex items-center gap-2 mb-3 text-xs text-neutral-500">
                       <span>{{ post.date }}</span>
-                      <span class="text-neutral-700">·</span>
+                      <span class="text-neutral-500" aria-hidden="true">·</span>
                       <span>{{ post.author }}</span>
                     </div>
                     @if (post.tags) {
                       <div class="flex flex-wrap gap-1.5 mb-3">
                         @for (tag of post.tags; track tag) {
-                          <span class="px-2 py-0.5 text-[10px] text-neutral-500 border border-white/5 rounded-full">{{ tag }}</span>
+                          <span
+                            class="px-2 py-0.5 text-[10px] text-neutral-500 border border-white/5 rounded-full"
+                            >{{ tag }}</span
+                          >
                         }
                       </div>
                     }
-                    <h2 class="text-lg font-bold text-white mb-2 group-hover:text-primary-400 transition-colors line-clamp-2">{{ post.title }}</h2>
+                    <h2
+                      class="text-lg font-bold text-white mb-2 group-hover:text-primary-400 transition-colors line-clamp-2"
+                    >
+                      {{ post.title }}
+                    </h2>
                     <p class="text-sm text-neutral-500 line-clamp-3">{{ post.excerpt }}</p>
                   </div>
                 </a>
@@ -72,8 +100,10 @@
 
       <div class="mt-16 pt-12 border-t border-white/5 text-center">
         <p class="text-neutral-500 mb-4">Imaš ideju za tekst ili želiš da pišeš za blog?</p>
-        <a routerLink="/dokumentacija/kontakt"
-          class="inline-flex items-center px-6 py-3 text-sm font-semibold text-black bg-white rounded-full hover:bg-neutral-200 transition-colors">
+        <a
+          routerLink="/dokumentacija/kontakt"
+          class="inline-flex items-center px-6 py-3 text-sm font-semibold text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
+        >
           Javi nam se
         </a>
       </div>

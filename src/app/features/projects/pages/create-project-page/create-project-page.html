@@ -39,11 +39,9 @@
       class="flex flex-col gap-8 py-8 px-6 mx-auto xl:mx-0 max-w-screen-xl overflow-hidden bg-neutral-950 border border-white/5 rounded-2xl shadow-lg w-full"
     >
       @if (form()) {
-        <h2
-          class="text-2xl font-bold text-white border-b-2 border-white/5 pb-8"
-        >
+        <h1 class="text-2xl font-bold text-white border-b-2 border-white/5 pb-8">
           {{ project ? 'Ažuriraj' : 'Predloži novi' }} projekat
-        </h2>
+        </h1>
         <form (submit)="onSubmit($event)">
           <div class="grid gap-4 sm:grid-cols-2 sm:gap-2">
             <!-- #region Image Selector -->
@@ -56,17 +54,14 @@
 
             <!--#region Name -->
             <div class="sm:col-span-2">
-              <label
-                for="name"
-                class="block mb-2 text-sm font-medium text-neutral-400"
-              >
+              <label for="name" class="block mb-2 text-sm font-medium text-neutral-400">
                 Ime projekta
               </label>
               <input
                 type="text"
                 id="name"
                 [field]="form.name"
-                class="bg-neutral-900 border border-white/10 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 placeholder-neutral-600"
+                class="bg-neutral-900 border border-white/10 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 placeholder-neutral-400"
                 placeholder="Kreativno ime projekta"
               />
               <app-validation-message [control]="form.name" />
@@ -75,17 +70,14 @@
 
             <!--#region Slug -->
             <div class="sm:col-span-2">
-              <label
-                for="slug"
-                class="block mb-2 text-sm font-medium text-neutral-400"
-              >
+              <label for="slug" class="block mb-2 text-sm font-medium text-neutral-400">
                 Slug
               </label>
               <input
                 type="text"
                 id="slug"
                 [field]="form.slug"
-                class="bg-neutral-900 border border-white/10 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 placeholder-neutral-600"
+                class="bg-neutral-900 border border-white/10 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 placeholder-neutral-400"
                 placeholder="kreativno-ime-projekta"
               />
               <app-validation-message [control]="form.slug" />
@@ -94,17 +86,14 @@
 
             <!--#region GitHub Link -->
             <div class="sm:col-span-2">
-              <label
-                for="github"
-                class="block mb-2 text-sm font-medium text-neutral-400"
-              >
+              <label for="github" class="block mb-2 text-sm font-medium text-neutral-400">
                 GitHub link
               </label>
               <input
                 type="text"
                 id="github"
                 [field]="form.github"
-                class="bg-neutral-900 border border-white/10 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 placeholder-neutral-600"
+                class="bg-neutral-900 border border-white/10 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 placeholder-neutral-400"
                 placeholder="https://github.com/username/repository"
               />
               <app-validation-message [control]="form.github" />
@@ -114,16 +103,13 @@
             <!--#region Status -->
             @if (project) {
               <div class="sm:col-span-2">
-                <label
-                  for="status"
-                  class="block mb-2 text-sm font-medium text-neutral-400"
-                >
+                <label for="status" class="block mb-2 text-sm font-medium text-neutral-400">
                   Status projekta
                 </label>
                 <select
                   id="status"
                   [field]="form.status!"
-                  class="bg-neutral-900 border border-white/10 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 placeholder-neutral-600"
+                  class="bg-neutral-900 border border-white/10 text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 placeholder-neutral-400"
                 >
                   <option [value]="projectStatus.Pending">{{ projectStatus.Pending }}</option>
                   <option [value]="projectStatus.Voting">{{ projectStatus.Voting }}</option>
@@ -141,17 +127,14 @@
 
             <!--#region Short Description -->
             <div class="sm:col-span-2">
-              <label
-                for="shortDescription"
-                class="block mb-2 text-sm font-medium text-neutral-400"
-              >
+              <label for="shortDescription" class="block mb-2 text-sm font-medium text-neutral-400">
                 Kratak opis
               </label>
               <textarea
                 id="shortDescription"
                 [field]="form.shortDescription"
                 rows="5"
-                class="block p-2.5 w-full text-sm text-white bg-neutral-900 rounded-lg border border-white/10 focus:ring-primary-500 focus:border-primary-500 placeholder-neutral-600"
+                class="block p-2.5 w-full text-sm text-white bg-neutral-900 rounded-lg border border-white/10 focus:ring-primary-500 focus:border-primary-500 placeholder-neutral-400"
                 placeholder="Biće vidljiv na karticama projekta"
               ></textarea>
               <app-validation-message [control]="form.shortDescription" />
@@ -160,10 +143,7 @@
 
             <!--#region Description -->
             <div class="sm:col-span-2">
-              <label
-                for="description"
-                class="block mb-2 text-sm font-medium text-neutral-400"
-              >
+              <label for="description" class="block mb-2 text-sm font-medium text-neutral-400">
                 Opis
               </label>
               <quill-editor

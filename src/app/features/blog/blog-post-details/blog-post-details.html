@@ -1,7 +1,10 @@
 <app-basic-layout>
   <div class="bg-black min-h-screen">
     <div class="container px-4 mx-auto lg:px-8 py-16 lg:py-24 max-w-screen-md">
-      <a routerLink="/blog" class="inline-flex items-center text-sm text-neutral-500 hover:text-white transition-colors mb-8">
+      <a
+        routerLink="/blog"
+        class="inline-flex items-center text-sm text-neutral-500 hover:text-white transition-colors mb-8"
+      >
         ← Nazad na blog
       </a>
 
@@ -9,20 +12,29 @@
         <article>
           @if (post.image) {
             <div class="mb-8 overflow-hidden rounded-xl border border-white/5">
-              <img [src]="post.image" [alt]="post.title" class="w-full h-64 sm:h-80 object-cover" />
+              <img
+                [src]="post.image"
+                [alt]="post.title"
+                width="1470"
+                height="980"
+                class="w-full h-64 sm:h-80 object-cover"
+              />
             </div>
           }
 
           <div class="flex items-center gap-3 mb-4 text-xs text-neutral-500">
             <span>{{ post.date }}</span>
-            <span class="text-neutral-700">·</span>
+            <span class="text-neutral-500" aria-hidden="true">·</span>
             <span>{{ post.author }}</span>
           </div>
 
           @if (post.tags) {
             <div class="flex flex-wrap gap-2 mb-6">
               @for (tag of post.tags; track tag) {
-                <span class="px-2 py-0.5 text-xs text-primary-400 bg-primary-500/10 border border-primary-500/20 rounded-full">{{ tag }}</span>
+                <span
+                  class="px-2 py-0.5 text-xs text-primary-400 bg-primary-500/10 border border-primary-500/20 rounded-full"
+                  >{{ tag }}</span
+                >
               }
             </div>
           }
@@ -36,7 +48,10 @@
           </div>
 
           <div class="mt-16 pt-8 border-t border-white/5">
-            <a routerLink="/blog" class="text-sm font-medium text-primary-400 hover:text-primary-300 transition-colors">
+            <a
+              routerLink="/blog"
+              class="text-sm font-medium text-primary-400 hover:text-primary-300 transition-colors"
+            >
               ← Svi tekstovi
             </a>
           </div>
@@ -44,7 +59,9 @@
       } @else {
         <div class="p-8 bg-neutral-950 rounded-xl border border-white/5 text-center">
           <p class="text-neutral-400 mb-4">Članak nije pronađen.</p>
-          <a routerLink="/blog" class="text-sm font-medium text-primary-400 hover:text-primary-300">Nazad na blog</a>
+          <a routerLink="/blog" class="text-sm font-medium text-primary-400 hover:text-primary-300"
+            >Nazad na blog</a
+          >
         </div>
       }
     </div>

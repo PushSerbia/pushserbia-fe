@@ -8,9 +8,7 @@
     <!-- Modal content -->
     <div class="relative rounded-lg bg-neutral-950 border border-white/5 shadow">
       <!-- Modal header -->
-      <div
-        class="flex items-center justify-between rounded-t border-b border-white/5 p-4 md:p-5"
-      >
+      <div class="flex items-center justify-between rounded-t border-b border-white/5 p-4 md:p-5">
         <h3 class="text-lg font-semibold text-white">Informacije o profilu</h3>
         <button
           type="button"
@@ -40,49 +38,40 @@
       <form class="p-4 md:p-5" [formGroup]="form" (ngSubmit)="updateMe()">
         <div class="mb-5 flex flex-col gap-4">
           <div>
-            <label
-              for="linkedin"
-              class="mb-2 block text-sm font-medium text-white"
-            >
+            <label for="linkedin" class="mb-2 block text-sm font-medium text-white">
               Ime i prezime
             </label>
             <input
               type="text"
               id="fullName"
-              class="block w-full rounded-lg border border-white/10 bg-black p-2.5 text-sm text-white placeholder-neutral-700 focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+              class="block w-full rounded-lg border border-white/10 bg-black p-2.5 text-sm text-white placeholder-neutral-500 focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
               placeholder="Petar Petrović"
               formControlName="fullName"
             />
           </div>
 
           <div>
-            <label
-              for="linkedin"
-              class="mb-2 block text-sm font-medium text-white"
-            >
+            <label for="linkedin" class="mb-2 block text-sm font-medium text-white">
               Linkedin nalog
               <small>(npr. https://www.linkedin.com/in/your-username)</small>
             </label>
             <input
               type="text"
               id="linkedin"
-              class="block w-full rounded-lg border border-white/10 bg-black p-2.5 text-sm text-white placeholder-neutral-700 focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+              class="block w-full rounded-lg border border-white/10 bg-black p-2.5 text-sm text-white placeholder-neutral-500 focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
               placeholder="https://www.linkedin.com/in/your-username"
               formControlName="linkedInUrl"
             />
           </div>
 
           <div>
-            <label
-              for="github"
-              class="mb-2 block text-sm font-medium text-white"
-            >
+            <label for="github" class="mb-2 block text-sm font-medium text-white">
               Github nalog <small>(npr. https://github.com/PushSerbia)</small>
             </label>
             <input
               type="text"
               id="github"
-              class="block w-full rounded-lg border border-white/10 bg-black p-2.5 text-sm text-white placeholder-neutral-700 focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+              class="block w-full rounded-lg border border-white/10 bg-black p-2.5 text-sm text-white placeholder-neutral-500 focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
               placeholder="https://github.com/PushSerbia"
               formControlName="gitHubUrl"
             />
@@ -90,15 +79,13 @@
 
           @if (false) {
             <div class="sm:col-span-2">
-              <label
-                for="address_billing_modal"
-                class="mb-2 block text-sm font-medium text-white"
+              <label for="address_billing_modal" class="mb-2 block text-sm font-medium text-white"
                 >Biografija</label
               >
               <textarea
                 id="address_billing_modal"
                 rows="4"
-                class="block w-full rounded-lg border border-white/10 bg-black p-2.5 text-sm text-white placeholder-neutral-700 focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+                class="block w-full rounded-lg border border-white/10 bg-black p-2.5 text-sm text-white placeholder-neutral-500 focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                 placeholder="Enter here your address"
               ></textarea>
             </div>

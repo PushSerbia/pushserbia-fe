@@ -10,6 +10,7 @@
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
         >
           <path
             fill-rule="evenodd"
@@ -26,9 +27,7 @@
 
       <!-- Step 1: Collect user data -->
       @if (currentStep === 1) {
-        <div
-          class="mb-6 p-4 bg-neutral-950 rounded-xl border border-white/5"
-        >
+        <div class="mb-6 p-4 bg-neutral-950 rounded-xl border border-white/5">
           <div class="flex justify-between items-center">
             <span class="text-lg font-medium text-white">Iznos:</span>
             <span class="text-2xl font-bold text-white">{{
@@ -48,6 +47,7 @@
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               <path
                 d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
@@ -70,9 +70,7 @@
                   [class.border-primary-500]="selectedOption?.title === option.title"
                 >
                   <div class="flex justify-between items-center">
-                    <span class="font-medium text-white">{{
-                      option.title
-                    }}</span>
+                    <span class="font-medium text-white">{{ option.title }}</span>
                     <span class="font-bold text-white">{{
                       option.price | currency: 'EUR' : 'symbol' : '1.0'
                     }}</span>
@@ -88,22 +86,18 @@
 
         <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="space-y-6">
           <div>
-            <label
-              for="fullName"
-              class="block mb-2 text-sm font-medium text-white"
+            <label for="fullName" class="block mb-2 text-sm font-medium text-white"
               >Ime i prezime</label
             >
             <input
               type="text"
               id="fullName"
               formControlName="fullName"
-              class="bg-black border border-white/10 text-white text-sm rounded-lg focus:ring-1 focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 placeholder-neutral-700"
+              class="bg-black border border-white/10 text-white text-sm rounded-lg focus:ring-1 focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 placeholder-neutral-500"
               placeholder="Unesite vaše ime i prezime"
             />
             @if (paymentForm.get('fullName')?.invalid && paymentForm.get('fullName')?.touched) {
-              <div class="mt-1 text-sm text-red-500">
-                Ime i prezime je obavezno polje
-              </div>
+              <div class="mt-1 text-sm text-red-500">Ime i prezime je obavezno polje</div>
             }
           </div>
 
@@ -115,13 +109,11 @@
               type="email"
               id="email"
               formControlName="email"
-              class="bg-black border border-white/10 text-white text-sm rounded-lg focus:ring-1 focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 placeholder-neutral-700"
+              class="bg-black border border-white/10 text-white text-sm rounded-lg focus:ring-1 focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 placeholder-neutral-500"
               placeholder="ime@example.com"
             />
             @if (paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched) {
-              <div class="mt-1 text-sm text-red-500">
-                Unesite validnu email adresu
-              </div>
+              <div class="mt-1 text-sm text-red-500">Unesite validnu email adresu</div>
             }
           </div>
 
@@ -146,15 +138,11 @@
             </label>
           </div>
           @if (paymentForm.get('agreeTerms')?.invalid && paymentForm.get('agreeTerms')?.touched) {
-            <div class="mt-1 text-sm text-red-500">
-              Morate se složiti sa uslovima korišćenja
-            </div>
+            <div class="mt-1 text-sm text-red-500">Morate se složiti sa uslovima korišćenja</div>
           }
 
           @if (submissionError) {
-            <div
-              class="p-4 bg-red-950/50 rounded-lg border border-red-800"
-            >
+            <div class="p-4 bg-red-950/50 rounded-lg border border-red-800">
               <div class="text-sm text-red-500">
                 {{ submissionError }}
               </div>
@@ -174,6 +162,7 @@
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <circle
                       class="opacity-25"
@@ -201,15 +190,14 @@
 
       <!-- Step 2: Confirmation -->
       @if (currentStep === 2) {
-        <div
-          class="p-6 bg-primary-950/30 rounded-xl border border-primary-800 mb-6"
-        >
+        <div class="p-6 bg-primary-950/30 rounded-xl border border-primary-800 mb-6">
           <div class="flex items-center mb-4">
             <svg
               class="w-6 h-6 mr-2 text-primary-400"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               <path
                 fill-rule="evenodd"
