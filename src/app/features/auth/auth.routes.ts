@@ -4,17 +4,7 @@ import { Account } from './account/account';
 export const authRoutes: Route[] = [
   {
     path: 'prijava',
-    loadComponent: () =>
-      import('./login/login').then(
-        (m) => m.Login,
-      ),
-  },
-  {
-    path: 'registracija',
-    loadComponent: () =>
-      import('./register/register').then(
-        (m) => m.Register,
-      ),
+    loadComponent: () => import('./login/login').then((m) => m.Login),
   },
   {
     path: 'preusmeravanje/linkedin',
