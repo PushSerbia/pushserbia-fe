@@ -1,7 +1,7 @@
 <a
   [routerLink]="['/projekti', project().slug]"
   queryParamsHandling="merge"
-  class="flex flex-col w-sm max-w-[calc(100svw-32px)] bg-neutral-950 border border-white/5 rounded-xl hover:border-white/10 transition-colors relative"
+  class="flex flex-col w-full sm:w-sm max-w-[calc(100svw-32px)] bg-neutral-950 border border-white/5 rounded-xl hover:border-white/10 transition-colors relative"
 >
   @if (supported()) {
     <div class="absolute top-4 right-4 z-10">
