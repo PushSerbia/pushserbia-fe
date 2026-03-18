@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 import { QuillViewHTMLComponent } from 'ngx-quill';
 import { BlogStoreService } from '../../../core/blog/blog.store.service';
 import { BlogPost } from '../../../core/blog/blog';
+import { BasicLayout } from '../../../shared/layout/landing-layout/basic-layout';
 
 @Component({
   selector: 'app-blog-post-details',
-  imports: [RouterLink, QuillViewHTMLComponent],
+  imports: [RouterLink, QuillViewHTMLComponent, BasicLayout],
   templateUrl: './blog-post-details.html',
   styleUrl: './blog-post-details.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
