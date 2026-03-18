@@ -34,6 +34,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import Quill from 'quill';
 import { ValidationMessage } from '../../../../shared/ui/validation-message/validation-message';
+import { SeoService } from '../../../../core/seo/seo.service';
 
 interface CreateProjectModel {
   name: string;
@@ -65,6 +66,7 @@ export class CreateProjectPage implements OnInit {
   private readonly router = inject(Router);
   private readonly injector = inject(Injector);
   private readonly projectStoreService = inject(ProjectStoreService);
+  private readonly seo = inject(SeoService);
 
   protected project?: Project;
   protected projectStatus = ProjectStatus;
@@ -133,6 +135,11 @@ export class CreateProjectPage implements OnInit {
   });
 
   ngOnInit(): void {
+    this.seo.update({
+      title: 'Predloži projekat',
+      description: 'Predloži novi open-source projekat sa društvenim uticajem za Push Serbia zajednicu.',
+    });
+
     effect(
       () => {
         const slug = this.slug();
