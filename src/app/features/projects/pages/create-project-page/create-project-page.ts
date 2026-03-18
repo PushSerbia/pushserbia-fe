@@ -158,6 +158,25 @@ export class CreateProjectPage implements OnInit {
   onQuillCreated(quill: Quill): void {
     this.quillEditor = quill;
     this.quillNbspFix(quill);
+    this.addToolbarAriaLabels(quill);
+  }
+
+  private addToolbarAriaLabels(quill: Quill): void {
+    const toolbar = (quill.getModule('toolbar') as { container: HTMLElement })?.container;
+    if (!toolbar) return;
+    const pickerLabels: Record<string, string> = {
+      'ql-header': 'Naslov',
+      'ql-size': 'Veličina fonta',
+      'ql-color': 'Boja teksta',
+      'ql-background': 'Boja pozadine',
+      'ql-align': 'Poravnanje teksta',
+      'ql-font': 'Font',
+    };
+    for (const [cls, label] of Object.entries(pickerLabels)) {
+      toolbar.querySelectorAll(`.${cls} .ql-picker-label`).forEach((el) => {
+        el.setAttribute('aria-label', label);
+      });
+    }
   }
 
   onQuillContentChanged(event: ContentChange): void {
