@@ -1,4 +1,7 @@
-<section class="bg-black pt-16 pb-16 sm:pt-32 sm:pb-28 lg:pt-40 lg:pb-36" aria-labelledby="hero-heading">
+<section
+  class="bg-black pt-16 pb-16 sm:pt-32 sm:pb-28 lg:pt-40 lg:pb-36"
+  aria-labelledby="hero-heading"
+>
   <div class="container px-4 mx-auto lg:px-8">
     <div class="max-w-4xl mx-auto text-center">
       <h1
@@ -10,16 +13,21 @@
       </h1>
 
       <p class="mt-8 text-lg sm:text-xl text-neutral-400 max-w-xl mx-auto leading-relaxed">
-        Open-source zajednica koja spaja developere, dizajnere i entuzijaste oko projekata sa stvarnim društvenim uticajem.
+        Open-source zajednica koja spaja developere, dizajnere i entuzijaste oko projekata sa
+        stvarnim društvenim uticajem.
       </p>
 
       <div class="flex flex-col sm:flex-row gap-3 mt-12 justify-center">
-        <a routerLink="/autentikacija/prijava"
-          class="px-8 py-4 text-base font-semibold text-black bg-white rounded-full hover:bg-neutral-200 transition-colors">
+        <a
+          routerLink="/autentikacija/prijava"
+          class="px-8 py-4 text-base font-semibold text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
+        >
           Pridruži se besplatno
         </a>
-        <a routerLink="/projekti"
-          class="px-8 py-4 text-base font-semibold text-neutral-400 border border-neutral-800 rounded-full hover:text-white hover:border-neutral-600 transition-colors">
+        <a
+          routerLink="/projekti"
+          class="px-8 py-4 text-base font-semibold text-neutral-400 border border-neutral-800 rounded-full hover:text-white hover:border-neutral-600 transition-colors"
+        >
           Pogledaj projekte
         </a>
       </div>
@@ -27,13 +35,18 @@
       <div class="flex items-center justify-center gap-3 mt-14">
         <div class="flex -space-x-2">
           @for (member of members; track member.linkedinUrl) {
-            <a [title]="member.name" [href]="member.linkedinUrl" target="_blank" rel="noopener noreferrer"
-              class="rounded-full border-2 border-black overflow-hidden hover:scale-110 hover:z-10 transition-transform w-9 h-9">
+            <a
+              [title]="member.name"
+              [href]="member.linkedinUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-full border-2 border-black overflow-hidden hover:scale-110 hover:z-10 transition-transform w-9 h-9"
+            >
               <img [ngSrc]="member.imageUrl" [alt]="member.name" width="36" height="36" priority />
             </a>
           }
         </div>
-        <span class="text-sm text-neutral-600">osnivači zajednice</span>
+        <span class="text-sm text-neutral-400">osnivači zajednice</span>
       </div>
     </div>
   </div>

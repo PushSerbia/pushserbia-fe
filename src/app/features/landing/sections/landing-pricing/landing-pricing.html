@@ -13,8 +13,8 @@
         Podrži infrastrukturu
       </h2>
       <p class="mt-3 text-gray-500 max-w-lg">
-        Neprofitni smo. Svaki euro ide u servere, projekte i edukaciju.
-        Bez profita, bez skrivenih troškova.
+        Neprofitni smo. Svaki euro ide u servere, projekte i edukaciju. Bez profita, bez skrivenih
+        troškova.
       </p>
     </div>
 
@@ -26,12 +26,14 @@
           [class.border-gray-800]="!donation.isHighlighted"
         >
           @if (donation.isHighlighted) {
-            <span class="absolute -top-3 left-6 px-3 py-0.5 text-xs font-mono text-gray-950 bg-primary-400 rounded-full">
+            <span
+              class="absolute -top-3 left-6 px-3 py-0.5 text-xs font-mono text-gray-950 bg-primary-400 rounded-full"
+            >
               popular
             </span>
           }
 
-          <div class="font-mono text-xs text-gray-600 mb-4">
+          <div class="font-mono text-xs text-gray-400 mb-4">
             {{ donation.isOneTime ? '// one-time' : '// monthly' }}
           </div>
 
@@ -57,7 +59,11 @@
 
           <a
             routerLink="/placanja/placanje"
-            [queryParams]="{ isOneTime: donation.isOneTime, amount: donation.price, title: donation.title }"
+            [queryParams]="{
+              isOneTime: donation.isOneTime,
+              amount: donation.price,
+              title: donation.title,
+            }"
             class="block w-full py-3 text-center text-sm font-semibold rounded-lg transition-colors"
             [class.bg-primary-500]="donation.isHighlighted"
             [class.text-gray-950]="donation.isHighlighted"
@@ -72,9 +78,11 @@
       }
     </div>
 
-    <p class="mt-8 text-xs font-mono text-gray-600 max-w-lg">
+    <p class="mt-8 text-xs font-mono text-gray-400 max-w-lg">
       $ cat TRANSPARENCY.md → Mesečno objavljujemo kako se sredstva koriste.
-      <a routerLink="/placanja/finansiranje" class="text-primary-500 hover:text-primary-400 ml-1">Pogledaj →</a>
+      <a routerLink="/placanja/finansiranje" class="text-primary-500 hover:text-primary-400 ml-1"
+        >Pogledaj →</a
+      >
     </p>
   </div>
 </section>
