@@ -49,5 +49,5 @@ Thumbs.db
 *-debug.log
 .runtimeconfig.json
 
-tmp/.claude
 .mcp.json
+.claude
