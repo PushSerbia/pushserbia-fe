@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-landing-how-to',
+  selector: 'app-landing-cta',
   imports: [RouterLink],
-  templateUrl: './landing-how-to.html',
-  styleUrl: './landing-how-to.css',
+  templateUrl: './landing-cta.html',
+  styleUrl: './landing-cta.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingHowTo {}
+export class LandingCta {}

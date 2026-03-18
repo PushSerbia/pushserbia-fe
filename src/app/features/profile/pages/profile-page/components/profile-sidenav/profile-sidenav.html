@@ -1,16 +1,16 @@
 <aside
   id="sidebar"
-  class="hidden h-full w-80 shrink-0 overflow-y-auto border border-gray-200 bg-white p-3 shadow-sm dark:border-gray-700 dark:bg-gray-800 lg:block lg:rounded-lg"
+  class="hidden h-full w-80 shrink-0 overflow-y-auto border border-white/5 bg-neutral-950 p-3 shadow-sm lg:block lg:rounded-lg"
 >
   <ul class="space-y-2">
     <li>
       <a
         routerLink="/projekti"
         [queryParams]="{ myProjectsOnly: true }"
-        class="group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+        class="group flex items-center rounded-lg p-2 text-base font-medium text-white hover:bg-white/5"
       >
         <svg
-          class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+          class="h-6 w-6 text-neutral-400 transition duration-75 group-hover:text-white"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -33,10 +33,10 @@
       <a
         routerLink="/projekti"
         [queryParams]="{ supportedOnly: true }"
-        class="group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+        class="group flex items-center rounded-lg p-2 text-base font-medium text-white hover:bg-white/5"
       >
         <svg
-          class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+          class="h-6 w-6 text-neutral-400 transition duration-75 group-hover:text-white"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -58,10 +58,10 @@
     <li>
       <a
         routerLink="/dokumentacija/kontakt"
-        class="group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+        class="group flex items-center rounded-lg p-2 text-base font-medium text-white hover:bg-white/5"
       >
         <svg
-          class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+          class="h-6 w-6 text-neutral-400 transition duration-75 group-hover:text-white"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -84,10 +84,10 @@
       <a
         routerLink="/"
         fragment="pricing"
-        class="group flex items-center rounded-lg p-2 text-base font-medium text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+        class="group flex items-center rounded-lg p-2 text-base font-medium text-white hover:bg-white/5"
       >
         <svg
-          class="h-6 w-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+          class="h-6 w-6 text-neutral-400 transition duration-75 group-hover:text-white"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -105,14 +105,14 @@
       </a>
     </li>
   </ul>
-  <ul class="mt-5 space-y-2 border-t border-gray-100 pt-5 dark:border-gray-700">
+  <ul class="mt-5 space-y-2 border-t border-white/10 pt-5">
     <li>
       <button
-        class="group flex items-center rounded-lg p-2 text-base font-medium text-red-600 hover:bg-red-100 dark:text-red-500 dark:hover:bg-gray-700 cursor-pointer w-full"
+        class="group flex items-center rounded-lg p-2 text-base font-medium text-red-500 hover:bg-white/5 cursor-pointer w-full"
         (click)="onLogoutClick()"
       >
         <svg
-          class="h-6 w-6 flex-shrink-0 text-red-600 transition duration-75 dark:text-red-500"
+          class="h-6 w-6 flex-shrink-0 text-red-500 transition duration-75"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"

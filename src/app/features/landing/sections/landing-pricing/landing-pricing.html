@@ -1,117 +1,80 @@
 <section
   id="pricing"
-  class="bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 py-16 sm:py-24"
+  class="bg-gray-950 border-t border-gray-800"
+  aria-labelledby="pricing-heading"
 >
-  <div class="px-4 mx-auto max-w-screen-xl">
-    <div class="mx-auto max-w-screen-md text-center mb-12 lg:mb-16">
+  <div class="container px-4 mx-auto lg:px-8 py-20 lg:py-28">
+    <div class="max-w-2xl mb-16">
+      <p class="text-xs font-mono text-primary-400 uppercase tracking-wider mb-4">// podrška</p>
       <h2
-        class="mb-6 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white sm:text-5xl"
+        id="pricing-heading"
+        class="text-3xl font-extrabold text-white sm:text-4xl tracking-tight"
       >
-        Podrži open-source zajednicu
+        Podrži infrastrukturu
       </h2>
-      <p class="mb-4 text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
-        Push Serbia je neprofitna open-source zajednica koja razvija društveno korisne projekte.
-      </p>
-      <p class="text-lg text-gray-600 dark:text-gray-300 sm:text-xl max-w-3xl mx-auto">
-        Tvojom donacijom omogućavaš održavanje infrastrukture, razvoj novih projekata i organizaciju
-        edukativnih događaja. Svaka podrška čini razliku – zajedno gradimo održivu i otvorenu
-        tehnološku budućnost!
+      <p class="mt-3 text-gray-500 max-w-lg">
+        Neprofitni smo. Svaki euro ide u servere, projekte i edukaciju.
+        Bez profita, bez skrivenih troškova.
       </p>
     </div>
 
-    <div class="grid gap-10 mb-12 lg:grid-cols-2 xl:grid-cols-3">
+    <div class="grid gap-6 max-w-4xl lg:grid-cols-3">
       @for (donation of donationOptions; track $index) {
         <div
-          [ngClass]="{
-            'ring-4 ring-primary-500 scale-105 shadow-xl dark:ring-primary-400':
-              donation.isHighlighted,
-          }"
-          class="flex flex-col p-8 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-xl border border-gray-200 shadow-lg dark:border-gray-700 dark:text-white dark:bg-gray-800 transition-all hover:shadow-xl"
+          class="relative rounded-xl border bg-gray-900 p-8 flex flex-col transition-colors"
+          [class.border-primary-500]="donation.isHighlighted"
+          [class.border-gray-800]="!donation.isHighlighted"
         >
-          <h3 class="mb-4 text-2xl font-bold">{{ donation.title }}</h3>
-          <p class="text-gray-600 sm:text-lg dark:text-gray-300">
-            {{ donation.description }}
-          </p>
+          @if (donation.isHighlighted) {
+            <span class="absolute -top-3 left-6 px-3 py-0.5 text-xs font-mono text-gray-950 bg-primary-400 rounded-full">
+              popular
+            </span>
+          }
 
-          <div class="flex justify-center items-baseline my-8">
-            <span
-              class="mr-2 text-4xl sm:text-6xl font-extrabold text-primary-700 dark:text-primary-400"
-            >
+          <div class="font-mono text-xs text-gray-600 mb-4">
+            {{ donation.isOneTime ? '// one-time' : '// monthly' }}
+          </div>
+
+          <h3 class="text-lg font-bold text-white mb-1">{{ donation.title }}</h3>
+
+          <div class="flex items-baseline gap-1 mt-4 mb-6">
+            <span class="text-4xl font-extrabold text-white">
               {{ donation.price | currency: 'EUR' : 'symbol' : '1.0' }}
             </span>
-            <span class="text-gray-500 dark:text-gray-400 text-base sm:text-xl">
-              {{ donation.isOneTime ? '/jednokratno' : '/mesečno' }}
+            <span class="text-sm text-gray-500">
+              {{ donation.isOneTime ? '' : '/mes' }}
             </span>
           </div>
 
-          <div class="mb-6 p-4 bg-primary-50 dark:bg-gray-700 rounded-lg">
-            <h4 class="text-base font-medium text-gray-900 dark:text-white mb-2">
-              Uticaj donacije:
-            </h4>
-            <p class="text-gray-700 dark:text-gray-300">
-              {{ donation.impact }}
-            </p>
-          </div>
-
-          <ul role="list" class="mb-8 space-y-4 text-left">
+          <ul class="space-y-3 mb-8 flex-1">
             @for (benefit of donation.benefits; track $index) {
-              <li class="flex items-center space-x-3">
-                <svg
-                  class="flex-shrink-0 w-5 h-5 text-primary-600 dark:text-primary-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <span>{{ benefit }}</span>
+              <li class="flex items-start gap-2 text-sm text-gray-400">
+                <span class="text-primary-500 mt-0.5" aria-hidden="true">✓</span>
+                {{ benefit }}
               </li>
             }
           </ul>
 
           <a
             routerLink="/placanja/placanje"
-            [queryParams]="{
-              isOneTime: donation.isOneTime,
-              amount: donation.price,
-              title: donation.title,
-            }"
-            class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-lg px-6 py-3 text-center dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800 shadow-md hover:shadow-lg transition-all mt-auto"
-            >{{ donation.isOneTime ? 'Doniraj' : 'Pretplati se' }}</a
+            [queryParams]="{ isOneTime: donation.isOneTime, amount: donation.price, title: donation.title }"
+            class="block w-full py-3 text-center text-sm font-semibold rounded-lg transition-colors"
+            [class.bg-primary-500]="donation.isHighlighted"
+            [class.text-gray-950]="donation.isHighlighted"
+            [class.hover:bg-primary-400]="donation.isHighlighted"
+            [class.bg-gray-800]="!donation.isHighlighted"
+            [class.text-gray-300]="!donation.isHighlighted"
+            [class.hover:bg-gray-700]="!donation.isHighlighted"
           >
+            {{ donation.isOneTime ? 'Doniraj' : 'Pretplati se' }}
+          </a>
         </div>
       }
     </div>
 
-    <div
-      class="mx-auto max-w-screen-md text-center mt-16 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md"
-    >
-      <p class="mb-6 text-lg text-gray-600 dark:text-gray-300">
-        Sve donacije su transparentne i koriste se isključivo za održavanje i razvoj open-source
-        projekata. Mesečno objavljujemo izveštaje o korišćenju sredstava.
-      </p>
-      <a
-        routerLink="/placanja/finansiranje"
-        class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-primary-800 bg-primary-50 rounded-lg hover:bg-primary-100 hover:text-primary-900 hover:dark:text-primary-300 transition-colors dark:bg-gray-700 dark:text-primary-300 dark:hover:bg-gray-600"
-      >
-        Saznaj više o našem finansiranju
-        <svg
-          class="ml-2 w-5 h-5"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </a>
-    </div>
+    <p class="mt-8 text-xs font-mono text-gray-600 max-w-lg">
+      $ cat TRANSPARENCY.md → Mesečno objavljujemo kako se sredstva koriste.
+      <a routerLink="/placanja/finansiranje" class="text-primary-500 hover:text-primary-400 ml-1">Pogledaj →</a>
+    </p>
   </div>
 </section>

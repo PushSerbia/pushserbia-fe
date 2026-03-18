@@ -1,9 +1,9 @@
-<div class="bg-white dark:bg-gray-800 min-h-screen">
+<div class="bg-black min-h-screen">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
     <div class="mx-auto max-w-screen-md mb-8 lg:mb-12">
       <a
         routerLink="/"
-        class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium mb-6"
+        class="inline-flex items-center text-primary-400 hover:text-primary-300 font-medium mb-6"
       >
         <svg
           class="mr-1 w-5 h-5 rotate-180"
@@ -20,11 +20,11 @@
         Nazad na početnu
       </a>
 
-      <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+      <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-white">
         Blog
       </h1>
 
-      <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
+      <p class="mb-5 font-light text-neutral-400 sm:text-xl">
         Dobrodošli na Push Serbia blog! Ovde delimo naše znanje, iskustva i novosti iz sveta
         tehnologije, open-source zajednice i programiranja.
       </p>
@@ -32,29 +32,29 @@
       <div class="grid gap-8 mb-8">
         @for (post of blogPosts; track post.id) {
           <div
-            class="p-6 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600"
+            class="p-6 bg-neutral-950 rounded-xl border border-white/5"
           >
             <div class="mb-4 overflow-hidden rounded-lg">
               <img [src]="post.image" [alt]="post.title" class="w-full h-auto" />
             </div>
-            <div class="flex items-center mb-2 text-sm text-gray-500 dark:text-gray-400">
+            <div class="flex items-center mb-2 text-sm text-neutral-500">
               <span>{{ post.date }}</span>
               <span class="mx-2">•</span>
               <span>{{ post.author }}</span>
             </div>
-            <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h2 class="mb-2 text-2xl font-bold tracking-tight text-white">
               <a
                 [routerLink]="['/blog', post.slug]"
-                class="hover:text-primary-600 dark:hover:text-primary-500"
+                class="hover:text-primary-400"
                 >{{ post.title }}</a
               >
             </h2>
-            <p class="mb-4 font-light text-gray-500 dark:text-gray-400">
+            <p class="mb-4 font-light text-neutral-400">
               {{ post.excerpt }}
             </p>
             <a
               [routerLink]="['/blog', post.slug]"
-              class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
+              class="inline-flex items-center text-primary-400 hover:text-primary-300 font-medium"
             >
               Pročitaj više
               <svg
@@ -77,7 +77,7 @@
       <div class="mt-8 text-center">
         <a
           routerLink="/dokumentacija/kontakt"
-          class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+          class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-black bg-white rounded-lg hover:bg-neutral-200"
         >
           Imate ideju za blog post?
           <svg
