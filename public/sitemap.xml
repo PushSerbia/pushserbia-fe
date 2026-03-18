@@ -22,24 +22,9 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://pushserbia.com/autentikacija</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pushserbia.com/admin</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://pushserbia.com/profil</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://pushserbia.com/projekti</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <!-- Payments routes -->
@@ -89,42 +74,6 @@
     <loc>https://pushserbia.com/dokumentacija/karijere</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-
-  <!-- Authentication routes -->
-  <url>
-    <loc>https://pushserbia.com/autentikacija/prijava</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pushserbia.com/autentikacija/registracija</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pushserbia.com/autentikacija/preusmeravanje/linkedin</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <!-- Admin routes -->
-  <url>
-    <loc>https://pushserbia.com/admin/projekti</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://pushserbia.com/admin/korisnici</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- Profile routes -->
-  <url>
-    <loc>https://pushserbia.com/profil/obavestenja</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
 
   <!-- Projects routes -->
