@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, PLATFORM_ID } from 
 import { environment } from '../../../../environments/environment';
 import { RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { SeoService } from '../../../core/seo/seo.service';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +13,16 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class Login implements OnInit {
   private platformId = inject(PLATFORM_ID);
+  private seo = inject(SeoService);
 
   linkedinUrl!: string;
 
   ngOnInit() {
+    this.seo.update({
+      title: 'Prijava',
+      description: 'Prijavi se na Push Serbia platformu putem LinkedIn naloga.',
+    });
+
     if (isPlatformBrowser(this.platformId)) {
       const origin = window.location.origin;
 

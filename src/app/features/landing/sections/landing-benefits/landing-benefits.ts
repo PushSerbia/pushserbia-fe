@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-landing-benefits',
   imports: [],
-  templateUrl: './register.html',
-  styleUrl: './register.scss',
+  templateUrl: './landing-benefits.html',
+  styleUrl: './landing-benefits.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Register {}
+export class LandingBenefits {}

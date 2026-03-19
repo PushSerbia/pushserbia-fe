@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SeoService } from '../../../../core/seo/seo.service';
 
 @Component({
   selector: 'app-licensing',
@@ -8,4 +9,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './licensing.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Licensing {}
+export class Licensing {
+  constructor() {
+    inject(SeoService).update({
+      title: 'Licence',
+      description:
+        'Informacije o licencama koje koristi Push Serbia platforma i open-source projekti.',
+    });
+  }
+}

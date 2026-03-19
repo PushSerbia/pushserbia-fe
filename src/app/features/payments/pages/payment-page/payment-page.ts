@@ -11,6 +11,7 @@ import {
 import { DonationOption, donationOptions } from '../../../../core/donation/donation-option';
 import { catchError, of, Subscription, tap } from 'rxjs';
 import { IntegrationsService } from '../../../../core/integrations/integrations.service';
+import { SeoService } from '../../../../core/seo/seo.service';
 
 @Component({
   selector: 'app-payment-page',
@@ -24,6 +25,7 @@ export class PaymentPage implements OnInit, OnDestroy {
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private integrationsService = inject(IntegrationsService);
+  private seo = inject(SeoService);
 
   paymentForm: FormGroup;
   isOneTime = true;
@@ -47,6 +49,11 @@ export class PaymentPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.seo.update({
+      title: 'Donacija',
+      description: 'Podrži Push Serbia zajednicu donacijom.',
+    });
+
     this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
       this.isOneTime = params['isOneTime'] === 'true';
       this.amount = Number(params['amount']) || 0;

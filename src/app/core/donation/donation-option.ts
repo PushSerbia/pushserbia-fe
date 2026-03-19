@@ -16,12 +16,12 @@ export const donationOptions: DonationOption[] = [
     description:
       'Osnovni nivo podrške za održavanje zajedničkih projekata.',
     impact:
-      'Tvoja podrška pokriva osnovne tehničke troškove i omogućava stabilno funkcionisanje servisa.',
+      'Sa €5 mesečno omogućavaš jednom open-source projektu da ostane dostupan za stotine korisnika.',
     benefits: [
       'Pokrivanje dela troškova hostinga i servera',
       'Održavanje redovnog rada servisa',
-      'Omogućavanje dostupnosti projekata svakodnevnim korisnicima'
-    ]
+      'Omogućavanje dostupnosti projekata svakodnevnim korisnicima',
+    ],
   },
   {
     title: 'Contributor',
@@ -31,27 +31,25 @@ export const donationOptions: DonationOption[] = [
     description:
       'Za članove koji žele da podrže skaliranje i širenje projekata.',
     impact:
-      'Tvoja podrška omogućava proširenje infrastrukture i skaliranje servisa kako bi više ljudi moglo koristiti projekte.',
+      'Sa €9 mesečno pomažeš da naši projekti dođu do više ljudi i imaju veći društveni uticaj.',
     benefits: [
       'Proširenje kapaciteta servera i resursa',
       'Omogućavanje skalabilnosti postojećih projekata',
-      'Podrška rastu zajednice i novih inicijativa'
-    ]
+      'Podrška rastu zajednice i novih inicijativa',
+    ],
   },
   {
-    title: 'Guardian',
-    price: 990,
-    isOneTime: false,
+    title: 'Jednokratna podrška',
+    price: 25,
+    isOneTime: true,
     description:
-      'Najviši nivo podrške za dugoročnu održivost zajednice i njenih projekata.',
+      'Jednokratna donacija za sve koji žele da podrže bez mesečne obaveze.',
     impact:
-      'Tvoja podrška omogućava da inicijativa i zajednica žive i razvijaju se na duge staze, održavajući ideje i projekte dostupnim svima.',
+      'Tvoja jednokratna donacija direktno finansira razvoj projekata koji pomažu zajednici.',
     benefits: [
-      'Održavanje i unapređenje infrastrukture zajednice',
-      'Podrška razvoju novih projekata i ideja',
-      'Omogućavanje zajednici da samostalno rešava administrativne i birokratske stvari',
-      'Osiguravanje kontinuiteta i stabilnosti zajednice'
-    ]
-  }
+      'Bez mesečne obaveze — doniraj kada želiš',
+      'Direktna podrška aktivnim projektima',
+      'Doprinos održivosti zajednice',
+    ],
+  },
 ];
-

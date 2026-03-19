@@ -20,6 +20,7 @@ import { AsyncPipe } from '@angular/common';
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 import { GravatarModule } from 'ngx-gravatar';
 import { UnsplashUrlFormatterPipe } from '../../../../shared/unsplash-url-formatter.pipe';
+import { SeoService } from '../../../../core/seo/seo.service';
 
 @Component({
   selector: 'app-project-details-page',
@@ -31,7 +32,7 @@ import { UnsplashUrlFormatterPipe } from '../../../../shared/unsplash-url-format
     AsyncPipe,
     AuthRequiredDirective,
     GravatarModule,
-    UnsplashUrlFormatterPipe
+    UnsplashUrlFormatterPipe,
   ],
   templateUrl: './project-details-page.html',
   styleUrl: './project-details-page.scss',
@@ -42,6 +43,7 @@ export class ProjectDetailsPage implements OnInit {
   public readonly voteStore = inject(VoteStoreService);
   private readonly authService = inject(AuthService);
   private readonly injector = inject(Injector);
+  private readonly seo = inject(SeoService);
 
   readonly slug = input.required<string>();
 
@@ -61,6 +63,21 @@ export class ProjectDetailsPage implements OnInit {
         const project = this.$project?.();
         if (project?.id) {
           this.$voted = this.voteStore.isVoted(project.id);
+          this.seo.update({
+            title: project.name,
+            description: project.shortDescription,
+            image: project.image,
+            jsonLd: {
+              '@type': 'SoftwareApplication',
+              name: project.name,
+              description: project.shortDescription,
+              image: project.image,
+              author: {
+                '@type': 'Person',
+                name: project.creator.fullName,
+              },
+            },
+          });
         }
       },
       { injector: this.injector },
