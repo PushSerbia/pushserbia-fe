@@ -18,10 +18,10 @@ export class LandingTestimonials {
   readonly testimonials: Testimonial[] = [
     {
       quote:
-        'Pridružio sam se Push Serbia da unapredim svoje veštine i već posle par meseci, uz pomoć mentora kojeg sam upoznao ovde, dobio sam bolji posao.',
-      name: 'Marko J.',
-      role: 'JavaScript developer',
-      initial: 'M',
+        'Misija projekta je zadužbinarstvo, a o tome valjda razmišljamo sa godinama.',
+      name: 'Dušan',
+      role: 'Software Engineer',
+      initial: 'D',
     },
     {
       quote:
