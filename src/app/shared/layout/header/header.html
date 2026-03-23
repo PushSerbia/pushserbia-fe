@@ -1,13 +1,96 @@
-<header class="container mx-auto py-6 px-4">
-  <div class="flex justify-between items-center gap-y-2 min-h-12">
-    <a routerLink="/" class="flex items-center whitespace-nowrap">
-      <span class="ml-3 mr-2 text-green-700 dark:text-green-400 text-lg">git</span>
-      <span class="text-xl font-bold text-black dark:text-white">push Serbia</span>
-    </a>
+<header class="bg-black/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
+  <div class="container mx-auto py-4 px-4 lg:px-8">
+    <div class="flex justify-between items-center min-h-10">
+      <a routerLink="/" class="flex items-center whitespace-nowrap">
+        <span class="mr-1.5 text-primary-400 text-base font-mono">git</span>
+        <span class="text-lg font-bold text-white">push Serbia</span>
+      </a>
 
-    <div class="flex items-center gap-2 pr-2 sm:pr-4 w-full sm:w-auto justify-end">
-      <app-theme-switcher />
-      <app-user-widget />
+      <nav class="hidden md:flex items-center gap-8">
+        <a
+          routerLink="/projekti"
+          routerLinkActive="text-white"
+          class="text-sm text-neutral-400 hover:text-white transition-colors"
+          >Projekti</a
+        >
+        <a
+          routerLink="/blog"
+          routerLinkActive="text-white"
+          class="text-sm text-neutral-400 hover:text-white transition-colors"
+          >Blog</a
+        >
+        <a
+          routerLink="/dokumentacija/o-nama"
+          routerLinkActive="text-white"
+          class="text-sm text-neutral-400 hover:text-white transition-colors"
+          >O nama</a
+        >
+        <a
+          routerLink="/autentikacija/prijava"
+          class="text-sm font-medium text-black bg-white px-4 py-1.5 rounded-full hover:bg-neutral-200 transition-colors"
+          >Pridruži se</a
+        >
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <app-theme-switcher />
+        <app-user-widget />
+        <button
+          type="button"
+          class="md:hidden p-1.5 text-neutral-400 hover:text-white transition-colors"
+          (click)="toggleMobileMenu()"
+          [attr.aria-expanded]="mobileMenuOpen()"
+          aria-label="Meni"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            @if (mobileMenuOpen()) {
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            } @else {
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            }
+          </svg>
+        </button>
+      </div>
     </div>
+
+    @if (mobileMenuOpen()) {
+      <nav class="md:hidden mt-3 pt-3 border-t border-white/5 flex flex-col gap-1 pb-2">
+        <a
+          routerLink="/projekti"
+          class="text-sm text-neutral-400 hover:text-white py-2 px-2"
+          (click)="closeMobileMenu()"
+          >Projekti</a
+        >
+        <a
+          routerLink="/blog"
+          class="text-sm text-neutral-400 hover:text-white py-2 px-2"
+          (click)="closeMobileMenu()"
+          >Blog</a
+        >
+        <a
+          routerLink="/dokumentacija/o-nama"
+          class="text-sm text-neutral-400 hover:text-white py-2 px-2"
+          (click)="closeMobileMenu()"
+          >O nama</a
+        >
+        <a
+          routerLink="/autentikacija/prijava"
+          class="text-sm font-medium text-black bg-white px-4 py-2 rounded-full mt-2 text-center"
+          (click)="closeMobileMenu()"
+          >Pridruži se</a
+        >
+      </nav>
+    }
   </div>
 </header>

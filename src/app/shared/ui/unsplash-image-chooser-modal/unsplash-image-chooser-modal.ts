@@ -49,8 +49,8 @@ export class UnsplashImageChooserModal implements OnInit {
   }
 
   selectImage(imagePath: string): void {
-    this.value.set(imagePath);
-    this.dialogRef.close(imagePath);
+    this.value.set(imagePath.split('?')[0]);
+    this.dialogRef.close(this.value());
   }
 
   close(): void {

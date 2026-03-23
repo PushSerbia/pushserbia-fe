@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../../../core/auth/auth.service';
 
 @Component({
@@ -15,18 +15,15 @@ export class ProfileInformationDialog {
   closeClick = output<void>();
 
   private readonly authService = inject(AuthService);
-  private readonly formBuilder = inject(UntypedFormBuilder);
+  private readonly fb = inject(FormBuilder);
 
-  readonly form = this.formBuilder.group({
-    fullName: this.formBuilder.control(
-      this.authService.$fullUserData()?.fullName || '',
-      Validators.required,
-    ),
-    linkedInUrl: this.formBuilder.control(this.authService.$fullUserData()?.linkedInUrl || ''),
-    gitHubUrl: this.formBuilder.control(this.authService.$fullUserData()?.gitHubUrl || ''),
+  readonly form = this.fb.nonNullable.group({
+    fullName: [this.authService.$fullUserData()?.fullName || '', Validators.required],
+    linkedInUrl: [this.authService.$fullUserData()?.linkedInUrl || ''],
+    gitHubUrl: [this.authService.$fullUserData()?.gitHubUrl || ''],
   });
 
   updateMe() {
-    this.authService.updateMe(this.form.value).subscribe(() => this.closeClick.emit());
+    this.authService.updateMe(this.form.getRawValue()).subscribe(() => this.closeClick.emit());
   }
 }

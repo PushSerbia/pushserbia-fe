@@ -1,16 +1,34 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LandingHero } from './sections/landing-hero/landing-hero';
+import { LandingBenefits } from './sections/landing-benefits/landing-benefits';
 import { LandingProjects } from './sections/landing-projects/landing-projects';
 import { LandingHowTo } from './sections/landing-how-to/landing-how-to';
-import { LandingPricing } from './sections/landing-pricing/landing-pricing';
+import { LandingTestimonials } from './sections/landing-testimonials/landing-testimonials';
 import { LandingFaq } from './sections/landing-faq/landing-faq';
+import { LandingCta } from './sections/landing-cta/landing-cta';
 import { BasicLayout } from '../../shared/layout/landing-layout/basic-layout';
+import { SeoService } from '../../core/seo/seo.service';
 
 @Component({
   selector: 'app-landing',
-  imports: [LandingHero, LandingProjects, LandingHowTo, LandingPricing, LandingFaq, BasicLayout],
+  imports: [
+    LandingHero,
+    LandingBenefits,
+    LandingProjects,
+    LandingHowTo,
+    LandingTestimonials,
+    LandingFaq,
+    LandingCta,
+    BasicLayout,
+  ],
   templateUrl: './landing.html',
   styleUrl: './landing.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Landing {}
+export class Landing {
+  constructor() {
+    inject(SeoService).update({
+      url: 'https://pushserbia.com',
+    });
+  }
+}

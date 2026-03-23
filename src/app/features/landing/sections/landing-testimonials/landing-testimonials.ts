@@ -1,0 +1,39 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+  initial: string;
+}
+
+@Component({
+  selector: 'app-landing-testimonials',
+  imports: [],
+  templateUrl: './landing-testimonials.html',
+  styleUrl: './landing-testimonials.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class LandingTestimonials {
+  readonly testimonials: Testimonial[] = [
+    {
+      quote:
+        'Misija projekta je zadužbinarstvo, a o tome valjda razmišljamo sa godinama.',
+      name: 'Dušan',
+      role: 'Software Engineer',
+      initial: 'D',
+    },
+    {
+      quote: 'Ovo vam je čisto gubljenje vremena.',
+      name: 'LinkedIn korisnik',
+      role: '',
+      initial: 'L',
+    },
+    {
+      quote: 'Ja hoću i želim, ali nemam ti brate kad.',
+      name: 'Poznanik',
+      role: '',
+      initial: 'P',
+    },
+  ];
+}

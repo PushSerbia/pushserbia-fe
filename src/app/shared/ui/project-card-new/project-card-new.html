@@ -1,40 +1,28 @@
 <a
   routerLink="/projekti/novi"
-  class="flex flex-col w-sm max-w-[calc(100svw-32px)] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:shadow hover:shadow-primary-500 transition-transform"
+  class="flex flex-col w-full sm:w-sm max-w-[calc(100svw-32px)] bg-neutral-950 border border-dashed border-white/10 rounded-xl hover:border-primary-500/30 transition-colors group"
   appAuthRequired
 >
   <div
-    class="h-[208px] bg-gray-700 text-white flex justify-center items-center text-5xl rounded-t-lg"
+    class="h-52 flex justify-center items-center text-neutral-500 group-hover:text-primary-500 transition-colors"
   >
-    ?
+    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+        d="M12 4.5v15m7.5-7.5h-15"
+      />
+    </svg>
   </div>
 
-  <div class="p-8">
-    <h3 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-      Dodaj svoj projekat
-    </h3>
-    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 h-20">
-      Unesi ideju za društveno koristan projekat i razvijaj u open-source zajednici.
+  <div class="p-5">
+    <h3 class="mb-2 text-xl font-bold tracking-tight text-white">Dodaj svoj projekat</h3>
+    <p class="mb-4 text-sm text-neutral-400 h-20">
+      Imaš ideju za društveno koristan projekat? Podijeli je sa zajednicom.
     </p>
-    <div
-      class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800"
-    >
-      Kreiraj projekat
-      <svg
-        class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 14 10"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M1 5h12m0 0L9 1m4 4L9 9"
-        />
-      </svg>
-    </div>
+    <span class="text-sm font-medium text-primary-400 group-hover:text-primary-300">
+      Kreiraj projekat →
+    </span>
   </div>
 </a>

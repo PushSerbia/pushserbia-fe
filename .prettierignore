@@ -7,3 +7,4 @@ sourcemaps
 *.log
 package.json
 package-lock.json
+tmp/

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SeoService } from '../../../../core/seo/seo.service';
 
 @Component({
   selector: 'app-terms',
@@ -8,4 +9,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './terms.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Terms {}
+export class Terms {
+  constructor() {
+    inject(SeoService).update({
+      title: 'Uslovi korišćenja',
+      description:
+        'Uslovi korišćenja Push Serbia platforme — pravila i obaveze korisnika.',
+    });
+  }
+}

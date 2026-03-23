@@ -3,6 +3,7 @@ import { AbstractFormUiControl } from '../../directives/abstract-form-ui-control
 import { Dialog, DialogModule } from '@angular/cdk/dialog';
 import { UnsplashImageChooserModal } from '../unsplash-image-chooser-modal/unsplash-image-chooser-modal';
 import { take } from 'rxjs';
+import { UnsplashUrlFormatterPipe } from '../../unsplash-url-formatter.pipe';
 
 export interface ImageControlOption {
   author: {
@@ -16,7 +17,7 @@ export interface ImageControlOption {
 
 @Component({
   selector: 'app-image-control',
-  imports: [DialogModule],
+  imports: [DialogModule, UnsplashUrlFormatterPipe],
   templateUrl: './image-control.html',
   styleUrl: './image-control.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -16,9 +16,11 @@ import { ProjectStoreService } from '../../../../core/project/project.store.serv
 import { PageLoader } from '../../../../shared/ui/page-loader/page-loader';
 import { VoteStoreService } from '../../../../core/vote/vote.store.service';
 import { AuthService } from '../../../../core/auth/auth.service';
-import { AsyncPipe } from '@angular/common';
+
 import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
 import { GravatarModule } from 'ngx-gravatar';
+import { UnsplashUrlFormatterPipe } from '../../../../shared/unsplash-url-formatter.pipe';
+import { SeoService } from '../../../../core/seo/seo.service';
 
 @Component({
   selector: 'app-project-details-page',
@@ -27,9 +29,9 @@ import { GravatarModule } from 'ngx-gravatar';
     QuillViewHTMLComponent,
     ProjectDetailsSidenav,
     PageLoader,
-    AsyncPipe,
     AuthRequiredDirective,
     GravatarModule,
+    UnsplashUrlFormatterPipe,
   ],
   templateUrl: './project-details-page.html',
   styleUrl: './project-details-page.scss',
@@ -40,6 +42,7 @@ export class ProjectDetailsPage implements OnInit {
   public readonly voteStore = inject(VoteStoreService);
   private readonly authService = inject(AuthService);
   private readonly injector = inject(Injector);
+  private readonly seo = inject(SeoService);
 
   readonly slug = input.required<string>();
 
@@ -49,7 +52,7 @@ export class ProjectDetailsPage implements OnInit {
   $voteLoading = this.voteStore.$loading;
   $voted?: Signal<boolean>;
 
-  currentUser$ = this.authService.userData$;
+  $currentUser = this.authService.$userData;
 
   ngOnInit(): void {
     this.$project = this.projectStore.getBySlug(this.slug());
@@ -59,6 +62,21 @@ export class ProjectDetailsPage implements OnInit {
         const project = this.$project?.();
         if (project?.id) {
           this.$voted = this.voteStore.isVoted(project.id);
+          this.seo.update({
+            title: project.name,
+            description: project.shortDescription,
+            image: project.image,
+            jsonLd: {
+              '@type': 'SoftwareApplication',
+              name: project.name,
+              description: project.shortDescription,
+              image: project.image,
+              author: {
+                '@type': 'Person',
+                name: project.creator.fullName,
+              },
+            },
+          });
         }
       },
       { injector: this.injector },
