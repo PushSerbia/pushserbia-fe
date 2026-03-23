@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'unsplashUrlFormatter'
+  name: 'unsplashUrlFormatter',
+  standalone: true,
 })
 export class UnsplashUrlFormatterPipe implements PipeTransform {
   transform(unsplashBaseUrl: string, {width, height}: {width: number, height: number}): string {

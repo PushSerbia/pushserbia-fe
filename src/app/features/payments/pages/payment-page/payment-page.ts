@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
@@ -9,7 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DonationOption, donationOptions } from '../../../../core/donation/donation-option';
-import { catchError, of, Subscription, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 import { IntegrationsService } from '../../../../core/integrations/integrations.service';
 import { SeoService } from '../../../../core/seo/seo.service';
 
@@ -20,12 +21,13 @@ import { SeoService } from '../../../../core/seo/seo.service';
   styleUrl: './payment-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PaymentPage implements OnInit, OnDestroy {
+export class PaymentPage implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private integrationsService = inject(IntegrationsService);
   private seo = inject(SeoService);
+  private destroyRef = inject(DestroyRef);
 
   paymentForm: FormGroup;
   isOneTime = true;
@@ -38,7 +40,6 @@ export class PaymentPage implements OnInit, OnDestroy {
   isSubmitting = false;
   submissionSuccess = false;
   submissionError: string | null = null;
-  private queryParamsSubscription: Subscription = new Subscription();
 
   constructor() {
     this.paymentForm = this.fb.group({
@@ -54,7 +55,7 @@ export class PaymentPage implements OnInit, OnDestroy {
       description: 'Podrži Push Serbia zajednicu donacijom.',
     });
 
-    this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.isOneTime = params['isOneTime'] === 'true';
       this.amount = Number(params['amount']) || 0;
       this.title = params['title'] || '';
@@ -67,12 +68,6 @@ export class PaymentPage implements OnInit, OnDestroy {
             option.isOneTime === this.isOneTime,
         ) || null;
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.queryParamsSubscription) {
-      this.queryParamsSubscription.unsubscribe();
-    }
   }
 
   toggleOptionsSelector(): void {
