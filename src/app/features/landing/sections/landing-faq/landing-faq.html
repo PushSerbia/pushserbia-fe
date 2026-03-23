@@ -19,7 +19,8 @@
     <div class="mb-10">
       <input
         type="search"
-        [(ngModel)]="searchQuery"
+        [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)"
         class="block w-full py-3 px-4 text-sm text-white bg-black border border-white/10 rounded-lg focus:ring-1 focus:ring-primary-500 focus:border-primary-500 placeholder-neutral-500 outline-0"
         placeholder="Pretraži..."
       />
@@ -33,9 +34,9 @@
           </button>
         }
       </div>
-      @if (searchQuery) {
+      @if (searchQuery()) {
         <p class="mt-3 text-xs text-neutral-400">
-          {{ faq.length }} rezultata
+          {{ faq().length }} rezultata
           <button (click)="clearSearch()" class="text-white hover:underline ml-1">očisti</button>
         </p>
       }
@@ -43,7 +44,7 @@
 
     <!-- FAQ list -->
     <div class="divide-y divide-white/5">
-      @for (question of faq; track $index) {
+      @for (question of faq(); track $index) {
         <div class="py-6">
           <h3 class="text-base font-semibold text-white mb-2">{{ question.title }}</h3>
           <p class="text-sm text-neutral-400 leading-relaxed">{{ question.description }}</p>
@@ -51,7 +52,7 @@
       }
     </div>
 
-    @if (!showAllQuestions && !searchQuery && totalQuestionsCount > initialQuestionsCount) {
+    @if (!showAllQuestions() && !searchQuery() && totalQuestionsCount > initialQuestionsCount) {
       <button
         (click)="toggleShowAll()"
         class="mt-6 text-sm text-neutral-400 hover:text-white transition-colors"
@@ -59,7 +60,7 @@
         Prikaži sva pitanja (još {{ hiddenQuestionsCount }}) →
       </button>
     }
-    @if (showAllQuestions && !searchQuery) {
+    @if (showAllQuestions() && !searchQuery()) {
       <button
         (click)="toggleShowAll()"
         class="mt-6 text-sm text-neutral-400 hover:text-white transition-colors"
