@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { signal } from '@angular/core';
+import { of } from 'rxjs';
 
 import { LandingProjects } from './landing-projects';
 import { ProjectStoreService } from '../../../../core/project/project.store.service';
@@ -34,10 +35,11 @@ describe('LandingProjects', () => {
         { provide: VoteStoreService, useValue: voteStoreMock },
         {
           provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut'], {
+          useValue: jasmine.createSpyObj('AuthService', ['signOut', 'getMe', 'updateMe'], {
             $authenticated: jasmine.createSpy().and.returnValue(false),
             $userData: jasmine.createSpy().and.returnValue(undefined),
             $fullUserData: jasmine.createSpy().and.returnValue(null),
+            userData$: of(undefined),
           }),
         },
       ],

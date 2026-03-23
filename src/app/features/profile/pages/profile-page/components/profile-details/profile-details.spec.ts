@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Component } from '@angular/core';
 
+import { of } from 'rxjs';
+
 import { ProfileDetails } from './profile-details';
 import { ModalService } from '../../../../../../core/modal/modal.service';
 import { AuthService } from '../../../../../../core/auth/auth.service';
@@ -33,10 +35,11 @@ describe('ProfileDetails', () => {
         },
         {
           provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut'], {
+          useValue: jasmine.createSpyObj('AuthService', ['signOut', 'getMe', 'updateMe'], {
             $authenticated: jasmine.createSpy().and.returnValue(false),
             $userData: jasmine.createSpy().and.returnValue(undefined),
             $fullUserData: jasmine.createSpy().and.returnValue(null),
+            userData$: of(undefined),
           }),
         },
       ],

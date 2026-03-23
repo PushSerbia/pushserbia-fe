@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 
 import { ProfilePage } from './profile-page';
 import { AuthService } from '../../../../core/auth/auth.service';
+import { ModalService } from '../../../../core/modal/modal.service';
 
 describe('ProfilePage', () => {
   let component: ProfilePage;
@@ -31,6 +32,10 @@ describe('ProfilePage', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: AuthService, useValue: authServiceMock },
+        {
+          provide: ModalService,
+          useValue: jasmine.createSpyObj('ModalService', ['open', 'close', 'remove']),
+        },
       ],
     }).compileComponents();
 

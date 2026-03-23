@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { signal } from '@angular/core';
+import { of } from 'rxjs';
 
 import { CreateProjectPage } from './create-project-page';
 import { ProjectStoreService } from '../../../../core/project/project.store.service';
@@ -32,10 +33,11 @@ describe('CreateProjectPage', () => {
         { provide: SeoService, useValue: jasmine.createSpyObj('SeoService', ['update']) },
         {
           provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut'], {
+          useValue: jasmine.createSpyObj('AuthService', ['signOut', 'getMe', 'updateMe'], {
             $authenticated: jasmine.createSpy().and.returnValue(false),
             $userData: jasmine.createSpy().and.returnValue(undefined),
             $fullUserData: jasmine.createSpy().and.returnValue(null),
+            userData$: of(undefined),
           }),
         },
       ],
