@@ -18,24 +18,22 @@ export class LandingTestimonials {
   readonly testimonials: Testimonial[] = [
     {
       quote:
-        'Pridružio sam se Push Serbia da unapredim svoje veštine i već posle par meseci, uz pomoć mentora kojeg sam upoznao ovde, dobio sam bolji posao.',
-      name: 'Marko J.',
-      role: 'JavaScript developer',
-      initial: 'M',
+        'Misija projekta je zadužbinarstvo, a o tome valjda razmišljamo sa godinama.',
+      name: 'Dušan',
+      role: 'Software Engineer',
+      initial: 'D',
     },
     {
-      quote:
-        'Predložio sam projekat za digitalizaciju školskih udžbenika i zajednica mi je pomogla da ga realizujem. Neverovatan osećaj kada tvoj kod pomaže hiljadama učenika.',
-      name: 'Ana S.',
-      role: 'Full-stack developer',
-      initial: 'A',
+      quote: 'Ovo vam je čisto gubljenje vremena.',
+      name: 'LinkedIn korisnik',
+      role: '',
+      initial: 'L',
     },
     {
-      quote:
-        'Kao dizajner, nisam znao kako da doprinosim open-source projektima. Push Serbia mi je pokazala put — sada radim na 3 projekta i učim svaki dan.',
-      name: 'Nikola T.',
-      role: 'UX dizajner',
-      initial: 'N',
+      quote: 'Ja hoću i želim, ali nemam ti brate kad.',
+      name: 'Poznanik',
+      role: '',
+      initial: 'P',
     },
   ];
 }

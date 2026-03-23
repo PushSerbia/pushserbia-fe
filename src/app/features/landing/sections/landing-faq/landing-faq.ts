@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 interface SearchOption {
@@ -16,51 +16,43 @@ interface SearchOption {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingFaq implements OnInit {
-  // State variables for show all functionality and search
-  showAllQuestions = false;
-  searchQuery = '';
+  showAllQuestions = signal(false);
+  searchQuery = signal('');
 
-  // Number of questions to show initially
   initialQuestionsCount = 6;
 
-  // Search options for quick filtering
   searchOptions: SearchOption[] = [];
 
-  // Computed property to get filtered questions
-  get faq() {
+  faq = computed(() => {
     let filteredFaq = this.originalFaq;
+    const query = this.searchQuery().trim();
 
-    // Filter by search query if it exists
-    if (this.searchQuery.trim()) {
-      const query = this.searchQuery.toLowerCase();
+    if (query) {
+      const lowerQuery = query.toLowerCase();
       filteredFaq = filteredFaq.filter(
         (item) =>
-          item.title.toLowerCase().includes(query) ||
-          item.description.toLowerCase().includes(query),
+          item.title.toLowerCase().includes(lowerQuery) ||
+          item.description.toLowerCase().includes(lowerQuery),
       );
     }
 
-    // Limit the number of questions if not showing all
-    if (!this.showAllQuestions && !this.searchQuery.trim()) {
+    if (!this.showAllQuestions() && !query) {
       return filteredFaq.slice(0, this.initialQuestionsCount);
     }
 
     return filteredFaq;
-  }
+  });
 
-  // Toggle show all questions
   toggleShowAll() {
-    this.showAllQuestions = !this.showAllQuestions;
+    this.showAllQuestions.update((v) => !v);
   }
 
-  // Clear search query
   clearSearch() {
-    this.searchQuery = '';
+    this.searchQuery.set('');
   }
 
-  // Set search query to the selected option's search text
   setSearchOption(option: SearchOption) {
-    this.searchQuery = option.searchText;
+    this.searchQuery.set(option.searchText);
   }
 
   ngOnInit() {

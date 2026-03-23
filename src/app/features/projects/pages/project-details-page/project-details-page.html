@@ -8,7 +8,7 @@
       />
     } @else {
       @let projectDetails = $project!();
-      @let currentUser = currentUser$ | async;
+      @let currentUser = $currentUser();
 
       @if (currentUser) {
         <app-project-details-sidenav
