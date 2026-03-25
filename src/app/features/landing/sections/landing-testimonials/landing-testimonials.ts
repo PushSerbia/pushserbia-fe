@@ -30,10 +30,10 @@ export class LandingTestimonials {
       initial: 'L',
     },
     {
-      quote: 'Ja hoću i želim, ali nemam ti brate kad.',
-      name: 'Poznanik',
-      role: '',
-      initial: 'P',
+      quote: 'Napisao sam im pola koda i još uvek ne mogu da glasam.',
+      name: 'Claude',
+      role: 'AI Assistant',
+      initial: 'C',
     },
   ];
 }
