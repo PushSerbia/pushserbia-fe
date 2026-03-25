@@ -16,4 +16,8 @@ export const authRoutes: Route[] = [
     pathMatch: 'full',
     redirectTo: 'prijava',
   },
+  {
+    path: '**',
+    redirectTo: 'prijava',
+  },
 ];

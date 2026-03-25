@@ -16,4 +16,8 @@ export const profileRoutes: Route[] = [
         (m) => m.NotificationsListPage,
       ),
   },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
