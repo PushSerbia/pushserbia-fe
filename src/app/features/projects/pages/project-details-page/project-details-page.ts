@@ -36,7 +36,6 @@ import { SeoService } from '../../../../core/seo/seo.service';
     UnsplashUrlFormatterPipe,
   ],
   templateUrl: './project-details-page.html',
-  styleUrl: './project-details-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectDetailsPage implements OnInit {

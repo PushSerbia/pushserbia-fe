@@ -10,7 +10,6 @@ import { GravatarModule } from 'ngx-gravatar';
   selector: 'app-profile-details',
   imports: [TitleCasePipe, ProfileInformationDialog, GravatarModule],
   templateUrl: './profile-details.html',
-  styleUrl: './profile-details.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileDetails implements OnDestroy {

@@ -10,8 +10,10 @@ import { SeoService } from '../../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Careers {
+  private readonly seo = inject(SeoService);
+
   constructor() {
-    inject(SeoService).update({
+    this.seo.update({
       title: 'Karijere',
       description:
         'Pridruži se Push Serbia timu — otvorene pozicije i mogućnosti za saradnju.',

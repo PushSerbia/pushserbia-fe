@@ -6,7 +6,6 @@ import { Footer } from '../footer/footer';
   selector: 'app-basic-layout',
   imports: [Header, Footer],
   templateUrl: './basic-layout.html',
-  styleUrl: './basic-layout.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicLayout {}

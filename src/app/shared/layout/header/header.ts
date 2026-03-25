@@ -7,7 +7,6 @@ import { ThemeSwitcher } from '../../ui/theme-switcher/theme-switcher';
   selector: 'app-header',
   imports: [UserWidget, RouterLink, RouterLinkActive, ThemeSwitcher],
   templateUrl: './header.html',
-  styleUrl: './header.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {

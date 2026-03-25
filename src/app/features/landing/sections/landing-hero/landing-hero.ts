@@ -12,7 +12,6 @@ interface Member {
   selector: 'app-landing-hero',
   imports: [RouterLink, NgOptimizedImage],
   templateUrl: './landing-hero.html',
-  styleUrl: './landing-hero.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingHero {

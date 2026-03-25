@@ -8,7 +8,6 @@ import { first } from 'rxjs';
   selector: 'app-account',
   imports: [],
   templateUrl: './account.html',
-  styleUrl: './account.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Account implements OnInit {

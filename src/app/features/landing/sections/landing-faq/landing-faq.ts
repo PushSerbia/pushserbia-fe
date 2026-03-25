@@ -12,7 +12,6 @@ interface SearchOption {
   selector: 'app-landing-faq',
   imports: [FormsModule],
   templateUrl: './landing-faq.html',
-  styleUrl: './landing-faq.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingFaq implements OnInit {

@@ -5,7 +5,6 @@ import { FieldTree } from '@angular/forms/signals';
   selector: 'app-validation-message',
   imports: [],
   templateUrl: './validation-message.html',
-  styleUrl: './validation-message.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ValidationMessage {

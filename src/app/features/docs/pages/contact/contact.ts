@@ -10,8 +10,10 @@ import { SeoService } from '../../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Contact {
+  private readonly seo = inject(SeoService);
+
   constructor() {
-    inject(SeoService).update({
+    this.seo.update({
       title: 'Kontakt',
       description:
         'Kontaktiraj Push Serbia tim — email, društvene mreže, Slack i GitHub.',
