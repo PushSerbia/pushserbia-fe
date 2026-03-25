@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { BasicLayout } from '../../../../shared/layout/landing-layout/basic-layout';
 import { QuillViewHTMLComponent } from 'ngx-quill';
+import { RouterLink } from '@angular/router';
 import { Project } from '../../../../core/project/project';
 import { ProjectDetailsSidenav } from './components/project-details-sidenav/project-details-sidenav';
 import { ProjectStoreService } from '../../../../core/project/project.store.service';
@@ -27,6 +28,7 @@ import { SeoService } from '../../../../core/seo/seo.service';
   imports: [
     BasicLayout,
     QuillViewHTMLComponent,
+    RouterLink,
     ProjectDetailsSidenav,
     PageLoader,
     AuthRequiredDirective,
