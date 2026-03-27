@@ -5,7 +5,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-landing-cta',
   imports: [RouterLink],
   templateUrl: './landing-cta.html',
-  styleUrl: './landing-cta.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingCta {}

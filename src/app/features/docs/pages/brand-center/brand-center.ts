@@ -10,8 +10,10 @@ import { SeoService } from '../../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrandCenter {
+  private readonly seo = inject(SeoService);
+
   constructor() {
-    inject(SeoService).update({
+    this.seo.update({
       title: 'Brend centar',
       description:
         'Push Serbia brend resursi — logotip, boje, tipografija i smernice za korišćenje.',

@@ -28,7 +28,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-unsplash-image-chooser-modal',
   imports: [ReactiveFormsModule],
   templateUrl: './unsplash-image-chooser-modal.html',
-  styleUrl: './unsplash-image-chooser-modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UnsplashImageChooserModal implements OnInit {

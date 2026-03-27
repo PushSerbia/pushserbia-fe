@@ -10,8 +10,10 @@ import { SeoService } from '../../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FinancingDetails {
+  private readonly seo = inject(SeoService);
+
   constructor() {
-    inject(SeoService).update({
+    this.seo.update({
       title: 'Podrži nas',
       description:
         'Podrži Push Serbia zajednicu — jednokratna donacija ili mesečna pretplata za razvoj open-source projekata.',

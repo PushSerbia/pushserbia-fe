@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'app-page-loader',
   imports: [],
   templateUrl: './page-loader.html',
-  styleUrl: './page-loader.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageLoader {}

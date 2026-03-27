@@ -19,7 +19,6 @@ export interface ImageControlOption {
   selector: 'app-image-control',
   imports: [DialogModule, UnsplashUrlFormatterPipe],
   templateUrl: './image-control.html',
-  styleUrl: './image-control.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(click)': 'touched.set(true)'

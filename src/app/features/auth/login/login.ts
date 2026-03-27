@@ -8,7 +8,6 @@ import { SeoService } from '../../../core/seo/seo.service';
   selector: 'app-login',
   imports: [RouterLink],
   templateUrl: './login.html',
-  styleUrl: './login.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Login implements OnInit {

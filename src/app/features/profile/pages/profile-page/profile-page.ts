@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
   selector: 'app-profile-page',
   imports: [BasicLayout, ProfileSidenav, PageLoader, ProfileStats, ProfileDetails],
   templateUrl: './profile-page.html',
-  styleUrl: './profile-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilePage {

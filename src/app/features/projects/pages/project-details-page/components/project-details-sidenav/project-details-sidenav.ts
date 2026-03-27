@@ -8,7 +8,6 @@ import { AuthRequiredDirective } from '../../../../../../core/auth/auth-required
   selector: 'app-project-details-sidenav',
   imports: [RouterLink, AuthRequiredDirective],
   templateUrl: './project-details-sidenav.html',
-  styleUrl: './project-details-sidenav.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectDetailsSidenav {

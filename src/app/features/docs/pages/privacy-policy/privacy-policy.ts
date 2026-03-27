@@ -10,8 +10,10 @@ import { SeoService } from '../../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrivacyPolicy {
+  private readonly seo = inject(SeoService);
+
   constructor() {
-    inject(SeoService).update({
+    this.seo.update({
       title: 'Politika privatnosti',
       description:
         'Politika privatnosti Push Serbia platforme — kako prikupljamo, koristimo i štitimo vaše podatke.',

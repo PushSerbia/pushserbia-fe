@@ -6,7 +6,6 @@ import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data
   selector: 'app-profile-stats',
   imports: [],
   templateUrl: './profile-stats.html',
-  styleUrl: './profile-stats.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileStats {

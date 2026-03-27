@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
   selector: 'app-notifications-list-page',
   imports: [],
   templateUrl: './notifications-list-page.html',
-  styleUrl: './notifications-list-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsListPage {

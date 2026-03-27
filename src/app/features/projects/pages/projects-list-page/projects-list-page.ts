@@ -35,7 +35,6 @@ import { SeoService } from '../../../../core/seo/seo.service';
     AuthRequiredDirective,
   ],
   templateUrl: './projects-list-page.html',
-  styleUrl: './projects-list-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsListPage implements OnInit {
@@ -58,8 +57,10 @@ export class ProjectsListPage implements OnInit {
   myProjectsOnly = input<string>('myProjectsOnly');
   supportedOnly = input<string>('supportedOnly');
 
+  private readonly seo = inject(SeoService);
+
   constructor() {
-    inject(SeoService).update({
+    this.seo.update({
       title: 'Projekti',
       description:
         'Pregledaj open-source projekte sa društvenim uticajem u Srbiji. Glasaj, predloži ili doprinesi.',

@@ -6,7 +6,6 @@ import { AuthService } from '../../../../../../core/auth/auth.service';
   selector: 'app-profile-information-dialog',
   imports: [ReactiveFormsModule],
   templateUrl: './profile-information-dialog.html',
-  styleUrl: './profile-information-dialog.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileInformationDialog {

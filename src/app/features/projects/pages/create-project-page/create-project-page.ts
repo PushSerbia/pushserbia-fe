@@ -59,7 +59,6 @@ interface CreateProjectModel {
     ValidationMessage,
   ],
   templateUrl: './create-project-page.html',
-  styleUrl: './create-project-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateProjectPage implements OnInit {

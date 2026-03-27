@@ -12,7 +12,6 @@ import { TransitionService } from '../../../../core/transition/transition.servic
   selector: 'app-landing-projects',
   imports: [RouterLink, ProjectCard, ProjectCardNew, SlicePipe],
   templateUrl: './landing-projects.html',
-  styleUrl: './landing-projects.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingProjects {
