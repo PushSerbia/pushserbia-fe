@@ -6,7 +6,6 @@ import { AuthRequiredDirective } from '../../../core/auth/auth-required.directiv
   selector: 'app-project-card-new',
   imports: [RouterLink, AuthRequiredDirective],
   templateUrl: './project-card-new.html',
-  styleUrl: './project-card-new.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectCardNew {}

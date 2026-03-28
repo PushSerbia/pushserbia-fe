@@ -5,7 +5,6 @@ import { ProjectsFilter } from '../../../../../../core/project/projects-filter';
   selector: 'app-project-list-filters',
   imports: [],
   templateUrl: './project-list-filters.html',
-  styleUrl: './project-list-filters.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectListFilters {

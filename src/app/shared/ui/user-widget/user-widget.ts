@@ -7,7 +7,6 @@ import { GravatarModule } from 'ngx-gravatar';
   selector: 'app-user-widget',
   imports: [RouterLink, GravatarModule],
   templateUrl: './user-widget.html',
-  styleUrl: './user-widget.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserWidget {

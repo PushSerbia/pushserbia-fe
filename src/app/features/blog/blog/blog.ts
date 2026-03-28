@@ -12,12 +12,13 @@ import { SeoService } from '../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Blog {
-  private blogStoreService = inject(BlogStoreService);
+  private readonly blogStoreService = inject(BlogStoreService);
+  private readonly seo = inject(SeoService);
 
   blogPosts = this.blogStoreService.getBlogPosts();
 
   constructor() {
-    inject(SeoService).update({
+    this.seo.update({
       title: 'Blog',
       description: 'Znanje, iskustva i novosti iz Push Serbia zajednice.',
     });

@@ -7,7 +7,6 @@ import { first } from 'rxjs';
   selector: 'app-profile-sidenav',
   imports: [RouterLink],
   templateUrl: './profile-sidenav.html',
-  styleUrl: './profile-sidenav.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileSidenav {

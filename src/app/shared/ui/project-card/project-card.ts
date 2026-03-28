@@ -8,7 +8,6 @@ import { UnsplashUrlFormatterPipe } from '../../unsplash-url-formatter.pipe';
   selector: 'app-project-card',
   imports: [RouterLink, NgOptimizedImage, UnsplashUrlFormatterPipe],
   templateUrl: './project-card.html',
-  styleUrl: './project-card.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectCard {

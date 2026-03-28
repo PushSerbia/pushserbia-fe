@@ -7,7 +7,6 @@ import { donationOptions } from '../../../../core/donation/donation-option';
   selector: 'app-landing-pricing',
   imports: [CurrencyPipe, RouterLink, NgClass],
   templateUrl: './landing-pricing.html',
-  styleUrl: './landing-pricing.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingPricing {

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BlogPost } from './blog';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BlogStoreService {
-  private _blogPosts: BlogPost[] = [
+  private readonly _blogPosts = signal<BlogPost[]>([
     {
       id: '1',
       title: 'Zašto smo pokrenuli Push Serbia',
@@ -244,13 +244,15 @@ export class BlogStoreService {
         'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1470&q=80',
       tags: ['organizacija', 'iza kulisa', 'proces'],
     },
-  ];
+  ]);
+
+  readonly $blogPosts = this._blogPosts.asReadonly();
 
   getBlogPosts(): BlogPost[] {
-    return this._blogPosts;
+    return this._blogPosts();
   }
 
   getBlogPostBySlug(slug: string): BlogPost | undefined {
-    return this._blogPosts.find((post) => post.slug === slug);
+    return this._blogPosts().find((post) => post.slug === slug);
   }
 }

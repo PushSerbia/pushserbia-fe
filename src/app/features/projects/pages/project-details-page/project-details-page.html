@@ -8,133 +8,148 @@
       />
     } @else {
       @let projectDetails = $project!();
-      @let currentUser = $currentUser();
 
-      @if (currentUser) {
-        <app-project-details-sidenav
-          class="h-fit md:sticky md:top-4"
-          [project]="projectDetails"
-          [currentUser]="currentUser"
-        />
-      }
+      @if (projectDetails) {
+        @let currentUser = $currentUser();
 
-      <div
-        class="flex flex-col gap-16 items-center py-8 px-4 mx-auto xl:mx-0 w-[calc(100%-16px)] max-w-screen-xl overflow-hidden lg:px-6 bg-neutral-950 border border-white/5 rounded-2xl"
-      >
+        @if (currentUser) {
+          <app-project-details-sidenav
+            class="h-fit md:sticky md:top-4"
+            [project]="projectDetails"
+            [currentUser]="currentUser"
+          />
+        }
+
         <div
-          class="w-full flex justify-center xl:justify-start items-center flex-wrap xl:flex-nowrap"
+          class="flex flex-col gap-16 items-center py-8 px-4 mx-auto xl:mx-0 w-[calc(100%-16px)] max-w-screen-xl overflow-hidden lg:px-6 bg-neutral-950 border border-white/5 rounded-2xl"
         >
           <div
-            class="project-img h-[calc(100vh/3)] flex justify-start items-center bg-neutral-900 p-6 rounded-2xl"
+            class="w-full flex justify-center xl:justify-start items-center flex-wrap xl:flex-nowrap"
           >
-            @if (projectDetails!.image) {
-              <img
-                class="w-full h-full rounded-lg object-center object-cover"
-                [src]="projectDetails.image | unsplashUrlFormatter: {width: 600, height: 400}"
-                [alt]="projectDetails.name"
-              />
-            } @else {
-              <img
-                src="/illustrations/woman-earth-hugging.svg"
-                class="w-72 h-full rounded-lg"
-                [alt]="projectDetails.name"
-              />
-            }
-          </div>
-          <div class="flex flex-col p-8 text-neutral-500 sm:text-lg">
-            <div class="grid grid-cols-3 gap-4 w-fit">
-              <p>Predlagač:</p>
-              <div class="flex items-center gap-3 col-span-2">
-                @if (projectDetails.creator.gravatar) {
-                  <img ngxGravatar [md5Hash]="projectDetails.creator.gravatar" alt="creator" />
+            <div
+              class="project-img h-[calc(100vh/3)] flex justify-start items-center bg-neutral-900 p-6 rounded-2xl"
+            >
+              @if (projectDetails.image) {
+                <img
+                  class="w-full h-full rounded-lg object-center object-cover"
+                  [src]="projectDetails.image | unsplashUrlFormatter: {width: 600, height: 400}"
+                  [alt]="projectDetails.name"
+                />
+              } @else {
+                <img
+                  src="/illustrations/woman-earth-hugging.svg"
+                  class="w-72 h-full rounded-lg"
+                  [alt]="projectDetails.name"
+                />
+              }
+            </div>
+            <div class="flex flex-col p-8 text-neutral-500 sm:text-lg">
+              <div class="grid grid-cols-3 gap-4 w-fit">
+                <p>Predlagač:</p>
+                <div class="flex items-center gap-3 col-span-2">
+                  @if (projectDetails.creator.gravatar) {
+                    <img ngxGravatar [md5Hash]="projectDetails.creator.gravatar" alt="creator" />
+                  } @else {
+                    <span
+                      class="text-white text-lg font-medium flex items-center justify-center rounded-full w-8 h-8 bg-neutral-800"
+                    >
+                      {{ projectDetails.creator.fullName.charAt(0) }}
+                    </span>
+                  }
+                  <span class="text-white text-lg font-medium rounded-sm">
+                    {{ projectDetails.creator.fullName }}
+                  </span>
+                </div>
+                <p>Github:</p>
+                @if (projectDetails.github) {
+                  <a
+                    class="text-white text-lg font-medium me-2 rounded-sm hover:underline truncate col-span-2"
+                    [href]="projectDetails.github"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {{ projectDetails.github }}
+                  </a>
                 } @else {
                   <span
-                    class="text-white text-lg font-medium flex items-center justify-center rounded-full w-8 h-8 bg-neutral-800"
+                    class="text-white text-lg font-medium me-2 rounded-sm col-span-2"
                   >
-                    {{ projectDetails.creator.fullName.charAt(0) }}
+                    GitHub link nije dodat
                   </span>
                 }
-                <span class="text-white text-lg font-medium rounded-sm">
-                  {{ projectDetails.creator.fullName }}
-                </span>
-              </div>
-              <p>Github:</p>
-              @if (projectDetails.github) {
-                <a
-                  class="text-white text-lg font-medium me-2 rounded-sm hover:underline truncate col-span-2"
-                  [href]="projectDetails.github"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {{ projectDetails.github }}
-                </a>
-              } @else {
-                <span
-                  class="text-white text-lg font-medium me-2 rounded-sm col-span-2"
-                >
-                  GitHub link nije dodat
-                </span>
-              }
-              <p>Status:</p>
-              <div class="col-span-2">
-                <span
-                  class="bg-white/5 text-primary-400 border border-white/10 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm text-center"
-                >
-                  {{ projectDetails.status }}
-                </span>
-              </div>
-              <p>Ukupna podrška:</p>
-              <div>
-                <span
-                  class="bg-white/5 text-primary-400 border border-white/10 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm text-center col-span-2"
-                >
-                  {{ projectDetails.totalVotes }}
-                </span>
-              </div>
-            </div>
-            <div class="py-8">
-              @if ($voteLoading()) {
-                <span
-                  class="bg-primary-500/10 text-primary-400 border border-primary-500/20 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm text-center"
-                >
-                  <span class="animate-pulse">Učitavanje...</span>
-                </span>
-              } @else if ($voted && $voted()) {
-                <span
-                  class="bg-primary-500/10 text-primary-400 border border-primary-500/20 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm text-center"
-                >
-                  Glasali ste za ovaj projekat
-                </span>
-              } @else {
-                <button
-                  class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300"
-                  (click)="voteForProject(projectDetails)"
-                  appAuthRequired
-                >
-                  <span class="pr-2">Glasaj za projekat</span>
-                  <svg
-                    class="w-4 h-4"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 18 18"
+                <p>Status:</p>
+                <div class="col-span-2">
+                  <span
+                    class="bg-white/5 text-primary-400 border border-white/10 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm text-center"
                   >
-                    <path
-                      d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"
-                    />
-                  </svg>
-                </button>
-              }
+                    {{ projectDetails.status }}
+                  </span>
+                </div>
+                <p>Ukupna podrška:</p>
+                <div>
+                  <span
+                    class="bg-white/5 text-primary-400 border border-white/10 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm text-center col-span-2"
+                  >
+                    {{ projectDetails.totalVotes }}
+                  </span>
+                </div>
+              </div>
+              <div class="py-8">
+                @if ($voteLoading()) {
+                  <span
+                    class="bg-primary-500/10 text-primary-400 border border-primary-500/20 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm text-center"
+                  >
+                    <span class="animate-pulse">Učitavanje...</span>
+                  </span>
+                } @else if ($voted && $voted()) {
+                  <span
+                    class="bg-primary-500/10 text-primary-400 border border-primary-500/20 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm text-center"
+                  >
+                    Glasali ste za ovaj projekat
+                  </span>
+                } @else {
+                  <button
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300"
+                    (click)="voteForProject(projectDetails)"
+                    appAuthRequired
+                  >
+                    <span class="pr-2">Glasaj za projekat</span>
+                    <svg
+                      class="w-4 h-4"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 18 18"
+                    >
+                      <path
+                        d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"
+                      />
+                    </svg>
+                  </button>
+                }
+              </div>
             </div>
           </div>
+          <div class="w-full font-light text-neutral-300 sm:text-lg">
+            <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-white">
+              {{ projectDetails.name }}
+            </h1>
+            <quill-view-html [content]="projectDetails.description" />
+          </div>
         </div>
-        <div class="w-full font-light text-neutral-300 sm:text-lg">
-          <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-white">
-            {{ projectDetails.name }}
-          </h1>
-          <quill-view-html [content]="projectDetails.description" />
+      } @else {
+        <div class="w-full max-w-screen-xl mx-auto px-4 py-16 text-center">
+          <div class="p-8 bg-neutral-950 rounded-xl border border-white/5">
+            <p class="text-neutral-400 mb-4">Projekat nije pronađen.</p>
+            <a
+              routerLink="/projekti"
+              class="text-sm font-medium text-primary-400 hover:text-primary-300 transition-colors"
+            >
+              Nazad na projekte
+            </a>
+          </div>
         </div>
-      </div>
+      }
     }
   </section>
 </app-basic-layout>

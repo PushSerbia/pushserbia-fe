@@ -11,7 +11,6 @@ interface Testimonial {
   selector: 'app-landing-testimonials',
   imports: [],
   templateUrl: './landing-testimonials.html',
-  styleUrl: './landing-testimonials.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingTestimonials {
@@ -30,10 +29,10 @@ export class LandingTestimonials {
       initial: 'L',
     },
     {
-      quote: 'Ja hoću i želim, ali nemam ti brate kad.',
-      name: 'Poznanik',
-      role: '',
-      initial: 'P',
+      quote: 'Napisao sam im pola koda i još uvek ne mogu da glasam.',
+      name: 'Claude',
+      role: 'AI Assistant',
+      initial: 'C',
     },
   ];
 }

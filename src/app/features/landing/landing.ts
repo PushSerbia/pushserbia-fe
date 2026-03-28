@@ -22,12 +22,13 @@ import { SeoService } from '../../core/seo/seo.service';
     BasicLayout,
   ],
   templateUrl: './landing.html',
-  styleUrl: './landing.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Landing {
+  private readonly seo = inject(SeoService);
+
   constructor() {
-    inject(SeoService).update({
+    this.seo.update({
       url: 'https://pushserbia.com',
     });
   }
