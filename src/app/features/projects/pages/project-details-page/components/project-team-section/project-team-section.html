@@ -6,7 +6,9 @@
       <div class="relative">
         <button
           class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300"
-          (click)="toggleAssignDropdown()"
+          (click)="toggleAssignDropdown(); $event.stopPropagation()"
+          aria-haspopup="listbox"
+          [attr.aria-expanded]="showAssignDropdown()"
         >
           <svg
             class="w-4 h-4"
@@ -25,6 +27,7 @@
         @if (showAssignDropdown()) {
           <div
             class="absolute right-0 top-full mt-2 w-72 bg-neutral-900 border border-white/10 rounded-lg shadow-xl z-50 max-h-64 overflow-y-auto"
+            role="listbox"
           >
             @if (votersLoading()) {
               <div class="p-4 text-center text-neutral-400">
@@ -37,14 +40,17 @@
             } @else {
               @for (voter of voters(); track voter.id) {
                 <button
-                  class="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-white/5 transition-colors"
+                  class="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-white/5 transition-colors disabled:opacity-50 disabled:cursor-wait"
+                  [disabled]="assigningIds().has(voter.id)"
+                  [title]="'Dodaj ' + voter.fullName"
+                  role="option"
                   (click)="assignMember(voter)"
                 >
                   @if (voter.gravatar) {
                     <img
                       ngxGravatar
                       [md5Hash]="voter.gravatar"
-                      alt="voter"
+                      alt=""
                       class="rounded-full"
                       size="32"
                     />
@@ -52,12 +58,15 @@
                     <span
                       class="text-white text-sm font-medium flex items-center justify-center rounded-full w-8 h-8 bg-neutral-800 shrink-0"
                     >
-                      {{ voter.fullName.charAt(0) }}
+                      {{ voter.fullName?.charAt(0) || '?' }}
                     </span>
                   }
                   <span class="text-white text-sm font-medium truncate">
                     {{ voter.fullName }}
                   </span>
+                  @if (assigningIds().has(voter.id)) {
+                    <span class="ml-auto text-xs text-neutral-400 animate-pulse">...</span>
+                  }
                 </button>
               }
             }
@@ -78,12 +87,13 @@
       @for (member of members(); track member.id) {
         <div
           class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+          [class.opacity-50]="removingIds().has(member.userId)"
         >
-          @if (member.user.gravatar) {
+          @if (member.user?.gravatar) {
             <img
               ngxGravatar
               [md5Hash]="member.user.gravatar"
-              alt="member"
+              alt=""
               class="rounded-full"
               size="40"
             />
@@ -91,18 +101,19 @@
             <span
               class="text-white text-base font-medium flex items-center justify-center rounded-full w-10 h-10 bg-neutral-800 shrink-0"
             >
-              {{ member.user.fullName.charAt(0) }}
+              {{ member.user?.fullName?.charAt(0) || '?' }}
             </span>
           }
           <span class="text-white font-medium">
-            {{ member.user.fullName }}
+            {{ member.user?.fullName }}
           </span>
 
           @if (isOwner()) {
             <button
-              class="ml-2 text-neutral-500 hover:text-red-400 transition-colors"
+              class="ml-2 text-neutral-500 hover:text-red-400 transition-colors disabled:opacity-30 disabled:cursor-wait"
+              [disabled]="removingIds().has(member.userId)"
               (click)="removeMember(member)"
-              title="Ukloni člana"
+              [title]="'Ukloni ' + member.user?.fullName"
             >
               <svg
                 class="w-4 h-4"

@@ -2,11 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
+  ElementRef,
+  HostListener,
   inject,
   input,
   OnInit,
   signal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectMember, ProjectVoter } from '../../../../../../core/project/project';
 import { ProjectMemberService } from '../../../../../../core/project/project-member.service';
 import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data';
@@ -22,6 +26,8 @@ import { first } from 'rxjs';
 })
 export class ProjectTeamSection implements OnInit {
   private readonly memberService = inject(ProjectMemberService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly elementRef = inject(ElementRef);
 
   readonly projectId = input.required<string>();
   readonly creatorId = input.required<string>();
@@ -32,12 +38,24 @@ export class ProjectTeamSection implements OnInit {
   readonly loading = signal(false);
   readonly showAssignDropdown = signal(false);
   readonly votersLoading = signal(false);
+  readonly assigningIds = signal<Set<string>>(new Set());
+  readonly removingIds = signal<Set<string>>(new Set());
 
   readonly isOwner = computed(() => {
     const user = this.currentUser();
     if (!user) return false;
     return user.id === this.creatorId() || user.role === UserRole.Admin;
   });
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (
+      this.showAssignDropdown() &&
+      !this.elementRef.nativeElement.contains(event.target)
+    ) {
+      this.showAssignDropdown.set(false);
+    }
+  }
 
   ngOnInit(): void {
     this.loadMembers();
@@ -47,7 +65,7 @@ export class ProjectTeamSection implements OnInit {
     this.loading.set(true);
     this.memberService
       .getMembers(this.projectId())
-      .pipe(first())
+      .pipe(first(), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (members) => {
           this.members.set(members);
@@ -69,7 +87,7 @@ export class ProjectTeamSection implements OnInit {
     this.votersLoading.set(true);
     this.memberService
       .getVoters(this.projectId())
-      .pipe(first())
+      .pipe(first(), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (voters) => {
           this.voters.set(voters);
@@ -80,34 +98,64 @@ export class ProjectTeamSection implements OnInit {
   }
 
   assignMember(voter: ProjectVoter): void {
+    if (this.assigningIds().has(voter.id)) return;
+
+    this.assigningIds.update((ids) => new Set(ids).add(voter.id));
+
     this.memberService
       .addMember(this.projectId(), voter.id)
-      .pipe(first())
+      .pipe(first(), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (member) => {
           this.members.update((current) => [...current, member]);
           this.voters.update((current) =>
             current.filter((v) => v.id !== voter.id),
           );
+          this.assigningIds.update((ids) => {
+            const next = new Set(ids);
+            next.delete(voter.id);
+            return next;
+          });
+
+          if (this.voters().length === 0) {
+            this.showAssignDropdown.set(false);
+          }
         },
         error: () => {
-          // Silently handle — voter list stays unchanged
+          this.assigningIds.update((ids) => {
+            const next = new Set(ids);
+            next.delete(voter.id);
+            return next;
+          });
         },
       });
   }
 
   removeMember(member: ProjectMember): void {
+    if (this.removingIds().has(member.userId)) return;
+
+    this.removingIds.update((ids) => new Set(ids).add(member.userId));
+
     this.memberService
       .removeMember(this.projectId(), member.userId)
-      .pipe(first())
+      .pipe(first(), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.members.update((current) =>
             current.filter((m) => m.id !== member.id),
           );
+          this.removingIds.update((ids) => {
+            const next = new Set(ids);
+            next.delete(member.userId);
+            return next;
+          });
         },
         error: () => {
-          // Silently handle — member list stays unchanged
+          this.removingIds.update((ids) => {
+            const next = new Set(ids);
+            next.delete(member.userId);
+            return next;
+          });
         },
       });
   }
