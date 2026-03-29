@@ -34,7 +34,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import Quill from 'quill';
 import { ValidationMessage } from '../../../../shared/ui/validation-message/validation-message';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 
 interface CreateProjectModel {
   name: string;

@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 
 import { CreateProjectPage } from './create-project-page';
 import { ProjectStore } from '../../../../core/project/project-store';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 import { AuthClient } from '../../../../core/auth/auth-client';
 
 describe('CreateProjectPage', () => {

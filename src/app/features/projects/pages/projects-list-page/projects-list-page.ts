@@ -21,7 +21,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthRequired } from '../../../../core/auth/auth-required';
 import { VoteState, VoteStore } from '../../../../core/vote/vote-store';
 import { TransitionManager } from '../../../../core/transition/transition-manager';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-projects-list-page',

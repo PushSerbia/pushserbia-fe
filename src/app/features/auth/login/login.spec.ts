@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
 
 import { Login } from './login';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../core/seo/seo-manager';
 
 describe('Login', () => {
   let component: Login;

@@ -21,7 +21,7 @@ import { AuthClient } from '../../../../core/auth/auth-client';
 import { AuthRequired } from '../../../../core/auth/auth-required';
 import { GravatarModule } from 'ngx-gravatar';
 import { UnsplashUrlFormatter } from '../../../../shared/unsplash-url-formatter';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 import { ProjectTeamSection } from './components/project-team-section/project-team-section';
 
 @Component({

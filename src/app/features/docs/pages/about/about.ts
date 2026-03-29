@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-about',

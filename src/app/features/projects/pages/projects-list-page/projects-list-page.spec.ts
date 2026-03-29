@@ -7,7 +7,7 @@ import { ProjectsListPage } from './projects-list-page';
 import { ProjectStore } from '../../../../core/project/project-store';
 import { VoteStore } from '../../../../core/vote/vote-store';
 import { AuthClient } from '../../../../core/auth/auth-client';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 
 describe('ProjectsListPage', () => {
   let component: ProjectsListPage;

@@ -7,7 +7,7 @@ import { LandingTestimonials } from './sections/landing-testimonials/landing-tes
 import { LandingFaq } from './sections/landing-faq/landing-faq';
 import { LandingCta } from './sections/landing-cta/landing-cta';
 import { BasicLayout } from '../../shared/layout/landing-layout/basic-layout';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-landing',

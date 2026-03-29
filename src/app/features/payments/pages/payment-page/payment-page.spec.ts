@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PaymentPage } from './payment-page';
 import { provideRouter } from '@angular/router';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 
 describe('PaymentPage', () => {
   let component: PaymentPage;

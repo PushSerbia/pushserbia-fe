@@ -4,7 +4,7 @@ import { ProjectDetailsPage } from './project-details-page';
 import { ProjectStore } from '../../../../core/project/project-store';
 import { VoteStore } from '../../../../core/vote/vote-store';
 import { AuthClient } from '../../../../core/auth/auth-client';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 import { ComponentRef, signal } from '@angular/core';
 
 describe('ProjectDetailsPage', () => {

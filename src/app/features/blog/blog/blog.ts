@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BlogStore } from '../../../core/blog/blog-store';
 import { BasicLayout } from '../../../shared/layout/landing-layout/basic-layout';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-blog',

@@ -7,7 +7,7 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 
 import { Landing } from './landing';
-import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { SeoManager } from '../../core/seo/seo-manager';
 import { AuthClient } from '../../core/auth/auth-client';
 import { ProjectStore } from '../../core/project/project-store';
 import { VoteStore } from '../../core/vote/vote-store';
