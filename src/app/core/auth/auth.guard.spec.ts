@@ -1,17 +1,73 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
-
+import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { authGuard } from './auth.guard';
+import { AuthService } from './auth.service';
 
 describe('authGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => authGuard(...guardParameters));
+  let $authenticatedSpy: jasmine.Spy;
+  let mockRouter: jasmine.SpyObj<Router>;
+
+  const executeGuard: CanActivateFn = (...guardParameters) =>
+    TestBed.runInInjectionContext(() => authGuard(...guardParameters));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    $authenticatedSpy = jasmine.createSpy().and.returnValue(false);
+
+    mockRouter = jasmine.createSpyObj('Router', ['parseUrl']);
+    mockRouter.parseUrl.and.returnValue({} as UrlTree);
+
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: AuthService,
+          useValue: jasmine.createSpyObj('AuthService', [], {
+            $authenticated: $authenticatedSpy,
+          }),
+        },
+        { provide: Router, useValue: mockRouter },
+      ],
+    });
   });
 
-  it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+  it('should allow access when user is authenticated', () => {
+    $authenticatedSpy.and.returnValue(true);
+
+    const result = executeGuard(
+      {} as Parameters<CanActivateFn>[0],
+      {} as Parameters<CanActivateFn>[1],
+    );
+
+    expect(result).toBeTrue();
+    expect(mockRouter.parseUrl).not.toHaveBeenCalled();
+  });
+
+  it('should redirect to login page when user is not authenticated', () => {
+    const loginUrlTree = {} as UrlTree;
+    mockRouter.parseUrl.and.returnValue(loginUrlTree);
+    $authenticatedSpy.and.returnValue(false);
+
+    const result = executeGuard(
+      {} as Parameters<CanActivateFn>[0],
+      {} as Parameters<CanActivateFn>[1],
+    );
+
+    expect(result).toBe(loginUrlTree);
+    expect(mockRouter.parseUrl).toHaveBeenCalledWith(
+      '/autentikacija/prijava',
+    );
+  });
+
+  it('should redirect to login page and not to home page', () => {
+    $authenticatedSpy.and.returnValue(false);
+
+    executeGuard(
+      {} as Parameters<CanActivateFn>[0],
+      {} as Parameters<CanActivateFn>[1],
+    );
+
+    expect(mockRouter.parseUrl).not.toHaveBeenCalledWith('/');
+    expect(mockRouter.parseUrl).toHaveBeenCalledWith(
+      '/autentikacija/prijava',
+    );
   });
 });
