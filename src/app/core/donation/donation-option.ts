@@ -1,55 +1,58 @@
-export interface DonationOption {
+export interface SupportOption {
   title: string;
   price: number;
+  currency: string;
   isOneTime: boolean;
   description: string;
   benefits: string[];
   impact: string;
   isHighlighted?: boolean;
+  externalUrl: string;
 }
 
-export const donationOptions: DonationOption[] = [
+export const supportOptions: SupportOption[] = [
   {
-    title: 'Supporter',
-    price: 5,
-    isOneTime: false,
-    description:
-      'Osnovni nivo podrške za održavanje zajedničkih projekata.',
-    impact:
-      'Sa €5 mesečno omogućavaš jednom open-source projektu da ostane dostupan za stotine korisnika.',
-    benefits: [
-      'Pokrivanje dela troškova hostinga i servera',
-      'Održavanje redovnog rada servisa',
-      'Omogućavanje dostupnosti projekata svakodnevnim korisnicima',
-    ],
-  },
-  {
-    title: 'Contributor',
-    price: 9,
+    title: 'Member',
+    price: 20,
+    currency: 'USD',
     isOneTime: false,
     isHighlighted: true,
-    description:
-      'Za članove koji žele da podrže skaliranje i širenje projekata.',
+    externalUrl: 'https://buymeacoffee.com/duxor/membership',
+    description: 'Mesečna podrška za održavanje i razvoj zajednice.',
     impact:
-      'Sa €9 mesečno pomažeš da naši projekti dođu do više ljudi i imaju veći društveni uticaj.',
-    benefits: [
-      'Proširenje kapaciteta servera i resursa',
-      'Omogućavanje skalabilnosti postojećih projekata',
-      'Podrška rastu zajednice i novih inicijativa',
-    ],
+      'Sa $20 mesečno direktno podržavaš infrastrukturu i projekte zajednice.',
+    benefits: ['Community membership.'],
   },
   {
-    title: 'Jednokratna podrška',
-    price: 25,
-    isOneTime: true,
-    description:
-      'Jednokratna donacija za sve koji žele da podrže bez mesečne obaveze.',
+    title: 'Angel',
+    price: 990,
+    currency: 'USD',
+    isOneTime: false,
+    externalUrl: 'https://buymeacoffee.com/duxor/membership',
+    description: 'Premium podrška za dugoročnu održivost zajednice.',
     impact:
-      'Tvoja jednokratna donacija direktno finansira razvoj projekata koji pomažu zajednici.',
-    benefits: [
-      'Bez mesečne obaveze — doniraj kada želiš',
-      'Direktna podrška aktivnim projektima',
-      'Doprinos održivosti zajednice',
-    ],
+      'Sa $990 mesečno omogućavaš skaliranje projekata i širenje zajednice.',
+    benefits: ['Community membership.'],
+  },
+  {
+    title: 'Buy me a coffee',
+    price: 5,
+    currency: 'USD',
+    isOneTime: true,
+    externalUrl: 'https://buymeacoffee.com/duxor',
+    description: 'Jednokratna podrška bez obaveza.',
+    impact:
+      'Tvoja jednokratna donacija direktno finansira razvoj projekata.',
+    benefits: ['Community membership.'],
   },
 ];
+
+/**
+ * @deprecated Use SupportOption and supportOptions instead.
+ */
+export type DonationOption = SupportOption;
+
+/**
+ * @deprecated Use supportOptions instead.
+ */
+export const donationOptions = supportOptions;
