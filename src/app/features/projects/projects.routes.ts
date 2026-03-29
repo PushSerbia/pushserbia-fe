@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { authGuard } from '../../core/auth/auth.guard';
 
 export const projectsRoutes: Route[] = [
   {
@@ -11,6 +12,7 @@ export const projectsRoutes: Route[] = [
   {
     path: 'novi',
     pathMatch: 'full',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/create-project-page/create-project-page').then(
         (m) => m.CreateProjectPage,
@@ -18,6 +20,7 @@ export const projectsRoutes: Route[] = [
   },
   {
     path: ':slug/izmena',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/create-project-page/create-project-page').then(
         (m) => m.CreateProjectPage,
