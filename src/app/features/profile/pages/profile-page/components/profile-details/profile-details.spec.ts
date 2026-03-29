@@ -18,6 +18,7 @@ class TestHostComponent {
     firstName: 'Test',
     lastName: 'User',
     email: 'test@example.com',
+    membershipStatus: 'free',
   };
 }
 
