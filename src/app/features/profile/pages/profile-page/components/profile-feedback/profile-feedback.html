@@ -33,11 +33,9 @@
             type="button"
             (click)="setRating(star)"
             class="text-2xl transition-colors focus:outline-none"
-            [class]="
-              star <= form.controls.rating.value
-                ? 'text-primary-400'
-                : 'text-neutral-600 hover:text-neutral-400'
-            "
+            [class.text-primary-400]="star <= form.controls.rating.value"
+            [class.text-neutral-600]="star > form.controls.rating.value"
+            [class.hover:text-neutral-400]="star > form.controls.rating.value"
           >
             &#9733;
           </button>
