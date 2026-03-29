@@ -6,7 +6,7 @@ import { ProjectMember, ProjectVoter } from './project';
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectMemberService {
+export class ProjectMemberApi {
   private httpClient = inject(HttpClient);
 
   getMembers(projectId: string): Observable<ProjectMember[]> {

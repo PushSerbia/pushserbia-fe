@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { PaginatedResponse } from './paginated-response';
 
 @Injectable()
-export abstract class ApiService<Model> {
+export abstract class ApiClient<Model> {
   protected abstract endpoint: string;
 
   protected httpClient = inject(HttpClient);

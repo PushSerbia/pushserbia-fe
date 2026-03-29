@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { authInterceptor } from './auth.interceptor';
-import { AuthService } from './auth.service';
+import { AuthClient } from './auth-client';
 import { Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
 import { PLATFORM_ID } from '@angular/core';
@@ -15,12 +15,12 @@ import { PLATFORM_ID } from '@angular/core';
 describe('authInterceptor', () => {
   let httpClient: HttpClient;
   let httpTesting: HttpTestingController;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
+  let mockAuthClient: jasmine.SpyObj<AuthClient>;
   let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['signOut']);
-    mockAuthService.signOut.and.returnValue(of(undefined));
+    mockAuthClient = jasmine.createSpyObj('AuthClient', ['signOut']);
+    mockAuthClient.signOut.and.returnValue(of(undefined));
 
     mockRouter = jasmine.createSpyObj('Router', ['navigateByUrl']);
     mockRouter.navigateByUrl.and.returnValue(Promise.resolve(true));
@@ -29,7 +29,7 @@ describe('authInterceptor', () => {
       providers: [
         provideHttpClient(withInterceptors([authInterceptor])),
         provideHttpClientTesting(),
-        { provide: AuthService, useValue: mockAuthService },
+        { provide: AuthClient, useValue: mockAuthClient },
         { provide: Router, useValue: mockRouter },
         { provide: PLATFORM_ID, useValue: 'browser' },
       ],
@@ -67,7 +67,7 @@ describe('authInterceptor', () => {
     const req = httpTesting.expectOne('/api/test');
     req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
 
-    expect(mockAuthService.signOut).toHaveBeenCalled();
+    expect(mockAuthClient.signOut).toHaveBeenCalled();
     expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/autentikacija/prijava');
   });
 
@@ -80,7 +80,7 @@ describe('authInterceptor', () => {
     const req = httpTesting.expectOne('/api/test');
     req.flush('Server Error', { status: 500, statusText: 'Internal Server Error' });
 
-    expect(mockAuthService.signOut).not.toHaveBeenCalled();
+    expect(mockAuthClient.signOut).not.toHaveBeenCalled();
     expect(mockRouter.navigateByUrl).not.toHaveBeenCalled();
   });
 });

@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
 
 import { Login } from './login';
-import { SeoService } from '../../../core/seo/seo.service';
+import { SeoManager } from '../../../../../core/seo/seo-manager';
 
 describe('Login', () => {
   let component: Login;
@@ -15,7 +15,7 @@ describe('Login', () => {
       providers: [
         provideRouter([]),
         { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: SeoService, useValue: jasmine.createSpyObj('SeoService', ['update']) },
+        { provide: SeoManager, useValue: jasmine.createSpyObj('SeoManager', ['update']) },
       ],
     }).compileComponents();
 

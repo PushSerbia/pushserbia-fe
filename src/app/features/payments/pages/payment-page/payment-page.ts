@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SupportOption, supportOptions } from '../../../../core/donation/donation-option';
-import { SeoService } from '../../../../core/seo/seo.service';
+import { SeoManager } from '../../../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-payment-page',
@@ -12,7 +12,7 @@ import { SeoService } from '../../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentPage implements OnInit {
-  private seo = inject(SeoService);
+  private seo = inject(SeoManager);
 
   supportOptions = supportOptions;
 

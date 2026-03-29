@@ -4,7 +4,7 @@ import { Modal } from 'flowbite';
 @Injectable({
   providedIn: 'root',
 })
-export class ModalService {
+export class ModalManager {
   private readonly document = inject(DOCUMENT);
   private modals: Record<string, Modal> = {};
 

@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
 import { ProfileSidenav } from './profile-sidenav';
-import { AuthService } from '../../../../../../core/auth/auth.service';
+import { AuthClient } from '../../../../../../core/auth/auth-client';
 
 describe('ProfileSidenav', () => {
   let component: ProfileSidenav;
@@ -11,7 +11,7 @@ describe('ProfileSidenav', () => {
 
   beforeEach(async () => {
     const authServiceMock = jasmine.createSpyObj(
-      'AuthService',
+      'AuthClient',
       ['signOut', 'getMe', 'updateMe'],
       {
         $authenticated: jasmine.createSpy().and.returnValue(false),
@@ -25,7 +25,7 @@ describe('ProfileSidenav', () => {
       imports: [ProfileSidenav],
       providers: [
         provideRouter([]),
-        { provide: AuthService, useValue: authServiceMock },
+        { provide: AuthClient, useValue: authServiceMock },
       ],
     }).compileComponents();
 

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileInformationDialog } from './profile-information-dialog';
-import { AuthService } from '../../../../../../core/auth/auth.service';
+import { AuthClient } from '../../../../../../core/auth/auth-client';
 import { ComponentRef } from '@angular/core';
 import { of } from 'rxjs';
 
@@ -8,10 +8,10 @@ describe('ProfileInformationDialog', () => {
   let component: ProfileInformationDialog;
   let componentRef: ComponentRef<ProfileInformationDialog>;
   let fixture: ComponentFixture<ProfileInformationDialog>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
+  let mockAuthClient: jasmine.SpyObj<AuthClient>;
 
   beforeEach(async () => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['updateMe'], {
+    mockAuthClient = jasmine.createSpyObj('AuthClient', ['updateMe'], {
       $fullUserData: jasmine.createSpy().and.returnValue({
         fullName: 'Test User',
         linkedInUrl: 'https://linkedin.com/in/test',
@@ -21,7 +21,7 @@ describe('ProfileInformationDialog', () => {
 
     await TestBed.configureTestingModule({
       imports: [ProfileInformationDialog],
-      providers: [{ provide: AuthService, useValue: mockAuthService }],
+      providers: [{ provide: AuthClient, useValue: mockAuthClient }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileInformationDialog);
@@ -52,12 +52,12 @@ describe('ProfileInformationDialog', () => {
   });
 
   it('should call authService.updateMe on updateMe()', () => {
-    mockAuthService.updateMe.and.returnValue(of({} as any));
+    mockAuthClient.updateMe.and.returnValue(of({} as any));
     spyOn(component.closeClick, 'emit');
 
     component.updateMe();
 
-    expect(mockAuthService.updateMe).toHaveBeenCalledWith({
+    expect(mockAuthClient.updateMe).toHaveBeenCalledWith({
       fullName: 'Test User',
       linkedInUrl: 'https://linkedin.com/in/test',
       gitHubUrl: 'https://github.com/test',

@@ -4,9 +4,9 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 
 import { LandingProjects } from './landing-projects';
-import { ProjectStoreService } from '../../../../core/project/project.store.service';
-import { VoteStoreService } from '../../../../core/vote/vote.store.service';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { ProjectStore } from '../../../../core/project/project-store';
+import { VoteStore } from '../../../../core/vote/vote-store';
+import { AuthClient } from '../../../../core/auth/auth-client';
 
 describe('LandingProjects', () => {
   let component: LandingProjects;
@@ -14,14 +14,14 @@ describe('LandingProjects', () => {
 
   beforeEach(async () => {
     const projectStoreMock = jasmine.createSpyObj(
-      'ProjectStoreService',
+      'ProjectStore',
       ['getAll', 'getBySlug'],
       { $loading: signal(false) },
     );
     projectStoreMock.getAll.and.returnValue(signal([]));
 
     const voteStoreMock = jasmine.createSpyObj(
-      'VoteStoreService',
+      'VoteStore',
       ['getAll', 'isVoted'],
       { $loading: signal(false) },
     );
@@ -31,11 +31,11 @@ describe('LandingProjects', () => {
       imports: [LandingProjects],
       providers: [
         provideRouter([]),
-        { provide: ProjectStoreService, useValue: projectStoreMock },
-        { provide: VoteStoreService, useValue: voteStoreMock },
+        { provide: ProjectStore, useValue: projectStoreMock },
+        { provide: VoteStore, useValue: voteStoreMock },
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut', 'getMe', 'updateMe'], {
+          provide: AuthClient,
+          useValue: jasmine.createSpyObj('AuthClient', ['signOut', 'getMe', 'updateMe'], {
             $authenticated: jasmine.createSpy().and.returnValue(false),
             $userData: jasmine.createSpy().and.returnValue(undefined),
             $fullUserData: jasmine.createSpy().and.returnValue(null),

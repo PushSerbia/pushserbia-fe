@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../api/api.service';
+import { ApiClient } from '../api/api-client';
 import { Vote } from './vote';
 
 @Injectable({
   providedIn: 'root',
 })
-export class VoteService extends ApiService<Vote> {
+export class VoteApi extends ApiClient<Vote> {
   readonly endpoint = 'votes';
 
   getMyVotes() {

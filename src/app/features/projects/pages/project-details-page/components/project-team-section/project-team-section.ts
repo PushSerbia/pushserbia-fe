@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectMember, ProjectVoter } from '../../../../../../core/project/project';
-import { ProjectMemberService } from '../../../../../../core/project/project-member.service';
+import { ProjectMemberApi } from '../../../../../../core/project/project-member-api';
 import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data';
 import { UserRole } from '../../../../../../core/user/user-role';
 import { GravatarModule } from 'ngx-gravatar';
@@ -25,7 +25,7 @@ import { first } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectTeamSection implements OnInit {
-  private readonly memberService = inject(ProjectMemberService);
+  private readonly memberService = inject(ProjectMemberApi);
   private readonly destroyRef = inject(DestroyRef);
   private readonly elementRef = inject(ElementRef);
 

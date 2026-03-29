@@ -5,8 +5,8 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 import { ProfilePage } from './profile-page';
-import { AuthService } from '../../../../core/auth/auth.service';
-import { ModalService } from '../../../../core/modal/modal.service';
+import { AuthClient } from '../../../../core/auth/auth-client';
+import { ModalManager } from '../../../../core/modal/modal-manager';
 
 describe('ProfilePage', () => {
   let component: ProfilePage;
@@ -14,7 +14,7 @@ describe('ProfilePage', () => {
 
   beforeEach(async () => {
     const authServiceMock = jasmine.createSpyObj(
-      'AuthService',
+      'AuthClient',
       ['signOut', 'getMe', 'updateMe'],
       {
         $authenticated: jasmine.createSpy().and.returnValue(false),
@@ -31,10 +31,10 @@ describe('ProfilePage', () => {
         provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: AuthService, useValue: authServiceMock },
+        { provide: AuthClient, useValue: authServiceMock },
         {
-          provide: ModalService,
-          useValue: jasmine.createSpyObj('ModalService', ['open', 'close', 'remove']),
+          provide: ModalManager,
+          useValue: jasmine.createSpyObj('ModalManager', ['open', 'close', 'remove']),
         },
       ],
     }).compileComponents();

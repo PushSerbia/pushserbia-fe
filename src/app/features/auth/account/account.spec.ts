@@ -5,7 +5,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 import { Account } from './account';
-import { AuthService } from '../../../core/auth/auth.service';
+import { AuthClient } from '../../../core/auth/auth-client';
 
 describe('Account', () => {
   let component: Account;
@@ -13,7 +13,7 @@ describe('Account', () => {
 
   beforeEach(async () => {
     const authServiceMock = jasmine.createSpyObj(
-      'AuthService',
+      'AuthClient',
       ['signOut', 'getMe', 'updateMe', 'signInWithCustomToken'],
       {
         $authenticated: jasmine.createSpy().and.returnValue(false),
@@ -30,7 +30,7 @@ describe('Account', () => {
         provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: AuthService, useValue: authServiceMock },
+        { provide: AuthClient, useValue: authServiceMock },
       ],
     }).compileComponents();
 

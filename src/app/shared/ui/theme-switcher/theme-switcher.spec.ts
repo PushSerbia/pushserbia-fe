@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThemeSwitcher } from './theme-switcher';
-import { ThemeService } from '../../../core/theme/theme.service';
+import { ThemeManager } from '../../../core/theme/theme-manager';
 import { signal } from '@angular/core';
 
 describe('ThemeSwitcher', () => {
   let component: ThemeSwitcher;
   let fixture: ComponentFixture<ThemeSwitcher>;
-  let mockThemeService: jasmine.SpyObj<ThemeService>;
+  let mockThemeService: jasmine.SpyObj<ThemeManager>;
 
   beforeEach(async () => {
-    mockThemeService = jasmine.createSpyObj('ThemeService', ['toggleTheme', 'applyTheme'], {
+    mockThemeService = jasmine.createSpyObj('ThemeManager', ['toggleTheme', 'applyTheme'], {
       isDarkMode: signal(true),
     });
 
     await TestBed.configureTestingModule({
       imports: [ThemeSwitcher],
-      providers: [{ provide: ThemeService, useValue: mockThemeService }],
+      providers: [{ provide: ThemeManager, useValue: mockThemeService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ThemeSwitcher);
@@ -27,7 +27,7 @@ describe('ThemeSwitcher', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should inject ThemeService', () => {
+  it('should inject ThemeManager', () => {
     expect(component.themeService).toBeTruthy();
   });
 });

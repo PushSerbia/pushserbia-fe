@@ -1,10 +1,10 @@
-import { UnsplashUrlFormatterPipe } from './unsplash-url-formatter.pipe';
+import { UnsplashUrlFormatter } from './unsplash-url-formatter';
 
 describe('UnsplashUrlFormatterPipe', () => {
-  let pipe: UnsplashUrlFormatterPipe;
+  let pipe: UnsplashUrlFormatter;
 
   beforeEach(() => {
-    pipe = new UnsplashUrlFormatterPipe();
+    pipe = new UnsplashUrlFormatter();
   });
 
   it('should create', () => {

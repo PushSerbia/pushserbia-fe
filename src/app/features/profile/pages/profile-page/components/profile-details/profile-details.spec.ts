@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
 import { of } from 'rxjs';
 
 import { ProfileDetails } from './profile-details';
-import { ModalService } from '../../../../../../core/modal/modal.service';
-import { AuthService } from '../../../../../../core/auth/auth.service';
+import { ModalManager } from '../../../../../../core/modal/modal-manager';
+import { AuthClient } from '../../../../../../core/auth/auth-client';
 
 @Component({
   template: '<app-profile-details [data]="mockData" />',
@@ -31,12 +31,12 @@ describe('ProfileDetails', () => {
       providers: [
         provideRouter([]),
         {
-          provide: ModalService,
-          useValue: jasmine.createSpyObj('ModalService', ['open', 'close', 'remove']),
+          provide: ModalManager,
+          useValue: jasmine.createSpyObj('ModalManager', ['open', 'close', 'remove']),
         },
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut', 'getMe', 'updateMe'], {
+          provide: AuthClient,
+          useValue: jasmine.createSpyObj('AuthClient', ['signOut', 'getMe', 'updateMe'], {
             $authenticated: jasmine.createSpy().and.returnValue(false),
             $userData: jasmine.createSpy().and.returnValue(undefined),
             $fullUserData: jasmine.createSpy().and.returnValue(null),

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../api/api.service';
+import { ApiClient } from '../api/api-client';
 import { User } from './user';
-import { UpdateMePayload } from './interfaces/update-me-payload.interface';
+import { UpdateMePayload } from './interfaces/update-me-payload';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService extends ApiService<User> {
+export class UserApi extends ApiClient<User> {
   protected endpoint = 'users';
 
   createAccount(params: Partial<User>) {

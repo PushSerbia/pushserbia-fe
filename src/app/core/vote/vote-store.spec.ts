@@ -3,15 +3,15 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
-import { VoteStoreService } from './vote.store.service';
-import { AuthService } from '../auth/auth.service';
+import { VoteStore } from './vote-store';
+import { AuthClient } from '../auth/auth-client';
 
-describe('VoteStoreService', () => {
-  let service: VoteStoreService;
+describe('VoteStore', () => {
+  let service: VoteStore;
 
   beforeEach(() => {
     const authServiceMock = jasmine.createSpyObj(
-      'AuthService',
+      'AuthClient',
       ['signOut', 'getMe', 'updateMe'],
       {
         $authenticated: jasmine.createSpy().and.returnValue(false),
@@ -25,10 +25,10 @@ describe('VoteStoreService', () => {
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: AuthService, useValue: authServiceMock },
+        { provide: AuthClient, useValue: authServiceMock },
       ],
     });
-    service = TestBed.inject(VoteStoreService);
+    service = TestBed.inject(VoteStore);
   });
 
   it('should be created', () => {

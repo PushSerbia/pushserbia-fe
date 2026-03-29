@@ -10,7 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
-export class ThemeService {
+export class ThemeManager {
   private document = inject(DOCUMENT);
   private platformId = inject(PLATFORM_ID);
   private storageKey = 'theme';

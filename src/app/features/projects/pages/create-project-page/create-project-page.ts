@@ -13,7 +13,7 @@ import {
 import { BasicLayout } from '../../../../shared/layout/landing-layout/basic-layout';
 import { ContentChange, QuillEditorComponent } from 'ngx-quill';
 import slugify from 'slugify';
-import { ProjectStoreService } from '../../../../core/project/project.store.service';
+import { ProjectStore } from '../../../../core/project/project-store';
 import { PageLoader } from '../../../../shared/ui/page-loader/page-loader';
 import { Project } from '../../../../core/project/project';
 import { ProjectStatus } from '../../../../core/project/project-status';
@@ -34,7 +34,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import Quill from 'quill';
 import { ValidationMessage } from '../../../../shared/ui/validation-message/validation-message';
-import { SeoService } from '../../../../core/seo/seo.service';
+import { SeoManager } from '../../../../../core/seo/seo-manager';
 
 interface CreateProjectModel {
   name: string;
@@ -64,8 +64,8 @@ interface CreateProjectModel {
 export class CreateProjectPage implements OnInit {
   private readonly router = inject(Router);
   private readonly injector = inject(Injector);
-  private readonly projectStoreService = inject(ProjectStoreService);
-  private readonly seo = inject(SeoService);
+  private readonly projectStoreService = inject(ProjectStore);
+  private readonly seo = inject(SeoManager);
 
   protected project?: Project;
   protected projectStatus = ProjectStatus;

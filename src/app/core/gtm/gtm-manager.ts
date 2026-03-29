@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class GoogleTagManagerService {
+export class GtmManager {
   private readonly document = inject(DOCUMENT);
   private readonly gtmId = environment.gtmId;
 

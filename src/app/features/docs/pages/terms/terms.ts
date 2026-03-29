@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SeoService } from '../../../../core/seo/seo.service';
+import { SeoManager } from '../../../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-terms',
@@ -10,7 +10,7 @@ import { SeoService } from '../../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Terms {
-  private readonly seo = inject(SeoService);
+  private readonly seo = inject(SeoManager);
 
   constructor() {
     this.seo.update({

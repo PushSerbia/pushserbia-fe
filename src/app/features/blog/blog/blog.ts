@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BlogStoreService } from '../../../core/blog/blog.store.service';
+import { BlogStore } from '../../../core/blog/blog-store';
 import { BasicLayout } from '../../../shared/layout/landing-layout/basic-layout';
-import { SeoService } from '../../../core/seo/seo.service';
+import { SeoManager } from '../../../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-blog',
@@ -12,8 +12,8 @@ import { SeoService } from '../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Blog {
-  private readonly blogStoreService = inject(BlogStoreService);
-  private readonly seo = inject(SeoService);
+  private readonly blogStoreService = inject(BlogStore);
+  private readonly seo = inject(SeoManager);
 
   blogPosts = this.blogStoreService.getBlogPosts();
 

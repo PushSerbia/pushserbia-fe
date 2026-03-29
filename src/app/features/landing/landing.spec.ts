@@ -7,22 +7,22 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 
 import { Landing } from './landing';
-import { SeoService } from '../../core/seo/seo.service';
-import { AuthService } from '../../core/auth/auth.service';
-import { ProjectStoreService } from '../../core/project/project.store.service';
-import { VoteStoreService } from '../../core/vote/vote.store.service';
+import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { AuthClient } from '../../core/auth/auth-client';
+import { ProjectStore } from '../../core/project/project-store';
+import { VoteStore } from '../../core/vote/vote-store';
 
 describe('Landing', () => {
   let component: Landing;
   let fixture: ComponentFixture<Landing>;
 
   beforeEach(async () => {
-    const projectStoreMock = jasmine.createSpyObj('ProjectStoreService', ['getAll'], {
+    const projectStoreMock = jasmine.createSpyObj('ProjectStore', ['getAll'], {
       $loading: signal(false),
     });
     projectStoreMock.getAll.and.returnValue(signal([]));
 
-    const voteStoreMock = jasmine.createSpyObj('VoteStoreService', ['getAll', 'isVoted'], {
+    const voteStoreMock = jasmine.createSpyObj('VoteStore', ['getAll', 'isVoted'], {
       $loading: signal(false),
     });
     voteStoreMock.getAll.and.returnValue(signal({}));
@@ -33,18 +33,18 @@ describe('Landing', () => {
         provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: SeoService, useValue: jasmine.createSpyObj('SeoService', ['update']) },
+        { provide: SeoManager, useValue: jasmine.createSpyObj('SeoManager', ['update']) },
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut', 'getMe', 'updateMe'], {
+          provide: AuthClient,
+          useValue: jasmine.createSpyObj('AuthClient', ['signOut', 'getMe', 'updateMe'], {
             $authenticated: jasmine.createSpy().and.returnValue(false),
             $userData: jasmine.createSpy().and.returnValue(undefined),
             $fullUserData: jasmine.createSpy().and.returnValue(null),
             userData$: of(undefined),
           }),
         },
-        { provide: ProjectStoreService, useValue: projectStoreMock },
-        { provide: VoteStoreService, useValue: voteStoreMock },
+        { provide: ProjectStore, useValue: projectStoreMock },
+        { provide: VoteStore, useValue: voteStoreMock },
       ],
     }).compileComponents();
 

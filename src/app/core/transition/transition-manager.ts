@@ -4,6 +4,6 @@ import { ViewTransitionInfo } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class TransitionService {
+export class TransitionManager {
   readonly current = signal<ViewTransitionInfo | null>(null);
 }

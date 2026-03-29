@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { ProjectDetailsPage } from './project-details-page';
-import { ProjectStoreService } from '../../../../core/project/project.store.service';
-import { VoteStoreService } from '../../../../core/vote/vote.store.service';
-import { AuthService } from '../../../../core/auth/auth.service';
-import { SeoService } from '../../../../core/seo/seo.service';
+import { ProjectStore } from '../../../../core/project/project-store';
+import { VoteStore } from '../../../../core/vote/vote-store';
+import { AuthClient } from '../../../../core/auth/auth-client';
+import { SeoManager } from '../../../../../core/seo/seo-manager';
 import { ComponentRef, signal } from '@angular/core';
 
 describe('ProjectDetailsPage', () => {
   let component: ProjectDetailsPage;
   let componentRef: ComponentRef<ProjectDetailsPage>;
   let fixture: ComponentFixture<ProjectDetailsPage>;
-  let mockProjectStore: jasmine.SpyObj<ProjectStoreService>;
-  let mockVoteStore: jasmine.SpyObj<VoteStoreService>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
-  let mockSeoService: jasmine.SpyObj<SeoService>;
+  let mockProjectStore: jasmine.SpyObj<ProjectStore>;
+  let mockVoteStore: jasmine.SpyObj<VoteStore>;
+  let mockAuthClient: jasmine.SpyObj<AuthClient>;
+  let mockSeoManager: jasmine.SpyObj<SeoManager>;
 
   const mockProject = {
     id: '1',
@@ -32,31 +32,31 @@ describe('ProjectDetailsPage', () => {
 
   beforeEach(async () => {
     mockProjectStore = jasmine.createSpyObj(
-      'ProjectStoreService',
+      'ProjectStore',
       ['getBySlug', 'updateStateBySlug'],
       { $loading: signal(false) },
     );
     mockProjectStore.getBySlug.and.returnValue(signal(mockProject as any));
 
-    mockVoteStore = jasmine.createSpyObj('VoteStoreService', ['isVoted', 'create'], {
+    mockVoteStore = jasmine.createSpyObj('VoteStore', ['isVoted', 'create'], {
       $loading: signal(false),
     });
     mockVoteStore.isVoted.and.returnValue(signal(false));
 
-    mockAuthService = jasmine.createSpyObj('AuthService', [], {
+    mockAuthClient = jasmine.createSpyObj('AuthClient', [], {
       $userData: signal(undefined),
     });
 
-    mockSeoService = jasmine.createSpyObj('SeoService', ['update']);
+    mockSeoManager = jasmine.createSpyObj('SeoManager', ['update']);
 
     await TestBed.configureTestingModule({
       imports: [ProjectDetailsPage],
       providers: [
         provideRouter([]),
-        { provide: ProjectStoreService, useValue: mockProjectStore },
-        { provide: VoteStoreService, useValue: mockVoteStore },
-        { provide: AuthService, useValue: mockAuthService },
-        { provide: SeoService, useValue: mockSeoService },
+        { provide: ProjectStore, useValue: mockProjectStore },
+        { provide: VoteStore, useValue: mockVoteStore },
+        { provide: AuthClient, useValue: mockAuthClient },
+        { provide: SeoManager, useValue: mockSeoManager },
       ],
     }).compileComponents();
 

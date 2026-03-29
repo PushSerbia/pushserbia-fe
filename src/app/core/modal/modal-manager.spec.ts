@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TransitionService } from './transition.service';
+import { ModalManager } from './modal-manager';
 
-describe('TransitionService', () => {
-  let service: TransitionService;
+describe('ModalManager', () => {
+  let service: ModalManager;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TransitionService);
+    service = TestBed.inject(ModalManager);
   });
 
   it('should be created', () => {

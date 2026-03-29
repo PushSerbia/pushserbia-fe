@@ -12,7 +12,7 @@ export interface SubscriptionData {
 @Injectable({
   providedIn: 'root',
 })
-export class IntegrationsService {
+export class IntegrationsApi {
   private apiUrl = `${environment.apiUrl}/integrations`;
   private httpClient = inject(HttpClient);
 

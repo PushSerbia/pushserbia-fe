@@ -5,7 +5,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 import { NotificationsListPage } from './notifications-list-page';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { AuthClient } from '../../../../core/auth/auth-client';
 
 describe('NotificationsListPage', () => {
   let component: NotificationsListPage;
@@ -13,7 +13,7 @@ describe('NotificationsListPage', () => {
 
   beforeEach(async () => {
     const authServiceMock = jasmine.createSpyObj(
-      'AuthService',
+      'AuthClient',
       ['signOut', 'getMe', 'updateMe'],
       {
         $authenticated: jasmine.createSpy().and.returnValue(false),
@@ -29,7 +29,7 @@ describe('NotificationsListPage', () => {
         provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: AuthService, useValue: authServiceMock },
+        { provide: AuthClient, useValue: authServiceMock },
       ],
     }).compileComponents();
 

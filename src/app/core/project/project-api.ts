@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../api/api.service';
+import { ApiClient } from '../api/api-client';
 import { Project } from './project';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectService extends ApiService<Project> {
+export class ProjectApi extends ApiClient<Project> {
   readonly endpoint = 'projects';
 }

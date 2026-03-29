@@ -6,7 +6,7 @@ import { Project } from '../../../../../../core/project/project';
 import { ProjectStatus } from '../../../../../../core/project/project-status';
 import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data';
 import { UserRole } from '../../../../../../core/user/user-role';
-import { AuthService } from '../../../../../../core/auth/auth.service';
+import { AuthClient } from '../../../../../../core/auth/auth-client';
 
 describe('ProjectDetailsSidenav', () => {
   let component: ProjectDetailsSidenav;
@@ -42,8 +42,8 @@ describe('ProjectDetailsSidenav', () => {
       providers: [
         provideRouter([]),
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut'], {
+          provide: AuthClient,
+          useValue: jasmine.createSpyObj('AuthClient', ['signOut'], {
             $authenticated: jasmine.createSpy().and.returnValue(false),
             $userData: jasmine.createSpy().and.returnValue(undefined),
             $fullUserData: jasmine.createSpy().and.returnValue(null),

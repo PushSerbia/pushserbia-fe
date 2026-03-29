@@ -19,7 +19,7 @@ const DEFAULT_IMAGE = 'https://pushserbia.com/pushserbia.png';
 const BASE_URL = 'https://pushserbia.com';
 
 @Injectable({ providedIn: 'root' })
-export class SeoService {
+export class SeoManager {
   private readonly titleService = inject(Title);
   private readonly meta = inject(Meta);
   private readonly document = inject(DOCUMENT);

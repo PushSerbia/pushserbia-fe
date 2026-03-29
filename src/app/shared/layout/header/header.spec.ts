@@ -4,7 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { Header } from './header';
-import { AuthService } from '../../../core/auth/auth.service';
+import { AuthClient } from '../../../core/auth/auth-client';
 
 describe('LandingHeaderComponent', () => {
   let component: Header;
@@ -18,8 +18,8 @@ describe('LandingHeaderComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut'], {
+          provide: AuthClient,
+          useValue: jasmine.createSpyObj('AuthClient', ['signOut'], {
             $authenticated: jasmine.createSpy().and.returnValue(false),
             $userData: jasmine.createSpy().and.returnValue(undefined),
             $fullUserData: jasmine.createSpy().and.returnValue(null),

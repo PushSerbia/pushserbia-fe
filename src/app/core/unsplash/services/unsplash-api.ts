@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { UnsplashPhoto, UnsplashSearchResponse } from '../interfaces/unsplash-photo.interface';
+import { UnsplashPhoto, UnsplashSearchResponse } from '../interfaces/unsplash-photo';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UnsplashService {
+export class UnsplashApi {
   private httpClient = inject(HttpClient);
   private endpoint = 'unsplash';
 

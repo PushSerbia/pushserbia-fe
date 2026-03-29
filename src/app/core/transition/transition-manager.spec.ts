@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProjectStoreService } from './project.store.service';
+import { TransitionManager } from './transition-manager';
 
-describe('ProjectStoreService', () => {
-  let service: ProjectStoreService;
+describe('TransitionManager', () => {
+  let service: TransitionManager;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ProjectStoreService);
+    service = TestBed.inject(TransitionManager);
   });
 
   it('should be created', () => {

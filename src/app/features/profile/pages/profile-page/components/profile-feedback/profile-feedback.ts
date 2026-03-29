@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FeedbackService } from '../../../../../../core/feedback/feedback.service';
+import { FeedbackApi } from '../../../../../../core/feedback/feedback-api';
 import { FeedbackCategory } from '../../../../../../core/feedback/feedback-category';
 import { finalize } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { finalize } from 'rxjs';
 })
 export class ProfileFeedback implements OnDestroy {
   private readonly fb = inject(FormBuilder);
-  private readonly feedbackService = inject(FeedbackService);
+  private readonly feedbackService = inject(FeedbackApi);
   private successTimeout?: ReturnType<typeof setTimeout>;
 
   $isSubmitting = signal(false);

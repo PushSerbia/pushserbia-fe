@@ -9,10 +9,10 @@ import {
   Signal,
   TransferState,
 } from '@angular/core';
-import { VoteService } from './vote.service';
+import { VoteApi } from './vote-api';
 import { Vote } from './vote';
 import { catchError, EMPTY, finalize, first, Observable, of, tap } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthClient } from '../auth/auth-client';
 import { isPlatformBrowser } from '@angular/common';
 
 export type VoteState = Record<string, boolean>;
@@ -22,11 +22,11 @@ const VOTE_INITIAL_STATE = null;
 @Injectable({
   providedIn: 'root',
 })
-export class VoteStoreService {
+export class VoteStore {
   private platformId = inject(PLATFORM_ID);
   private state = inject(TransferState);
-  private voteService = inject(VoteService);
-  private authService = inject(AuthService);
+  private voteService = inject(VoteApi);
+  private authService = inject(AuthClient);
 
   private loading = signal<boolean>(false);
   private itemMap = signal<VoteState | null>(VOTE_INITIAL_STATE);

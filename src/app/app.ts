@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ThemeService } from './core/theme/theme.service';
+import { ThemeManager } from './core/theme/theme-manager';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { ThemeService } from './core/theme/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  private themeService = inject(ThemeService);
+  private themeService = inject(ThemeManager);
 
   constructor() {
     this.themeService.applyTheme(this.themeService.isDarkMode());

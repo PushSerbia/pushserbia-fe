@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnsplashImageChooserModal } from './unsplash-image-chooser-modal';
-import { UnsplashService } from '../../../core/unsplash/services/unsplash.service';
+import { UnsplashApi } from '../../../core/unsplash/services/unsplash-api';
 import { DialogRef } from '@angular/cdk/dialog';
 import { of, throwError } from 'rxjs';
-import { UnsplashPhoto } from '../../../core/unsplash/interfaces/unsplash-photo.interface';
+import { UnsplashPhoto } from '../../../core/unsplash/interfaces/unsplash-photo';
 
 function createMockPhoto(overrides: Partial<UnsplashPhoto> = {}): UnsplashPhoto {
   return {
@@ -86,13 +86,13 @@ function createMockPhoto(overrides: Partial<UnsplashPhoto> = {}): UnsplashPhoto 
 describe('UnsplashImageChooserModal', () => {
   let component: UnsplashImageChooserModal;
   let fixture: ComponentFixture<UnsplashImageChooserModal>;
-  let mockUnsplashService: jasmine.SpyObj<UnsplashService>;
+  let mockUnsplashService: jasmine.SpyObj<UnsplashApi>;
   let mockDialogRef: jasmine.SpyObj<DialogRef<string | null>>;
 
   beforeEach(() => {
     jasmine.clock().install();
 
-    mockUnsplashService = jasmine.createSpyObj('UnsplashService', [
+    mockUnsplashService = jasmine.createSpyObj('UnsplashApi', [
       'searchPhotos',
     ]);
     mockUnsplashService.searchPhotos.and.returnValue(of([]));
@@ -102,7 +102,7 @@ describe('UnsplashImageChooserModal', () => {
     TestBed.configureTestingModule({
       imports: [UnsplashImageChooserModal],
       providers: [
-        { provide: UnsplashService, useValue: mockUnsplashService },
+        { provide: UnsplashApi, useValue: mockUnsplashService },
         { provide: DialogRef, useValue: mockDialogRef },
       ],
     });

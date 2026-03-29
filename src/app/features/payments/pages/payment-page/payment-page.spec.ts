@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PaymentPage } from './payment-page';
 import { provideRouter } from '@angular/router';
-import { SeoService } from '../../../../core/seo/seo.service';
+import { SeoManager } from '../../../../../core/seo/seo-manager';
 
 describe('PaymentPage', () => {
   let component: PaymentPage;
   let fixture: ComponentFixture<PaymentPage>;
-  let mockSeoService: jasmine.SpyObj<SeoService>;
+  let mockSeoManager: jasmine.SpyObj<SeoManager>;
 
   beforeEach(async () => {
-    mockSeoService = jasmine.createSpyObj('SeoService', ['update']);
+    mockSeoManager = jasmine.createSpyObj('SeoManager', ['update']);
 
     await TestBed.configureTestingModule({
       imports: [PaymentPage],
       providers: [
         provideRouter([]),
-        { provide: SeoService, useValue: mockSeoService },
+        { provide: SeoManager, useValue: mockSeoManager },
       ],
     }).compileComponents();
 
@@ -29,7 +29,7 @@ describe('PaymentPage', () => {
   });
 
   it('should update SEO on init', () => {
-    expect(mockSeoService.update).toHaveBeenCalledWith({
+    expect(mockSeoManager.update).toHaveBeenCalledWith({
       title: 'Podrška',
       description: 'Podrži Push Serbia zajednicu kroz Buy Me a Coffee.',
     });

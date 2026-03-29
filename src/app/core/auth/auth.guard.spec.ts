@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { authGuard } from './auth.guard';
-import { AuthService } from './auth.service';
+import { AuthClient } from './auth-client';
 
 describe('authGuard', () => {
   let $authenticatedSpy: jasmine.Spy;
@@ -19,8 +19,8 @@ describe('authGuard', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', [], {
+          provide: AuthClient,
+          useValue: jasmine.createSpyObj('AuthClient', [], {
             $authenticated: $authenticatedSpy,
           }),
         },

@@ -1,6 +1,6 @@
 import { Router, ViewTransitionInfo } from '@angular/router';
 import { inject } from '@angular/core';
-import { TransitionService } from '../transition/transition.service';
+import { TransitionManager } from '../transition/transition-manager';
 
 export function onViewTransitionCreated(info: ViewTransitionInfo) {
   const router = inject(Router);
@@ -15,7 +15,7 @@ export function onViewTransitionCreated(info: ViewTransitionInfo) {
     return;
   }
 
-  const currentTransitionService = inject(TransitionService);
+  const currentTransitionService = inject(TransitionManager);
   currentTransitionService.current.set(info);
 
   info.transition.finished.finally(() => {

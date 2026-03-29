@@ -1,12 +1,12 @@
 import { Directive, HostListener, inject } from '@angular/core';
-import { AuthService } from '../../core/auth/auth.service';
+import { AuthClient } from '../../core/auth/auth-client';
 import { Router } from '@angular/router';
 
 @Directive({
   selector: '[appAuthRequired]',
 })
-export class AuthRequiredDirective {
-  private authService = inject(AuthService);
+export class AuthRequired {
+  private authService = inject(AuthClient);
   private router = inject(Router);
 
   @HostListener('click', ['$event'])

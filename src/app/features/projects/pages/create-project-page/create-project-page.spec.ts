@@ -6,9 +6,9 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 
 import { CreateProjectPage } from './create-project-page';
-import { ProjectStoreService } from '../../../../core/project/project.store.service';
-import { SeoService } from '../../../../core/seo/seo.service';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { ProjectStore } from '../../../../core/project/project-store';
+import { SeoManager } from '../../../../../core/seo/seo-manager';
+import { AuthClient } from '../../../../core/auth/auth-client';
 
 describe('CreateProjectPage', () => {
   let component: CreateProjectPage;
@@ -16,7 +16,7 @@ describe('CreateProjectPage', () => {
 
   beforeEach(async () => {
     const projectStoreMock = jasmine.createSpyObj(
-      'ProjectStoreService',
+      'ProjectStore',
       ['getAll', 'getBySlug', 'create', 'update'],
       { $loading: signal(false) },
     );
@@ -29,11 +29,11 @@ describe('CreateProjectPage', () => {
         provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: ProjectStoreService, useValue: projectStoreMock },
-        { provide: SeoService, useValue: jasmine.createSpyObj('SeoService', ['update']) },
+        { provide: ProjectStore, useValue: projectStoreMock },
+        { provide: SeoManager, useValue: jasmine.createSpyObj('SeoManager', ['update']) },
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut', 'getMe', 'updateMe'], {
+          provide: AuthClient,
+          useValue: jasmine.createSpyObj('AuthClient', ['signOut', 'getMe', 'updateMe'], {
             $authenticated: jasmine.createSpy().and.returnValue(false),
             $userData: jasmine.createSpy().and.returnValue(undefined),
             $fullUserData: jasmine.createSpy().and.returnValue(null),

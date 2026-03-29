@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../../../../core/auth/auth.service';
+import { AuthClient } from '../../../../../../core/auth/auth-client';
 
 @Component({
   selector: 'app-profile-information-dialog',
@@ -13,7 +13,7 @@ export class ProfileInformationDialog {
 
   closeClick = output<void>();
 
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject(AuthClient);
   private readonly fb = inject(FormBuilder);
 
   readonly form = this.fb.nonNullable.group({

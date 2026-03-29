@@ -4,7 +4,7 @@ import { BlogPost } from './blog';
 @Injectable({
   providedIn: 'root',
 })
-export class BlogStoreService {
+export class BlogStore {
   private readonly _blogPosts = signal<BlogPost[]>([
     {
       id: '1',

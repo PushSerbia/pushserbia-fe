@@ -17,7 +17,7 @@ import {
 import { FirebaseUserData } from '../user/firebase-user-data';
 import firebase from 'firebase/compat/app';
 import { User } from '../user/user';
-import { UserService } from '../user/user.service';
+import { UserApi } from '../user/user-api';
 import { UserRole } from '../user/user-role';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthUtils } from './auth.utils';
@@ -25,10 +25,10 @@ import { HttpClient } from '@angular/common/http';
 import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class AuthClient {
   private readonly httpClient = inject(HttpClient);
   private readonly afAuth = inject(AngularFireAuth);
-  private readonly userService = inject(UserService);
+  private readonly userService = inject(UserApi);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 

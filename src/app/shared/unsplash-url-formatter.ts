@@ -2,9 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'unsplashUrlFormatter',
-  standalone: true,
 })
-export class UnsplashUrlFormatterPipe implements PipeTransform {
+export class UnsplashUrlFormatter implements PipeTransform {
   transform(unsplashBaseUrl: string, {width, height}: {width: number, height: number}): string {
     const baseUrl = unsplashBaseUrl.split('?')[0];
     const params = new URLSearchParams({

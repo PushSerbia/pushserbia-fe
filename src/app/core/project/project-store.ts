@@ -8,7 +8,7 @@ import {
   Signal,
   TransferState,
 } from '@angular/core';
-import { ProjectService } from './project.service';
+import { ProjectApi } from './project-api';
 import { Project } from './project';
 import { finalize, first, Observable, tap } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
@@ -27,10 +27,10 @@ const PROJECT_INITIAL_STATE: ProjectState = {
 @Injectable({
   providedIn: 'root',
 })
-export class ProjectStoreService {
+export class ProjectStore {
   private platformId = inject(PLATFORM_ID);
   private state = inject(TransferState);
-  private projectService = inject(ProjectService);
+  private projectService = inject(ProjectApi);
 
   private loading = signal<boolean>(false);
   private items = signal<ProjectState>(PROJECT_INITIAL_STATE);
