@@ -1,4 +1,4 @@
-import { ApplicationConfig, ErrorHandler, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler } from '@angular/core';
 import {
   provideRouter,
   Router,
@@ -20,7 +20,6 @@ import { provideAuth } from './core/auth/auth.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZonelessChangeDetection(),
     provideClientHydration(withEventReplay()),
     provideRouter(
       routes,
