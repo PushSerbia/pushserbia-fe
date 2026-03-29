@@ -28,4 +28,11 @@ export class IntegrationsService {
       tags: 'newsletter',
     });
   }
+
+  subscribeForNewsletter(email: string) {
+    return this.subscribe({
+      email,
+      tags: 'newsletter',
+    });
+  }
 }
