@@ -1,1 +1,1 @@
-export const release = 'pushserbia-fe@1.0.0-q7ryyi';
+export const release = 'pushserbia-fe@1.0.0-kq4rnf';
