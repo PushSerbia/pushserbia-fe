@@ -22,6 +22,7 @@ import { AuthRequiredDirective } from '../../../../core/auth/auth-required.direc
 import { GravatarModule } from 'ngx-gravatar';
 import { UnsplashUrlFormatterPipe } from '../../../../shared/unsplash-url-formatter.pipe';
 import { SeoService } from '../../../../core/seo/seo.service';
+import { ProjectTeamSection } from './components/project-team-section/project-team-section';
 
 @Component({
   selector: 'app-project-details-page',
@@ -34,6 +35,7 @@ import { SeoService } from '../../../../core/seo/seo.service';
     AuthRequiredDirective,
     GravatarModule,
     UnsplashUrlFormatterPipe,
+    ProjectTeamSection,
   ],
   templateUrl: './project-details-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
