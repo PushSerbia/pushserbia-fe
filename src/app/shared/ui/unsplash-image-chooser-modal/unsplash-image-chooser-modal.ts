@@ -67,11 +67,14 @@ export class UnsplashImageChooserModal implements OnInit {
           this.isLoading.set(true);
           this.hasError.set(false);
         }),
-        switchMap((query) => this.unsplash.searchPhotos(query)),
-        catchError(() => {
-          this.hasError.set(true);
-          return of([]);
-        }),
+        switchMap((query) =>
+          this.unsplash.searchPhotos(query).pipe(
+            catchError(() => {
+              this.hasError.set(true);
+              return of([]);
+            }),
+          ),
+        ),
         tap((photos) => {
           const options = photos.map((photo) => ({
             value: photo.urls.small,
