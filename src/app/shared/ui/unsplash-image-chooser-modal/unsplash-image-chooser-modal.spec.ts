@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UnsplashImageChooserModal } from './unsplash-image-chooser-modal';
 import { UnsplashService } from '../../../core/unsplash/services/unsplash.service';
 import { DialogRef } from '@angular/cdk/dialog';
@@ -90,6 +90,8 @@ describe('UnsplashImageChooserModal', () => {
   let mockDialogRef: jasmine.SpyObj<DialogRef<string | null>>;
 
   beforeEach(() => {
+    jasmine.clock().install();
+
     mockUnsplashService = jasmine.createSpyObj('UnsplashService', [
       'searchPhotos',
     ]);
@@ -109,46 +111,48 @@ describe('UnsplashImageChooserModal', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
   it('should create', () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
-  it('should load initial photos with "Community" query on init', fakeAsync(() => {
+  it('should load initial photos with "Community" query on init', () => {
     const photos = [createMockPhoto()];
     mockUnsplashService.searchPhotos.and.returnValue(of(photos));
 
     fixture.detectChanges();
-    tick(0);
+    jasmine.clock().tick(0);
 
-    expect(mockUnsplashService.searchPhotos).toHaveBeenCalledWith(
-      'Community',
-    );
+    expect(mockUnsplashService.searchPhotos).toHaveBeenCalledWith('Community');
     expect(component.options().length).toBe(1);
     expect(component.isLoading()).toBeFalse();
     expect(component.hasError()).toBeFalse();
-  }));
+  });
 
-  it('should set hasError to true when API call fails', fakeAsync(() => {
+  it('should set hasError to true when API call fails', () => {
     mockUnsplashService.searchPhotos.and.returnValue(
       throwError(() => new Error('API error')),
     );
 
     fixture.detectChanges();
-    tick(0);
+    jasmine.clock().tick(0);
 
     expect(component.hasError()).toBeTrue();
     expect(component.options().length).toBe(0);
-  }));
+  });
 
-  it('should keep stream alive after an error and recover on next search', fakeAsync(() => {
+  it('should keep stream alive after an error and recover on next search', () => {
     // First call fails
     mockUnsplashService.searchPhotos.and.returnValue(
       throwError(() => new Error('API error')),
     );
 
     fixture.detectChanges();
-    tick(0);
+    jasmine.clock().tick(0);
 
     expect(component.hasError()).toBeTrue();
 
@@ -157,48 +161,48 @@ describe('UnsplashImageChooserModal', () => {
     mockUnsplashService.searchPhotos.and.returnValue(of(photos));
 
     component.searchQuery.setValue('Nature');
-    tick(1500);
+    jasmine.clock().tick(1500);
 
     expect(component.hasError()).toBeFalse();
     expect(component.options().length).toBe(1);
     expect(component.isLoading()).toBeFalse();
-  }));
+  });
 
-  it('should reset hasError before each new search', fakeAsync(() => {
+  it('should reset hasError before each new search', () => {
     mockUnsplashService.searchPhotos.and.returnValue(
       throwError(() => new Error('API error')),
     );
 
     fixture.detectChanges();
-    tick(0);
+    jasmine.clock().tick(0);
 
     expect(component.hasError()).toBeTrue();
 
     // Start a new search — hasError should reset before API call
     mockUnsplashService.searchPhotos.and.returnValue(of([]));
     component.searchQuery.setValue('Trees');
-    tick(1500);
+    jasmine.clock().tick(1500);
 
     expect(component.hasError()).toBeFalse();
-  }));
+  });
 
-  it('should set isLoading to true during search and false after', fakeAsync(() => {
+  it('should set isLoading to false after search completes', () => {
     mockUnsplashService.searchPhotos.and.returnValue(of([]));
 
     fixture.detectChanges();
-    tick(0);
+    jasmine.clock().tick(0);
 
     expect(component.isLoading()).toBeFalse();
-  }));
+  });
 
-  it('should map photos to ImageControlOption format', fakeAsync(() => {
+  it('should map photos to ImageControlOption format', () => {
     const photo = createMockPhoto({
       description: 'Beautiful landscape',
     });
     mockUnsplashService.searchPhotos.and.returnValue(of([photo]));
 
     fixture.detectChanges();
-    tick(0);
+    jasmine.clock().tick(0);
 
     const options = component.options();
     expect(options.length).toBe(1);
@@ -209,51 +213,51 @@ describe('UnsplashImageChooserModal', () => {
     expect(options[0].author.profileUrl).toBe(
       'https://unsplash.com/@testuser',
     );
-  }));
+  });
 
-  it('should use "Unsplash Image" as fallback label when description is null', fakeAsync(() => {
+  it('should use "Unsplash Image" as fallback label when description is null', () => {
     const photo = createMockPhoto({ description: null });
     mockUnsplashService.searchPhotos.and.returnValue(of([photo]));
 
     fixture.detectChanges();
-    tick(0);
+    jasmine.clock().tick(0);
 
     expect(component.options()[0].label).toBe('Unsplash Image');
-  }));
+  });
 
-  it('should debounce subsequent searches by 1500ms', fakeAsync(() => {
+  it('should debounce subsequent searches by 1500ms', () => {
     mockUnsplashService.searchPhotos.and.returnValue(of([]));
 
     fixture.detectChanges();
-    tick(0);
+    jasmine.clock().tick(0);
 
     mockUnsplashService.searchPhotos.calls.reset();
 
     component.searchQuery.setValue('Na');
-    tick(500);
+    jasmine.clock().tick(500);
     component.searchQuery.setValue('Nat');
-    tick(500);
+    jasmine.clock().tick(500);
     component.searchQuery.setValue('Nature');
-    tick(1500);
+    jasmine.clock().tick(1500);
 
     // Only the last value should trigger a search
     expect(mockUnsplashService.searchPhotos).toHaveBeenCalledTimes(1);
     expect(mockUnsplashService.searchPhotos).toHaveBeenCalledWith('Nature');
-  }));
+  });
 
-  it('should not search for empty or whitespace queries', fakeAsync(() => {
+  it('should not search for empty or whitespace queries', () => {
     mockUnsplashService.searchPhotos.and.returnValue(of([]));
 
     fixture.detectChanges();
-    tick(0);
+    jasmine.clock().tick(0);
 
     mockUnsplashService.searchPhotos.calls.reset();
 
     component.searchQuery.setValue('   ');
-    tick(1500);
+    jasmine.clock().tick(1500);
 
     expect(mockUnsplashService.searchPhotos).not.toHaveBeenCalled();
-  }));
+  });
 
   it('should close dialog with selected image path without query params', () => {
     component.selectImage('https://unsplash.com/photo?w=400&h=300');
