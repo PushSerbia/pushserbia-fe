@@ -1,22 +1,113 @@
 <div
-  class="rounded-lg border border-white/5 bg-neutral-950 p-6 text-center shadow-sm"
+  class="rounded-lg border border-white/5 bg-neutral-950 p-6 shadow-sm"
 >
-  <img
-    class="mx-auto h-28"
-    src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/girl-shopping-list-dark.svg"
-    alt="shopping illustration"
-  />
-  <h3 class="mb-2 mt-4 text-xl font-semibold leading-none text-white">
+  <h3
+    class="flex items-center border-b border-white/5 pb-4 text-xl font-semibold leading-none text-white md:pb-6"
+  >
     Pomozi nam da se popravimo!
   </h3>
-  <p class="mb-4 text-neutral-400">
-    Povremeno ćemo tražiti tvoje mišljenje o radu zajednice koje nam pomažu da unapredimo sve
-    aspekte u zajednici.
-  </p>
-  <button
-    type="button"
-    class="inline-flex w-full items-center justify-center rounded-lg bg-primary-400 px-5 py-2.5 text-sm font-medium text-black hover:bg-primary-300 focus:outline-none focus:ring-4 focus:ring-primary-800 sm:w-auto"
-  >
-    Pošalji utiske odmah
-  </button>
+
+  @if ($submitSuccess()) {
+    <div
+      class="my-4 rounded-lg border border-green-800 bg-green-950 p-4 text-sm text-green-400"
+    >
+      Hvala na povratnoj informaciji! Tvoje mišljenje nam mnogo znači.
+    </div>
+  }
+
+  @if ($submitError()) {
+    <div
+      class="my-4 rounded-lg border border-red-800 bg-red-950 p-4 text-sm text-red-400"
+    >
+      {{ $submitError() }}
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="mt-4 space-y-4 md:mt-6">
+    <!-- Rating -->
+    <div>
+      <label class="mb-2 block text-sm font-medium text-white">Ocjena</label>
+      <div class="flex gap-1">
+        @for (star of [1, 2, 3, 4, 5]; track star) {
+          <button
+            type="button"
+            (click)="setRating(star)"
+            class="text-2xl transition-colors focus:outline-none"
+            [class]="
+              star <= form.controls.rating.value
+                ? 'text-primary-400'
+                : 'text-neutral-600 hover:text-neutral-400'
+            "
+          >
+            &#9733;
+          </button>
+        }
+      </div>
+      @if (form.controls.rating.touched && form.controls.rating.invalid) {
+        <p class="mt-1 text-xs text-red-400">Izaberi ocjenu.</p>
+      }
+    </div>
+
+    <!-- Category -->
+    <div>
+      <label for="feedback-category" class="mb-2 block text-sm font-medium text-white">
+        Kategorija
+      </label>
+      <select
+        id="feedback-category"
+        formControlName="category"
+        class="block w-full rounded-lg border border-white/10 bg-neutral-900 p-2.5 text-sm text-white placeholder-neutral-400 focus:border-primary-500 focus:ring-primary-500"
+      >
+        @for (cat of categories; track cat.value) {
+          <option [value]="cat.value">{{ cat.label }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Message -->
+    <div>
+      <label for="feedback-message" class="mb-2 block text-sm font-medium text-white">
+        Poruka
+      </label>
+      <textarea
+        id="feedback-message"
+        formControlName="message"
+        rows="4"
+        placeholder="Podijeli svoje utiske o zajednici..."
+        class="block w-full rounded-lg border border-white/10 bg-neutral-900 p-2.5 text-sm text-white placeholder-neutral-400 focus:border-primary-500 focus:ring-primary-500"
+      ></textarea>
+      <div class="mt-1 flex items-center justify-between">
+        @if (form.controls.message.touched && form.controls.message.hasError('required')) {
+          <p class="text-xs text-red-400">Poruka je obavezna.</p>
+        } @else if (form.controls.message.hasError('maxlength')) {
+          <p class="text-xs text-red-400">Maksimalno 1000 karaktera.</p>
+        } @else {
+          <span></span>
+        }
+        <span class="text-xs text-neutral-500">{{ messageLength }}/1000</span>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      [disabled]="$isSubmitting()"
+      class="inline-flex w-full items-center justify-center rounded-lg bg-primary-400 px-5 py-2.5 text-sm font-medium text-black hover:bg-primary-300 focus:outline-none focus:ring-4 focus:ring-primary-800 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
+    >
+      @if ($isSubmitting()) {
+        <svg
+          class="me-2 h-4 w-4 animate-spin"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        Šalje se...
+      } @else {
+        Pošalji utiske
+      }
+    </button>
+  </form>
 </div>
