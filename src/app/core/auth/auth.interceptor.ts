@@ -21,7 +21,7 @@ function handleBrowserRequest(
       if (error instanceof HttpErrorResponse && error.status === 401) {
         return authService.signOut().pipe(
           switchMap(() => {
-            router.navigateByUrl('/');
+            router.navigateByUrl('/autentikacija/prijava');
             return throwError(() => error);
           }),
         );

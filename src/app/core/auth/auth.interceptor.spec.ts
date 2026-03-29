@@ -68,7 +68,7 @@ describe('authInterceptor', () => {
     req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
 
     expect(mockAuthService.signOut).toHaveBeenCalled();
-    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/');
+    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/autentikacija/prijava');
   });
 
   it('should not sign out on non-401 errors', () => {
