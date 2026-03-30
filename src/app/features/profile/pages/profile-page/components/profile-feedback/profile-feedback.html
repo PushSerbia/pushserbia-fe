@@ -26,7 +26,7 @@
   <form [formGroup]="form" (ngSubmit)="submit()" class="mt-4 space-y-4 md:mt-6">
     <!-- Rating -->
     <div>
-      <label class="mb-2 block text-sm font-medium text-white">Ocjena</label>
+      <label class="mb-2 block text-sm font-medium text-white">Ocena</label>
       <div class="flex gap-1">
         @for (star of [1, 2, 3, 4, 5]; track star) {
           <button
@@ -42,7 +42,7 @@
         }
       </div>
       @if (form.controls.rating.touched && form.controls.rating.invalid) {
-        <p class="mt-1 text-xs text-red-400">Izaberi ocjenu.</p>
+        <p class="mt-1 text-xs text-red-400">Izaberi ocenu.</p>
       }
     </div>
 
@@ -71,7 +71,7 @@
         id="feedback-message"
         formControlName="message"
         rows="4"
-        placeholder="Podijeli svoje utiske o zajednici..."
+        placeholder="Podeli svoje utiske o zajednici..."
         class="block w-full rounded-lg border border-white/10 bg-neutral-900 p-2.5 text-sm text-white placeholder-neutral-400 focus:border-primary-500 focus:ring-primary-500"
       ></textarea>
       <div class="mt-1 flex items-center justify-between">

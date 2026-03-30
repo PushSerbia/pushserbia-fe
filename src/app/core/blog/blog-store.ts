@@ -153,7 +153,7 @@ export class BlogStore {
 
         <p>Ono što nas je iznenadilo: neki od najvrednijih članova nikada nisu napisali liniju koda za naše projekte. Umesto toga, oni mentorišu, organizuju, i povezuju ljude. Zajednica je mnogo više od koda.</p>
 
-        <h2>Lekcija 2: Jednostavnost pobjeđuje</h2>
+        <h2>Lekcija 2: Jednostavnost pobeđuje</h2>
         <p>U početku smo planirali kompleksan sistem sa kategorijama, pod-kategorijama, milestone-ima, i detaljnim project management alatima. Brzo smo naučili da je manje — više. Ljudi žele da predlože ideju za 5 minuta, glasaju jednim klikom, i počnu da rade bez birokratije.</p>
 
         <h2>Lekcija 3: Transparentnost gradi poverenje brže od bilo čega</h2>
