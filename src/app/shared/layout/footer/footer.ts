@@ -12,7 +12,7 @@ import { IntegrationsApi } from '../../../core/integrations/integrations-api';
 export class Footer {
   currentYear = new Date().getFullYear();
   newsletterEmail = '';
-  newsletterStatus = signal<'idle' | 'loading' | 'success' | 'error' | 'invalid'>('idle');
+  newsletterStatus = signal<'idle' | 'loading' | 'success' | 'error' | 'unavailable' | 'invalid'>('idle');
 
   private integrationsService = inject(IntegrationsApi);
 
@@ -31,8 +31,8 @@ export class Footer {
         this.newsletterStatus.set('success');
         this.newsletterEmail = '';
       },
-      error: () => {
-        this.newsletterStatus.set('error');
+      error: (err: any) => {
+        this.newsletterStatus.set(err?.status === 503 ? 'unavailable' : 'error');
       },
     });
   }
