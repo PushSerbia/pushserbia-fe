@@ -3,17 +3,18 @@ import { TitleCasePipe } from '@angular/common';
 import { User } from '../../../../../../core/user/user';
 import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data';
 import { ProfileInformationDialog } from '../profile-information-dialog/profile-information-dialog';
-import { ModalService } from '../../../../../../core/modal/modal.service';
+import { ModalManager } from '../../../../../../core/modal/modal-manager';
 import { GravatarModule } from 'ngx-gravatar';
+import { ProfileProCard } from '../profile-pro-card/profile-pro-card';
 
 @Component({
   selector: 'app-profile-details',
-  imports: [TitleCasePipe, ProfileInformationDialog, GravatarModule],
+  imports: [TitleCasePipe, ProfileInformationDialog, GravatarModule, ProfileProCard],
   templateUrl: './profile-details.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileDetails implements OnDestroy {
-  private modal = inject(ModalService);
+  private modal = inject(ModalManager);
 
   id = 'profile-information-dialog';
   data = input.required<User & FirebaseUserData>();

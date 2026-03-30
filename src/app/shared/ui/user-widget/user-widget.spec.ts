@@ -1,31 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
+import { vi } from 'vitest';
 
 import { UserWidget } from './user-widget';
-import { AuthService } from '../../../core/auth/auth.service';
+import { AuthClient } from '../../../core/auth/auth-client';
 
 describe('UserWidget', () => {
   let component: UserWidget;
   let fixture: ComponentFixture<UserWidget>;
 
   beforeEach(async () => {
-    const authServiceMock = jasmine.createSpyObj(
-      'AuthService',
-      ['signOut', 'getMe', 'updateMe'],
-      {
-        $authenticated: jasmine.createSpy().and.returnValue(false),
-        $userData: jasmine.createSpy().and.returnValue(undefined),
-        $fullUserData: jasmine.createSpy().and.returnValue(null),
-        userData$: of(undefined),
-      },
-    );
+    const authServiceMock = {
+      signOut: vi.fn(),
+      getMe: vi.fn(),
+      updateMe: vi.fn(),
+      $authenticated: vi.fn().mockReturnValue(false),
+      $userData: vi.fn().mockReturnValue(undefined),
+      $fullUserData: vi.fn().mockReturnValue(null),
+      userData$: of(undefined),
+    };
 
     await TestBed.configureTestingModule({
       imports: [UserWidget],
       providers: [
         provideRouter([]),
-        { provide: AuthService, useValue: authServiceMock },
+        { provide: AuthClient, useValue: authServiceMock },
       ],
     }).compileComponents();
 

@@ -1,23 +1,37 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Component } from '@angular/core';
+import { vi } from 'vitest';
 
 import { of } from 'rxjs';
 
 import { ProfileDetails } from './profile-details';
-import { ModalService } from '../../../../../../core/modal/modal.service';
-import { AuthService } from '../../../../../../core/auth/auth.service';
+import { ModalManager } from '../../../../../../core/modal/modal-manager';
+import { AuthClient } from '../../../../../../core/auth/auth-client';
+import { User } from '../../../../../../core/user/user';
+import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data';
+import { UserRole } from '../../../../../../core/user/user-role';
 
 @Component({
   template: '<app-profile-details [data]="mockData" />',
   imports: [ProfileDetails],
 })
 class TestHostComponent {
-  mockData = {
+  mockData: User & FirebaseUserData = {
     id: '1',
-    firstName: 'Test',
-    lastName: 'User',
+    firebaseUid: 'fb-1',
+    fullName: 'Test User',
+    name: 'Test User',
     email: 'test@example.com',
+    emailVerified: true,
+    gravatar: 'https://gravatar.com/test',
+    imageUrl: 'https://example.com/img.png',
+    role: UserRole.Participant,
+    isBlocked: false,
+    level: 1,
+    projectsProposed: 0,
+    projectsSupported: 0,
+    membershipStatus: 'free',
   };
 }
 
@@ -30,17 +44,20 @@ describe('ProfileDetails', () => {
       providers: [
         provideRouter([]),
         {
-          provide: ModalService,
-          useValue: jasmine.createSpyObj('ModalService', ['open', 'close', 'remove']),
+          provide: ModalManager,
+          useValue: { open: vi.fn(), close: vi.fn(), remove: vi.fn() } as unknown as ModalManager,
         },
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut', 'getMe', 'updateMe'], {
-            $authenticated: jasmine.createSpy().and.returnValue(false),
-            $userData: jasmine.createSpy().and.returnValue(undefined),
-            $fullUserData: jasmine.createSpy().and.returnValue(null),
+          provide: AuthClient,
+          useValue: {
+            signOut: vi.fn(),
+            getMe: vi.fn(),
+            updateMe: vi.fn(),
+            $authenticated: vi.fn().mockReturnValue(false),
+            $userData: vi.fn().mockReturnValue(undefined),
+            $fullUserData: vi.fn().mockReturnValue(null),
             userData$: of(undefined),
-          }),
+          } as unknown as AuthClient,
         },
       ],
     }).compileComponents();

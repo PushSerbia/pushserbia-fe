@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, RESPONSE_INIT } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { BasicLayout } from '../../shared/layout/landing-layout/basic-layout';
 
 @Component({
   selector: 'app-not-found',
-  imports: [RouterLink],
+  imports: [RouterLink, BasicLayout],
   templateUrl: './not-found.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

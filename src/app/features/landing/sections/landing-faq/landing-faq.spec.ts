@@ -25,14 +25,14 @@ describe('LandingFaq', () => {
 
   it('should show all questions after toggleShowAll', () => {
     component.toggleShowAll();
-    expect(component.showAllQuestions()).toBeTrue();
+    expect(component.showAllQuestions()).toBe(true);
     expect(component.faq().length).toBe(component.totalQuestionsCount);
   });
 
   it('should toggle back to limited questions', () => {
     component.toggleShowAll();
     component.toggleShowAll();
-    expect(component.showAllQuestions()).toBeFalse();
+    expect(component.showAllQuestions()).toBe(false);
     expect(component.faq().length).toBe(component.initialQuestionsCount);
   });
 
@@ -44,7 +44,7 @@ describe('LandingFaq', () => {
       const matches =
         item.title.toLowerCase().includes('registr') ||
         item.description.toLowerCase().includes('registr');
-      expect(matches).toBeTrue();
+      expect(matches).toBe(true);
     });
   });
 

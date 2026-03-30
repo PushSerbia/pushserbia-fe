@@ -7,13 +7,13 @@ import {
 import { inject, PLATFORM_ID, REQUEST } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthClient } from './auth-client';
 import { Router } from '@angular/router';
 
 function handleBrowserRequest(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
-  authService: AuthService,
+  authService: AuthClient,
   router: Router,
 ): Observable<HttpEvent<unknown>> {
   return next(req.clone({ withCredentials: true })).pipe(
@@ -21,7 +21,7 @@ function handleBrowserRequest(
       if (error instanceof HttpErrorResponse && error.status === 401) {
         return authService.signOut().pipe(
           switchMap(() => {
-            router.navigateByUrl('/');
+            router.navigateByUrl('/autentikacija/prijava');
             return throwError(() => error);
           }),
         );
@@ -54,7 +54,7 @@ export const authInterceptor = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
-  const authService = inject(AuthService);
+  const authService = inject(AuthClient);
   const router = inject(Router);
 
   if (isPlatformBrowser(inject(PLATFORM_ID))) {

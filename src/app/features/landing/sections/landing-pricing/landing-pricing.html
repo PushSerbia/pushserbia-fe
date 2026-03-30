@@ -13,19 +13,19 @@
         Podrži infrastrukturu
       </h2>
       <p class="mt-3 text-gray-500 max-w-lg">
-        Neprofitni smo. Svaki euro ide u servere, projekte i edukaciju. Bez profita, bez skrivenih
+        Neprofitni smo. Svaki dolar ide u servere, projekte i edukaciju. Bez profita, bez skrivenih
         troškova.
       </p>
     </div>
 
     <div class="grid gap-6 max-w-4xl lg:grid-cols-3">
-      @for (donation of donationOptions; track $index) {
+      @for (option of supportOptions; track $index) {
         <div
           class="relative rounded-xl border bg-gray-900 p-8 flex flex-col transition-colors"
-          [class.border-primary-500]="donation.isHighlighted"
-          [class.border-gray-800]="!donation.isHighlighted"
+          [class.border-primary-500]="option.isHighlighted"
+          [class.border-gray-800]="!option.isHighlighted"
         >
-          @if (donation.isHighlighted) {
+          @if (option.isHighlighted) {
             <span
               class="absolute -top-3 left-6 px-3 py-0.5 text-xs font-mono text-gray-950 bg-primary-400 rounded-full"
             >
@@ -34,22 +34,22 @@
           }
 
           <div class="font-mono text-xs text-gray-400 mb-4">
-            {{ donation.isOneTime ? '// one-time' : '// monthly' }}
+            {{ option.isOneTime ? '// one-time' : '// monthly' }}
           </div>
 
-          <h3 class="text-lg font-bold text-white mb-1">{{ donation.title }}</h3>
+          <h3 class="text-lg font-bold text-white mb-1">{{ option.title }}</h3>
 
           <div class="flex items-baseline gap-1 mt-4 mb-6">
             <span class="text-4xl font-extrabold text-white">
-              {{ donation.price | currency: 'EUR' : 'symbol' : '1.0' }}
+              ${{ option.price }}
             </span>
             <span class="text-sm text-gray-500">
-              {{ donation.isOneTime ? '' : '/mes' }}
+              {{ option.isOneTime ? '' : '/mes' }}
             </span>
           </div>
 
           <ul class="space-y-3 mb-8 flex-1">
-            @for (benefit of donation.benefits; track $index) {
+            @for (benefit of option.benefits; track $index) {
               <li class="flex items-start gap-2 text-sm text-gray-400">
                 <span class="text-primary-500 mt-0.5" aria-hidden="true">✓</span>
                 {{ benefit }}
@@ -57,23 +57,19 @@
             }
           </ul>
 
-          <a
-            routerLink="/placanja/placanje"
-            [queryParams]="{
-              isOneTime: donation.isOneTime,
-              amount: donation.price,
-              title: donation.title,
-            }"
+          <button
+            type="button"
+            (click)="openExternal(option)"
             class="block w-full py-3 text-center text-sm font-semibold rounded-lg transition-colors"
-            [class.bg-primary-500]="donation.isHighlighted"
-            [class.text-gray-950]="donation.isHighlighted"
-            [class.hover:bg-primary-400]="donation.isHighlighted"
-            [class.bg-gray-800]="!donation.isHighlighted"
-            [class.text-gray-300]="!donation.isHighlighted"
-            [class.hover:bg-gray-700]="!donation.isHighlighted"
+            [class.bg-primary-500]="option.isHighlighted"
+            [class.text-gray-950]="option.isHighlighted"
+            [class.hover:bg-primary-400]="option.isHighlighted"
+            [class.bg-gray-800]="!option.isHighlighted"
+            [class.text-gray-300]="!option.isHighlighted"
+            [class.hover:bg-gray-700]="!option.isHighlighted"
           >
-            {{ donation.isOneTime ? 'Doniraj' : 'Pretplati se' }}
-          </a>
+            {{ option.isOneTime ? 'Doniraj' : 'Pretplati se' }}
+          </button>
         </div>
       }
     </div>

@@ -1,4 +1,4 @@
-import { ApplicationConfig, ErrorHandler, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler } from '@angular/core';
 import {
   provideRouter,
   Router,
@@ -15,12 +15,11 @@ import { provideQuillConfig } from 'ngx-quill';
 import { provideFirebase } from './core/firebase/firebase.provider';
 import { provideGtm } from './core/gtm/gtm.provider';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { onViewTransitionCreated } from './core/transitions/on-view-transition-created';
+import { onViewTransitionCreated } from './core/transition/on-view-transition-created';
 import { provideAuth } from './core/auth/auth.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZonelessChangeDetection(),
     provideClientHydration(withEventReplay()),
     provideRouter(
       routes,

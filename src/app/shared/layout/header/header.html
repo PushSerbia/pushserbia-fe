@@ -25,15 +25,11 @@
           class="text-sm text-neutral-400 hover:text-white transition-colors"
           >O nama</a
         >
-        <a
-          routerLink="/autentikacija/prijava"
-          class="text-sm font-medium text-black bg-white px-4 py-1.5 rounded-full hover:bg-neutral-200 transition-colors"
-          >Pridruži se</a
-        >
       </nav>
 
       <div class="flex items-center gap-3">
-        <app-theme-switcher />
+        <!-- TODO: unhide when light theme is implemented -->
+        <!-- <app-theme-switcher /> -->
         <app-user-widget />
         <button
           type="button"
@@ -83,12 +79,6 @@
           class="text-sm text-neutral-400 hover:text-white py-2 px-2"
           (click)="closeMobileMenu()"
           >O nama</a
-        >
-        <a
-          routerLink="/autentikacija/prijava"
-          class="text-sm font-medium text-black bg-white px-4 py-2 rounded-full mt-2 text-center"
-          (click)="closeMobileMenu()"
-          >Pridruži se</a
         >
       </nav>
     }

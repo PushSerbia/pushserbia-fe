@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IntegrationsService } from '../../../core/integrations/integrations.service';
+import { IntegrationsApi } from '../../../core/integrations/integrations-api';
 
 @Component({
   selector: 'app-footer',
@@ -12,12 +12,17 @@ import { IntegrationsService } from '../../../core/integrations/integrations.ser
 export class Footer {
   currentYear = new Date().getFullYear();
   newsletterEmail = '';
-  newsletterStatus = signal<'idle' | 'loading' | 'success' | 'error'>('idle');
+  newsletterStatus = signal<'idle' | 'loading' | 'success' | 'error' | 'unavailable' | 'invalid'>('idle');
 
-  private integrationsService = inject(IntegrationsService);
+  private integrationsService = inject(IntegrationsApi);
+
+  private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   onNewsletterSubmit() {
-    if (!this.newsletterEmail) return;
+    if (!this.newsletterEmail || !this.emailRegex.test(this.newsletterEmail)) {
+      this.newsletterStatus.set('invalid');
+      return;
+    }
 
     this.newsletterStatus.set('loading');
 
@@ -26,8 +31,8 @@ export class Footer {
         this.newsletterStatus.set('success');
         this.newsletterEmail = '';
       },
-      error: () => {
-        this.newsletterStatus.set('error');
+      error: (err: any) => {
+        this.newsletterStatus.set(err?.status === 503 ? 'unavailable' : 'error');
       },
     });
   }
