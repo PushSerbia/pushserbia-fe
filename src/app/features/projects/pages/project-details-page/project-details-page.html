@@ -136,6 +136,12 @@
             </h1>
             <quill-view-html [content]="projectDetails.description" />
           </div>
+
+          <app-project-team-section
+            [projectId]="projectDetails.id"
+            [creatorId]="projectDetails.creator.id"
+            [currentUser]="$currentUser()"
+          />
         </div>
       } @else {
         <div class="w-full max-w-screen-xl mx-auto px-4 py-16 text-center">

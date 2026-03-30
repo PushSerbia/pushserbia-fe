@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { QuillViewHTMLComponent } from 'ngx-quill';
-import { BlogStoreService } from '../../../core/blog/blog.store.service';
+import { BlogStore } from '../../../core/blog/blog-store';
 import { BlogPost } from '../../../core/blog/blog';
 import { BasicLayout } from '../../../shared/layout/landing-layout/basic-layout';
-import { SeoService } from '../../../core/seo/seo.service';
+import { SeoManager } from '../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-blog-post-details',
@@ -14,8 +14,8 @@ import { SeoService } from '../../../core/seo/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogPostDetails implements OnInit {
-  private blogStoreService = inject(BlogStoreService);
-  private seo = inject(SeoService);
+  private blogStoreService = inject(BlogStore);
+  private seo = inject(SeoManager);
 
   readonly slug = input.required<string>();
   post: BlogPost | undefined;
@@ -45,6 +45,11 @@ export class BlogPostDetails implements OnInit {
             logo: { '@type': 'ImageObject', url: 'https://pushserbia.com/pushserbia.png' },
           },
         },
+      });
+    } else {
+      this.seo.update({
+        title: 'Članak nije pronađen',
+        description: 'Traženi blog članak ne postoji.',
       });
     }
   }

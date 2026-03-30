@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 import { ProfileInformationDialog } from './profile-information-dialog';
-import { AuthService } from '../../../../../../core/auth/auth.service';
+import { AuthClient } from '../../../../../../core/auth/auth-client';
 import { ComponentRef } from '@angular/core';
 import { of } from 'rxjs';
 
@@ -8,20 +9,21 @@ describe('ProfileInformationDialog', () => {
   let component: ProfileInformationDialog;
   let componentRef: ComponentRef<ProfileInformationDialog>;
   let fixture: ComponentFixture<ProfileInformationDialog>;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
+  let mockAuthClient: AuthClient;
 
   beforeEach(async () => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['updateMe'], {
-      $fullUserData: jasmine.createSpy().and.returnValue({
+    mockAuthClient = {
+      updateMe: vi.fn(),
+      $fullUserData: vi.fn().mockReturnValue({
         fullName: 'Test User',
         linkedInUrl: 'https://linkedin.com/in/test',
         gitHubUrl: 'https://github.com/test',
       }),
-    });
+    } as unknown as AuthClient;
 
     await TestBed.configureTestingModule({
       imports: [ProfileInformationDialog],
-      providers: [{ provide: AuthService, useValue: mockAuthService }],
+      providers: [{ provide: AuthClient, useValue: mockAuthClient }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileInformationDialog);
@@ -43,21 +45,21 @@ describe('ProfileInformationDialog', () => {
 
   it('should require fullName', () => {
     component.form.controls.fullName.setValue('');
-    expect(component.form.controls.fullName.valid).toBeFalse();
+    expect(component.form.controls.fullName.valid).toBe(false);
   });
 
   it('should not require linkedInUrl', () => {
     component.form.controls.linkedInUrl.setValue('');
-    expect(component.form.controls.linkedInUrl.valid).toBeTrue();
+    expect(component.form.controls.linkedInUrl.valid).toBe(true);
   });
 
   it('should call authService.updateMe on updateMe()', () => {
-    mockAuthService.updateMe.and.returnValue(of({} as any));
-    spyOn(component.closeClick, 'emit');
+    (mockAuthClient.updateMe as any).mockReturnValue(of({} as any));
+    vi.spyOn(component.closeClick, 'emit');
 
     component.updateMe();
 
-    expect(mockAuthService.updateMe).toHaveBeenCalledWith({
+    expect(mockAuthClient.updateMe).toHaveBeenCalledWith({
       fullName: 'Test User',
       linkedInUrl: 'https://linkedin.com/in/test',
       gitHubUrl: 'https://github.com/test',

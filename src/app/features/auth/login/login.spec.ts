@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
+import { vi } from 'vitest';
 
 import { Login } from './login';
-import { SeoService } from '../../../core/seo/seo.service';
+import { SeoManager } from '../../../core/seo/seo-manager';
 
 describe('Login', () => {
   let component: Login;
@@ -15,7 +16,7 @@ describe('Login', () => {
       providers: [
         provideRouter([]),
         { provide: PLATFORM_ID, useValue: 'browser' },
-        { provide: SeoService, useValue: jasmine.createSpyObj('SeoService', ['update']) },
+        { provide: SeoManager, useValue: { update: vi.fn() } },
       ],
     }).compileComponents();
 

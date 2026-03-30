@@ -22,215 +22,83 @@
       </a>
 
       <h1 class="mb-4 text-3xl tracking-tight font-extrabold text-white">
-        {{ isOneTime ? 'Jednokratna donacija' : 'Pretplata' }}: {{ title }}
+        Podrži zajednicu
       </h1>
+      <p class="mb-8 text-neutral-400">
+        Izaberi način podrške. Sva plaćanja se obrađuju sigurno kroz Buy Me a Coffee.
+      </p>
 
-      <!-- Step 1: Collect user data -->
-      @if (currentStep === 1) {
-        <div class="mb-6 p-4 bg-neutral-950 rounded-xl border border-white/5">
-          <div class="flex justify-between items-center">
-            <span class="text-lg font-medium text-white">Iznos:</span>
-            <span class="text-2xl font-bold text-white">{{
-              amount | currency: 'EUR' : 'symbol' : '1.0'
-            }}</span>
-          </div>
-          <div class="mt-2 text-sm text-neutral-400">
-            {{ isOneTime ? 'Jednokratna donacija' : 'Mesečna pretplata' }}
-          </div>
-          <button
-            type="button"
-            (click)="toggleOptionsSelector()"
-            class="mt-3 text-sm text-primary-400 hover:text-primary-300 font-medium flex items-center"
+      <div class="space-y-4">
+        @for (option of supportOptions; track option.title) {
+          <div
+            class="rounded-xl border bg-neutral-950 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 transition-colors"
+            [class.border-primary-500]="option.isHighlighted"
+            [class.border-white/5]="!option.isHighlighted"
           >
-            <svg
-              class="w-4 h-4 mr-1"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-              ></path>
-            </svg>
-            Promeni izabranu podršku
-          </button>
-
-          <!-- Options Selector -->
-          @if (showOptionsSelector) {
-            <div class="mt-4 space-y-3">
-              @for (option of donationOptions; track option.title) {
-                <div
-                  role="button"
-                  tabindex="0"
-                  (click)="selectOption(option)"
-                  (keydown.enter)="selectOption(option)"
-                  (keydown.space)="selectOption(option)"
-                  class="p-3 bg-black rounded-lg border border-white/10 cursor-pointer hover:bg-neutral-900 transition-colors"
-                  [class.border-primary-500]="selectedOption?.title === option.title"
-                >
-                  <div class="flex justify-between items-center">
-                    <span class="font-medium text-white">{{ option.title }}</span>
-                    <span class="font-bold text-white">{{
-                      option.price | currency: 'EUR' : 'symbol' : '1.0'
-                    }}</span>
-                  </div>
-                  <div class="text-xs text-neutral-400">
-                    {{ option.isOneTime ? 'Jednokratna donacija' : 'Mesečna pretplata' }}
-                  </div>
-                </div>
-              }
-            </div>
-          }
-        </div>
-
-        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="space-y-6">
-          <div>
-            <label for="fullName" class="block mb-2 text-sm font-medium text-white"
-              >Ime i prezime</label
-            >
-            <input
-              type="text"
-              id="fullName"
-              formControlName="fullName"
-              class="bg-black border border-white/10 text-white text-sm rounded-lg focus:ring-1 focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 placeholder-neutral-500"
-              placeholder="Unesite vaše ime i prezime"
-            />
-            @if (paymentForm.get('fullName')?.invalid && paymentForm.get('fullName')?.touched) {
-              <div class="mt-1 text-sm text-red-500">Ime i prezime je obavezno polje</div>
-            }
-          </div>
-
-          <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-white"
-              >Email adresa</label
-            >
-            <input
-              type="email"
-              id="email"
-              formControlName="email"
-              class="bg-black border border-white/10 text-white text-sm rounded-lg focus:ring-1 focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 placeholder-neutral-500"
-              placeholder="ime@example.com"
-            />
-            @if (paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched) {
-              <div class="mt-1 text-sm text-red-500">Unesite validnu email adresu</div>
-            }
-          </div>
-
-          <div class="flex items-start">
-            <div class="flex items-center h-5">
-              <input
-                id="agreeTerms"
-                type="checkbox"
-                formControlName="agreeTerms"
-                class="w-4 h-4 border border-white/10 rounded bg-black focus:ring-3 focus:ring-primary-500"
-              />
-            </div>
-            <label for="agreeTerms" class="ml-2 text-sm font-medium text-white">
-              Slažem se sa
-              <a
-                routerLink="/dokumentacija/uslovi-koriscenja"
-                target="_blank"
-                class="text-primary-400 hover:text-primary-300 underline"
-                >uslovima korišćenja</a
-              >
-              i potvrđujem da razumem kako će moja donacija biti iskorišćena
-            </label>
-          </div>
-          @if (paymentForm.get('agreeTerms')?.invalid && paymentForm.get('agreeTerms')?.touched) {
-            <div class="mt-1 text-sm text-red-500">Morate se složiti sa uslovima korišćenja</div>
-          }
-
-          @if (submissionError) {
-            <div class="p-4 bg-red-950/50 rounded-lg border border-red-800">
-              <div class="text-sm text-red-500">
-                {{ submissionError }}
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h2 class="text-lg font-bold text-white">{{ option.title }}</h2>
+                @if (option.isHighlighted) {
+                  <span
+                    class="px-2 py-0.5 text-xs font-mono text-gray-950 bg-primary-400 rounded-full"
+                  >
+                    popular
+                  </span>
+                }
+              </div>
+              <p class="text-sm text-neutral-400 mb-2">{{ option.description }}</p>
+              <div class="flex items-baseline gap-1">
+                <span class="text-2xl font-extrabold text-white">
+                  ${{ option.price }}
+                </span>
+                <span class="text-sm text-neutral-500">
+                  {{ option.isOneTime ? 'jednokratno' : '/mesečno' }}
+                </span>
               </div>
             </div>
-          }
 
-          <div class="mt-8">
             <button
-              type="submit"
-              [disabled]="isSubmitting"
-              class="w-full text-black bg-primary-400 hover:bg-primary-500 focus:ring-4 focus:outline-none focus:ring-primary-500/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-50 disabled:cursor-not-allowed"
+              type="button"
+              (click)="openExternal(option)"
+              class="shrink-0 inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold rounded-lg transition-colors"
+              [class.bg-primary-500]="option.isHighlighted"
+              [class.text-gray-950]="option.isHighlighted"
+              [class.hover:bg-primary-400]="option.isHighlighted"
+              [class.bg-neutral-800]="!option.isHighlighted"
+              [class.text-neutral-300]="!option.isHighlighted"
+              [class.hover:bg-neutral-700]="!option.isHighlighted"
             >
-              @if (isSubmitting) {
-                <span class="inline-flex items-center">
-                  <svg
-                    class="animate-spin -ml-1 mr-2 h-4 w-4 text-black"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <circle
-                      class="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      stroke-width="4"
-                    ></circle>
-                    <path
-                      class="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Slanje...
-                </span>
-              } @else {
-                Pošalji podatke
-              }
+              {{ option.isOneTime ? 'Doniraj' : 'Pretplati se' }}
+              <svg
+                class="ml-1.5 w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                ></path>
+              </svg>
             </button>
           </div>
-        </form>
-      }
+        }
+      </div>
 
-      <!-- Step 2: Confirmation -->
-      @if (currentStep === 2) {
-        <div class="p-6 bg-primary-950/30 rounded-xl border border-primary-800 mb-6">
-          <div class="flex items-center mb-4">
-            <svg
-              class="w-6 h-6 mr-2 text-primary-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            <h2 class="text-xl font-bold text-primary-400">Hvala na podršci!</h2>
-          </div>
-          <p class="mb-4 text-neutral-400">
-            Uspešno ste se prijavili za podršku paketa
-            <strong class="text-white">{{ title }}</strong> u iznosu od
-            <strong class="text-white">{{ amount | currency: 'EUR' : 'symbol' : '1.0' }}</strong
-            >.
-          </p>
-          <p class="mb-4 text-neutral-400">
-            Kontaktiraćemo vas sa detaljima o načinu podrške. Napominjemo da trenutno ne primamo
-            online uplate. Ako imate bilo kakvih pitanja, slobodno nas kontaktirajte.
-          </p>
-          <div class="mt-6">
-            <button
-              (click)="onSubmit()"
-              class="w-full text-black bg-white hover:bg-neutral-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              Nazad na početnu
-            </button>
-          </div>
-        </div>
-      }
-
-      <div class="mt-8 text-sm text-neutral-400">
-        <p>
-          Za sva pitanja u vezi sa donacijama, molimo vas da nas kontaktirate na email:
+      <div class="mt-8 p-4 bg-neutral-950 rounded-xl border border-white/5">
+        <p class="text-sm text-neutral-400">
+          Sva plaćanja se obrađuju sigurno kroz
+          <a
+            href="https://buymeacoffee.com/duxor"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary-400 hover:text-primary-300"
+          >Buy Me a Coffee</a>.
+          Za sva pitanja u vezi sa podrškom, kontaktirajte nas na
           podrska&#64;pushserbia.com
         </p>
       </div>

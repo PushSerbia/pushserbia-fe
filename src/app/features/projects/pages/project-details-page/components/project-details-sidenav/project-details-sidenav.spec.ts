@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { vi } from 'vitest';
 
 import { ProjectDetailsSidenav } from './project-details-sidenav';
 import { Project } from '../../../../../../core/project/project';
 import { ProjectStatus } from '../../../../../../core/project/project-status';
 import { FirebaseUserData } from '../../../../../../core/user/firebase-user-data';
 import { UserRole } from '../../../../../../core/user/user-role';
-import { AuthService } from '../../../../../../core/auth/auth.service';
+import { AuthClient } from '../../../../../../core/auth/auth-client';
 
 describe('ProjectDetailsSidenav', () => {
   let component: ProjectDetailsSidenav;
@@ -42,12 +43,13 @@ describe('ProjectDetailsSidenav', () => {
       providers: [
         provideRouter([]),
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut'], {
-            $authenticated: jasmine.createSpy().and.returnValue(false),
-            $userData: jasmine.createSpy().and.returnValue(undefined),
-            $fullUserData: jasmine.createSpy().and.returnValue(null),
-          }),
+          provide: AuthClient,
+          useValue: {
+            signOut: vi.fn(),
+            $authenticated: vi.fn().mockReturnValue(false),
+            $userData: vi.fn().mockReturnValue(undefined),
+            $fullUserData: vi.fn().mockReturnValue(null),
+          },
         },
       ],
     }).compileComponents();

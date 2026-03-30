@@ -7,29 +7,32 @@ import {
 } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { authInterceptor } from './auth.interceptor';
-import { AuthService } from './auth.service';
+import { AuthClient } from './auth-client';
 import { Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
 import { PLATFORM_ID } from '@angular/core';
+import { vi } from 'vitest';
 
 describe('authInterceptor', () => {
   let httpClient: HttpClient;
   let httpTesting: HttpTestingController;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
-  let mockRouter: jasmine.SpyObj<Router>;
+  let mockAuthClient: { signOut: ReturnType<typeof vi.fn> };
+  let mockRouter: { navigateByUrl: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj('AuthService', ['signOut']);
-    mockAuthService.signOut.and.returnValue(of(undefined));
+    mockAuthClient = {
+      signOut: vi.fn().mockReturnValue(of(undefined)),
+    };
 
-    mockRouter = jasmine.createSpyObj('Router', ['navigateByUrl']);
-    mockRouter.navigateByUrl.and.returnValue(Promise.resolve(true));
+    mockRouter = {
+      navigateByUrl: vi.fn().mockReturnValue(Promise.resolve(true)),
+    };
 
     TestBed.configureTestingModule({
       providers: [
         provideHttpClient(withInterceptors([authInterceptor])),
         provideHttpClientTesting(),
-        { provide: AuthService, useValue: mockAuthService },
+        { provide: AuthClient, useValue: mockAuthClient },
         { provide: Router, useValue: mockRouter },
         { provide: PLATFORM_ID, useValue: 'browser' },
       ],
@@ -46,7 +49,7 @@ describe('authInterceptor', () => {
   it('should add withCredentials to requests', () => {
     httpClient.get('/api/test').subscribe();
     const req = httpTesting.expectOne('/api/test');
-    expect(req.request.withCredentials).toBeTrue();
+    expect(req.request.withCredentials).toBe(true);
     req.flush({});
   });
 
@@ -67,8 +70,8 @@ describe('authInterceptor', () => {
     const req = httpTesting.expectOne('/api/test');
     req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
 
-    expect(mockAuthService.signOut).toHaveBeenCalled();
-    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/');
+    expect(mockAuthClient.signOut).toHaveBeenCalled();
+    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/autentikacija/prijava');
   });
 
   it('should not sign out on non-401 errors', () => {
@@ -80,7 +83,7 @@ describe('authInterceptor', () => {
     const req = httpTesting.expectOne('/api/test');
     req.flush('Server Error', { status: 500, statusText: 'Internal Server Error' });
 
-    expect(mockAuthService.signOut).not.toHaveBeenCalled();
+    expect(mockAuthClient.signOut).not.toHaveBeenCalled();
     expect(mockRouter.navigateByUrl).not.toHaveBeenCalled();
   });
 });

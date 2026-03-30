@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { AuthClient } from '../../../../core/auth/auth-client';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsListPage {
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject(AuthClient);
   private readonly router = inject(Router);
 
   constructor() {

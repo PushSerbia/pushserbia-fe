@@ -12,16 +12,16 @@ import { BasicLayout } from '../../../../shared/layout/landing-layout/basic-layo
 import { ProjectCard } from '../../../../shared/ui/project-card/project-card';
 import { ProjectListFilters } from './components/project-list-filters/project-list-filters';
 import { ProjectListHeader } from './components/project-list-header/project-list-header';
-import { ProjectStoreService } from '../../../../core/project/project.store.service';
+import { ProjectStore } from '../../../../core/project/project-store';
 import { PageLoader } from '../../../../shared/ui/page-loader/page-loader';
 import { ProjectsFilter } from '../../../../core/project/projects-filter';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { AuthClient } from '../../../../core/auth/auth-client';
 import { Project } from '../../../../core/project/project';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
-import { VoteState, VoteStoreService } from '../../../../core/vote/vote.store.service';
-import { TransitionService } from '../../../../core/transition/transition.service';
-import { SeoService } from '../../../../core/seo/seo.service';
+import { AuthRequired } from '../../../../core/auth/auth-required';
+import { VoteState, VoteStore } from '../../../../core/vote/vote-store';
+import { TransitionManager } from '../../../../core/transition/transition-manager';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-projects-list-page',
@@ -32,18 +32,18 @@ import { SeoService } from '../../../../core/seo/seo.service';
     ProjectListHeader,
     PageLoader,
     RouterLink,
-    AuthRequiredDirective,
+    AuthRequired,
   ],
   templateUrl: './projects-list-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsListPage implements OnInit {
-  public readonly projectStore = inject(ProjectStoreService);
-  private readonly authService = inject(AuthService);
-  private readonly voteStore = inject(VoteStoreService);
+  public readonly projectStore = inject(ProjectStore);
+  private readonly authService = inject(AuthClient);
+  private readonly voteStore = inject(VoteStore);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly transitionService = inject(TransitionService);
+  private readonly transitionService = inject(TransitionManager);
 
   readonly $loading = computed(() => this.projectStore.$loading());
   readonly $filter = signal<ProjectsFilter>({
@@ -57,7 +57,7 @@ export class ProjectsListPage implements OnInit {
   myProjectsOnly = input<string>('myProjectsOnly');
   supportedOnly = input<string>('supportedOnly');
 
-  private readonly seo = inject(SeoService);
+  private readonly seo = inject(SeoManager);
 
   constructor() {
     this.seo.update({

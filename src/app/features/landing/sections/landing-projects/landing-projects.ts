@@ -3,10 +3,10 @@ import { RouterLink } from '@angular/router';
 import { Project } from '../../../../core/project/project';
 import { ProjectCard } from '../../../../shared/ui/project-card/project-card';
 import { ProjectCardNew } from '../../../../shared/ui/project-card-new/project-card-new';
-import { ProjectStoreService } from '../../../../core/project/project.store.service';
+import { ProjectStore } from '../../../../core/project/project-store';
 import { SlicePipe } from '@angular/common';
-import { VoteStoreService } from '../../../../core/vote/vote.store.service';
-import { TransitionService } from '../../../../core/transition/transition.service';
+import { VoteStore } from '../../../../core/vote/vote-store';
+import { TransitionManager } from '../../../../core/transition/transition-manager';
 
 @Component({
   selector: 'app-landing-projects',
@@ -15,9 +15,9 @@ import { TransitionService } from '../../../../core/transition/transition.servic
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingProjects {
-  private projectStoreService = inject(ProjectStoreService);
-  private voteStoreService = inject(VoteStoreService);
-  private transitionService = inject(TransitionService);
+  private projectStoreService = inject(ProjectStore);
+  private voteStoreService = inject(VoteStore);
+  private transitionService = inject(TransitionManager);
 
   $allProjects: Signal<Project[]> = this.projectStoreService.getAll();
   $votesMap = computed(() => this.voteStoreService.getAll()());

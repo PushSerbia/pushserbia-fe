@@ -1,129 +1,29 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { DonationOption, donationOptions } from '../../../../core/donation/donation-option';
-import { catchError, of, tap } from 'rxjs';
-import { IntegrationsService } from '../../../../core/integrations/integrations.service';
-import { SeoService } from '../../../../core/seo/seo.service';
+import { RouterLink } from '@angular/router';
+import { SupportOption, supportOptions } from '../../../../core/donation/donation-option';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-payment-page',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './payment-page.html',
   styleUrl: './payment-page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentPage implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private fb = inject(FormBuilder);
-  private integrationsService = inject(IntegrationsService);
-  private seo = inject(SeoService);
-  private destroyRef = inject(DestroyRef);
+  private seo = inject(SeoManager);
 
-  paymentForm: FormGroup;
-  isOneTime = true;
-  amount = 0;
-  title = '';
-  donationOptions = donationOptions;
-  selectedOption: DonationOption | null = null;
-  showOptionsSelector = false;
-  currentStep = 1; // Step 1: Collect data, Step 2: Display confirmation
-  isSubmitting = false;
-  submissionSuccess = false;
-  submissionError: string | null = null;
-
-  constructor() {
-    this.paymentForm = this.fb.group({
-      fullName: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      agreeTerms: [false, [Validators.requiredTrue]],
-    });
-  }
+  supportOptions = supportOptions;
 
   ngOnInit(): void {
     this.seo.update({
-      title: 'Donacija',
-      description: 'Podrži Push Serbia zajednicu donacijom.',
-    });
-
-    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
-      this.isOneTime = params['isOneTime'] === 'true';
-      this.amount = Number(params['amount']) || 0;
-      this.title = params['title'] || '';
-
-      this.selectedOption =
-        this.donationOptions.find(
-          (option) =>
-            option.title === this.title &&
-            option.price === this.amount &&
-            option.isOneTime === this.isOneTime,
-        ) || null;
+      title: 'Podrška',
+      description: 'Podrži Push Serbia zajednicu kroz Buy Me a Coffee.',
     });
   }
 
-  toggleOptionsSelector(): void {
-    this.showOptionsSelector = !this.showOptionsSelector;
-  }
-
-  selectOption(option: DonationOption): void {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {
-        isOneTime: option.isOneTime,
-        amount: option.price,
-        title: option.title,
-      },
-      queryParamsHandling: 'merge',
-    });
-    this.showOptionsSelector = false;
-  }
-
-  onSubmit(): void {
-    if (this.paymentForm.valid && this.currentStep === 1) {
-      this.isSubmitting = true;
-      this.submissionError = null;
-
-      this.integrationsService
-        .subscribeForPayment(
-          this.paymentForm.value.email,
-          this.paymentForm.value.fullName,
-          JSON.stringify({
-            amount: this.amount,
-            title: this.title,
-            isOneTime: this.isOneTime,
-          }),
-        )
-        .pipe(
-          tap(() => {
-            this.isSubmitting = false;
-            this.submissionSuccess = true;
-            this.currentStep = 2; // Move to confirmation step
-          }),
-          catchError((error) => {
-            this.isSubmitting = false;
-            this.submissionError =
-              'Došlo je do greške prilikom slanja podataka. Molimo pokušajte ponovo.';
-            console.error('Integration subscription error:', error);
-            return of(null); // Return an observable that emits null and completes
-          }),
-        )
-        .subscribe();
-    } else if (this.currentStep === 2) {
-      this.router.navigate(['/']);
-    } else {
-      Object.keys(this.paymentForm.controls).forEach((key) => {
-        const control = this.paymentForm.get(key);
-        control?.markAsTouched();
-      });
-    }
+  openExternal(option: SupportOption): void {
+    window.open(option.externalUrl, '_blank', 'noopener,noreferrer');
   }
 }

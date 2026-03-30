@@ -5,8 +5,11 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
-      "jasmine"
-    ]
+      "vitest/globals"
+    ],
+    "paths": {
+      "ts-md5/dist/md5": ["./node_modules/ts-md5/dist/md5.js"]
+    }
   },
   "include": [
     "src/**/*.spec.ts",

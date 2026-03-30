@@ -10,7 +10,7 @@ import {
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ImageControlOption } from '../image-control/image-control';
 import { DialogRef } from '@angular/cdk/dialog';
-import { UnsplashService } from '../../../core/unsplash/services/unsplash.service';
+import { UnsplashApi } from '../../../core/unsplash/services/unsplash-api';
 import {
   catchError,
   debounce,
@@ -31,7 +31,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UnsplashImageChooserModal implements OnInit {
-  private readonly unsplash = inject(UnsplashService);
+  private readonly unsplash = inject(UnsplashApi);
   private readonly dialogRef = inject<DialogRef<string | null>>(DialogRef<string | null>);
   private readonly destroyRef = inject(DestroyRef);
   readonly searchQuery = new FormControl<string>('', { nonNullable: true });
@@ -67,11 +67,14 @@ export class UnsplashImageChooserModal implements OnInit {
           this.isLoading.set(true);
           this.hasError.set(false);
         }),
-        switchMap((query) => this.unsplash.searchPhotos(query)),
-        catchError(() => {
-          this.hasError.set(true);
-          return of([]);
-        }),
+        switchMap((query) =>
+          this.unsplash.searchPhotos(query).pipe(
+            catchError(() => {
+              this.hasError.set(true);
+              return of([]);
+            }),
+          ),
+        ),
         tap((photos) => {
           const options = photos.map((photo) => ({
             value: photo.urls.small,

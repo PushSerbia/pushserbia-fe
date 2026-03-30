@@ -1,11 +1,11 @@
 import { APP_INITIALIZER, Provider } from '@angular/core';
-import { GoogleTagManagerService } from './gtm.service';
+import { GtmManager } from './gtm-manager';
 import { environment } from '../../../environments/environment';
 
 /**
  * Factory function to initialize the Google Tag Manager service
  */
-export function initializeGtm(gtmService: GoogleTagManagerService) {
+export function initializeGtm(gtmService: GtmManager) {
   return () => {
     gtmService.initialize();
   };
@@ -23,7 +23,7 @@ export function provideGtm(): Provider[] {
     {
       provide: APP_INITIALIZER,
       useFactory: initializeGtm,
-      deps: [GoogleTagManagerService],
+      deps: [GtmManager],
       multi: true,
     },
   ];

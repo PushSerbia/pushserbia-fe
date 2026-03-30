@@ -36,4 +36,9 @@ export const docsRoutes: Routes = [
     loadComponent: () =>
       import('./pages/careers/careers').then((m) => m.Careers),
   },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('../not-found/not-found').then((m) => m.NotFound),
+  },
 ];

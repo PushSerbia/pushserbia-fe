@@ -1,46 +1,48 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { vi } from 'vitest';
 import { signal } from '@angular/core';
 import { of } from 'rxjs';
 
 import { LandingProjects } from './landing-projects';
-import { ProjectStoreService } from '../../../../core/project/project.store.service';
-import { VoteStoreService } from '../../../../core/vote/vote.store.service';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { ProjectStore } from '../../../../core/project/project-store';
+import { VoteStore } from '../../../../core/vote/vote-store';
+import { AuthClient } from '../../../../core/auth/auth-client';
 
 describe('LandingProjects', () => {
   let component: LandingProjects;
   let fixture: ComponentFixture<LandingProjects>;
 
   beforeEach(async () => {
-    const projectStoreMock = jasmine.createSpyObj(
-      'ProjectStoreService',
-      ['getAll', 'getBySlug'],
-      { $loading: signal(false) },
-    );
-    projectStoreMock.getAll.and.returnValue(signal([]));
+    const projectStoreMock = {
+      getAll: vi.fn().mockReturnValue(signal([])),
+      getBySlug: vi.fn(),
+      $loading: signal(false),
+    } as unknown as ProjectStore;
 
-    const voteStoreMock = jasmine.createSpyObj(
-      'VoteStoreService',
-      ['getAll', 'isVoted'],
-      { $loading: signal(false) },
-    );
-    voteStoreMock.getAll.and.returnValue(signal({}));
+    const voteStoreMock = {
+      getAll: vi.fn().mockReturnValue(signal({})),
+      isVoted: vi.fn(),
+      $loading: signal(false),
+    } as unknown as VoteStore;
 
     await TestBed.configureTestingModule({
       imports: [LandingProjects],
       providers: [
         provideRouter([]),
-        { provide: ProjectStoreService, useValue: projectStoreMock },
-        { provide: VoteStoreService, useValue: voteStoreMock },
+        { provide: ProjectStore, useValue: projectStoreMock },
+        { provide: VoteStore, useValue: voteStoreMock },
         {
-          provide: AuthService,
-          useValue: jasmine.createSpyObj('AuthService', ['signOut', 'getMe', 'updateMe'], {
-            $authenticated: jasmine.createSpy().and.returnValue(false),
-            $userData: jasmine.createSpy().and.returnValue(undefined),
-            $fullUserData: jasmine.createSpy().and.returnValue(null),
+          provide: AuthClient,
+          useValue: {
+            signOut: vi.fn(),
+            getMe: vi.fn(),
+            updateMe: vi.fn(),
+            $authenticated: vi.fn().mockReturnValue(false),
+            $userData: vi.fn().mockReturnValue(undefined),
+            $fullUserData: vi.fn().mockReturnValue(null),
             userData$: of(undefined),
-          }),
+          } as unknown as AuthClient,
         },
       ],
     }).compileComponents();

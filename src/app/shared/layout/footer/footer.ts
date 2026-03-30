@@ -1,12 +1,39 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { IntegrationsApi } from '../../../core/integrations/integrations-api';
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './footer.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Footer {
   currentYear = new Date().getFullYear();
+  newsletterEmail = '';
+  newsletterStatus = signal<'idle' | 'loading' | 'success' | 'error' | 'unavailable' | 'invalid'>('idle');
+
+  private integrationsService = inject(IntegrationsApi);
+
+  private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  onNewsletterSubmit() {
+    if (!this.newsletterEmail || !this.emailRegex.test(this.newsletterEmail)) {
+      this.newsletterStatus.set('invalid');
+      return;
+    }
+
+    this.newsletterStatus.set('loading');
+
+    this.integrationsService.subscribeForNewsletter(this.newsletterEmail).subscribe({
+      next: () => {
+        this.newsletterStatus.set('success');
+        this.newsletterEmail = '';
+      },
+      error: (err: any) => {
+        this.newsletterStatus.set(err?.status === 503 ? 'unavailable' : 'error');
+      },
+    });
+  }
 }

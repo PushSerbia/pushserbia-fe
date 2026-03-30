@@ -1,5 +1,24 @@
 import { ProjectStatus } from './project-status';
 
+export interface ProjectMember {
+  id: string;
+  userId: string;
+  assignedAt: Date;
+  user: {
+    id: string;
+    fullName: string;
+    imageUrl: string;
+    gravatar: string;
+  };
+}
+
+export interface ProjectVoter {
+  id: string;
+  fullName: string;
+  imageUrl: string;
+  gravatar: string;
+}
+
 export interface Project {
   id: string;
   name: string;

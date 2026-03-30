@@ -13,15 +13,16 @@ import { QuillViewHTMLComponent } from 'ngx-quill';
 import { RouterLink } from '@angular/router';
 import { Project } from '../../../../core/project/project';
 import { ProjectDetailsSidenav } from './components/project-details-sidenav/project-details-sidenav';
-import { ProjectStoreService } from '../../../../core/project/project.store.service';
+import { ProjectStore } from '../../../../core/project/project-store';
 import { PageLoader } from '../../../../shared/ui/page-loader/page-loader';
-import { VoteStoreService } from '../../../../core/vote/vote.store.service';
-import { AuthService } from '../../../../core/auth/auth.service';
+import { VoteStore } from '../../../../core/vote/vote-store';
+import { AuthClient } from '../../../../core/auth/auth-client';
 
-import { AuthRequiredDirective } from '../../../../core/auth/auth-required.directive';
+import { AuthRequired } from '../../../../core/auth/auth-required';
 import { GravatarModule } from 'ngx-gravatar';
-import { UnsplashUrlFormatterPipe } from '../../../../shared/unsplash-url-formatter.pipe';
-import { SeoService } from '../../../../core/seo/seo.service';
+import { UnsplashUrlFormatter } from '../../../../shared/unsplash-url-formatter';
+import { SeoManager } from '../../../../core/seo/seo-manager';
+import { ProjectTeamSection } from './components/project-team-section/project-team-section';
 
 @Component({
   selector: 'app-project-details-page',
@@ -31,19 +32,20 @@ import { SeoService } from '../../../../core/seo/seo.service';
     RouterLink,
     ProjectDetailsSidenav,
     PageLoader,
-    AuthRequiredDirective,
+    AuthRequired,
     GravatarModule,
-    UnsplashUrlFormatterPipe,
+    UnsplashUrlFormatter,
+    ProjectTeamSection,
   ],
   templateUrl: './project-details-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectDetailsPage implements OnInit {
-  public readonly projectStore = inject(ProjectStoreService);
-  public readonly voteStore = inject(VoteStoreService);
-  private readonly authService = inject(AuthService);
+  public readonly projectStore = inject(ProjectStore);
+  public readonly voteStore = inject(VoteStore);
+  private readonly authService = inject(AuthClient);
   private readonly injector = inject(Injector);
-  private readonly seo = inject(SeoService);
+  private readonly seo = inject(SeoManager);
 
   readonly slug = input.required<string>();
 
