@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { vi } from 'vitest';
 import { signal } from '@angular/core';
 import { of } from 'rxjs';
 
@@ -13,19 +14,17 @@ describe('LandingProjects', () => {
   let fixture: ComponentFixture<LandingProjects>;
 
   beforeEach(async () => {
-    const projectStoreMock = jasmine.createSpyObj(
-      'ProjectStore',
-      ['getAll', 'getBySlug'],
-      { $loading: signal(false) },
-    );
-    projectStoreMock.getAll.and.returnValue(signal([]));
+    const projectStoreMock = {
+      getAll: vi.fn().mockReturnValue(signal([])),
+      getBySlug: vi.fn(),
+      $loading: signal(false),
+    } as unknown as ProjectStore;
 
-    const voteStoreMock = jasmine.createSpyObj(
-      'VoteStore',
-      ['getAll', 'isVoted'],
-      { $loading: signal(false) },
-    );
-    voteStoreMock.getAll.and.returnValue(signal({}));
+    const voteStoreMock = {
+      getAll: vi.fn().mockReturnValue(signal({})),
+      isVoted: vi.fn(),
+      $loading: signal(false),
+    } as unknown as VoteStore;
 
     await TestBed.configureTestingModule({
       imports: [LandingProjects],
@@ -35,12 +34,15 @@ describe('LandingProjects', () => {
         { provide: VoteStore, useValue: voteStoreMock },
         {
           provide: AuthClient,
-          useValue: jasmine.createSpyObj('AuthClient', ['signOut', 'getMe', 'updateMe'], {
-            $authenticated: jasmine.createSpy().and.returnValue(false),
-            $userData: jasmine.createSpy().and.returnValue(undefined),
-            $fullUserData: jasmine.createSpy().and.returnValue(null),
+          useValue: {
+            signOut: vi.fn(),
+            getMe: vi.fn(),
+            updateMe: vi.fn(),
+            $authenticated: vi.fn().mockReturnValue(false),
+            $userData: vi.fn().mockReturnValue(undefined),
+            $fullUserData: vi.fn().mockReturnValue(null),
             userData$: of(undefined),
-          }),
+          } as unknown as AuthClient,
         },
       ],
     }).compileComponents();

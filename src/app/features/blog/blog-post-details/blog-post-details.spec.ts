@@ -2,6 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { vi } from 'vitest';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { of } from 'rxjs';
 
 import { BlogPostDetails } from './blog-post-details';
 import { SeoManager } from '../../../core/seo/seo-manager';
@@ -11,8 +15,8 @@ import { BlogPost } from '../../../core/blog/blog';
 describe('BlogPostDetails', () => {
   let component: BlogPostDetails;
   let fixture: ComponentFixture<BlogPostDetails>;
-  let blogStoreMock: jasmine.SpyObj<BlogStore>;
-  let seoManagerMock: jasmine.SpyObj<SeoManager>;
+  let blogStoreMock: BlogStore;
+  let seoManagerMock: SeoManager;
 
   const mockBlogPost: BlogPost = {
     id: '1',
@@ -27,8 +31,20 @@ describe('BlogPostDetails', () => {
   };
 
   beforeEach(async () => {
-    blogStoreMock = jasmine.createSpyObj('BlogStore', ['getBlogPostBySlug']);
-    seoManagerMock = jasmine.createSpyObj('SeoManager', ['update']);
+    blogStoreMock = {
+      getBlogPostBySlug: vi.fn(),
+    } as unknown as BlogStore;
+    seoManagerMock = {
+      update: vi.fn(),
+    } as unknown as SeoManager;
+
+    const mockAfAuth = {
+      idTokenResult: of(null),
+      onIdTokenChanged: vi.fn(),
+      idToken: of(null),
+      user: of(null),
+      signOut: vi.fn().mockReturnValue(Promise.resolve()),
+    };
 
     await TestBed.configureTestingModule({
       imports: [BlogPostDetails],
@@ -38,6 +54,8 @@ describe('BlogPostDetails', () => {
         provideHttpClientTesting(),
         { provide: BlogStore, useValue: blogStoreMock },
         { provide: SeoManager, useValue: seoManagerMock },
+        { provide: FIREBASE_OPTIONS, useValue: { apiKey: 'test-key', projectId: 'test' } },
+        { provide: AngularFireAuth, useValue: mockAfAuth },
       ],
     }).compileComponents();
 
@@ -50,20 +68,20 @@ describe('BlogPostDetails', () => {
   });
 
   it('should load blog post by slug on init', () => {
-    blogStoreMock.getBlogPostBySlug.and.returnValue(mockBlogPost);
+    (blogStoreMock.getBlogPostBySlug as any).mockReturnValue(mockBlogPost);
 
     TestBed.runInInjectionContext(() => {
       fixture.componentRef.setInput('slug', 'test-blog-post');
     });
 
-    fixture.detectChanges();
     component.ngOnInit();
 
     expect(blogStoreMock.getBlogPostBySlug).toHaveBeenCalledWith('test-blog-post');
+    expect(component.post).toEqual(mockBlogPost);
   });
 
   it('should update SeoManager with blog post metadata when post exists', () => {
-    blogStoreMock.getBlogPostBySlug.and.returnValue(mockBlogPost);
+    (blogStoreMock.getBlogPostBySlug as any).mockReturnValue(mockBlogPost);
 
     TestBed.runInInjectionContext(() => {
       fixture.componentRef.setInput('slug', 'test-blog-post');
@@ -96,7 +114,7 @@ describe('BlogPostDetails', () => {
   });
 
   it('should not update SeoManager when post is not found', () => {
-    blogStoreMock.getBlogPostBySlug.and.returnValue(undefined);
+    (blogStoreMock.getBlogPostBySlug as any).mockReturnValue(undefined);
 
     TestBed.runInInjectionContext(() => {
       fixture.componentRef.setInput('slug', 'non-existent-post');
@@ -108,7 +126,7 @@ describe('BlogPostDetails', () => {
   });
 
   it('should set post to undefined when post is not found', () => {
-    blogStoreMock.getBlogPostBySlug.and.returnValue(undefined);
+    (blogStoreMock.getBlogPostBySlug as any).mockReturnValue(undefined);
 
     TestBed.runInInjectionContext(() => {
       fixture.componentRef.setInput('slug', 'non-existent-post');

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { vi } from 'vitest';
 import { of } from 'rxjs';
 
 import { NotificationsListPage } from './notifications-list-page';
@@ -12,16 +13,15 @@ describe('NotificationsListPage', () => {
   let fixture: ComponentFixture<NotificationsListPage>;
 
   beforeEach(async () => {
-    const authServiceMock = jasmine.createSpyObj(
-      'AuthClient',
-      ['signOut', 'getMe', 'updateMe'],
-      {
-        $authenticated: jasmine.createSpy().and.returnValue(false),
-        $userData: jasmine.createSpy().and.returnValue(undefined),
-        $fullUserData: jasmine.createSpy().and.returnValue(null),
-        userData$: of(undefined),
-      },
-    );
+    const authServiceMock = {
+      signOut: vi.fn(),
+      getMe: vi.fn(),
+      updateMe: vi.fn(),
+      $authenticated: vi.fn().mockReturnValue(false),
+      $userData: vi.fn().mockReturnValue(undefined),
+      $fullUserData: vi.fn().mockReturnValue(null),
+      userData$: of(undefined),
+    } as unknown as AuthClient;
 
     await TestBed.configureTestingModule({
       imports: [NotificationsListPage],

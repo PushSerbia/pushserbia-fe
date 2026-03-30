@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { vi } from 'vitest';
 import { ProjectDetailsPage } from './project-details-page';
 import { ProjectStore } from '../../../../core/project/project-store';
 import { VoteStore } from '../../../../core/vote/vote-store';
@@ -11,10 +12,10 @@ describe('ProjectDetailsPage', () => {
   let component: ProjectDetailsPage;
   let componentRef: ComponentRef<ProjectDetailsPage>;
   let fixture: ComponentFixture<ProjectDetailsPage>;
-  let mockProjectStore: jasmine.SpyObj<ProjectStore>;
-  let mockVoteStore: jasmine.SpyObj<VoteStore>;
-  let mockAuthClient: jasmine.SpyObj<AuthClient>;
-  let mockSeoManager: jasmine.SpyObj<SeoManager>;
+  let mockProjectStore: any;
+  let mockVoteStore: any;
+  let mockAuthClient: any;
+  let mockSeoManager: any;
 
   const mockProject = {
     id: '1',
@@ -31,23 +32,23 @@ describe('ProjectDetailsPage', () => {
   };
 
   beforeEach(async () => {
-    mockProjectStore = jasmine.createSpyObj(
-      'ProjectStore',
-      ['getBySlug', 'updateStateBySlug'],
-      { $loading: signal(false) },
-    );
-    mockProjectStore.getBySlug.and.returnValue(signal(mockProject as any));
-
-    mockVoteStore = jasmine.createSpyObj('VoteStore', ['isVoted', 'create'], {
+    mockProjectStore = {
+      getBySlug: vi.fn().mockReturnValue(signal(mockProject as any)),
+      updateStateBySlug: vi.fn(),
       $loading: signal(false),
-    });
-    mockVoteStore.isVoted.and.returnValue(signal(false));
+    } as any;
 
-    mockAuthClient = jasmine.createSpyObj('AuthClient', [], {
+    mockVoteStore = {
+      isVoted: vi.fn().mockReturnValue(signal(false)),
+      create: vi.fn(),
+      $loading: signal(false),
+    } as any;
+
+    mockAuthClient = {
       $userData: signal(undefined),
-    });
+    } as any;
 
-    mockSeoManager = jasmine.createSpyObj('SeoManager', ['update']);
+    mockSeoManager = { update: vi.fn() } as any;
 
     await TestBed.configureTestingModule({
       imports: [ProjectDetailsPage],

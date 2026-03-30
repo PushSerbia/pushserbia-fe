@@ -3,11 +3,12 @@ import { APP_INITIALIZER, Provider } from '@angular/core';
 import { provideGtm, initializeGtm } from './gtm.provider';
 import { GtmManager } from './gtm-manager';
 import { environment } from '../../../environments/environment';
+import { vi } from 'vitest';
 
 describe('GTM Provider', () => {
   describe('provideGtm()', () => {
     it('should return empty array in non-production environment', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(false);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(false);
 
       const providers = provideGtm();
 
@@ -15,7 +16,7 @@ describe('GTM Provider', () => {
     });
 
     it('should return provider configuration in production environment', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
 
@@ -24,7 +25,7 @@ describe('GTM Provider', () => {
     });
 
     it('should provide APP_INITIALIZER token in production', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
       const provider = providers[0] as any;
@@ -33,7 +34,7 @@ describe('GTM Provider', () => {
     });
 
     it('should use factory function in production', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
       const provider = providers[0] as any;
@@ -43,7 +44,7 @@ describe('GTM Provider', () => {
     });
 
     it('should specify GtmManager as dependency', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
       const provider = providers[0] as any;
@@ -52,7 +53,7 @@ describe('GTM Provider', () => {
     });
 
     it('should set multi to true', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
       const provider = providers[0] as any;
@@ -62,10 +63,12 @@ describe('GTM Provider', () => {
   });
 
   describe('initializeGtm()', () => {
-    let mockGtmManager: jasmine.SpyObj<GtmManager>;
+    let mockGtmManager: any;
 
     beforeEach(() => {
-      mockGtmManager = jasmine.createSpyObj('GtmManager', ['initialize']);
+      mockGtmManager = {
+        initialize: vi.fn(),
+      };
     });
 
     it('should return a function', () => {
@@ -104,11 +107,11 @@ describe('GTM Provider', () => {
     });
 
     it('should work with multiple GtmManager instances', () => {
-      const manager1 = jasmine.createSpyObj('GtmManager', ['initialize']);
-      const manager2 = jasmine.createSpyObj('GtmManager', ['initialize']);
+      const manager1 = { initialize: vi.fn() };
+      const manager2 = { initialize: vi.fn() };
 
-      const initFn1 = initializeGtm(manager1);
-      const initFn2 = initializeGtm(manager2);
+      const initFn1 = initializeGtm(manager1 as unknown as GtmManager);
+      const initFn2 = initializeGtm(manager2 as unknown as GtmManager);
 
       initFn1();
       initFn2();
@@ -120,7 +123,7 @@ describe('GTM Provider', () => {
 
   describe('Integration with TestBed', () => {
     it('should provide GTM provider through TestBed in production', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       TestBed.configureTestingModule({
         providers: [
@@ -134,7 +137,7 @@ describe('GTM Provider', () => {
     });
 
     it('should allow bootstrap without GTM provider in non-production', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(false);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(false);
 
       TestBed.configureTestingModule({
         providers: [
@@ -150,7 +153,7 @@ describe('GTM Provider', () => {
 
   describe('Provider structure', () => {
     it('should return array of Provider type', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
 
@@ -158,7 +161,7 @@ describe('GTM Provider', () => {
     });
 
     it('should maintain provider shape consistency', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
       const provider = providers[0] as any;
@@ -170,7 +173,7 @@ describe('GTM Provider', () => {
     });
 
     it('should have correct provider order in returned array', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
 
@@ -181,26 +184,26 @@ describe('GTM Provider', () => {
 
   describe('Factory function behavior', () => {
     it('should return a callable function from factory', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
       const provider = providers[0] as any;
-      const mockGtmManager = jasmine.createSpyObj('GtmManager', ['initialize']);
+      const mockGtmManager = { initialize: vi.fn() };
 
-      const initFn = provider.useFactory(mockGtmManager);
+      const initFn = provider.useFactory(mockGtmManager as unknown as GtmManager);
 
       expect(typeof initFn).toBe('function');
       expect(() => initFn()).not.toThrow();
     });
 
     it('should handle synchronous initialization', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       const providers = provideGtm();
       const provider = providers[0] as any;
-      const mockGtmManager = jasmine.createSpyObj('GtmManager', ['initialize']);
+      const mockGtmManager = { initialize: vi.fn() };
 
-      const initFn = provider.useFactory(mockGtmManager);
+      const initFn = provider.useFactory(mockGtmManager as unknown as GtmManager);
       const result = initFn();
 
       expect(mockGtmManager.initialize).toHaveBeenCalled();
@@ -210,10 +213,10 @@ describe('GTM Provider', () => {
 
   describe('Conditional provider configuration', () => {
     it('should return non-empty array only in production', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
       const prodProviders = provideGtm();
 
-      spyOnProperty(environment, 'production', 'get').and.returnValue(false);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(false);
       const devProviders = provideGtm();
 
       expect(prodProviders.length).toBeGreaterThan(0);
@@ -221,7 +224,7 @@ describe('GTM Provider', () => {
     });
 
     it('should not create provider redundancy in non-production', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(false);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(false);
 
       const providers = provideGtm();
 

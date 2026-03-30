@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { signal } from '@angular/core';
 import { of } from 'rxjs';
+import { vi } from 'vitest';
 
 import { CreateProjectPage } from './create-project-page';
 import { ProjectStore } from '../../../../core/project/project-store';
@@ -15,13 +16,13 @@ describe('CreateProjectPage', () => {
   let fixture: ComponentFixture<CreateProjectPage>;
 
   beforeEach(async () => {
-    const projectStoreMock = jasmine.createSpyObj(
-      'ProjectStore',
-      ['getAll', 'getBySlug', 'create', 'update'],
-      { $loading: signal(false) },
-    );
-    projectStoreMock.getAll.and.returnValue(signal([]));
-    projectStoreMock.getBySlug.and.returnValue(signal(undefined));
+    const projectStoreMock = {
+      getAll: vi.fn().mockReturnValue(signal([])),
+      getBySlug: vi.fn().mockReturnValue(signal(undefined)),
+      create: vi.fn(),
+      update: vi.fn(),
+      $loading: signal(false),
+    };
 
     await TestBed.configureTestingModule({
       imports: [CreateProjectPage],
@@ -30,15 +31,18 @@ describe('CreateProjectPage', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ProjectStore, useValue: projectStoreMock },
-        { provide: SeoManager, useValue: jasmine.createSpyObj('SeoManager', ['update']) },
+        { provide: SeoManager, useValue: { update: vi.fn() } },
         {
           provide: AuthClient,
-          useValue: jasmine.createSpyObj('AuthClient', ['signOut', 'getMe', 'updateMe'], {
-            $authenticated: jasmine.createSpy().and.returnValue(false),
-            $userData: jasmine.createSpy().and.returnValue(undefined),
-            $fullUserData: jasmine.createSpy().and.returnValue(null),
+          useValue: {
+            signOut: vi.fn(),
+            getMe: vi.fn(),
+            updateMe: vi.fn(),
+            $authenticated: vi.fn().mockReturnValue(false),
+            $userData: vi.fn().mockReturnValue(undefined),
+            $fullUserData: vi.fn().mockReturnValue(null),
             userData$: of(undefined),
-          }),
+          },
         },
       ],
     }).compileComponents();

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { signal } from '@angular/core';
 import { of } from 'rxjs';
+import { vi } from 'vitest';
 
 import { ProjectsListPage } from './projects-list-page';
 import { ProjectStore } from '../../../../core/project/project-store';
@@ -14,30 +15,27 @@ describe('ProjectsListPage', () => {
   let fixture: ComponentFixture<ProjectsListPage>;
 
   beforeEach(async () => {
-    const projectStoreMock = jasmine.createSpyObj(
-      'ProjectStore',
-      ['getAll', 'getBySlug'],
-      { $loading: signal(false) },
-    );
-    projectStoreMock.getAll.and.returnValue(signal([]));
+    const projectStoreMock = {
+      getAll: vi.fn().mockReturnValue(signal([])),
+      getBySlug: vi.fn(),
+      $loading: signal(false),
+    };
 
-    const voteStoreMock = jasmine.createSpyObj(
-      'VoteStore',
-      ['getAll', 'isVoted'],
-      { $loading: signal(false) },
-    );
-    voteStoreMock.getAll.and.returnValue(signal({}));
+    const voteStoreMock = {
+      getAll: vi.fn().mockReturnValue(signal({})),
+      isVoted: vi.fn(),
+      $loading: signal(false),
+    };
 
-    const authServiceMock = jasmine.createSpyObj(
-      'AuthClient',
-      ['signOut', 'getMe', 'updateMe'],
-      {
-        $authenticated: jasmine.createSpy().and.returnValue(false),
-        $userData: jasmine.createSpy().and.returnValue(undefined),
-        $fullUserData: jasmine.createSpy().and.returnValue(null),
-        userData$: of(undefined),
-      },
-    );
+    const authServiceMock = {
+      signOut: vi.fn(),
+      getMe: vi.fn(),
+      updateMe: vi.fn(),
+      $authenticated: vi.fn().mockReturnValue(false),
+      $userData: vi.fn().mockReturnValue(undefined),
+      $fullUserData: vi.fn().mockReturnValue(null),
+      userData$: of(undefined),
+    };
 
     await TestBed.configureTestingModule({
       imports: [ProjectsListPage],
@@ -46,7 +44,7 @@ describe('ProjectsListPage', () => {
         { provide: ProjectStore, useValue: projectStoreMock },
         { provide: VoteStore, useValue: voteStoreMock },
         { provide: AuthClient, useValue: authServiceMock },
-        { provide: SeoManager, useValue: jasmine.createSpyObj('SeoManager', ['update']) },
+        { provide: SeoManager, useValue: { update: vi.fn() } },
       ],
     }).compileComponents();
 

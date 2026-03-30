@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 import { ProfileInformationDialog } from './profile-information-dialog';
 import { AuthClient } from '../../../../../../core/auth/auth-client';
 import { ComponentRef } from '@angular/core';
@@ -8,16 +9,17 @@ describe('ProfileInformationDialog', () => {
   let component: ProfileInformationDialog;
   let componentRef: ComponentRef<ProfileInformationDialog>;
   let fixture: ComponentFixture<ProfileInformationDialog>;
-  let mockAuthClient: jasmine.SpyObj<AuthClient>;
+  let mockAuthClient: AuthClient;
 
   beforeEach(async () => {
-    mockAuthClient = jasmine.createSpyObj('AuthClient', ['updateMe'], {
-      $fullUserData: jasmine.createSpy().and.returnValue({
+    mockAuthClient = {
+      updateMe: vi.fn(),
+      $fullUserData: vi.fn().mockReturnValue({
         fullName: 'Test User',
         linkedInUrl: 'https://linkedin.com/in/test',
         gitHubUrl: 'https://github.com/test',
       }),
-    });
+    } as unknown as AuthClient;
 
     await TestBed.configureTestingModule({
       imports: [ProfileInformationDialog],
@@ -43,17 +45,17 @@ describe('ProfileInformationDialog', () => {
 
   it('should require fullName', () => {
     component.form.controls.fullName.setValue('');
-    expect(component.form.controls.fullName.valid).toBeFalse();
+    expect(component.form.controls.fullName.valid).toBe(false);
   });
 
   it('should not require linkedInUrl', () => {
     component.form.controls.linkedInUrl.setValue('');
-    expect(component.form.controls.linkedInUrl.valid).toBeTrue();
+    expect(component.form.controls.linkedInUrl.valid).toBe(true);
   });
 
   it('should call authService.updateMe on updateMe()', () => {
-    mockAuthClient.updateMe.and.returnValue(of({} as any));
-    spyOn(component.closeClick, 'emit');
+    (mockAuthClient.updateMe as any).mockReturnValue(of({} as any));
+    vi.spyOn(component.closeClick, 'emit');
 
     component.updateMe();
 

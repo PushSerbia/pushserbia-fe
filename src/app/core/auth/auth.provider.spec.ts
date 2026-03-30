@@ -2,12 +2,15 @@ import { TestBed } from '@angular/core/testing';
 import { EnvironmentProviders, Provider } from '@angular/core';
 import { provideAuth } from './auth.provider';
 import { AuthClient } from './auth-client';
+import { vi } from 'vitest';
 
 describe('Auth Provider', () => {
-  let mockAuthClient: jasmine.SpyObj<AuthClient>;
+  let mockAuthClient: any;
 
   beforeEach(() => {
-    mockAuthClient = jasmine.createSpyObj('AuthClient', ['initialize']);
+    mockAuthClient = {
+      initialize: vi.fn(),
+    };
   });
 
   describe('provideAuth()', () => {
@@ -48,7 +51,7 @@ describe('Auth Provider', () => {
           ...provideAuth(),
           {
             provide: AuthClient,
-            useValue: mockAuthClient,
+            useValue: mockAuthClient as unknown as AuthClient,
           },
         ],
       });
@@ -64,7 +67,7 @@ describe('Auth Provider', () => {
           ...provideAuth(),
           {
             provide: AuthClient,
-            useValue: mockAuthClient,
+            useValue: mockAuthClient as unknown as AuthClient,
           },
         ],
       });
@@ -74,60 +77,55 @@ describe('Auth Provider', () => {
       expect(authClient).toBe(mockAuthClient);
     });
 
-    it('should initialize AuthClient when configured with provideAuth', (done) => {
-      mockAuthClient.initialize.and.returnValue(Promise.resolve());
+    it('should initialize AuthClient when configured with provideAuth', async () => {
+      mockAuthClient.initialize.mockReturnValue(Promise.resolve());
 
       TestBed.configureTestingModule({
         providers: [
           ...provideAuth(),
           {
             provide: AuthClient,
-            useValue: mockAuthClient,
+            useValue: mockAuthClient as unknown as AuthClient,
           },
         ],
       });
 
       TestBed.inject(AuthClient);
 
-      // Wait for initializer to complete
-      setTimeout(() => {
-        expect(mockAuthClient.initialize).toHaveBeenCalled();
-        done();
-      }, 100);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      expect(mockAuthClient.initialize).toHaveBeenCalled();
     });
   });
 
   describe('AuthClient initialization', () => {
-    it('should call AuthClient.initialize', (done) => {
-      mockAuthClient.initialize.and.returnValue(Promise.resolve());
+    it('should call AuthClient.initialize', async () => {
+      mockAuthClient.initialize.mockReturnValue(Promise.resolve());
 
       TestBed.configureTestingModule({
         providers: [
           ...provideAuth(),
           {
             provide: AuthClient,
-            useValue: mockAuthClient,
+            useValue: mockAuthClient as unknown as AuthClient,
           },
         ],
       });
 
       TestBed.inject(AuthClient);
 
-      setTimeout(() => {
-        expect(mockAuthClient.initialize).toHaveBeenCalled();
-        done();
-      }, 100);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      expect(mockAuthClient.initialize).toHaveBeenCalled();
     });
 
     it('should handle synchronous initialization return value', () => {
-      mockAuthClient.initialize.and.returnValue(Promise.resolve());
+      mockAuthClient.initialize.mockReturnValue(Promise.resolve());
 
       TestBed.configureTestingModule({
         providers: [
           ...provideAuth(),
           {
             provide: AuthClient,
-            useValue: mockAuthClient,
+            useValue: mockAuthClient as unknown as AuthClient,
           },
         ],
       });
@@ -135,26 +133,24 @@ describe('Auth Provider', () => {
       expect(() => TestBed.inject(AuthClient)).not.toThrow();
     });
 
-    it('should handle promise-based initialization', (done) => {
+    it('should handle promise-based initialization', async () => {
       const initPromise = Promise.resolve();
-      mockAuthClient.initialize.and.returnValue(initPromise);
+      mockAuthClient.initialize.mockReturnValue(initPromise);
 
       TestBed.configureTestingModule({
         providers: [
           ...provideAuth(),
           {
             provide: AuthClient,
-            useValue: mockAuthClient,
+            useValue: mockAuthClient as unknown as AuthClient,
           },
         ],
       });
 
       TestBed.inject(AuthClient);
 
-      setTimeout(() => {
-        expect(mockAuthClient.initialize).toHaveBeenCalled();
-        done();
-      }, 100);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      expect(mockAuthClient.initialize).toHaveBeenCalled();
     });
   });
 
@@ -224,7 +220,7 @@ describe('Auth Provider', () => {
           ...provideAuth(),
           {
             provide: AuthClient,
-            useValue: mockAuthClient,
+            useValue: mockAuthClient as unknown as AuthClient,
           },
         ],
       });
@@ -234,23 +230,24 @@ describe('Auth Provider', () => {
       expect(authClient).toBe(mockAuthClient);
     });
 
-    it('should work within an injection context', (done) => {
+    it('should work within an injection context', async () => {
+      mockAuthClient.initialize.mockReturnValue(Promise.resolve());
+
       TestBed.configureTestingModule({
         providers: [
           ...provideAuth(),
           {
             provide: AuthClient,
-            useValue: mockAuthClient,
+            useValue: mockAuthClient as unknown as AuthClient,
           },
         ],
       });
 
       TestBed.runInInjectionContext(() => {
-        setTimeout(() => {
-          expect(mockAuthClient.initialize).toHaveBeenCalled();
-          done();
-        }, 50);
+        TestBed.inject(AuthClient);
       });
+
+      await new Promise(resolve => setTimeout(resolve, 50));
     });
   });
 

@@ -1,15 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 import { App } from './app';
 import { provideRouter } from '@angular/router';
 import { ThemeManager } from './core/theme/theme-manager';
 
 describe('App', () => {
-  let mockThemeService: jasmine.SpyObj<ThemeManager>;
+  let mockThemeService: any;
 
   beforeEach(async () => {
-    mockThemeService = jasmine.createSpyObj('ThemeManager', ['applyTheme'], {
-      isDarkMode: jasmine.createSpy().and.returnValue(true),
-    });
+    mockThemeService = {
+      applyTheme: vi.fn(),
+      isDarkMode: vi.fn().mockReturnValue(true),
+    } as any as ThemeManager;
 
     await TestBed.configureTestingModule({
       imports: [App],

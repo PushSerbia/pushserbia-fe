@@ -4,8 +4,12 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthRequired } from './auth-required';
 import { AuthClient } from './auth-client';
+import { vi } from 'vitest';
 
 @Component({
+  selector: 'app-test',
+  standalone: true,
+  imports: [AuthRequired],
   template: `
     <button appAuthRequired>Protected Button</button>
   `,
@@ -16,19 +20,20 @@ describe('AuthRequired Directive', () => {
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
   let buttonElement: DebugElement;
-  let mockAuthClient: jasmine.SpyObj<AuthClient>;
-  let mockRouter: jasmine.SpyObj<Router>;
+  let mockAuthClient: { $authenticated: ReturnType<typeof vi.fn> };
+  let mockRouter: { navigate: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
-    mockAuthClient = jasmine.createSpyObj('AuthClient', [], {
-      $authenticated: jasmine.createSpy().and.returnValue(false),
-    });
+    mockAuthClient = {
+      $authenticated: vi.fn().mockReturnValue(false),
+    };
 
-    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
-    mockRouter.navigate.and.returnValue(Promise.resolve(true));
+    mockRouter = {
+      navigate: vi.fn().mockReturnValue(Promise.resolve(true)),
+    };
 
     TestBed.configureTestingModule({
-      declarations: [TestComponent, AuthRequired],
+      imports: [TestComponent],
       providers: [
         { provide: AuthClient, useValue: mockAuthClient },
         { provide: Router, useValue: mockRouter },
@@ -46,10 +51,10 @@ describe('AuthRequired Directive', () => {
   });
 
   it('should block click and redirect when user is not authenticated', () => {
-    (mockAuthClient.$authenticated as jasmine.Spy).and.returnValue(false);
+    (mockAuthClient.$authenticated as any).mockReturnValue(false);
     const event = new MouseEvent('click');
-    spyOn(event, 'preventDefault');
-    spyOn(event, 'stopPropagation');
+    vi.spyOn(event, 'preventDefault' as any);
+    vi.spyOn(event, 'stopPropagation' as any);
 
     buttonElement.nativeElement.dispatchEvent(event);
 
@@ -59,10 +64,10 @@ describe('AuthRequired Directive', () => {
   });
 
   it('should allow click to pass through when user is authenticated', () => {
-    (mockAuthClient.$authenticated as jasmine.Spy).and.returnValue(true);
+    (mockAuthClient.$authenticated as any).mockReturnValue(true);
     const event = new MouseEvent('click');
-    spyOn(event, 'preventDefault');
-    spyOn(event, 'stopPropagation');
+    vi.spyOn(event, 'preventDefault' as any);
+    vi.spyOn(event, 'stopPropagation' as any);
 
     buttonElement.nativeElement.dispatchEvent(event);
 
@@ -72,7 +77,7 @@ describe('AuthRequired Directive', () => {
   });
 
   it('should navigate to login page when click is blocked', () => {
-    (mockAuthClient.$authenticated as jasmine.Spy).and.returnValue(false);
+    (mockAuthClient.$authenticated as any).mockReturnValue(false);
     const event = new MouseEvent('click');
 
     buttonElement.nativeElement.dispatchEvent(event);
@@ -81,7 +86,7 @@ describe('AuthRequired Directive', () => {
   });
 
   it('should not navigate when user is authenticated', () => {
-    (mockAuthClient.$authenticated as jasmine.Spy).and.returnValue(true);
+    (mockAuthClient.$authenticated as any).mockReturnValue(true);
     const event = new MouseEvent('click');
 
     buttonElement.nativeElement.dispatchEvent(event);
@@ -90,7 +95,7 @@ describe('AuthRequired Directive', () => {
   });
 
   it('should handle multiple clicks correctly', () => {
-    (mockAuthClient.$authenticated as jasmine.Spy).and.returnValue(false);
+    (mockAuthClient.$authenticated as any).mockReturnValue(false);
 
     buttonElement.nativeElement.dispatchEvent(new MouseEvent('click'));
     buttonElement.nativeElement.dispatchEvent(new MouseEvent('click'));

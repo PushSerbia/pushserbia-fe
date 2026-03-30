@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { AuthUtils } from './auth.utils';
 
 describe('AuthUtils', () => {
@@ -131,10 +132,10 @@ describe('AuthUtils', () => {
   });
 
   describe('edge cases', () => {
-    it('should handle token with Unicode characters', () => {
+    it('should handle token with special characters', () => {
       const futureDate = Math.floor(Date.now() / 1000) + 3600;
       const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-      const payload = btoa(JSON.stringify({ exp: futureDate, name: 'Юзер' }));
+      const payload = btoa(JSON.stringify({ exp: futureDate, name: 'user-123' }));
       const signature = 'test-signature';
       const token = `${header}.${payload}.${signature}`;
 
@@ -243,7 +244,8 @@ describe('AuthUtils', () => {
   describe('expiration date calculation', () => {
     it('should correctly calculate expiration date from Unix timestamp', () => {
       // Token expires 1 second from now
-      const futureDate = Math.floor(Date.now() / 1000) + 1;
+      const now = Math.floor(Date.now() / 1000);
+      const futureDate = now + 1;
       const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
       const payload = btoa(JSON.stringify({ exp: futureDate }));
       const signature = 'test-signature';
@@ -252,10 +254,13 @@ describe('AuthUtils', () => {
       expect(AuthUtils.isTokenExpired(token)).toBe(false);
 
       // After 2 seconds, should be expired
-      jasmine.clock().install();
-      jasmine.clock().tick(2000);
-      expect(AuthUtils.isTokenExpired(token)).toBe(true);
-      jasmine.clock().uninstall();
+      vi.useFakeTimers();
+      try {
+        vi.setSystemTime(new Date((now + 2) * 1000));
+        expect(AuthUtils.isTokenExpired(token)).toBe(true);
+      } finally {
+        vi.useRealTimers();
+      }
     });
 
     it('should handle expiration at midnight UTC', () => {

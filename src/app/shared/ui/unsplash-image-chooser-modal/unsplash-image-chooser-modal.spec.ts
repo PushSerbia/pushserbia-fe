@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 import { UnsplashImageChooserModal } from './unsplash-image-chooser-modal';
 import { UnsplashApi } from '../../../core/unsplash/services/unsplash-api';
 import { DialogRef } from '@angular/cdk/dialog';
@@ -80,24 +81,25 @@ function createMockPhoto(overrides: Partial<UnsplashPhoto> = {}): UnsplashPhoto 
     },
     search_source: 'web',
     ...overrides,
-  } as UnsplashPhoto;
+  } as unknown as UnsplashPhoto;
 }
 
 describe('UnsplashImageChooserModal', () => {
   let component: UnsplashImageChooserModal;
   let fixture: ComponentFixture<UnsplashImageChooserModal>;
-  let mockUnsplashService: jasmine.SpyObj<UnsplashApi>;
-  let mockDialogRef: jasmine.SpyObj<DialogRef<string | null>>;
+  let mockUnsplashService: UnsplashApi;
+  let mockDialogRef: DialogRef<string | null>;
 
   beforeEach(() => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
 
-    mockUnsplashService = jasmine.createSpyObj('UnsplashApi', [
-      'searchPhotos',
-    ]);
-    mockUnsplashService.searchPhotos.and.returnValue(of([]));
+    mockUnsplashService = {
+      searchPhotos: vi.fn().mockReturnValue(of([])),
+    } as any as UnsplashApi;
 
-    mockDialogRef = jasmine.createSpyObj('DialogRef', ['close']);
+    mockDialogRef = {
+      close: vi.fn(),
+    } as any as DialogRef<string | null>;
 
     TestBed.configureTestingModule({
       imports: [UnsplashImageChooserModal],
@@ -112,7 +114,7 @@ describe('UnsplashImageChooserModal', () => {
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should create', () => {
@@ -122,87 +124,87 @@ describe('UnsplashImageChooserModal', () => {
 
   it('should load initial photos with "Community" query on init', () => {
     const photos = [createMockPhoto()];
-    mockUnsplashService.searchPhotos.and.returnValue(of(photos));
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(of(photos));
 
     fixture.detectChanges();
-    jasmine.clock().tick(0);
+    vi.runAllTimers();
 
     expect(mockUnsplashService.searchPhotos).toHaveBeenCalledWith('Community');
     expect(component.options().length).toBe(1);
-    expect(component.isLoading()).toBeFalse();
-    expect(component.hasError()).toBeFalse();
+    expect(component.isLoading()).toBe(false);
+    expect(component.hasError()).toBe(false);
   });
 
   it('should set hasError to true when API call fails', () => {
-    mockUnsplashService.searchPhotos.and.returnValue(
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(
       throwError(() => new Error('API error')),
     );
 
     fixture.detectChanges();
-    jasmine.clock().tick(0);
+    vi.runAllTimers();
 
-    expect(component.hasError()).toBeTrue();
+    expect(component.hasError()).toBe(true);
     expect(component.options().length).toBe(0);
   });
 
   it('should keep stream alive after an error and recover on next search', () => {
     // First call fails
-    mockUnsplashService.searchPhotos.and.returnValue(
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(
       throwError(() => new Error('API error')),
     );
 
     fixture.detectChanges();
-    jasmine.clock().tick(0);
+    vi.runAllTimers();
 
-    expect(component.hasError()).toBeTrue();
+    expect(component.hasError()).toBe(true);
 
     // Second call succeeds
     const photos = [createMockPhoto()];
-    mockUnsplashService.searchPhotos.and.returnValue(of(photos));
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(of(photos));
 
     component.searchQuery.setValue('Nature');
-    jasmine.clock().tick(1500);
+    vi.runAllTimers();
 
-    expect(component.hasError()).toBeFalse();
+    expect(component.hasError()).toBe(false);
     expect(component.options().length).toBe(1);
-    expect(component.isLoading()).toBeFalse();
+    expect(component.isLoading()).toBe(false);
   });
 
   it('should reset hasError before each new search', () => {
-    mockUnsplashService.searchPhotos.and.returnValue(
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(
       throwError(() => new Error('API error')),
     );
 
     fixture.detectChanges();
-    jasmine.clock().tick(0);
+    vi.runAllTimers();
 
-    expect(component.hasError()).toBeTrue();
+    expect(component.hasError()).toBe(true);
 
     // Start a new search — hasError should reset before API call
-    mockUnsplashService.searchPhotos.and.returnValue(of([]));
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(of([]));
     component.searchQuery.setValue('Trees');
-    jasmine.clock().tick(1500);
+    vi.runAllTimers();
 
-    expect(component.hasError()).toBeFalse();
+    expect(component.hasError()).toBe(false);
   });
 
   it('should set isLoading to false after search completes', () => {
-    mockUnsplashService.searchPhotos.and.returnValue(of([]));
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(of([]));
 
     fixture.detectChanges();
-    jasmine.clock().tick(0);
+    vi.runAllTimers();
 
-    expect(component.isLoading()).toBeFalse();
+    expect(component.isLoading()).toBe(false);
   });
 
   it('should map photos to ImageControlOption format', () => {
     const photo = createMockPhoto({
       description: 'Beautiful landscape',
     });
-    mockUnsplashService.searchPhotos.and.returnValue(of([photo]));
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(of([photo]));
 
     fixture.detectChanges();
-    jasmine.clock().tick(0);
+    vi.runAllTimers();
 
     const options = component.options();
     expect(options.length).toBe(1);
@@ -217,28 +219,28 @@ describe('UnsplashImageChooserModal', () => {
 
   it('should use "Unsplash Image" as fallback label when description is null', () => {
     const photo = createMockPhoto({ description: null });
-    mockUnsplashService.searchPhotos.and.returnValue(of([photo]));
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(of([photo]));
 
     fixture.detectChanges();
-    jasmine.clock().tick(0);
+    vi.runAllTimers();
 
     expect(component.options()[0].label).toBe('Unsplash Image');
   });
 
   it('should debounce subsequent searches by 1500ms', () => {
-    mockUnsplashService.searchPhotos.and.returnValue(of([]));
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(of([]));
 
     fixture.detectChanges();
-    jasmine.clock().tick(0);
+    vi.runAllTimers();
 
-    mockUnsplashService.searchPhotos.calls.reset();
+    vi.clearAllMocks();
 
     component.searchQuery.setValue('Na');
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     component.searchQuery.setValue('Nat');
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     component.searchQuery.setValue('Nature');
-    jasmine.clock().tick(1500);
+    vi.advanceTimersByTime(1500);
 
     // Only the last value should trigger a search
     expect(mockUnsplashService.searchPhotos).toHaveBeenCalledTimes(1);
@@ -246,15 +248,15 @@ describe('UnsplashImageChooserModal', () => {
   });
 
   it('should not search for empty or whitespace queries', () => {
-    mockUnsplashService.searchPhotos.and.returnValue(of([]));
+    (mockUnsplashService.searchPhotos as any).mockReturnValue(of([]));
 
     fixture.detectChanges();
-    jasmine.clock().tick(0);
+    vi.runAllTimers();
 
-    mockUnsplashService.searchPhotos.calls.reset();
+    vi.clearAllMocks();
 
     component.searchQuery.setValue('   ');
-    jasmine.clock().tick(1500);
+    vi.advanceTimersByTime(1500);
 
     expect(mockUnsplashService.searchPhotos).not.toHaveBeenCalled();
   });

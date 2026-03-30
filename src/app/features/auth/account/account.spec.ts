@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { vi } from 'vitest';
 
 import { Account } from './account';
 import { AuthClient } from '../../../core/auth/auth-client';
@@ -12,17 +13,16 @@ describe('Account', () => {
   let fixture: ComponentFixture<Account>;
 
   beforeEach(async () => {
-    const authServiceMock = jasmine.createSpyObj(
-      'AuthClient',
-      ['signOut', 'getMe', 'updateMe', 'signInWithCustomToken'],
-      {
-        $authenticated: jasmine.createSpy().and.returnValue(false),
-        $userData: jasmine.createSpy().and.returnValue(undefined),
-        $fullUserData: jasmine.createSpy().and.returnValue(null),
-        userData$: of(undefined),
-      },
-    );
-    authServiceMock.signInWithCustomToken.and.returnValue(of(undefined));
+    const authServiceMock = {
+      signOut: vi.fn(),
+      getMe: vi.fn(),
+      updateMe: vi.fn(),
+      signInWithCustomToken: vi.fn().mockReturnValue(of(undefined)),
+      $authenticated: vi.fn().mockReturnValue(false),
+      $userData: vi.fn().mockReturnValue(undefined),
+      $fullUserData: vi.fn().mockReturnValue(null),
+      userData$: of(undefined),
+    };
 
     await TestBed.configureTestingModule({
       imports: [Account],

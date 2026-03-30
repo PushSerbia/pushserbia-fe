@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { vi } from 'vitest';
 
 import { BasicLayout } from './basic-layout';
 import { AuthClient } from '../../../core/auth/auth-client';
@@ -19,11 +20,12 @@ describe('LandingLayoutComponent', () => {
         provideHttpClientTesting(),
         {
           provide: AuthClient,
-          useValue: jasmine.createSpyObj('AuthClient', ['signOut'], {
-            $authenticated: jasmine.createSpy().and.returnValue(false),
-            $userData: jasmine.createSpy().and.returnValue(undefined),
-            $fullUserData: jasmine.createSpy().and.returnValue(null),
-          }),
+          useValue: {
+            signOut: vi.fn(),
+            $authenticated: vi.fn().mockReturnValue(false),
+            $userData: vi.fn().mockReturnValue(undefined),
+            $fullUserData: vi.fn().mockReturnValue(null),
+          },
         },
       ],
     }).compileComponents();

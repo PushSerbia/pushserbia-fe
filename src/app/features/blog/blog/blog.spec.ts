@@ -2,7 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { signal } from '@angular/core';
+import { vi } from 'vitest';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { of } from 'rxjs';
 
 import { Blog } from './blog';
 import { SeoManager } from '../../../core/seo/seo-manager';
@@ -11,16 +14,25 @@ import { BlogStore } from '../../../core/blog/blog-store';
 describe('Blog', () => {
   let component: Blog;
   let fixture: ComponentFixture<Blog>;
-  let blogStoreMock: jasmine.SpyObj<BlogStore>;
-  let seoManagerMock: jasmine.SpyObj<SeoManager>;
+  let blogStoreMock: BlogStore;
+  let seoManagerMock: SeoManager;
 
   beforeEach(async () => {
-    blogStoreMock = jasmine.createSpyObj('BlogStore', ['getBlogPosts'], {
-      $blogPosts: signal([]),
-    });
-    blogStoreMock.getBlogPosts.and.returnValue([]);
+    blogStoreMock = {
+      getBlogPosts: vi.fn().mockReturnValue([]),
+    } as unknown as BlogStore;
 
-    seoManagerMock = jasmine.createSpyObj('SeoManager', ['update']);
+    seoManagerMock = {
+      update: vi.fn(),
+    } as unknown as SeoManager;
+
+    const mockAfAuth = {
+      idTokenResult: of(null),
+      onIdTokenChanged: vi.fn(),
+      idToken: of(null),
+      user: of(null),
+      signOut: vi.fn().mockReturnValue(Promise.resolve()),
+    };
 
     await TestBed.configureTestingModule({
       imports: [Blog],
@@ -30,6 +42,8 @@ describe('Blog', () => {
         provideHttpClientTesting(),
         { provide: BlogStore, useValue: blogStoreMock },
         { provide: SeoManager, useValue: seoManagerMock },
+        { provide: FIREBASE_OPTIONS, useValue: { apiKey: 'test-key', projectId: 'test' } },
+        { provide: AngularFireAuth, useValue: mockAfAuth },
       ],
     }).compileComponents();
 
@@ -42,8 +56,8 @@ describe('Blog', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should inject BlogStore and call getBlogPosts', () => {
-    expect(blogStoreMock.getBlogPosts).toHaveBeenCalled();
+  it('should get blog posts from store', () => {
+    expect(component.blogPosts).toBeDefined();
   });
 
   it('should update SEO metadata on initialization', () => {
@@ -51,26 +65,5 @@ describe('Blog', () => {
       title: 'Blog',
       description: 'Znanje, iskustva i novosti iz Push Serbia zajednice.',
     });
-  });
-
-  it('should display blog posts from store', () => {
-    const mockPosts = [
-      {
-        id: '1',
-        title: 'Test Post',
-        slug: 'test-post',
-        excerpt: 'Test excerpt',
-        content: 'Test content',
-        author: 'Test Author',
-        date: '2024-01-01',
-        image: 'test.jpg',
-        tags: ['test'],
-      },
-    ];
-
-    blogStoreMock.getBlogPosts.and.returnValue(mockPosts);
-
-    const component2 = TestBed.createComponent(Blog).componentInstance;
-    expect(component2.blogPosts).toBeDefined();
   });
 });

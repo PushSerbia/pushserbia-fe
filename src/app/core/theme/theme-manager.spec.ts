@@ -2,17 +2,22 @@ import { TestBed } from '@angular/core/testing';
 import { DOCUMENT } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { ThemeManager } from './theme-manager';
+import { vi } from 'vitest';
 
 describe('ThemeManager', () => {
   let service: ThemeManager;
-  let mockDocument: jasmine.SpyObj<Document>;
-  let mockElement: jasmine.SpyObj<HTMLElement>;
+  let mockDocument: { createElement: ReturnType<typeof vi.fn>, documentElement: any, cookie: string };
+  let mockElement: { classList: { add: ReturnType<typeof vi.fn>, remove: ReturnType<typeof vi.fn> } };
 
   beforeEach(() => {
-    mockElement = jasmine.createSpyObj('HTMLElement', ['classList']);
-    mockElement.classList = jasmine.createSpyObj('classList', ['add', 'remove']);
+    mockElement = {
+      classList: {
+        add: vi.fn(),
+        remove: vi.fn(),
+      },
+    };
 
-    mockDocument = jasmine.createSpyObj('Document', ['createElement']);
+    mockDocument = { createElement: vi.fn() } as any;
     Object.defineProperty(mockDocument, 'documentElement', {
       value: mockElement,
       writable: true,
@@ -83,9 +88,11 @@ describe('ThemeManager', () => {
 
     it('should fall back to system preference when no cookie', () => {
       mockDocument.cookie = 'other=value';
-      spyOn(window, 'matchMedia').and.returnValue({
+
+      const originalMatchMedia = window.matchMedia;
+      window.matchMedia = vi.fn().mockReturnValue({
         matches: true,
-      } as MediaQueryList);
+      } as unknown as MediaQueryList);
 
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
@@ -98,11 +105,16 @@ describe('ThemeManager', () => {
 
       service = TestBed.inject(ThemeManager);
       expect(service.isDarkMode()).toBe(true);
+      window.matchMedia = originalMatchMedia;
     });
 
     it('should return false when matchMedia throws error', () => {
       mockDocument.cookie = 'other=value';
-      spyOn(window, 'matchMedia').and.throwError('matchMedia not supported');
+
+      const originalMatchMedia = window.matchMedia;
+      window.matchMedia = vi.fn().mockImplementation(() => {
+        throw new Error('matchMedia not supported');
+      });
 
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
@@ -115,6 +127,7 @@ describe('ThemeManager', () => {
 
       service = TestBed.inject(ThemeManager);
       expect(service.isDarkMode()).toBe(false);
+      window.matchMedia = originalMatchMedia;
     });
 
     it('should handle multiple cookies correctly', () => {
@@ -324,7 +337,7 @@ describe('ThemeManager', () => {
 
       service.toggleTheme();
       expect(service.isDarkMode()).toBe(!initialTheme);
-      expect((mockElement.classList.add as jasmine.Spy).calls.count() + (mockElement.classList.remove as jasmine.Spy).calls.count()).toBeGreaterThan(0);
+      expect((mockElement.classList.add as any).mock.calls.length + (mockElement.classList.remove as any).mock.calls.length).toBeGreaterThan(0);
       expect(mockDocument.cookie).toContain('theme=');
 
       service.toggleTheme();
@@ -332,8 +345,8 @@ describe('ThemeManager', () => {
     });
 
     it('should apply theme and update DOM when toggling', () => {
-      (mockElement.classList.add as jasmine.Spy).calls.reset();
-      (mockElement.classList.remove as jasmine.Spy).calls.reset();
+      (mockElement.classList.add as any).mockClear();
+      (mockElement.classList.remove as any).mockClear();
 
       service.isDarkMode.set(false);
       service.toggleTheme();

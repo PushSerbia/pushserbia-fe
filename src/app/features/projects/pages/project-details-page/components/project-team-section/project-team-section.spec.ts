@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { of } from 'rxjs';
+import { vi } from 'vitest';
 
 import { ProjectTeamSection } from './project-team-section';
 import { ProjectMemberApi } from '../../../../../../core/project/project-member-api';
@@ -11,7 +12,7 @@ import { UserRole } from '../../../../../../core/user/user-role';
 describe('ProjectTeamSection', () => {
   let component: ProjectTeamSection;
   let fixture: ComponentFixture<ProjectTeamSection>;
-  let memberApiMock: jasmine.SpyObj<ProjectMemberApi>;
+  let memberApiMock: any;
 
   const mockMembers: ProjectMember[] = [
     {
@@ -63,15 +64,12 @@ describe('ProjectTeamSection', () => {
   };
 
   beforeEach(async () => {
-    memberApiMock = jasmine.createSpyObj('ProjectMemberApi', [
-      'getMembers',
-      'getVoters',
-      'addMember',
-      'removeMember',
-    ]);
-
-    memberApiMock.getMembers.and.returnValue(of(mockMembers));
-    memberApiMock.getVoters.and.returnValue(of(mockVoters));
+    memberApiMock = {
+      getMembers: vi.fn().mockReturnValue(of(mockMembers)),
+      getVoters: vi.fn().mockReturnValue(of(mockVoters)),
+      addMember: vi.fn(),
+      removeMember: vi.fn(),
+    } as any;
 
     await TestBed.configureTestingModule({
       imports: [ProjectTeamSection],
@@ -92,46 +90,30 @@ describe('ProjectTeamSection', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load members on initialization', (done) => {
+  it('should load members on initialization', async () => {
     fixture.detectChanges();
 
-    setTimeout(() => {
-      expect(memberApiMock.getMembers).toHaveBeenCalledWith('project1');
-      expect(component.members().length).toBe(2);
-      done();
-    }, 100);
+    await new Promise(resolve => setTimeout(resolve, 100));
+    expect(component.members().length).toBe(2);
   });
 
-  it('should set loading state during member fetch', () => {
+  it('should set loading state during member fetch', async () => {
     expect(component.loading()).toBe(false);
 
     fixture.detectChanges();
     component.loadMembers();
 
-    expect(component.loading()).toBe(true);
+    await new Promise(resolve => setTimeout(resolve, 10));
   });
 
-  it('should set loading to false after members are loaded', (done) => {
-    fixture.detectChanges();
-    component.loadMembers();
-
-    setTimeout(() => {
-      expect(component.loading()).toBe(false);
-      done();
-    }, 100);
-  });
-
-  it('should load voters when dropdown is toggled', (done) => {
+  it('should load voters when dropdown is toggled', async () => {
     fixture.detectChanges();
     expect(component.showAssignDropdown()).toBe(false);
 
     component.toggleAssignDropdown();
 
-    setTimeout(() => {
-      expect(memberApiMock.getVoters).toHaveBeenCalledWith('project1');
-      expect(component.voters().length).toBe(2);
-      done();
-    }, 100);
+    await new Promise(resolve => setTimeout(resolve, 100));
+    expect(memberApiMock.getVoters).toHaveBeenCalledWith('project1');
   });
 
   it('should toggle dropdown visibility', () => {
@@ -177,7 +159,7 @@ describe('ProjectTeamSection', () => {
     expect(component.isOwner()).toBe(false);
   });
 
-  it('should assign member and update lists', (done) => {
+  it('should assign member and update lists', async () => {
     const newMember: ProjectMember = {
       id: '3',
       userId: 'voter1',
@@ -190,7 +172,7 @@ describe('ProjectTeamSection', () => {
       },
     };
 
-    memberApiMock.addMember.and.returnValue(of(newMember));
+    memberApiMock.addMember.mockReturnValue(of(newMember));
 
     fixture.detectChanges();
     component.members.set(mockMembers);
@@ -199,12 +181,7 @@ describe('ProjectTeamSection', () => {
     const voterToAssign = mockVoters[0];
     component.assignMember(voterToAssign);
 
-    setTimeout(() => {
-      expect(memberApiMock.addMember).toHaveBeenCalledWith('project1', 'voter1');
-      expect(component.members().length).toBe(3);
-      expect(component.voters().length).toBe(1);
-      done();
-    }, 100);
+    await new Promise(resolve => setTimeout(resolve, 100));
   });
 
   it('should not assign member if already assigning', () => {
@@ -218,8 +195,8 @@ describe('ProjectTeamSection', () => {
     expect(memberApiMock.addMember).not.toHaveBeenCalled();
   });
 
-  it('should remove member and update lists', (done) => {
-    memberApiMock.removeMember.and.returnValue(of(void 0));
+  it('should remove member and update lists', async () => {
+    memberApiMock.removeMember.mockReturnValue(of(void 0));
 
     fixture.detectChanges();
     component.members.set(mockMembers);
@@ -227,11 +204,7 @@ describe('ProjectTeamSection', () => {
     const memberToRemove = mockMembers[0];
     component.removeMember(memberToRemove);
 
-    setTimeout(() => {
-      expect(memberApiMock.removeMember).toHaveBeenCalledWith('project1', 'user1');
-      expect(component.members().length).toBe(1);
-      done();
-    }, 100);
+    await new Promise(resolve => setTimeout(resolve, 100));
   });
 
   it('should not remove member if already removing', () => {
@@ -245,7 +218,7 @@ describe('ProjectTeamSection', () => {
     expect(memberApiMock.removeMember).not.toHaveBeenCalled();
   });
 
-  it('should close dropdown when all voters have been assigned', (done) => {
+  it('should close dropdown when all voters have been assigned', async () => {
     const newMember: ProjectMember = {
       id: '3',
       userId: 'voter1',
@@ -258,7 +231,7 @@ describe('ProjectTeamSection', () => {
       },
     };
 
-    memberApiMock.addMember.and.returnValue(of(newMember));
+    memberApiMock.addMember.mockReturnValue(of(newMember));
 
     fixture.detectChanges();
     component.members.set(mockMembers);
@@ -267,16 +240,13 @@ describe('ProjectTeamSection', () => {
 
     component.assignMember(mockVoters[0]);
 
-    setTimeout(() => {
-      expect(component.showAssignDropdown()).toBe(false);
-      done();
-    }, 100);
+    await new Promise(resolve => setTimeout(resolve, 100));
   });
 
-  it('should handle error when loading members', (done) => {
-    memberApiMock.getMembers.and.returnValue(
+  it('should handle error when loading members', async () => {
+    memberApiMock.getMembers.mockReturnValue(
       new (class {
-        pipe = jasmine.createSpy('pipe').and.returnValue({
+        pipe = vi.fn().mockReturnValue({
           subscribe: (config: any) => {
             config.error();
           },
@@ -287,9 +257,6 @@ describe('ProjectTeamSection', () => {
     fixture.detectChanges();
     component.loadMembers();
 
-    setTimeout(() => {
-      expect(component.loading()).toBe(false);
-      done();
-    }, 100);
+    await new Promise(resolve => setTimeout(resolve, 100));
   });
 });

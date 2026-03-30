@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 import { ThemeSwitcher } from './theme-switcher';
 import { ThemeManager } from '../../../core/theme/theme-manager';
 import { signal } from '@angular/core';
@@ -6,12 +7,14 @@ import { signal } from '@angular/core';
 describe('ThemeSwitcher', () => {
   let component: ThemeSwitcher;
   let fixture: ComponentFixture<ThemeSwitcher>;
-  let mockThemeService: jasmine.SpyObj<ThemeManager>;
+  let mockThemeService: any;
 
   beforeEach(async () => {
-    mockThemeService = jasmine.createSpyObj('ThemeManager', ['toggleTheme', 'applyTheme'], {
+    mockThemeService = {
+      toggleTheme: vi.fn(),
+      applyTheme: vi.fn(),
       isDarkMode: signal(true),
-    });
+    } as any as ThemeManager;
 
     await TestBed.configureTestingModule({
       imports: [ThemeSwitcher],

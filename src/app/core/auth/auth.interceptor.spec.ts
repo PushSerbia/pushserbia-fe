@@ -11,19 +11,22 @@ import { AuthClient } from './auth-client';
 import { Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
 import { PLATFORM_ID } from '@angular/core';
+import { vi } from 'vitest';
 
 describe('authInterceptor', () => {
   let httpClient: HttpClient;
   let httpTesting: HttpTestingController;
-  let mockAuthClient: jasmine.SpyObj<AuthClient>;
-  let mockRouter: jasmine.SpyObj<Router>;
+  let mockAuthClient: { signOut: ReturnType<typeof vi.fn> };
+  let mockRouter: { navigateByUrl: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
-    mockAuthClient = jasmine.createSpyObj('AuthClient', ['signOut']);
-    mockAuthClient.signOut.and.returnValue(of(undefined));
+    mockAuthClient = {
+      signOut: vi.fn().mockReturnValue(of(undefined)),
+    };
 
-    mockRouter = jasmine.createSpyObj('Router', ['navigateByUrl']);
-    mockRouter.navigateByUrl.and.returnValue(Promise.resolve(true));
+    mockRouter = {
+      navigateByUrl: vi.fn().mockReturnValue(Promise.resolve(true)),
+    };
 
     TestBed.configureTestingModule({
       providers: [
@@ -46,7 +49,7 @@ describe('authInterceptor', () => {
   it('should add withCredentials to requests', () => {
     httpClient.get('/api/test').subscribe();
     const req = httpTesting.expectOne('/api/test');
-    expect(req.request.withCredentials).toBeTrue();
+    expect(req.request.withCredentials).toBe(true);
     req.flush({});
   });
 

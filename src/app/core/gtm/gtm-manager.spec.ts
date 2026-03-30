@@ -2,10 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { DOCUMENT } from '@angular/common';
 import { GtmManager } from './gtm-manager';
 import { environment } from '../../../environments/environment';
+import { vi } from 'vitest';
 
 describe('GtmManager', () => {
   let service: GtmManager;
-  let mockDocument: jasmine.SpyObj<Document>;
+  let mockDocument: { createElement: ReturnType<typeof vi.fn>, head: any, body: any };
   let mockHeadElement: any;
   let mockBodyElement: any;
   let mockScript: any;
@@ -28,20 +29,20 @@ describe('GtmManager', () => {
     };
 
     mockNoscript = {
-      appendChild: jasmine.createSpy('appendChild'),
+      appendChild: vi.fn(),
     };
 
     mockHeadElement = {
-      insertBefore: jasmine.createSpy('insertBefore'),
+      insertBefore: vi.fn(),
       firstChild: null,
     };
 
     mockBodyElement = {
-      insertBefore: jasmine.createSpy('insertBefore'),
+      insertBefore: vi.fn(),
       firstChild: null,
     };
 
-    mockDocument = jasmine.createSpyObj('Document', ['createElement']);
+    mockDocument = { createElement: vi.fn() } as any;
     Object.defineProperty(mockDocument, 'head', {
       value: mockHeadElement,
       writable: true,
@@ -51,7 +52,7 @@ describe('GtmManager', () => {
       writable: true,
     });
 
-    mockDocument.createElement.and.callFake((tag: string) => {
+    (mockDocument.createElement as any).mockImplementation((tag: string) => {
       if (tag === 'script') {
         return mockScript;
       } else if (tag === 'noscript') {
@@ -78,7 +79,7 @@ describe('GtmManager', () => {
 
   describe('initialize()', () => {
     it('should initialize GTM in production environment', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       service.initialize();
 
@@ -89,7 +90,7 @@ describe('GtmManager', () => {
     });
 
     it('should not initialize GTM in non-production environment', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(false);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(false);
 
       service.initialize();
 
@@ -99,7 +100,7 @@ describe('GtmManager', () => {
     });
 
     it('should inject both script and noscript in production', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       service.initialize();
 
@@ -118,7 +119,7 @@ describe('GtmManager', () => {
 
   describe('script injection', () => {
     beforeEach(() => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
     });
 
     it('should create script element', () => {
@@ -166,7 +167,7 @@ describe('GtmManager', () => {
 
   describe('noscript iframe injection', () => {
     beforeEach(() => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
     });
 
     it('should create noscript element', () => {
@@ -229,31 +230,31 @@ describe('GtmManager', () => {
 
   describe('production vs development', () => {
     it('should inject when production is true', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
-      const initialCreateCount = mockDocument.createElement.calls.count();
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
+      const initialCreateCount = mockDocument.createElement.mock.calls.length;
 
       service.initialize();
 
-      expect(mockDocument.createElement.calls.count()).toBeGreaterThan(initialCreateCount);
+      expect(mockDocument.createElement.mock.calls.length).toBeGreaterThan(initialCreateCount);
     });
 
     it('should not inject when production is false', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(false);
-      const initialCreateCount = mockDocument.createElement.calls.count();
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(false);
+      const initialCreateCount = mockDocument.createElement.mock.calls.length;
 
       service.initialize();
 
-      expect(mockDocument.createElement.calls.count()).toBe(initialCreateCount);
+      expect(mockDocument.createElement.mock.calls.length).toBe(initialCreateCount);
     });
 
     it('should only initialize once when called multiple times', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       service.initialize();
-      const firstCallCount = mockDocument.createElement.calls.count();
+      const firstCallCount = mockDocument.createElement.mock.calls.length;
 
       service.initialize();
-      const secondCallCount = mockDocument.createElement.calls.count();
+      const secondCallCount = mockDocument.createElement.mock.calls.length;
 
       expect(secondCallCount).toBeGreaterThan(firstCallCount);
     });
@@ -261,7 +262,7 @@ describe('GtmManager', () => {
 
   describe('GTM ID handling', () => {
     beforeEach(() => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
     });
 
     it('should use correct GTM ID from environment', () => {
@@ -286,7 +287,7 @@ describe('GtmManager', () => {
 
   describe('edge cases', () => {
     it('should handle when head.firstChild is null', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
       mockHeadElement.firstChild = null;
 
       service.initialize();
@@ -295,7 +296,7 @@ describe('GtmManager', () => {
     });
 
     it('should handle when body.firstChild is null', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
       mockBodyElement.firstChild = null;
 
       service.initialize();
@@ -306,7 +307,7 @@ describe('GtmManager', () => {
 
   describe('integration tests', () => {
     it('should initialize GTM with all components in production', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(true);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(true);
 
       service.initialize();
 
@@ -327,7 +328,7 @@ describe('GtmManager', () => {
     });
 
     it('should not initialize any GTM components in non-production', () => {
-      spyOnProperty(environment, 'production', 'get').and.returnValue(false);
+      vi.spyOn(environment, 'production', 'get').mockReturnValue(false);
 
       service.initialize();
 

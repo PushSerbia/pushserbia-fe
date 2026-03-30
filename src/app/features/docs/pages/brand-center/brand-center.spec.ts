@@ -1,15 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { vi } from 'vitest';
 import { BrandCenter } from './brand-center';
 import { SeoManager } from '../../../../core/seo/seo-manager';
 
 describe('BrandCenter', () => {
   let component: BrandCenter;
   let fixture: ComponentFixture<BrandCenter>;
-  let seoManager: jasmine.SpyObj<SeoManager>;
+  let seoManager: any;
 
   beforeEach(async () => {
-    const seoSpy = jasmine.createSpyObj('SeoManager', ['update']);
+    const seoSpy = { update: vi.fn() };
 
     await TestBed.configureTestingModule({
       imports: [BrandCenter],
@@ -19,7 +20,7 @@ describe('BrandCenter', () => {
       ],
     }).compileComponents();
 
-    seoManager = TestBed.inject(SeoManager) as jasmine.SpyObj<SeoManager>;
+    seoManager = TestBed.inject(SeoManager) as any;
     fixture = TestBed.createComponent(BrandCenter);
     component = fixture.componentInstance;
     fixture.detectChanges();

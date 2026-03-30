@@ -342,6 +342,8 @@ describe('ApiClient', () => {
     });
 
     it('should handle complex endpoint paths', () => {
+      TestBed.resetTestingModule();
+
       class ComplexApiClient extends ApiClient<TestModel> {
         readonly endpoint = 'api/v1/resources/items';
       }
@@ -351,10 +353,11 @@ describe('ApiClient', () => {
       });
 
       const complexService = TestBed.inject(ComplexApiClient);
+      const complexHttpTesting = TestBed.inject(HttpTestingController);
 
       complexService.getAll().subscribe();
 
-      const req = httpTesting.expectOne('/api/v1/resources/items');
+      const req = complexHttpTesting.expectOne('/api/v1/resources/items');
       req.flush({ data: [], total: 0, limit: 0, offset: 0, currentPage: 1, totalPages: 0 });
     });
   });

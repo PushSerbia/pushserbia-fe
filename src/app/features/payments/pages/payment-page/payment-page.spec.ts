@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 import { PaymentPage } from './payment-page';
 import { provideRouter } from '@angular/router';
 import { SeoManager } from '../../../../core/seo/seo-manager';
@@ -6,10 +7,12 @@ import { SeoManager } from '../../../../core/seo/seo-manager';
 describe('PaymentPage', () => {
   let component: PaymentPage;
   let fixture: ComponentFixture<PaymentPage>;
-  let mockSeoManager: jasmine.SpyObj<SeoManager>;
+  let mockSeoManager: SeoManager;
 
   beforeEach(async () => {
-    mockSeoManager = jasmine.createSpyObj('SeoManager', ['update']);
+    mockSeoManager = {
+      update: vi.fn(),
+    } as unknown as SeoManager;
 
     await TestBed.configureTestingModule({
       imports: [PaymentPage],
@@ -40,7 +43,7 @@ describe('PaymentPage', () => {
   });
 
   it('should open external URL on button click', () => {
-    spyOn(window, 'open');
+    vi.spyOn(window, 'open');
     const option = component.supportOptions[0];
     component.openExternal(option);
     expect(window.open).toHaveBeenCalledWith(
