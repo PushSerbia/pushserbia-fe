@@ -46,6 +46,11 @@ export class BlogPostDetails implements OnInit {
           },
         },
       });
+    } else {
+      this.seo.update({
+        title: 'Članak nije pronađen',
+        description: 'Traženi blog članak ne postoji.',
+      });
     }
   }
 }
