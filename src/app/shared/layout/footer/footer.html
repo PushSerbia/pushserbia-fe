@@ -34,6 +34,9 @@
             }
           </button>
         </form>
+        @if (newsletterStatus() === 'invalid') {
+          <p class="text-xs text-red-400 mt-1">Unesi validnu email adresu.</p>
+        }
         @if (newsletterStatus() === 'error') {
           <p class="text-xs text-red-400 mt-1">Došlo je do greške. Pokušaj ponovo.</p>
         }

@@ -12,12 +12,17 @@ import { IntegrationsApi } from '../../../core/integrations/integrations-api';
 export class Footer {
   currentYear = new Date().getFullYear();
   newsletterEmail = '';
-  newsletterStatus = signal<'idle' | 'loading' | 'success' | 'error'>('idle');
+  newsletterStatus = signal<'idle' | 'loading' | 'success' | 'error' | 'invalid'>('idle');
 
   private integrationsService = inject(IntegrationsApi);
 
+  private readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   onNewsletterSubmit() {
-    if (!this.newsletterEmail) return;
+    if (!this.newsletterEmail || !this.emailRegex.test(this.newsletterEmail)) {
+      this.newsletterStatus.set('invalid');
+      return;
+    }
 
     this.newsletterStatus.set('loading');
 
