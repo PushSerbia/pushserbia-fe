@@ -67,10 +67,10 @@ export class OnboardingService {
     return TASKS.filter((task) => state[task]).length;
   });
 
-  readonly $totalTasks = TASKS.length;
+  readonly totalTasks = TASKS.length;
 
   readonly $completionPercentage = computed(
-    () => Math.round((this.$completedCount() / this.$totalTasks) * 100),
+    () => Math.round((this.$completedCount() / this.totalTasks) * 100),
   );
 
   loadForUser(userId: string): void {

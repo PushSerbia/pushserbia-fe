@@ -14,6 +14,8 @@ describe('ProfileInformationDialog', () => {
   beforeEach(async () => {
     mockAuthClient = {
       updateMe: vi.fn(),
+      $authenticated: vi.fn().mockReturnValue(false),
+      $userData: vi.fn().mockReturnValue(undefined),
       $fullUserData: vi.fn().mockReturnValue({
         fullName: 'Test User',
         linkedInUrl: 'https://linkedin.com/in/test',
