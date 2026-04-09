@@ -20,6 +20,7 @@ export class Login implements OnInit {
     this.seo.update({
       title: 'Prijava',
       description: 'Prijavi se na Push Serbia platformu putem LinkedIn naloga.',
+      robots: 'noindex',
     });
 
     if (isPlatformBrowser(this.platformId)) {
