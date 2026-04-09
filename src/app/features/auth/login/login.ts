@@ -19,7 +19,8 @@ export class Login implements OnInit {
   ngOnInit() {
     this.seo.update({
       title: 'Prijava',
-      description: 'Prijavi se na Push Serbia platformu putem LinkedIn naloga.',
+      description:
+        'Prijavi se na Push Serbia platformu putem svog LinkedIn naloga. Brza i jednostavna autentikacija za pristup projektima i glasanju.',
     });
 
     if (isPlatformBrowser(this.platformId)) {
