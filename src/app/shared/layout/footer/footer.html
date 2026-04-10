@@ -59,9 +59,9 @@
         </p>
         <div class="flex gap-4 mt-6">
           <a
-            href="https://github.com/pushserbia"
+            [href]="links.github"
             target="_blank"
-            rel="nofollow noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             class="text-neutral-400 hover:text-white transition-colors"
             aria-label="GitHub"
           >
@@ -72,9 +72,9 @@
             </svg>
           </a>
           <a
-            href="https://www.linkedin.com/company/pushserbia"
+            [href]="links.linkedin"
             target="_blank"
-            rel="nofollow noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             class="text-neutral-400 hover:text-white transition-colors"
             aria-label="LinkedIn"
           >
@@ -85,9 +85,9 @@
             </svg>
           </a>
           <a
-            href="https://join.slack.com/t/pushserbia/shared_invite/zt-34h9oiyc4-w8eLTnI9f5I6EbTueg8HWQ"
+            [href]="links.slack"
             target="_blank"
-            rel="nofollow noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             class="text-neutral-400 hover:text-white transition-colors"
             aria-label="Slack"
           >
@@ -124,15 +124,19 @@
         </p>
         <ul class="space-y-3 text-sm text-neutral-400">
           <li>
-            <a href="https://github.com/pushserbia" target="_blank" rel="nofollow noopener noreferrer" class="hover:text-white transition-colors"
+            <a
+              [href]="links.github"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              class="hover:text-white transition-colors"
               >GitHub</a
             >
           </li>
           <li>
             <a
-              href="https://join.slack.com/t/pushserbia/shared_invite/zt-34h9oiyc4-w8eLTnI9f5I6EbTueg8HWQ"
+              [href]="links.slack"
               target="_blank"
-              rel="nofollow noopener noreferrer"
+              rel="noopener noreferrer nofollow"
               class="hover:text-white transition-colors"
               >Slack</a
             >

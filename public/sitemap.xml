@@ -18,6 +18,28 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Project pages -->
+  <url>
+    <loc>https://pushserbia.com/projekti/zasadi-drvo</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pushserbia.com/projekti/udomi-ne-kupuj</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pushserbia.com/projekti/spasi-obrok</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pushserbia.com/projekti/popravi-umesto-baci</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Blog posts -->
   <url>
     <loc>https://pushserbia.com/blog/zasto-smo-pokrenuli-push-serbia</loc>
