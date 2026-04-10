@@ -9,6 +9,7 @@ export interface SeoConfig {
   image?: string;
   url?: string;
   type?: string;
+  robots?: string;
   jsonLd?: Record<string, unknown>;
 }
 
@@ -45,6 +46,12 @@ export class SeoManager {
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
     this.meta.updateTag({ name: 'twitter:image', content: image });
+
+    if (config.robots) {
+      this.meta.updateTag({ name: 'robots', content: config.robots });
+    } else {
+      this.meta.removeTag('name="robots"');
+    }
 
     this.updateCanonical(url);
 
