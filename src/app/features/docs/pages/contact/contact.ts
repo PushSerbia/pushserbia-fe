@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SeoManager } from '../../../../core/seo/seo-manager';
+import { EXTERNAL_LINKS } from '../../../../shared/external-links';
 
 @Component({
   selector: 'app-contact',
@@ -10,6 +11,7 @@ import { SeoManager } from '../../../../core/seo/seo-manager';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Contact {
+  readonly links = EXTERNAL_LINKS;
   private readonly seo = inject(SeoManager);
 
   constructor() {
