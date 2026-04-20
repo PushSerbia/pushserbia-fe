@@ -46,6 +46,7 @@ describe('ProjectDetailsPage', () => {
 
     mockAuthClient = {
       $userData: signal(undefined),
+      $authenticated: signal(false),
     } as any;
 
     mockSeoManager = { update: vi.fn() } as any;
