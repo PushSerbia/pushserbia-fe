@@ -7,12 +7,17 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SLACK_INVITE_URL } from './app/shared/external-links';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 export const app = express();
 const angularApp = new AngularNodeAppEngine();
+
+app.get('/pridruzi-se-slack', (_req, res) => {
+  res.redirect(301, SLACK_INVITE_URL);
+});
 
 /**
  * Example Express Rest API endpoints can be defined here.
