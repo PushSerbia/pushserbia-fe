@@ -18,7 +18,6 @@ const DEFAULT_DESCRIPTION =
   'Pridruži se Push Serbia zajednici! Predloži projekte, glasaj za inicijative i doprinesi razvoju open-source softvera koji mijenja društvo.';
 const DEFAULT_IMAGE = 'https://pushserbia.com/pushserbia.png';
 const BASE_URL = 'https://pushserbia.com';
-const MAX_DESCRIPTION_LENGTH = 160;
 
 @Injectable({ providedIn: 'root' })
 export class SeoManager {
@@ -29,7 +28,7 @@ export class SeoManager {
 
   update(config: SeoConfig): void {
     const title = config.title ? `${config.title} | ${SITE_NAME}` : SITE_NAME;
-    const description = this.truncateDescription(config.description || DEFAULT_DESCRIPTION);
+    const description = config.description || DEFAULT_DESCRIPTION;
     const image = config.image || DEFAULT_IMAGE;
     const url = config.url || `${BASE_URL}${this.router.url.split('?')[0]}`;
     const type = config.type || 'website';
@@ -82,16 +81,5 @@ export class SeoManager {
   private removeJsonLd(): void {
     const existing = this.document.querySelector('script[data-dynamic-seo="true"]');
     existing?.remove();
-  }
-
-  private truncateDescription(description: string): string {
-    const trimmed = description.trim();
-    if (trimmed.length <= MAX_DESCRIPTION_LENGTH) {
-      return trimmed;
-    }
-    const sliced = trimmed.slice(0, MAX_DESCRIPTION_LENGTH - 1);
-    const lastSpace = sliced.lastIndexOf(' ');
-    const cutoff = lastSpace > 0 ? sliced.slice(0, lastSpace) : sliced;
-    return `${cutoff.replace(/[\s.,;:!?-]+$/, '')}…`;
   }
 }

@@ -135,8 +135,14 @@
                 [field]="form.shortDescription"
                 rows="5"
                 class="block p-2.5 w-full text-sm text-white bg-neutral-900 rounded-lg border border-white/10 focus:ring-primary-500 focus:border-primary-500 placeholder-neutral-400"
-                placeholder="Biće vidljiv na karticama projekta"
+                placeholder="Biće vidljiv na karticama projekta i u Google rezultatima pretrage"
               ></textarea>
+              <div class="flex justify-between mt-1 text-xs">
+                <span class="text-neutral-500">Preporučena dužina: 110–160 karaktera</span>
+                <span [class]="shortDescriptionCounterClass()">
+                  {{ model().shortDescription.length }} / 160
+                </span>
+              </div>
               <app-validation-message [control]="form.shortDescription" />
             </div>
             <!--#endregion Short Description -->

@@ -96,8 +96,11 @@ export class CreateProjectPage implements OnInit {
     required(schema.shortDescription, {
       message: 'Kratak opis je obavezan',
     });
-    maxLength(schema.shortDescription, 250, {
-      message: 'Kratak opis ne može biti duži od 250 karaktera',
+    minLength(schema.shortDescription, 110, {
+      message: 'Kratak opis bi trebalo da ima najmanje 110 karaktera',
+    });
+    maxLength(schema.shortDescription, 160, {
+      message: 'Kratak opis ne može biti duži od 160 karaktera',
     });
     required(schema.description, {
       message: 'Opis je obavezan',
@@ -117,6 +120,13 @@ export class CreateProjectPage implements OnInit {
   protected quillEditor?: Quill | null;
 
   private readonly name = computed(() => this.form.name().value());
+
+  protected readonly shortDescriptionCounterClass = computed(() => {
+    const length = this.model().shortDescription.length;
+    if (length > 160) return 'text-red-400';
+    if (length >= 110) return 'text-green-400';
+    return 'text-neutral-500';
+  });
 
   private readonly _nameToSlugEffect = effect(() => {
     const name = this.name();

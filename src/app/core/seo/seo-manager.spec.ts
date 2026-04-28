@@ -100,33 +100,6 @@ describe('SeoManager', () => {
       });
     });
 
-    it('should truncate descriptions longer than 160 characters', () => {
-      const longDescription =
-        'Finansiraj sadnju drveta i prati njegov rast putem geolokacije. Kada bude zasađeno, dobićeš lokaciju i fotografiju svog drveta - da ga obilaziš i vidiš kako napreduje.';
-
-      service.update({ description: longDescription });
-
-      const descriptionCall = metaService.updateTag.mock.calls.find(
-        (call: unknown[]) => (call[0] as { name?: string })?.name === 'description',
-      );
-      const truncated: string = (descriptionCall![0] as { content: string }).content;
-
-      expect(truncated.length).toBeLessThanOrEqual(160);
-      expect(truncated.endsWith('…')).toBe(true);
-      expect(longDescription.startsWith(truncated.slice(0, -1).trim())).toBe(true);
-    });
-
-    it('should not truncate descriptions within the 160 character limit', () => {
-      const description = 'A'.repeat(160);
-
-      service.update({ description });
-
-      expect(metaService.updateTag).toHaveBeenCalledWith({
-        name: 'description',
-        content: description,
-      });
-    });
-
     it('should use default description when not provided', () => {
       service.update({});
 
