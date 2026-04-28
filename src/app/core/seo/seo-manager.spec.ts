@@ -8,7 +8,10 @@ import { vi } from 'vitest';
 describe('SeoManager', () => {
   let service: SeoManager;
   let titleService: { setTitle: ReturnType<typeof vi.fn> };
-  let metaService: { updateTag: ReturnType<typeof vi.fn> };
+  let metaService: {
+    updateTag: ReturnType<typeof vi.fn>;
+    removeTag: ReturnType<typeof vi.fn>;
+  };
   let mockDocument: { querySelector: ReturnType<typeof vi.fn>, createElement: ReturnType<typeof vi.fn>, head: any, cookie: string };
   let mockRouter: { url: string };
 
@@ -51,6 +54,7 @@ describe('SeoManager', () => {
     };
     metaService = {
       updateTag: vi.fn(),
+      removeTag: vi.fn(),
     };
 
     TestBed.configureTestingModule({
