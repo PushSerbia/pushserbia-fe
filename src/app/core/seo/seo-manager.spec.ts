@@ -38,7 +38,7 @@ describe('SeoManager', () => {
         if (tag === 'script') {
           return mockScript;
         }
-        return {};
+        return { setAttribute: vi.fn(), remove: vi.fn() };
       }),
       head: {
         appendChild: vi.fn(),
@@ -94,6 +94,55 @@ describe('SeoManager', () => {
         name: 'description',
         content: 'Test description',
       });
+    });
+
+    it('should set robots index, follow by default', () => {
+      service.update({ title: 'Test Page' });
+
+      expect(metaService.updateTag).toHaveBeenCalledWith({
+        name: 'robots',
+        content: 'index, follow',
+      });
+    });
+
+    it('should set robots noindex, nofollow when noIndex is true', () => {
+      service.update({ title: 'Private', noIndex: true });
+
+      expect(metaService.updateTag).toHaveBeenCalledWith({
+        name: 'robots',
+        content: 'noindex, nofollow',
+      });
+    });
+
+    it('should set og:site_name', () => {
+      service.update({ title: 'Test Page' });
+
+      expect(metaService.updateTag).toHaveBeenCalledWith({
+        property: 'og:site_name',
+        content: 'Push Serbia',
+      });
+    });
+
+    it('should inject BreadcrumbList JSON-LD for an indexable titled page', () => {
+      service.update({ title: 'Test Page' });
+
+      const scriptIndex = (mockDocument.createElement as any).mock.calls.findIndex(
+        (c: any) => c[0] === 'script',
+      );
+      const script = (mockDocument.createElement as any).mock.results[scriptIndex].value;
+      const parsed = JSON.parse(script.textContent);
+      expect(parsed['@type']).toBe('BreadcrumbList');
+      expect(parsed.itemListElement[0].name).toBe('Početna');
+      expect(parsed.itemListElement[1].name).toBe('Test Page');
+    });
+
+    it('should not inject breadcrumbs on a noindex page', () => {
+      service.update({ title: 'Private', noIndex: true });
+
+      const scriptIndex = (mockDocument.createElement as any).mock.calls.findIndex(
+        (c: any) => c[0] === 'script',
+      );
+      expect(scriptIndex).toBe(-1);
     });
 
     it('should use default description when not provided', () => {
@@ -225,7 +274,9 @@ describe('SeoManager', () => {
 
       expect(mockDocument.createElement).toHaveBeenCalledWith('script');
       // Get the script element that was created
-      const createdScript = (mockDocument.createElement as any).mock.results[0].value;
+      const createdScript = (mockDocument.createElement as any).mock.results[
+        (mockDocument.createElement as any).mock.calls.findIndex((c: any) => c[0] === 'script')
+      ].value;
       expect(createdScript.setAttribute).toHaveBeenCalledWith('type', 'application/ld+json');
       expect(createdScript.setAttribute).toHaveBeenCalledWith('data-dynamic-seo', 'true');
       expect(createdScript.textContent).toContain('@context');
@@ -282,7 +333,9 @@ describe('SeoManager', () => {
 
       service.update({ jsonLd: jsonLdData });
 
-      const createdScript = (mockDocument.createElement as any).mock.results[0].value;
+      const createdScript = (mockDocument.createElement as any).mock.results[
+        (mockDocument.createElement as any).mock.calls.findIndex((c: any) => c[0] === 'script')
+      ].value;
       const parsed = JSON.parse(createdScript.textContent);
       expect(parsed['@context']).toBe('https://schema.org');
       expect(parsed['@type']).toBe('Article');

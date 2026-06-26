@@ -14,6 +14,40 @@ const browserDistFolder = resolve(serverDistFolder, '../browser');
 export const app = express();
 const angularApp = new AngularNodeAppEngine();
 
+const CANONICAL_HOST = 'pushserbia.com';
+
+const isProductionHost = (host: string): boolean =>
+  host === CANONICAL_HOST || host === `www.${CANONICAL_HOST}`;
+
+/**
+ * Canonicalize the host: redirect www -> non-www and http -> https in a single
+ * permanent (301) hop. Scoped to the production host so staging, *.vercel.app
+ * preview deployments and localhost keep working untouched.
+ */
+app.use((req, res, next) => {
+  const host = req.headers.host ?? '';
+  const isHttp = req.headers['x-forwarded-proto'] === 'http';
+  const isWww = host.startsWith('www.');
+
+  if (isProductionHost(host) && (isHttp || isWww)) {
+    return res.redirect(301, `https://${CANONICAL_HOST}${req.originalUrl}`);
+  }
+  next();
+});
+
+/**
+ * Serve a restrictive robots.txt on non-production hosts (e.g. staging) so the
+ * staging subdomain is never crawled or indexed. The production host falls
+ * through to the static public/robots.txt.
+ */
+app.get('/robots.txt', (req, res, next) => {
+  if (!isProductionHost(req.headers.host ?? '')) {
+    res.type('text/plain').send('User-agent: *\nDisallow: /\n');
+    return;
+  }
+  next();
+});
+
 /**
  * Example Express Rest API endpoints can be defined here.
  * Uncomment and define endpoints as necessary.

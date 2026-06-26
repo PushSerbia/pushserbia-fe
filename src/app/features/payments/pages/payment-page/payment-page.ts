@@ -20,6 +20,7 @@ export class PaymentPage implements OnInit {
     this.seo.update({
       title: 'Podrška',
       description: 'Podrži Push Serbia zajednicu kroz Buy Me a Coffee.',
+      noIndex: true,
     });
   }
 

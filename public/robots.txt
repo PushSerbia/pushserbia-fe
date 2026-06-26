@@ -1,3 +1,11 @@
 User-agent: *
 Allow: /
+
+# Private, auth-only areas with no public or search value.
+# Note: publicly reachable utility pages (login, payment, /projekti/novi) are
+# kept crawlable on purpose and use a `noindex` meta tag instead, so Google can
+# actually see the directive and drop them cleanly.
+Disallow: /profil
+Disallow: /autentikacija/preusmeravanje
+
 Sitemap: https://pushserbia.com/sitemap.xml
