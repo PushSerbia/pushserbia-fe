@@ -16,7 +16,7 @@ export class Terms {
     this.seo.update({
       title: 'Uslovi korišćenja',
       description:
-        'Uslovi korišćenja Push Serbia platforme — pravila, prava i obaveze korisnika pri predlaganju, glasanju i radu na open-source projektima.',
+        'Uslovi korišćenja Push Serbia platforme — pravila, obaveze korisnika i smernice za korišćenje naših servisa i open-source projekata.',
     });
   }
 }

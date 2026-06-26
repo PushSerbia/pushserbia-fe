@@ -34,7 +34,7 @@ describe('BrandCenter', () => {
     expect(seoManager.update).toHaveBeenCalledWith({
       title: 'Brend centar',
       description:
-        'Push Serbia brend resursi — logotip, boje, tipografija i smernice za korišćenje vizuelnog identiteta zajednice u medijima i materijalima.',
+        'Push Serbia brend resursi — preuzmite logotip, saznajte više o bojama, tipografiji i pravilima vizuelnog identiteta naše zajednice.',
     });
   });
 });

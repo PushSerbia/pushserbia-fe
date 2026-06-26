@@ -8,7 +8,10 @@ import { vi } from 'vitest';
 describe('SeoManager', () => {
   let service: SeoManager;
   let titleService: { setTitle: ReturnType<typeof vi.fn> };
-  let metaService: { updateTag: ReturnType<typeof vi.fn> };
+  let metaService: {
+    updateTag: ReturnType<typeof vi.fn>;
+    removeTag: ReturnType<typeof vi.fn>;
+  };
   let mockDocument: { querySelector: ReturnType<typeof vi.fn>, createElement: ReturnType<typeof vi.fn>, head: any, cookie: string };
   let mockRouter: { url: string };
 
@@ -51,6 +54,7 @@ describe('SeoManager', () => {
     };
     metaService = {
       updateTag: vi.fn(),
+      removeTag: vi.fn(),
     };
 
     TestBed.configureTestingModule({
@@ -96,17 +100,14 @@ describe('SeoManager', () => {
       });
     });
 
-    it('should set robots index, follow by default', () => {
+    it('should remove the robots tag when none is provided', () => {
       service.update({ title: 'Test Page' });
 
-      expect(metaService.updateTag).toHaveBeenCalledWith({
-        name: 'robots',
-        content: 'index, follow',
-      });
+      expect(metaService.removeTag).toHaveBeenCalledWith('name="robots"');
     });
 
-    it('should set robots noindex, nofollow when noIndex is true', () => {
-      service.update({ title: 'Private', noIndex: true });
+    it('should set robots when provided', () => {
+      service.update({ title: 'Private', robots: 'noindex, nofollow' });
 
       expect(metaService.updateTag).toHaveBeenCalledWith({
         name: 'robots',
@@ -137,7 +138,7 @@ describe('SeoManager', () => {
     });
 
     it('should not inject breadcrumbs on a noindex page', () => {
-      service.update({ title: 'Private', noIndex: true });
+      service.update({ title: 'Private', robots: 'noindex, nofollow' });
 
       const scriptIndex = (mockDocument.createElement as any).mock.calls.findIndex(
         (c: any) => c[0] === 'script',

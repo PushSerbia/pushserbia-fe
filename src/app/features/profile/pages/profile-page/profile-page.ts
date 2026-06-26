@@ -23,7 +23,7 @@ export class ProfilePage {
   $data = this.authService.$fullUserData;
 
   constructor() {
-    this.seo.update({ title: 'Profil', noIndex: true });
+    this.seo.update({ title: 'Profil', robots: 'noindex, nofollow' });
     this.authService.getMe().subscribe();
     effect(() => {
       const authenticated = this.authService.$authenticated();

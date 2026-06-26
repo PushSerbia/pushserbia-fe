@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { IntegrationsApi } from '../../../core/integrations/integrations-api';
+import { EXTERNAL_LINKS } from '../../external-links';
 
 @Component({
   selector: 'app-footer',
@@ -10,6 +11,7 @@ import { IntegrationsApi } from '../../../core/integrations/integrations-api';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Footer {
+  readonly links = EXTERNAL_LINKS;
   currentYear = new Date().getFullYear();
   newsletterEmail = '';
   newsletterStatus = signal<'idle' | 'loading' | 'success' | 'error' | 'unavailable' | 'invalid'>('idle');

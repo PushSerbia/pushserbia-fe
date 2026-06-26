@@ -34,7 +34,7 @@ describe('Careers', () => {
     expect(seoManager.update).toHaveBeenCalledWith({
       title: 'Karijere',
       description:
-        'Pridruži se Push Serbia timu — otvorene pozicije, volonterske uloge i prilike za saradnju na open-source projektima za opšte dobro.',
+        'Pridruži se Push Serbia timu — pogledaj otvorene pozicije, mogućnosti za saradnju i kako možeš doprineti razvoju open-source projekata.',
     });
   });
 });

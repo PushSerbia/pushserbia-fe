@@ -24,13 +24,6 @@ import { UnsplashUrlFormatter } from '../../../../shared/unsplash-url-formatter'
 import { SeoManager } from '../../../../core/seo/seo-manager';
 import { ProjectTeamSection } from './components/project-team-section/project-team-section';
 
-// Search engines prefer meta descriptions between 110 and 160 characters.
-// Project descriptions come from the backend and vary in length, so we pad
-// short ones with a relevant call-to-action and trim ones that run too long.
-const MIN_META_DESCRIPTION_LENGTH = 110;
-const MAX_META_DESCRIPTION_LENGTH = 160;
-const META_DESCRIPTION_SUFFIX = ' Glasaj i prati razvoj ovog open-source projekta.';
-
 @Component({
   selector: 'app-project-details-page',
   imports: [
@@ -74,30 +67,26 @@ export class ProjectDetailsPage implements OnInit {
           this.$voted = this.voteStore.isVoted(project.id);
           this.seo.update({
             title: project.name,
-            description: this.buildMetaDescription(project.shortDescription),
+            description: project.shortDescription,
             image: project.image,
+            jsonLd: {
+              '@type': 'CreativeWork',
+              name: project.name,
+              description: project.shortDescription,
+              image: project.image,
+              url: `https://pushserbia.com/projekti/${project.slug}`,
+              dateCreated: project.createdAt,
+              dateModified: project.updatedAt,
+              author: {
+                '@type': 'Person',
+                name: project.creator.fullName,
+              },
+            },
           });
         }
       },
       { injector: this.injector },
     );
-  }
-
-  private buildMetaDescription(shortDescription: string): string {
-    let description = (shortDescription ?? '').trim();
-
-    if (description.length < MIN_META_DESCRIPTION_LENGTH) {
-      description += META_DESCRIPTION_SUFFIX;
-    }
-
-    if (description.length > MAX_META_DESCRIPTION_LENGTH) {
-      const truncated = description.slice(0, MAX_META_DESCRIPTION_LENGTH);
-      const lastSpace = truncated.lastIndexOf(' ');
-      description =
-        truncated.slice(0, lastSpace > 0 ? lastSpace : MAX_META_DESCRIPTION_LENGTH).trimEnd() + '…';
-    }
-
-    return description;
   }
 
   voteForProject(project: Project): void {

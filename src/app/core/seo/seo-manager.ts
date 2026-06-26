@@ -14,9 +14,9 @@ export interface SeoConfig {
   image?: string;
   url?: string;
   type?: string;
+  /** Robots directive, e.g. `noindex, nofollow`. Omit to leave the page indexable. */
+  robots?: string;
   jsonLd?: Record<string, unknown>;
-  /** When true, emits `noindex, nofollow` so the page is kept out of search results. */
-  noIndex?: boolean;
   /** Explicit breadcrumb trail. When omitted, an indexable page gets one auto-generated. */
   breadcrumbs?: BreadcrumbItem[];
 }
@@ -52,10 +52,6 @@ export class SeoManager {
     this.titleService.setTitle(title);
 
     this.meta.updateTag({ name: 'description', content: description });
-    this.meta.updateTag({
-      name: 'robots',
-      content: config.noIndex ? 'noindex, nofollow' : 'index, follow',
-    });
 
     this.meta.updateTag({ property: 'og:title', content: title });
     this.meta.updateTag({ property: 'og:description', content: description });
@@ -68,6 +64,12 @@ export class SeoManager {
     this.meta.updateTag({ name: 'twitter:description', content: description });
     this.meta.updateTag({ name: 'twitter:image', content: image });
 
+    if (config.robots) {
+      this.meta.updateTag({ name: 'robots', content: config.robots });
+    } else {
+      this.meta.removeTag('name="robots"');
+    }
+
     this.updateCanonical(url);
 
     if (config.jsonLd) {
@@ -78,8 +80,9 @@ export class SeoManager {
 
     // Breadcrumbs: use an explicit trail when provided, otherwise auto-generate
     // one for indexable pages. Noindex pages don't get breadcrumb markup.
+    const isNoIndex = (config.robots ?? '').includes('noindex');
     const breadcrumbs =
-      config.breadcrumbs ?? (config.noIndex ? [] : this.buildBreadcrumbs(config.title, cleanPath));
+      config.breadcrumbs ?? (isNoIndex ? [] : this.buildBreadcrumbs(config.title, cleanPath));
     if (breadcrumbs.length > 1) {
       this.updateBreadcrumbJsonLd(breadcrumbs);
     } else {

@@ -15,7 +15,7 @@ export class NotificationsListPage {
   private readonly seo = inject(SeoManager);
 
   constructor() {
-    this.seo.update({ title: 'Obaveštenja', noIndex: true });
+    this.seo.update({ title: 'Obaveštenja', robots: 'noindex, nofollow' });
     effect(() => {
       const authenticated = this.authService.$authenticated();
       if (authenticated === false) {

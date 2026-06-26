@@ -20,7 +20,7 @@ export class Account implements OnInit {
 
   ngOnInit(): void {
     // OAuth callback page — never index it (also runs during SSR).
-    this.seo.update({ title: 'Preusmeravanje', noIndex: true });
+    this.seo.update({ title: 'Preusmeravanje', robots: 'noindex, nofollow' });
 
     if (!isPlatformBrowser(this.platformId)) {
       return;
