@@ -16,7 +16,7 @@ export class Careers {
     this.seo.update({
       title: 'Karijere',
       description:
-        'Pridruži se Push Serbia timu — otvorene pozicije i mogućnosti za saradnju.',
+        'Pridruži se Push Serbia timu — otvorene pozicije, volonterske uloge i prilike za saradnju na open-source projektima za opšte dobro.',
     });
   }
 }

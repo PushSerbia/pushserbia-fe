@@ -34,7 +34,7 @@ describe('Licensing', () => {
     expect(seoManager.update).toHaveBeenCalledWith({
       title: 'Licence',
       description:
-        'Informacije o licencama koje koristi Push Serbia platforma i open-source projekti.',
+        'Informacije o licencama koje koristi Push Serbia platforma i open-source projekti zajednice, uključujući uslove korišćenja i deljenja koda.',
     });
   });
 });

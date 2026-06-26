@@ -63,7 +63,7 @@ export class ProjectsListPage implements OnInit {
     this.seo.update({
       title: 'Projekti',
       description:
-        'Pregledaj open-source projekte sa društvenim uticajem u Srbiji. Glasaj, predloži ili doprinesi.',
+        'Pregledaj open-source projekte sa društvenim uticajem u Srbiji. Glasaj, predloži svoju ideju ili doprinesi razvoju softvera za opšte dobro.',
     });
 
     effect(() => {

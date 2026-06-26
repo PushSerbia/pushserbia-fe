@@ -63,7 +63,8 @@ describe('Blog', () => {
   it('should update SEO metadata on initialization', () => {
     expect(seoManagerMock.update).toHaveBeenCalledWith({
       title: 'Blog',
-      description: 'Znanje, iskustva i novosti iz Push Serbia zajednice.',
+      description:
+        'Znanje, iskustva i novosti iz Push Serbia zajednice — saveti o open-source razvoju, priče članova i uvid u rad na društveno korisnim projektima.',
     });
   });
 });

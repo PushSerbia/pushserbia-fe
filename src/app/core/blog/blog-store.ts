@@ -144,7 +144,7 @@ export class BlogStore {
       author: 'Push Serbia tim',
       date: '2026-02-28',
       excerpt:
-        'Šta smo naučili, gde smo pogrešili i šta bismo uradili drugačije da krenemo iz početka.',
+        'Šta smo naučili, gde smo pogrešili i šta bismo uradili drugačije da krenemo iz početka — pet iskrenih lekcija iz prve godine Push Serbia.',
       content: `
         <p>Prošla je godina od pokretanja Push Serbia. Vreme za iskren pogled unazad — bez ulepšavanja.</p>
 
@@ -214,7 +214,7 @@ export class BlogStore {
       author: 'Push Serbia tim',
       date: '2026-03-15',
       excerpt:
-        'Pogled iznutra na alate, rituale i principe koji pokreću razvoj naših open-source projekata.',
+        'Pogled iznutra na alate, rituale i principe koji pokreću razvoj naših open-source projekata — kako planiramo, komuniciramo i isporučujemo.',
       content: `
         <p>Jedno od pitanja koje najčešće čujemo od novih članova: "OK, pridružio sam se. Šta sad?" Fer pitanje. Evo kako zapravo izgleda rad na projektu u Push Serbia zajednici.</p>
 

@@ -43,9 +43,25 @@ app.use(
 app.use('/**', (req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
+    .then((response) => {
+      if (!response) {
+        return next();
+      }
+
+      // Auth-guarded pages (e.g. /projekti/novi) redirect unauthenticated
+      // visitors to the login page. Angular SSR emits this as a temporary 302;
+      // serve it as a permanent 301 instead, since those pages always require
+      // authentication. This avoids the "302 redirect" SEO warning.
+      const location = response.headers.get('location');
+      if (response.status === 302 && location?.endsWith('/autentikacija/prijava')) {
+        return writeResponseToNodeResponse(
+          new Response(null, { status: 301, headers: response.headers }),
+          res,
+        );
+      }
+
+      return writeResponseToNodeResponse(response, res);
+    })
     .catch(next);
 });
 

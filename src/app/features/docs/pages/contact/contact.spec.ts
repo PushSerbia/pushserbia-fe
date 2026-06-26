@@ -34,7 +34,7 @@ describe('Contact', () => {
     expect(seoManager.update).toHaveBeenCalledWith({
       title: 'Kontakt',
       description:
-        'Kontaktiraj Push Serbia tim — email, društvene mreže, Slack i GitHub.',
+        'Kontaktiraj Push Serbia tim — email, društvene mreže, Slack i GitHub. Tu smo za sva pitanja, predloge i ideje o open-source saradnji.',
     });
   });
 });

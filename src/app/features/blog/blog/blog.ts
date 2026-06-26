@@ -20,7 +20,8 @@ export class Blog {
   constructor() {
     this.seo.update({
       title: 'Blog',
-      description: 'Znanje, iskustva i novosti iz Push Serbia zajednice.',
+      description:
+        'Znanje, iskustva i novosti iz Push Serbia zajednice — saveti o open-source razvoju, priče članova i uvid u rad na društveno korisnim projektima.',
     });
   }
 }

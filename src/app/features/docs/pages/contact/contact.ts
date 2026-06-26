@@ -16,7 +16,7 @@ export class Contact {
     this.seo.update({
       title: 'Kontakt',
       description:
-        'Kontaktiraj Push Serbia tim — email, društvene mreže, Slack i GitHub.',
+        'Kontaktiraj Push Serbia tim — email, društvene mreže, Slack i GitHub. Tu smo za sva pitanja, predloge i ideje o open-source saradnji.',
     });
   }
 }
