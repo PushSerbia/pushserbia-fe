@@ -35,6 +35,7 @@ describe('PaymentPage', () => {
     expect(mockSeoManager.update).toHaveBeenCalledWith({
       title: 'Podrška',
       description: 'Podrži Push Serbia zajednicu kroz Buy Me a Coffee.',
+      robots: 'noindex, nofollow',
     });
   });
 

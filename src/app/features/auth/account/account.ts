@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Dialog } from '@angular/cdk/dialog';
 import { AuthClient } from '../../../core/auth/auth-client';
 import { OnboardingService } from '../../../core/onboarding/onboarding';
+import { SeoManager } from '../../../core/seo/seo-manager';
 import { first } from 'rxjs';
 
 @Component({
@@ -19,8 +20,12 @@ export class Account implements OnInit {
   private authService = inject(AuthClient);
   private dialog = inject(Dialog);
   private onboarding = inject(OnboardingService);
+  private seo = inject(SeoManager);
 
   ngOnInit(): void {
+    // OAuth callback page — never index it (also runs during SSR).
+    this.seo.update({ title: 'Preusmeravanje', robots: 'noindex, nofollow' });
+
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
