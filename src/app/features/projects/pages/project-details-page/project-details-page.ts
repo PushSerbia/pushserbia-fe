@@ -6,6 +6,7 @@ import {
   Injector,
   input,
   OnInit,
+  RESPONSE_INIT,
   Signal,
 } from '@angular/core';
 import { BasicLayout } from '../../../../shared/layout/landing-layout/basic-layout';
@@ -46,6 +47,7 @@ export class ProjectDetailsPage implements OnInit {
   private readonly authService = inject(AuthClient);
   private readonly injector = inject(Injector);
   private readonly seo = inject(SeoManager);
+  private readonly response = inject(RESPONSE_INIT, { optional: true });
 
   readonly slug = input.required<string>();
 
@@ -63,6 +65,7 @@ export class ProjectDetailsPage implements OnInit {
     effect(
       () => {
         const project = this.$project?.();
+        const loading = this.$projectLoading();
         if (project?.id) {
           this.$voted = this.voteStore.isVoted(project.id);
           this.seo.update({
@@ -83,6 +86,17 @@ export class ProjectDetailsPage implements OnInit {
               },
             },
           });
+        } else if (!loading) {
+          // Finished loading with no match → unknown/removed slug. Serve a real
+          // 404 (+ noindex) instead of a soft-404 (200 with a "not found" view).
+          this.seo.update({
+            title: 'Projekat nije pronađen',
+            description: 'Traženi projekat ne postoji ili je uklonjen.',
+            robots: 'noindex, nofollow',
+          });
+          if (this.response) {
+            this.response.status = 404;
+          }
         }
       },
       { injector: this.injector },

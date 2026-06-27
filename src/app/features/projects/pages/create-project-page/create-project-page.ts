@@ -147,6 +147,7 @@ export class CreateProjectPage implements OnInit {
     this.seo.update({
       title: 'Predloži projekat',
       description: 'Predloži novi open-source projekat sa društvenim uticajem za Push Serbia zajednicu.',
+      robots: 'noindex, nofollow',
     });
 
     effect(

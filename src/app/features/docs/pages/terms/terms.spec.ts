@@ -34,7 +34,7 @@ describe('Terms', () => {
     expect(seoManager.update).toHaveBeenCalledWith({
       title: 'Uslovi korišćenja',
       description:
-        'Uslovi korišćenja Push Serbia platforme — pravila i obaveze korisnika.',
+        'Uslovi korišćenja Push Serbia platforme — pravila, obaveze korisnika i smernice za korišćenje naših servisa i open-source projekata.',
     });
   });
 });

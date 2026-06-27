@@ -1,6 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 
 interface SearchOption {
   displayText: string; // Full word to display
@@ -15,7 +24,9 @@ interface SearchOption {
   templateUrl: './landing-faq.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LandingFaq implements OnInit {
+export class LandingFaq implements OnInit, OnDestroy {
+  private readonly seo = inject(SeoManager);
+
   showAllQuestions = signal(false);
   searchQuery = signal('');
 
@@ -97,6 +108,13 @@ export class LandingFaq implements OnInit {
       .slice(0, 6) // Take only the top 6
       // Final sort by importance to ensure the most important options appear first
       .sort((a, b) => b.importance - a.importance);
+
+    // Expose the full FAQ as FAQPage structured data for rich results.
+    this.seo.setFaqJsonLd(this.originalFaq);
+  }
+
+  ngOnDestroy(): void {
+    this.seo.removeFaqJsonLd();
   }
 
   // Count how many questions contain the given search term

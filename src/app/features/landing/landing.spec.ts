@@ -35,7 +35,14 @@ describe('Landing', () => {
         provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: SeoManager, useValue: { update: vi.fn() } as unknown as SeoManager },
+        {
+          provide: SeoManager,
+          useValue: {
+            update: vi.fn(),
+            setFaqJsonLd: vi.fn(),
+            removeFaqJsonLd: vi.fn(),
+          } as unknown as SeoManager,
+        },
         {
           provide: AuthClient,
           useValue: {

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, PLATFORM_ID } from 
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthClient } from '../../../core/auth/auth-client';
+import { SeoManager } from '../../../core/seo/seo-manager';
 import { first } from 'rxjs';
 
 @Component({
@@ -15,8 +16,12 @@ export class Account implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private authService = inject(AuthClient);
+  private seo = inject(SeoManager);
 
   ngOnInit(): void {
+    // OAuth callback page — never index it (also runs during SSR).
+    this.seo.update({ title: 'Preusmeravanje', robots: 'noindex, nofollow' });
+
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }

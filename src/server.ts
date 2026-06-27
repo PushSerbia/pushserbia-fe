@@ -15,6 +15,40 @@ const browserDistFolder = resolve(serverDistFolder, '../browser');
 export const app = express();
 const angularApp = new AngularNodeAppEngine();
 
+const CANONICAL_HOST = 'pushserbia.com';
+
+const isProductionHost = (host: string): boolean =>
+  host === CANONICAL_HOST || host === `www.${CANONICAL_HOST}`;
+
+/**
+ * Canonicalize the host: redirect www -> non-www and http -> https in a single
+ * permanent (301) hop. Scoped to the production host so staging, *.vercel.app
+ * preview deployments and localhost keep working untouched.
+ */
+app.use((req, res, next) => {
+  const host = req.headers.host ?? '';
+  const isHttp = req.headers['x-forwarded-proto'] === 'http';
+  const isWww = host.startsWith('www.');
+
+  if (isProductionHost(host) && (isHttp || isWww)) {
+    return res.redirect(301, `https://${CANONICAL_HOST}${req.originalUrl}`);
+  }
+  next();
+});
+
+/**
+ * Serve a restrictive robots.txt on non-production hosts (e.g. staging) so the
+ * staging subdomain is never crawled or indexed. The production host falls
+ * through to the static public/robots.txt.
+ */
+app.get('/robots.txt', (req, res, next) => {
+  if (!isProductionHost(req.headers.host ?? '')) {
+    res.type('text/plain').send('User-agent: *\nDisallow: /\n');
+    return;
+  }
+  next();
+});
+
 app.get('/pridruzi-se-slack', (_req, res) => {
   res.redirect(301, SLACK_INVITE_URL);
 });
@@ -48,9 +82,25 @@ app.use(
 app.use('/**', (req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
+    .then((response) => {
+      if (!response) {
+        return next();
+      }
+
+      // Auth-guarded pages (e.g. /projekti/novi) redirect unauthenticated
+      // visitors to the login page. Angular SSR emits this as a temporary 302;
+      // serve it as a permanent 301 instead, since those pages always require
+      // authentication. This avoids the "302 redirect" SEO warning.
+      const location = response.headers.get('location');
+      if (response.status === 302 && location?.endsWith('/autentikacija/prijava')) {
+        return writeResponseToNodeResponse(
+          new Response(null, { status: 301, headers: response.headers }),
+          res,
+        );
+      }
+
+      return writeResponseToNodeResponse(response, res);
+    })
     .catch(next);
 });
 

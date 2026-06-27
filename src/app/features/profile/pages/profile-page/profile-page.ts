@@ -7,6 +7,7 @@ import { ProfileStats } from './components/profile-stats/profile-stats';
 import { ProfileDetails } from './components/profile-details/profile-details';
 import { ProfileFeedback } from './components/profile-feedback/profile-feedback';
 import { Router } from '@angular/router';
+import { SeoManager } from '../../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-profile-page',
@@ -17,10 +18,12 @@ import { Router } from '@angular/router';
 export class ProfilePage {
   private readonly authService = inject(AuthClient);
   private readonly router = inject(Router);
+  private readonly seo = inject(SeoManager);
 
   $data = this.authService.$fullUserData;
 
   constructor() {
+    this.seo.update({ title: 'Profil', robots: 'noindex, nofollow' });
     this.authService.getMe().subscribe();
     effect(() => {
       const authenticated = this.authService.$authenticated();
