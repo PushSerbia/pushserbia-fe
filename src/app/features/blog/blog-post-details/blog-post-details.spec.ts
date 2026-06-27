@@ -113,7 +113,7 @@ describe('BlogPostDetails', () => {
     });
   });
 
-  it('should not update SeoManager when post is not found', () => {
+  it('should set noindex SEO when post is not found', () => {
     (blogStoreMock.getBlogPostBySlug as any).mockReturnValue(undefined);
 
     TestBed.runInInjectionContext(() => {
@@ -122,7 +122,11 @@ describe('BlogPostDetails', () => {
 
     component.ngOnInit();
 
-    expect(seoManagerMock.update).not.toHaveBeenCalled();
+    expect(seoManagerMock.update).toHaveBeenCalledWith({
+      title: 'Članak nije pronađen',
+      description: 'Traženi blog članak ne postoji.',
+      robots: 'noindex, nofollow',
+    });
   });
 
   it('should set post to undefined when post is not found', () => {

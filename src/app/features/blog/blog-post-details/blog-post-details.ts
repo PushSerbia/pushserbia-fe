@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  OnInit,
+  RESPONSE_INIT,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { QuillViewHTMLComponent } from 'ngx-quill';
 import { BlogStore } from '../../../core/blog/blog-store';
@@ -16,6 +23,7 @@ import { SeoManager } from '../../../core/seo/seo-manager';
 export class BlogPostDetails implements OnInit {
   private blogStoreService = inject(BlogStore);
   private seo = inject(SeoManager);
+  private readonly response = inject(RESPONSE_INIT, { optional: true });
 
   readonly slug = input.required<string>();
   post: BlogPost | undefined;
@@ -50,7 +58,13 @@ export class BlogPostDetails implements OnInit {
       this.seo.update({
         title: 'Članak nije pronađen',
         description: 'Traženi blog članak ne postoji.',
+        robots: 'noindex, nofollow',
       });
+
+      // Unknown slug → real 404 instead of a soft-404 (200 with "not found").
+      if (this.response) {
+        this.response.status = 404;
+      }
     }
   }
 }

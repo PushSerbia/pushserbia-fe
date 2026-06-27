@@ -146,6 +146,20 @@ describe('SeoManager', () => {
       expect(scriptIndex).toBe(-1);
     });
 
+    it('should inject FAQPage JSON-LD via setFaqJsonLd', () => {
+      service.setFaqJsonLd([{ title: 'Q1?', description: 'A1.' }]);
+
+      const scriptIndex = (mockDocument.createElement as any).mock.calls.findIndex(
+        (c: any) => c[0] === 'script',
+      );
+      const script = (mockDocument.createElement as any).mock.results[scriptIndex].value;
+      const parsed = JSON.parse(script.textContent);
+      expect(parsed['@type']).toBe('FAQPage');
+      expect(parsed.mainEntity[0]['@type']).toBe('Question');
+      expect(parsed.mainEntity[0].name).toBe('Q1?');
+      expect(parsed.mainEntity[0].acceptedAnswer.text).toBe('A1.');
+    });
+
     it('should use default description when not provided', () => {
       service.update({});
 

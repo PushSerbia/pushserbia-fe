@@ -8,6 +8,11 @@ export interface BreadcrumbItem {
   url: string;
 }
 
+export interface FaqEntry {
+  title: string;
+  description: string;
+}
+
 export interface SeoConfig {
   title?: string;
   description?: string;
@@ -155,6 +160,35 @@ export class SeoManager {
 
   private removeBreadcrumbJsonLd(): void {
     const existing = this.document.querySelector('script[data-dynamic-seo-breadcrumb="true"]');
+    existing?.remove();
+  }
+
+  /**
+   * Inject FAQPage structured data. Owned by the component that renders the FAQ
+   * (only the home page today); call removeFaqJsonLd() from its ngOnDestroy.
+   */
+  setFaqJsonLd(items: FaqEntry[]): void {
+    this.removeFaqJsonLd();
+    if (!items.length) {
+      return;
+    }
+    const script = this.document.createElement('script');
+    script.setAttribute('type', 'application/ld+json');
+    script.setAttribute('data-dynamic-seo-faq', 'true');
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: items.map((item) => ({
+        '@type': 'Question',
+        name: item.title,
+        acceptedAnswer: { '@type': 'Answer', text: item.description },
+      })),
+    });
+    this.document.head.appendChild(script);
+  }
+
+  removeFaqJsonLd(): void {
+    const existing = this.document.querySelector('script[data-dynamic-seo-faq="true"]');
     existing?.remove();
   }
 }
