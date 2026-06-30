@@ -27,11 +27,14 @@ export class BlogPostDetails implements OnInit {
 
   readonly slug = input.required<string>();
   post: BlogPost | undefined;
+  relatedPosts: BlogPost[] = [];
 
   ngOnInit() {
     this.post = this.blogStoreService.getBlogPostBySlug(this.slug());
 
     if (this.post) {
+      this.relatedPosts = this.getRelatedPosts(this.post);
+
       this.seo.update({
         title: this.post.title,
         description: this.post.excerpt,
@@ -66,5 +69,24 @@ export class BlogPostDetails implements OnInit {
         this.response.status = 404;
       }
     }
+  }
+
+  /**
+   * Pick up to three other posts to surface as "Srodni članci". Posts sharing
+   * the most tags rank first, falling back to chronological order. These render
+   * as plain dofollow internal links so every post receives inbound links from
+   * its siblings, not just the single link from the blog listing page.
+   */
+  private getRelatedPosts(current: BlogPost): BlogPost[] {
+    return this.blogStoreService
+      .getBlogPosts()
+      .filter((post) => post.slug !== current.slug)
+      .map((post) => ({
+        post,
+        sharedTags: post.tags?.filter((tag) => current.tags?.includes(tag)).length ?? 0,
+      }))
+      .sort((a, b) => b.sharedTags - a.sharedTags)
+      .slice(0, 3)
+      .map((entry) => entry.post);
   }
 }

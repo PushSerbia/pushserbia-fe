@@ -56,6 +56,40 @@
             </a>
           </div>
         </article>
+
+        @if (relatedPosts.length > 0) {
+          <section class="mt-16 pt-8 border-t border-white/5">
+            <h2 class="font-mono text-xl font-bold text-white mb-6">Srodni članci</h2>
+            <div class="grid gap-6 sm:grid-cols-3">
+              @for (related of relatedPosts; track related.id) {
+                <a
+                  [routerLink]="['/blog', related.slug]"
+                  class="group rounded-xl border border-white/5 bg-neutral-950 overflow-hidden hover:border-white/10 transition-colors"
+                >
+                  @if (related.image) {
+                    <div class="overflow-hidden">
+                      <img
+                        [src]="related.image"
+                        [alt]="related.title"
+                        width="1470"
+                        height="980"
+                        class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  }
+                  <div class="p-4">
+                    <span class="block text-xs text-neutral-400 mb-2">{{ related.date }}</span>
+                    <h3
+                      class="text-sm font-bold text-white group-hover:text-primary-400 transition-colors line-clamp-2"
+                    >
+                      {{ related.title }}
+                    </h3>
+                  </div>
+                </a>
+              }
+            </div>
+          </section>
+        }
       } @else {
         <div class="p-8 bg-neutral-950 rounded-xl border border-white/5 text-center">
           <p class="text-neutral-400 mb-4">Članak nije pronađen.</p>
