@@ -34,7 +34,7 @@ describe('PrivacyPolicy', () => {
     expect(seoManager.update).toHaveBeenCalledWith({
       title: 'Politika privatnosti',
       description:
-        'Politika privatnosti Push Serbia platforme — kako prikupljamo, koristimo i štitimo vaše podatke.',
+        'Politika privatnosti Push Serbia platforme — saznajte kako prikupljamo, koristimo, čuvamo i štitimo vaše lične podatke i informacije.',
     });
   });
 });

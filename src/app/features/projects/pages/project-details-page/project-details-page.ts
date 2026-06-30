@@ -6,6 +6,7 @@ import {
   Injector,
   input,
   OnInit,
+  RESPONSE_INIT,
   Signal,
 } from '@angular/core';
 import { BasicLayout } from '../../../../shared/layout/landing-layout/basic-layout';
@@ -23,6 +24,7 @@ import { GravatarModule } from 'ngx-gravatar';
 import { UnsplashUrlFormatter } from '../../../../shared/unsplash-url-formatter';
 import { SeoManager } from '../../../../core/seo/seo-manager';
 import { ProjectTeamSection } from './components/project-team-section/project-team-section';
+import { OnboardingService } from '../../../../core/onboarding/onboarding';
 
 @Component({
   selector: 'app-project-details-page',
@@ -46,6 +48,8 @@ export class ProjectDetailsPage implements OnInit {
   private readonly authService = inject(AuthClient);
   private readonly injector = inject(Injector);
   private readonly seo = inject(SeoManager);
+  private readonly onboarding = inject(OnboardingService);
+  private readonly response = inject(RESPONSE_INIT, { optional: true });
 
   readonly slug = input.required<string>();
 
@@ -60,9 +64,14 @@ export class ProjectDetailsPage implements OnInit {
   ngOnInit(): void {
     this.$project = this.projectStore.getBySlug(this.slug());
 
+    if (this.authService.$authenticated()) {
+      this.onboarding.markFirstProjectView();
+    }
+
     effect(
       () => {
         const project = this.$project?.();
+        const loading = this.$projectLoading();
         if (project?.id) {
           this.$voted = this.voteStore.isVoted(project.id);
           this.seo.update({
@@ -70,16 +79,30 @@ export class ProjectDetailsPage implements OnInit {
             description: project.shortDescription,
             image: project.image,
             jsonLd: {
-              '@type': 'SoftwareApplication',
+              '@type': 'CreativeWork',
               name: project.name,
               description: project.shortDescription,
               image: project.image,
+              url: `https://pushserbia.com/projekti/${project.slug}`,
+              dateCreated: project.createdAt,
+              dateModified: project.updatedAt,
               author: {
                 '@type': 'Person',
                 name: project.creator.fullName,
               },
             },
           });
+        } else if (!loading) {
+          // Finished loading with no match → unknown/removed slug. Serve a real
+          // 404 (+ noindex) instead of a soft-404 (200 with a "not found" view).
+          this.seo.update({
+            title: 'Projekat nije pronađen',
+            description: 'Traženi projekat ne postoji ili je uklonjen.',
+            robots: 'noindex, nofollow',
+          });
+          if (this.response) {
+            this.response.status = 404;
+          }
         }
       },
       { injector: this.injector },
@@ -93,6 +116,7 @@ export class ProjectDetailsPage implements OnInit {
         totalVoters: project.totalVoters + 1,
         totalVotes: project.totalVotes + vote.weight,
       });
+      this.onboarding.markFirstVote();
     });
   }
 }

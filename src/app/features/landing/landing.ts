@@ -29,6 +29,7 @@ export class Landing {
 
   constructor() {
     this.seo.update({
+      title: 'Open-source zajednica za društveno korisne projekte',
       url: 'https://pushserbia.com',
     });
   }

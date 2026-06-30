@@ -16,7 +16,7 @@ export class Licensing {
     this.seo.update({
       title: 'Licence',
       description:
-        'Informacije o licencama koje koristi Push Serbia platforma i open-source projekti.',
+        'Informacije o licencama koje koristi Push Serbia platforma i open-source projekti. Saznaj više o uslovima korišćenja koda i resursa.',
     });
   }
 }
