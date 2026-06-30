@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthClient } from '../../../../../../core/auth/auth-client';
+import { OnboardingService } from '../../../../../../core/onboarding/onboarding';
 
 @Component({
   selector: 'app-profile-information-dialog',
@@ -14,6 +15,7 @@ export class ProfileInformationDialog {
   closeClick = output<void>();
 
   private readonly authService = inject(AuthClient);
+  private readonly onboarding = inject(OnboardingService);
   private readonly fb = inject(FormBuilder);
 
   readonly form = this.fb.nonNullable.group({
@@ -23,6 +25,12 @@ export class ProfileInformationDialog {
   });
 
   updateMe() {
-    this.authService.updateMe(this.form.getRawValue()).subscribe(() => this.closeClick.emit());
+    this.authService.updateMe(this.form.getRawValue()).subscribe(() => {
+      const values = this.form.getRawValue();
+      if (values.gitHubUrl || values.linkedInUrl) {
+        this.onboarding.markProfileCompleted();
+      }
+      this.closeClick.emit();
+    });
   }
 }

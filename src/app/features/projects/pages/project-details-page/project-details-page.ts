@@ -24,6 +24,7 @@ import { GravatarModule } from 'ngx-gravatar';
 import { UnsplashUrlFormatter } from '../../../../shared/unsplash-url-formatter';
 import { SeoManager } from '../../../../core/seo/seo-manager';
 import { ProjectTeamSection } from './components/project-team-section/project-team-section';
+import { OnboardingService } from '../../../../core/onboarding/onboarding';
 
 @Component({
   selector: 'app-project-details-page',
@@ -47,6 +48,7 @@ export class ProjectDetailsPage implements OnInit {
   private readonly authService = inject(AuthClient);
   private readonly injector = inject(Injector);
   private readonly seo = inject(SeoManager);
+  private readonly onboarding = inject(OnboardingService);
   private readonly response = inject(RESPONSE_INIT, { optional: true });
 
   readonly slug = input.required<string>();
@@ -61,6 +63,10 @@ export class ProjectDetailsPage implements OnInit {
 
   ngOnInit(): void {
     this.$project = this.projectStore.getBySlug(this.slug());
+
+    if (this.authService.$authenticated()) {
+      this.onboarding.markFirstProjectView();
+    }
 
     effect(
       () => {
@@ -110,6 +116,7 @@ export class ProjectDetailsPage implements OnInit {
         totalVoters: project.totalVoters + 1,
         totalVotes: project.totalVotes + vote.weight,
       });
+      this.onboarding.markFirstVote();
     });
   }
 }

@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { Dialog } from '@angular/cdk/dialog';
 import { AuthClient } from '../../../core/auth/auth-client';
+import { OnboardingService } from '../../../core/onboarding/onboarding';
 import { SeoManager } from '../../../core/seo/seo-manager';
 import { first } from 'rxjs';
 
@@ -16,6 +18,8 @@ export class Account implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private authService = inject(AuthClient);
+  private dialog = inject(Dialog);
+  private onboarding = inject(OnboardingService);
   private seo = inject(SeoManager);
 
   ngOnInit(): void {
@@ -32,7 +36,24 @@ export class Account implements OnInit {
       .signInWithCustomToken(customToken)
       .pipe(first())
       .subscribe(() => {
-        this.router.navigateByUrl('/');
+        const userId = this.authService.$userData()?.id;
+        if (userId) {
+          this.onboarding.loadForUser(userId);
+        }
+
+        if (this.onboarding.shouldShowWelcome()) {
+          this.router.navigateByUrl('/').then(() => {
+            import('../../../shared/ui/onboarding-wizard/onboarding-wizard').then((m) => {
+              this.dialog.open(m.OnboardingWizard, {
+                width: '480px',
+                disableClose: true,
+                backdropClass: 'bg-black/80',
+              });
+            });
+          });
+        } else {
+          this.router.navigateByUrl('/');
+        }
       });
   }
 }
