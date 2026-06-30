@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   Injector,
@@ -60,6 +61,17 @@ export class ProjectDetailsPage implements OnInit {
   $voted?: Signal<boolean>;
 
   $currentUser = this.authService.$userData;
+
+  // Up to three other projects, surfaced as dofollow internal links so each
+  // project receives inbound links from its siblings — not only the single
+  // link from the /projekti listing page.
+  private readonly $allProjects = this.projectStore.getAll();
+  readonly $relatedProjects = computed<Project[]>(() => {
+    const current = this.$project?.();
+    return this.$allProjects()
+      .filter((project) => project?.slug && project.slug !== current?.slug)
+      .slice(0, 3);
+  });
 
   ngOnInit(): void {
     this.$project = this.projectStore.getBySlug(this.slug());
