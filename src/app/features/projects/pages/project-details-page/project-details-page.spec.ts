@@ -34,6 +34,7 @@ describe('ProjectDetailsPage', () => {
   beforeEach(async () => {
     mockProjectStore = {
       getBySlug: vi.fn().mockReturnValue(signal(mockProject as any)),
+      getAll: vi.fn().mockReturnValue(signal([mockProject] as any)),
       updateStateBySlug: vi.fn(),
       $loading: signal(false),
     } as any;

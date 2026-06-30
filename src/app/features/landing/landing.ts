@@ -28,8 +28,12 @@ export class Landing {
   private readonly seo = inject(SeoManager);
 
   constructor() {
+    // Brand-forward, concise home page title (≈49 chars). Google was ignoring
+    // the previous generic, keyword-led title ("Open-source zajednica za...")
+    // and rewriting the SERP title down to just "Push Serbia". Leading with the
+    // brand and a specific value proposition gives Google a title it can use.
     this.seo.update({
-      title: 'Open-source zajednica za društveno korisne projekte',
+      title: 'Push Serbia — open-source projekti za opšte dobro',
       url: 'https://pushserbia.com',
     });
   }

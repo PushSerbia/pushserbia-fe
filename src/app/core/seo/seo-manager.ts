@@ -47,7 +47,13 @@ export class SeoManager {
   private readonly router = inject(Router);
 
   update(config: SeoConfig): void {
-    const title = config.title ? `${config.title} | ${SITE_NAME}` : SITE_NAME;
+    // Append the site name as a suffix, unless the page already leads with the
+    // brand (e.g. the home page) — that avoids a duplicated "Push Serbia".
+    const title = config.title
+      ? config.title.includes(SITE_NAME)
+        ? config.title
+        : `${config.title} | ${SITE_NAME}`
+      : SITE_NAME;
     const description = config.description || DEFAULT_DESCRIPTION;
     const image = config.image || DEFAULT_IMAGE;
     const cleanPath = this.router.url.split('?')[0].split('#')[0];

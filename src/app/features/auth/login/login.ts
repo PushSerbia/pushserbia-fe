@@ -21,7 +21,10 @@ export class Login implements OnInit {
       title: 'Prijava',
       description:
         'Prijavi se na Push Serbia platformu putem svog LinkedIn naloga. Brza i jednostavna autentikacija za pristup projektima i glasanju.',
-      robots: 'noindex',
+      // The login page is intentionally kept out of the index (no public search
+      // value). Pair `noindex` with `nofollow` so the directives are consistent
+      // — Google treats a long-lived `noindex` as `noindex, nofollow` anyway.
+      robots: 'noindex, nofollow',
     });
 
     if (isPlatformBrowser(this.platformId)) {

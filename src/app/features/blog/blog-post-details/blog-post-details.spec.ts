@@ -33,6 +33,7 @@ describe('BlogPostDetails', () => {
   beforeEach(async () => {
     blogStoreMock = {
       getBlogPostBySlug: vi.fn(),
+      getBlogPosts: vi.fn().mockReturnValue([mockBlogPost]),
     } as unknown as BlogStore;
     seoManagerMock = {
       update: vi.fn(),
