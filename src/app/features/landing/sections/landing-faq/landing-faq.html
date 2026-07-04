@@ -19,9 +19,10 @@
     <div class="mb-10">
       <input
         type="search"
+        aria-label="Pretraži pitanja"
         [ngModel]="searchQuery()"
         (ngModelChange)="searchQuery.set($event)"
-        class="block w-full py-3 px-4 text-sm text-white bg-black border border-white/10 rounded-lg focus:ring-1 focus:ring-primary-500 focus:border-primary-500 placeholder-neutral-500 outline-0"
+        class="block w-full py-3 px-4 text-sm text-white bg-black border border-white/10 rounded-lg focus:ring-1 focus:ring-primary-500 focus:border-primary-500 placeholder-neutral-400 outline-0"
         placeholder="Pretraži..."
       />
       <div class="flex flex-wrap gap-2 mt-3">

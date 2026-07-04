@@ -45,8 +45,33 @@
             [priorityImg]="i < 3"
           />
         } @empty {
-          <div class="w-full flex items-center justify-center text-center">
-            <p class="text-neutral-400">Nema projekata koji odgovaraju tvojim filtrima.</p>
+          <div class="w-full flex flex-col items-center justify-center text-center gap-5 py-12">
+            <p class="text-neutral-400">
+              @if ($hasActiveFilter()) {
+                Nema projekata koji odgovaraju tvojim filtrima.
+              } @else {
+                Još nema projekata. Budi prvi koji predlaže ideju za zajednicu.
+              }
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              @if ($hasActiveFilter()) {
+                <button
+                  type="button"
+                  (click)="clearFilters()"
+                  class="px-4 py-2 text-sm font-medium text-neutral-400 border border-neutral-800 rounded-lg hover:text-white hover:border-neutral-600 transition-colors cursor-pointer"
+                >
+                  Poništi filtere
+                </button>
+              }
+              <button
+                type="button"
+                routerLink="/projekti/novi"
+                appAuthRequired
+                class="px-4 py-2 text-sm font-semibold text-black bg-white rounded-lg hover:bg-neutral-200 transition-colors cursor-pointer"
+              >
+                Predloži projekat
+              </button>
+            </div>
           </div>
         }
       }

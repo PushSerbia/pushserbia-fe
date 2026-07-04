@@ -7,6 +7,7 @@ import {
   RESPONSE_INIT,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { QuillViewHTMLComponent } from 'ngx-quill';
 import { BlogStore } from '../../../core/blog/blog-store';
 import { BlogPost } from '../../../core/blog/blog';
@@ -15,7 +16,7 @@ import { SeoManager } from '../../../core/seo/seo-manager';
 
 @Component({
   selector: 'app-blog-post-details',
-  imports: [RouterLink, QuillViewHTMLComponent, BasicLayout],
+  imports: [RouterLink, QuillViewHTMLComponent, BasicLayout, DatePipe],
   templateUrl: './blog-post-details.html',
   styleUrl: './blog-post-details.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,8 +45,18 @@ export class BlogPostDetails implements OnInit {
           '@type': 'BlogPosting',
           headline: this.post.title,
           description: this.post.excerpt,
-          image: this.post.image,
+          image: this.post.image
+            ? { '@type': 'ImageObject', url: this.post.image, width: 1470, height: 980 }
+            : undefined,
           datePublished: this.post.date,
+          dateModified: this.post.date,
+          inLanguage: 'sr-RS',
+          keywords: this.post.tags?.join(', '),
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': `https://pushserbia.com/blog/${this.post.slug}`,
+          },
+          url: `https://pushserbia.com/blog/${this.post.slug}`,
           author: {
             '@type': 'Person',
             name: this.post.author,

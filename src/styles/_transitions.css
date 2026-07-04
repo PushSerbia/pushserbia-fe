@@ -66,3 +66,26 @@
     transform: translateY(20px);
   }
 }
+
+/* Respect users who prefer reduced motion: disable page/view transitions and
+   collapse long transitions so nothing large moves or fades. */
+@media (prefers-reduced-motion: reduce) {
+  .enter-animation,
+  .leave-animation {
+    animation: none !important;
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

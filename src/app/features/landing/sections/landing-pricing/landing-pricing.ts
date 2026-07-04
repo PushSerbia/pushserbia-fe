@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SupportOption, supportOptions } from '../../../../core/donation/donation-option';
+import {
+  formatSupportPrice,
+  SupportOption,
+  supportOptions,
+} from '../../../../core/donation/donation-option';
 
 @Component({
   selector: 'app-landing-pricing',
@@ -10,6 +14,7 @@ import { SupportOption, supportOptions } from '../../../../core/donation/donatio
 })
 export class LandingPricing {
   supportOptions = supportOptions;
+  protected readonly formatPrice = formatSupportPrice;
 
   openExternal(option: SupportOption): void {
     window.open(option.externalUrl, '_blank', 'noopener,noreferrer');

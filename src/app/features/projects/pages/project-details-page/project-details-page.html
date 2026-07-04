@@ -32,6 +32,10 @@
               @if (projectDetails.image) {
                 <img
                   class="w-full h-full rounded-lg object-center object-cover"
+                  width="600"
+                  height="400"
+                  fetchpriority="high"
+                  decoding="async"
                   [src]="projectDetails.image | unsplashUrlFormatter: {width: 600, height: 400}"
                   [alt]="projectDetails.name"
                 />
@@ -82,7 +86,7 @@
                   <span
                     class="bg-white/5 text-primary-400 border border-white/10 text-lg font-medium me-2 px-2.5 py-0.5 rounded-sm text-center"
                   >
-                    {{ projectDetails.status }}
+                    {{ projectDetails.status | projectStatusLabel }}
                   </span>
                 </div>
                 <p>Ukupna podrška:</p>

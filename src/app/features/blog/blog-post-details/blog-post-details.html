@@ -17,13 +17,15 @@
                 [alt]="post.title"
                 width="1470"
                 height="980"
+                fetchpriority="high"
+                decoding="async"
                 class="w-full h-64 sm:h-80 object-cover"
               />
             </div>
           }
 
           <div class="flex items-center gap-3 mb-4 text-xs text-neutral-400">
-            <span>{{ post.date }}</span>
+            <time [attr.datetime]="post.date">{{ post.date | date: 'd. MMMM y.' : '' : 'sr-Latn' }}</time>
             <span class="text-neutral-400" aria-hidden="true">·</span>
             <span>{{ post.author }}</span>
           </div>
@@ -47,7 +49,31 @@
             <quill-view-html [content]="post.content" />
           </div>
 
-          <div class="mt-16 pt-8 border-t border-white/5">
+          <div
+            class="mt-16 p-6 sm:p-8 rounded-2xl border border-primary-500/20 bg-primary-500/5 text-center"
+          >
+            <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">Priča te inspirisala?</h2>
+            <p class="text-neutral-400 max-w-md mx-auto mb-6">
+              Zajednica se gradi od ljudi kao što si ti. Pridruži se besplatno i predloži svoj
+              projekat — zajednica bira šta se gradi.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              <a
+                routerLink="/autentikacija/prijava"
+                class="inline-flex items-center px-6 py-3 text-sm font-semibold text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
+              >
+                Pridruži se besplatno
+              </a>
+              <a
+                routerLink="/projekti"
+                class="inline-flex items-center px-6 py-3 text-sm font-semibold text-neutral-300 border border-white/10 rounded-full hover:text-white hover:border-white/20 transition-colors"
+              >
+                Pogledaj projekte
+              </a>
+            </div>
+          </div>
+
+          <div class="mt-10 pt-8 border-t border-white/5">
             <a
               routerLink="/blog"
               class="text-sm font-medium text-primary-400 hover:text-primary-300 transition-colors"
@@ -73,12 +99,18 @@
                         [alt]="related.title"
                         width="1470"
                         height="980"
+                        loading="lazy"
+                        decoding="async"
                         class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>
                   }
                   <div class="p-4">
-                    <span class="block text-xs text-neutral-400 mb-2">{{ related.date }}</span>
+                    <time
+                      [attr.datetime]="related.date"
+                      class="block text-xs text-neutral-400 mb-2"
+                      >{{ related.date | date: 'd. MMMM y.' : '' : 'sr-Latn' }}</time
+                    >
                     <h3
                       class="text-sm font-bold text-white group-hover:text-primary-400 transition-colors line-clamp-2"
                     >

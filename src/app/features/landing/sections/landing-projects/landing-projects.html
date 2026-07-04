@@ -13,7 +13,7 @@
     </div>
 
     <div class="flex flex-wrap gap-8">
-      @for (project of $allProjects() | slice: 0 : 2; track project.id) {
+      @for (project of $allProjects() | slice: 0 : 6; track project.id) {
         <app-project-card
           [project]="project"
           [supported]="$votesMap()[project.id]"

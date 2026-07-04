@@ -17,22 +17,24 @@ export class LandingTestimonials {
   readonly testimonials: Testimonial[] = [
     {
       quote:
-        'Misija projekta je zadužbinarstvo, a o tome valjda razmišljamo sa godinama.',
-      name: 'Dušan',
-      role: 'Software Engineer',
+        'Svaki dan pišem kod za kompanije širom sveta. Ovde pišem kod za komšiluk — i taj osećaj ne možeš da kupiš.',
+      name: 'Miloš Krstić',
+      role: 'Suosnivač',
+      initial: 'M',
+    },
+    {
+      quote:
+        'Najbolji deo nije kod, nego ljudi. Za par meseci sam upoznao developere i ljude sa idejama za koje nisam ni znao da postoje kod nas.',
+      name: 'Marko Makarić',
+      role: 'Suosnivač',
+      initial: 'M',
+    },
+    {
+      quote:
+        'Krenuli smo od jednog pitanja: šta ako svoje veštine iskoristimo za nešto što stvarno pomaže? Push Serbia je odgovor koji zajednica gradi svakog dana.',
+      name: 'Dušan Perišić',
+      role: 'Suosnivač',
       initial: 'D',
-    },
-    {
-      quote: 'Ovo vam je čisto gubljenje vremena.',
-      name: 'LinkedIn korisnik',
-      role: '',
-      initial: 'L',
-    },
-    {
-      quote: 'Napisao sam im pola koda i još uvek ne mogu da glasam.',
-      name: 'Claude',
-      role: 'AI Assistant',
-      initial: 'C',
     },
   ];
 }

@@ -39,14 +39,16 @@
 
           <h3 class="text-lg font-bold text-white mb-1">{{ option.title }}</h3>
 
-          <div class="flex items-baseline gap-1 mt-4 mb-6">
+          <div class="flex items-baseline gap-1 mt-4 mb-4">
             <span class="text-4xl font-extrabold text-white">
-              ${{ option.price }}
+              {{ formatPrice(option) }}
             </span>
             <span class="text-sm text-gray-500">
               {{ option.isOneTime ? '' : '/mes' }}
             </span>
           </div>
+
+          <p class="text-xs text-gray-500 mb-6 leading-relaxed">{{ option.impact }}</p>
 
           <ul class="space-y-3 mb-8 flex-1">
             @for (benefit of option.benefits; track $index) {

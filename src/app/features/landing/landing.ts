@@ -5,6 +5,7 @@ import { LandingProjects } from './sections/landing-projects/landing-projects';
 import { LandingHowTo } from './sections/landing-how-to/landing-how-to';
 import { LandingTestimonials } from './sections/landing-testimonials/landing-testimonials';
 import { LandingFaq } from './sections/landing-faq/landing-faq';
+import { LandingPricing } from './sections/landing-pricing/landing-pricing';
 import { LandingCta } from './sections/landing-cta/landing-cta';
 import { BasicLayout } from '../../shared/layout/landing-layout/basic-layout';
 import { SeoManager } from '../../core/seo/seo-manager';
@@ -18,6 +19,7 @@ import { SeoManager } from '../../core/seo/seo-manager';
     LandingHowTo,
     LandingTestimonials,
     LandingFaq,
+    LandingPricing,
     LandingCta,
     BasicLayout,
   ],
