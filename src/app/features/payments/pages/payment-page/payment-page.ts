@@ -1,7 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { SupportOption, supportOptions } from '../../../../core/donation/donation-option';
+import {
+  formatSupportPrice,
+  SupportOption,
+  supportOptions,
+} from '../../../../core/donation/donation-option';
 import { SeoManager } from '../../../../core/seo/seo-manager';
 
 @Component({
@@ -15,6 +19,7 @@ export class PaymentPage implements OnInit {
   private seo = inject(SeoManager);
 
   supportOptions = supportOptions;
+  protected readonly formatPrice = formatSupportPrice;
 
   ngOnInit(): void {
     this.seo.update({

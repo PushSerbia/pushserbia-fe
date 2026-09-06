@@ -18,13 +18,17 @@
                   [alt]="blogPosts[0].title"
                   width="1470"
                   height="980"
+                  fetchpriority="high"
+                  decoding="async"
                   class="w-full h-48 sm:h-64 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
             }
             <div>
               <div class="flex items-center gap-3 mb-4 text-xs text-neutral-400">
-                <span>{{ blogPosts[0].date }}</span>
+                <time [attr.datetime]="blogPosts[0].date">{{
+                  blogPosts[0].date | date: 'd. MMMM y.' : '' : 'sr-Latn'
+                }}</time>
                 <span class="text-neutral-400" aria-hidden="true">·</span>
                 <span>{{ blogPosts[0].author }}</span>
               </div>
@@ -64,13 +68,17 @@
                         [alt]="post.title"
                         width="1470"
                         height="980"
+                        loading="lazy"
+                        decoding="async"
                         class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>
                   }
                   <div class="p-5">
                     <div class="flex items-center gap-2 mb-3 text-xs text-neutral-400">
-                      <span>{{ post.date }}</span>
+                      <time [attr.datetime]="post.date">{{
+                        post.date | date: 'd. MMMM y.' : '' : 'sr-Latn'
+                      }}</time>
                       <span class="text-neutral-400" aria-hidden="true">·</span>
                       <span>{{ post.author }}</span>
                     </div>
@@ -99,13 +107,23 @@
       }
 
       <div class="mt-16 pt-12 border-t border-white/5 text-center">
-        <p class="text-neutral-400 mb-4">Imaš ideju za tekst ili želiš da pišeš za blog?</p>
-        <a
-          routerLink="/dokumentacija/kontakt"
-          class="inline-flex items-center px-6 py-3 text-sm font-semibold text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
-        >
-          Javi nam se
-        </a>
+        <p class="text-neutral-400 mb-4">
+          Zajednica se gradi od ljudi kao što si ti. Pridruži se i predloži svoj projekat.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <a
+            routerLink="/autentikacija/prijava"
+            class="inline-flex items-center px-6 py-3 text-sm font-semibold text-black bg-white rounded-full hover:bg-neutral-200 transition-colors"
+          >
+            Pridruži se besplatno
+          </a>
+          <a
+            routerLink="/dokumentacija/kontakt"
+            class="inline-flex items-center px-6 py-3 text-sm font-semibold text-neutral-400 border border-neutral-800 rounded-full hover:text-white hover:border-neutral-600 transition-colors"
+          >
+            Piši za blog
+          </a>
+        </div>
       </div>
     </div>
   </div>

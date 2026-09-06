@@ -8,6 +8,8 @@ import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SLACK_INVITE_URL } from './app/shared/external-links';
+import { BLOG_POSTS } from './app/core/blog/blog-posts.data';
+import { environment } from './environments/environment';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -51,6 +53,104 @@ app.get('/robots.txt', (req, res, next) => {
 
 app.get('/pridruzi-se-slack', (_req, res) => {
   res.redirect(301, SLACK_INVITE_URL);
+});
+
+/**
+ * Dynamic sitemap. Projects are user-generated via the API, so a static file
+ * goes stale the moment a new project is proposed. This route always returns
+ * the static pages + blog posts, and enriches them with the live project list
+ * when the API is reachable — falling back gracefully (never a 500) otherwise.
+ */
+const SITE_URL = 'https://pushserbia.com';
+
+interface SitemapEntry {
+  loc: string;
+  lastmod: string;
+  changefreq: string;
+  priority: string;
+}
+
+const STATIC_SITEMAP_ENTRIES: Omit<SitemapEntry, 'lastmod'>[] = [
+  { loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0' },
+  { loc: `${SITE_URL}/projekti`, changefreq: 'weekly', priority: '0.9' },
+  { loc: `${SITE_URL}/blog`, changefreq: 'weekly', priority: '0.9' },
+  { loc: `${SITE_URL}/placanja/finansiranje`, changefreq: 'monthly', priority: '0.7' },
+  { loc: `${SITE_URL}/dokumentacija/o-nama`, changefreq: 'monthly', priority: '0.7' },
+  { loc: `${SITE_URL}/dokumentacija/kontakt`, changefreq: 'monthly', priority: '0.7' },
+  { loc: `${SITE_URL}/dokumentacija/karijere`, changefreq: 'monthly', priority: '0.7' },
+  { loc: `${SITE_URL}/dokumentacija/brend-centar`, changefreq: 'monthly', priority: '0.6' },
+  { loc: `${SITE_URL}/dokumentacija/politika-privatnosti`, changefreq: 'monthly', priority: '0.6' },
+  { loc: `${SITE_URL}/dokumentacija/uslovi-koriscenja`, changefreq: 'monthly', priority: '0.6' },
+  { loc: `${SITE_URL}/dokumentacija/licence`, changefreq: 'monthly', priority: '0.6' },
+];
+
+const escapeXml = (value: string): string =>
+  value.replace(
+    /[<>&'"]/g,
+    (char) =>
+      ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' })[char] ?? char,
+  );
+
+const toIsoDate = (value: string | undefined, fallback: string): string => {
+  if (!value) {
+    return fallback;
+  }
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? fallback : parsed.toISOString().slice(0, 10);
+};
+
+const renderSitemap = (entries: SitemapEntry[]): string => {
+  const urls = entries
+    .map(
+      (entry) =>
+        `  <url>\n    <loc>${escapeXml(entry.loc)}</loc>\n    <lastmod>${entry.lastmod}</lastmod>\n` +
+        `    <changefreq>${entry.changefreq}</changefreq>\n    <priority>${entry.priority}</priority>\n  </url>`,
+    )
+    .join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+};
+
+app.get('/sitemap.xml', async (_req, res) => {
+  const buildDate = new Date().toISOString().slice(0, 10);
+  const entries: SitemapEntry[] = STATIC_SITEMAP_ENTRIES.map((entry) => ({
+    ...entry,
+    lastmod: buildDate,
+  }));
+
+  for (const post of BLOG_POSTS) {
+    entries.push({
+      loc: `${SITE_URL}/blog/${post.slug}`,
+      lastmod: toIsoDate(post.date, buildDate),
+      changefreq: 'monthly',
+      priority: '0.8',
+    });
+  }
+
+  try {
+    const response = await fetch(`${environment.apiUrl}/projects?limit=200`);
+    if (response.ok) {
+      const body = (await response.json()) as {
+        data?: { slug: string; updatedAt?: string; status?: string; isBanned?: boolean }[];
+      };
+      for (const project of body.data ?? []) {
+        // Skip projects that have no public detail page yet.
+        if (project.isBanned || project.status === 'pending' || project.status === 'declined') {
+          continue;
+        }
+        entries.push({
+          loc: `${SITE_URL}/projekti/${project.slug}`,
+          lastmod: toIsoDate(project.updatedAt, buildDate),
+          changefreq: 'weekly',
+          priority: '0.8',
+        });
+      }
+    }
+  } catch {
+    // API unreachable — serve the static + blog sitemap instead of erroring.
+  }
+
+  res.set('Cache-Control', 'public, max-age=3600');
+  res.type('application/xml').send(renderSitemap(entries));
 });
 
 /**

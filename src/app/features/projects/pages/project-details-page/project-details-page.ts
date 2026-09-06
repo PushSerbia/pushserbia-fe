@@ -26,6 +26,7 @@ import { UnsplashUrlFormatter } from '../../../../shared/unsplash-url-formatter'
 import { SeoManager } from '../../../../core/seo/seo-manager';
 import { ProjectTeamSection } from './components/project-team-section/project-team-section';
 import { OnboardingService } from '../../../../core/onboarding/onboarding';
+import { ProjectStatusLabelPipe } from '../../../../core/project/project-status-label-pipe';
 
 @Component({
   selector: 'app-project-details-page',
@@ -39,6 +40,7 @@ import { OnboardingService } from '../../../../core/onboarding/onboarding';
     GravatarModule,
     UnsplashUrlFormatter,
     ProjectTeamSection,
+    ProjectStatusLabelPipe,
   ],
   templateUrl: './project-details-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -102,6 +104,18 @@ export class ProjectDetailsPage implements OnInit {
                 '@type': 'Person',
                 name: project.creator.fullName,
               },
+              interactionStatistic: [
+                {
+                  '@type': 'InteractionCounter',
+                  interactionType: 'https://schema.org/LikeAction',
+                  userInteractionCount: project.totalVoters,
+                },
+                {
+                  '@type': 'InteractionCounter',
+                  interactionType: 'https://schema.org/VoteAction',
+                  userInteractionCount: project.totalVotes,
+                },
+              ],
             },
           });
         } else if (!loading) {

@@ -59,11 +59,39 @@ export class ProjectsListPage implements OnInit {
 
   private readonly seo = inject(SeoManager);
 
+  private static readonly SEO_DESCRIPTION =
+    'Pregledaj open-source projekte sa pozitivnim društvenim uticajem u Srbiji. Glasaj za inicijative, predloži nove ideje ili doprinesi razvoju.';
+
   constructor() {
     this.seo.update({
       title: 'Projekti',
-      description:
-        'Pregledaj open-source projekte sa pozitivnim društvenim uticajem u Srbiji. Glasaj za inicijative, predloži nove ideje ili doprinesi razvoju.',
+      description: ProjectsListPage.SEO_DESCRIPTION,
+    });
+
+    // Emit CollectionPage/ItemList structured data once the project list has
+    // loaded, so search engines see the catalog that links to each detail page.
+    effect(() => {
+      const projects = this.projectStore.getAll()();
+      if (!projects.length) {
+        return;
+      }
+      this.seo.update({
+        title: 'Projekti',
+        description: ProjectsListPage.SEO_DESCRIPTION,
+        jsonLd: {
+          '@type': 'CollectionPage',
+          name: 'Projekti | Push Serbia',
+          mainEntity: {
+            '@type': 'ItemList',
+            itemListElement: projects.slice(0, 100).map((project, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              url: `https://pushserbia.com/projekti/${project.slug}`,
+              name: project.name,
+            })),
+          },
+        },
+      });
     });
 
     effect(() => {
@@ -113,6 +141,14 @@ export class ProjectsListPage implements OnInit {
     if (newFilter.myProjectsOnly || newFilter.supportedOnly) {
       this.$filter.set(newFilter);
     }
+  }
+
+  readonly $hasActiveFilter = computed(
+    () => this.$filter().myProjectsOnly || this.$filter().supportedOnly,
+  );
+
+  clearFilters(): void {
+    this.onFilterUpdate({ myProjectsOnly: false, supportedOnly: false });
   }
 
   onFilterUpdate(filter: ProjectsFilter): void {

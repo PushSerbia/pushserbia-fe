@@ -3,8 +3,25 @@
   queryParamsHandling="merge"
   class="flex flex-col w-full sm:w-sm max-w-[calc(100svw-32px)] bg-neutral-950 border border-white/5 rounded-xl hover:border-white/10 transition-colors relative"
 >
+  <div
+    class="absolute top-4 left-4 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-white/10"
+    [attr.aria-label]="project().totalVotes + ' podrški'"
+  >
+    <svg
+      class="w-3.5 h-3.5"
+      [class.text-red-500]="supported()"
+      [class.text-neutral-300]="!supported()"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
+    </svg>
+    <span class="text-xs font-semibold text-white tabular-nums">{{ project().totalVotes }}</span>
+  </div>
+
   @if (supported()) {
-    <div class="absolute top-4 right-4 z-10">
+    <div class="absolute top-4 right-4 z-10" title="Glasao/la si za ovaj projekat">
       <svg
         class="w-7 h-7 text-red-500"
         fill="currentColor"
@@ -45,9 +62,14 @@
   </div>
 
   <div class="p-5">
-    <h2 class="mb-2 text-xl font-bold tracking-tight text-white line-clamp-1">
+    <span
+      class="inline-flex items-center mb-3 px-2 py-0.5 text-[11px] font-medium text-primary-400 bg-primary-500/10 border border-primary-500/20 rounded-full"
+    >
+      {{ project().status | projectStatusLabel }}
+    </span>
+    <h3 class="mb-2 text-xl font-bold tracking-tight text-white line-clamp-1">
       {{ project().name }}
-    </h2>
+    </h3>
     <p class="mb-4 text-sm text-neutral-400 line-clamp-4 h-20">
       {{ project().shortDescription }}
     </p>

@@ -34,6 +34,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import Quill from 'quill';
 import { ValidationMessage } from '../../../../shared/ui/validation-message/validation-message';
+import { ProjectStatusLabelPipe } from '../../../../core/project/project-status-label-pipe';
 import { SeoManager } from '../../../../core/seo/seo-manager';
 
 interface CreateProjectModel {
@@ -57,6 +58,7 @@ interface CreateProjectModel {
     Field,
     FormsModule,
     ValidationMessage,
+    ProjectStatusLabelPipe,
   ],
   templateUrl: './create-project-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

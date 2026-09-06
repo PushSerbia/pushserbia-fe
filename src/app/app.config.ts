@@ -6,7 +6,13 @@ import {
   withInMemoryScrolling,
   withViewTransitions,
 } from '@angular/router';
+import { registerLocaleData } from '@angular/common';
+import localeSrLatn from '@angular/common/locales/sr-Latn';
 import { routes } from './app.routes';
+
+// Register Serbian (Latin script) locale data so DatePipe formats dates as
+// "15. novembar 2025." — matching the site's Latin-script content.
+registerLocaleData(localeSrLatn);
 import * as Sentry from '@sentry/angular';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/auth/auth.interceptor';

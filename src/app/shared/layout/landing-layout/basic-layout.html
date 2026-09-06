@@ -1,7 +1,13 @@
 <div class="bg-black min-h-screen flex flex-col overflow-x-hidden">
+  <a
+    href="#glavni-sadrzaj"
+    class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-3 focus:left-3 focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded-lg focus:font-semibold"
+    >Preskoči na sadržaj</a
+  >
+
   <app-header />
 
-  <main class="flex-1">
+  <main id="glavni-sadrzaj" tabindex="-1" class="flex-1 outline-none">
     <ng-content />
   </main>
 
